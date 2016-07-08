@@ -20,32 +20,32 @@
 // photo_navi.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header.php' );
-webphoto_include_once( 'class/main/photo.php' );
+webphoto_include_once('main/header.php');
+webphoto_include_once('class/main/photo.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_main_photo::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_main_photo::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manage->init();
 
 // exit if execute edittag
 $manage->check_edittag();
 
-$xoopsOption['template_main'] = $manage->get_template_main() ;
-include XOOPS_ROOT_PATH . '/header.php' ;
+$xoopsOption['template_main'] = $manage->get_template_main();
+include XOOPS_ROOT_PATH . '/header.php';
 
-$xoopsTpl->assign( $manage->main() ) ;
+$xoopsTpl->assign($manage->main());
 
 // subsutitute XOOPS_ROOT_PATH.'/include/comment_view.php';
 $manage->comment_view();
 
-include XOOPS_ROOT_PATH .'/footer.php' ;
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();
-
-?>

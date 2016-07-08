@@ -16,7 +16,9 @@
 // webphoto_imagemanager_form -> webphoto_edit_imagemanager_form
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_edit_imagemanager_form
@@ -24,55 +26,50 @@ if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_edit_imagemanager_form extends webphoto_edit_form
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_edit_imagemanager_form( $dirname, $trust_dirname )
-{
-	$this->webphoto_edit_form( $dirname, $trust_dirname );
-	$this->init_preload();
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
+        $this->init_preload();
+    }
+
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_edit_imagemanager_form($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // imagemanager
+    //---------------------------------------------------------
+    public function build_form_imagemanager($row, $param)
+    {
+        $arr = array_merge($this->build_form_base_param(), $this->build_form_submit_imagemanager($row, $param));
+        return $arr;
+    }
+
+    public function build_form_submit_imagemanager($row, $param)
+    {
+        $has_resize   = $param['has_resize'];
+        $allowed_exts = $param['allowed_exts'];
+
+        $this->set_row($row);
+
+        $arr = array(
+            'max_file_size'        => $this->_cfg_fsize,
+            'ele_maxpixel'         => $this->ele_maxpixel($has_resize),
+            'ele_maxsize'          => $this->ele_maxsize(),
+            'ele_allowed_exts'     => $this->ele_allowed_exts($allowed_exts),
+            'ele_item_description' => $this->item_description_dhtml(),
+            'item_cat_id_options'  => $this->item_cat_id_options(),
+        );
+        return $arr;
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname, $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_edit_imagemanager_form( $dirname, $trust_dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// imagemanager
-//---------------------------------------------------------
-function build_form_imagemanager( $row, $param )
-{
-	$arr = array_merge(
-		$this->build_form_base_param() ,
-		$this->build_form_submit_imagemanager( $row, $param )
-	);
-	return $arr;
-}
-
-function build_form_submit_imagemanager( $row, $param )
-{
-	$has_resize    = $param['has_resize'];
-	$allowed_exts  = $param['allowed_exts'];
-
-	$this->set_row( $row );
-
-	$arr = array(
-		'max_file_size'        => $this->_cfg_fsize ,
-		'ele_maxpixel'         => $this->ele_maxpixel( $has_resize ) ,
-		'ele_maxsize'          => $this->ele_maxsize() ,
-		'ele_allowed_exts'     => $this->ele_allowed_exts( $allowed_exts ) ,
-		'ele_item_description' => $this->item_description_dhtml() ,
-		'item_cat_id_options'  => $this->item_cat_id_options() ,
-	);
-	return $arr ;
-}
-
-// --- class end ---
-}
-
-?>

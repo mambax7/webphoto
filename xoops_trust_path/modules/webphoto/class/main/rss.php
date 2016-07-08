@@ -20,7 +20,9 @@
 // photo_handler -> item_handler
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_main_rss
@@ -28,32 +30,30 @@ if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_main_rss extends webphoto_rss
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_main_rss( $dirname, $trust_dirname )
-{
-	$this->webphoto_rss( $dirname, $trust_dirname ) ;
-}
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
+    }
 
-function &getInstance( $dirname, $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_main_rss( $dirname, $trust_dirname );
-	}
-	return $instance;
-}
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_main_rss($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
 
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function main()
-{
-	$this->show_rss();
-}
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function main()
+    {
+        $this->show_rss();
+    }
 
-// --- class end ---
+    // --- class end ---
 }
-
-?>

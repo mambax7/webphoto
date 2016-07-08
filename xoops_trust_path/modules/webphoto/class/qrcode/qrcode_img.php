@@ -7,85 +7,90 @@
 #
 */
 
-require "qrcode.php";
+require 'qrcode.php';
 
-class Qrcode_image extends Qrcode{
+class Qrcode_image extends Qrcode
+{
 
-    var $module_size;
-    var $quiet_zone;
+    public $module_size;
+    public $quiet_zone;
 
-    function Qrcode_image(){
-       $this->Qrcode();
-       $this->module_size=4;
-       $this->quiet_zone=4;
+    public function __construct()
+    {
+        parent::__construct();
+        $this->module_size = 4;
+        $this->quiet_zone  = 4;
     }
 
-    function set_module_size($z){
-        if ($z>0 && $z<9){
-            $this->module_size=$z;
-        }    
-    }
-
-    function set_quietzone($z){
-        if ($z>0 && $z<9){
-            $this->quiet_zone=$z;
+    public function set_module_size($z)
+    {
+        if ($z > 0 && $z < 9) {
+            $this->module_size = $z;
         }
     }
 
-    function qrcode_image_out($org_data,$image_type='png',$filename=''){
-      $this->image_out($this->cal_qrcode($org_data),$image_type,$filename);
-    }
-
-    function image_out($data,$image_type='png',$filename=''){
-         $im=$this->mkimage($data);
-         if ($image_type=="jpeg"){
-	   if (strlen($filename)>0){
-               ImageJPEG($im,$filename);
-           } else {
-               ImageJPEG($im);
-           }
-         } else {
-	   if (strlen($filename)>0){
-	       ImagePNG($im,$filename);
-           } else {
-               ImagePNG($im);
-           }
-         }
-    }
-
-    function mkimage($data){
-        $data_array=explode("\n",$data);
-        $c=count($data_array)-1;
-        $image_size=$c;
-        $output_size=($c+($this->quiet_zone)*2)*$this->module_size;
-
-        $img=ImageCreate($image_size,$image_size);
-        $white = ImageColorAllocate ($img, 255, 255, 255);
-        $black = ImageColorAllocate ($img, 0, 0, 0);
-
-        $im=ImageCreate($output_size,$output_size);
-
-        $white2 = ImageColorAllocate ($im ,255,255,255);
-        ImageFill($im,0,0,$white2);
-
-        $y=0;
-        foreach($data_array as $row){
-           $x=0;
-           while ($x<$image_size){
-           if (substr($row,$x,1)=="1"){
-               ImageSetPixel($img,$x,$y,$black);
-           }
-           $x++;
-           }
-        $y++;
+    public function set_quietzone($z)
+    {
+        if ($z > 0 && $z < 9) {
+            $this->quiet_zone = $z;
         }
-        $quiet_zone_offset=($this->quiet_zone)*($this->module_size);
-        $image_width=$image_size*($this->module_size);
+    }
 
-        ImageCopyResized($im,$img,$quiet_zone_offset ,$quiet_zone_offset,0,0,$image_width ,$image_width ,$image_size,$image_size);
+    public function qrcode_image_out($org_data, $image_type = 'png', $filename = '')
+    {
+        $this->image_out($this->cal_qrcode($org_data), $image_type, $filename);
+    }
 
-        return($im);
+    public function image_out($data, $image_type = 'png', $filename = '')
+    {
+        $im = $this->mkimage($data);
+        if ($image_type == 'jpeg') {
+            if (strlen($filename) > 0) {
+                imagejpeg($im, $filename);
+            } else {
+                imagejpeg($im);
+            }
+        } else {
+            if (strlen($filename) > 0) {
+                imagepng($im, $filename);
+            } else {
+                imagepng($im);
+            }
+        }
+    }
+
+    public function mkimage($data)
+    {
+        $data_array  = explode("\n", $data);
+        $c           = count($data_array) - 1;
+        $image_size  = $c;
+        $output_size = ($c + $this->quiet_zone * 2) * $this->module_size;
+
+        $img   = imagecreate($image_size, $image_size);
+        $white = imagecolorallocate($img, 255, 255, 255);
+        $black = imagecolorallocate($img, 0, 0, 0);
+
+        $im = imagecreate($output_size, $output_size);
+
+        $white2 = imagecolorallocate($im, 255, 255, 255);
+        imagefill($im, 0, 0, $white2);
+
+        $y = 0;
+        foreach ($data_array as $row) {
+            $x = 0;
+            while ($x < $image_size) {
+                if (substr($row, $x, 1) == '1') {
+                    imagesetpixel($img, $x, $y, $black);
+                }
+                ++$x;
+            }
+            ++$y;
+        }
+        $quiet_zone_offset = $this->quiet_zone * $this->module_size;
+        $image_width       = $image_size * $this->module_size;
+
+        imagecopyresized($im, $img, $quiet_zone_offset, $quiet_zone_offset, 0, 0, $image_width, $image_width, $image_size, $image_size);
+
+        return $im;
     }
 }
-
-?>

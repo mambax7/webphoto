@@ -18,24 +18,24 @@
 // imagemagick.php flash_log.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'admin/header_edit.php' );
-webphoto_include_once( 'class/edit/photo_form.php' );
-webphoto_include_once( 'class/edit/misc_form.php' );
-webphoto_include_once( 'class/edit/flashvar_edit.php' );
-webphoto_include_once( 'class/edit/flashvar_form.php' );
-webphoto_include_once( 'class/admin/item_form.php' );
-webphoto_include_once( 'class/admin/item_manager.php' );
+webphoto_include_once('admin/header_edit.php');
+webphoto_include_once('class/edit/photo_form.php');
+webphoto_include_once('class/edit/misc_form.php');
+webphoto_include_once('class/edit/flashvar_edit.php');
+webphoto_include_once('class/edit/flashvar_form.php');
+webphoto_include_once('class/admin/item_form.php');
+webphoto_include_once('class/admin/item_manager.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_admin_item_manager::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_admin_item_manager::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manage->main();
 exit();
-
-?>

@@ -6,19 +6,19 @@
 // 2008-08-01 K.OHWADA
 //=========================================================
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'admin/header.php' );
-webphoto_include_once( 'class/admin/check_mb.php' );
+webphoto_include_once('admin/header.php');
+webphoto_include_once('class/admin/check_mb.php');
 
 //=========================================================
 // main
 //=========================================================
-$manager =& webphoto_admin_check_mb::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manager = webphoto_admin_check_mb::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manager->main();
 exit();
-
-?>

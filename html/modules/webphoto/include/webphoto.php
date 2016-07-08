@@ -10,5 +10,4 @@
 // this is the file for identifying webphoto module
 // do NOT remove this file
 //---------------------------------------------------------
-
-?>
+;

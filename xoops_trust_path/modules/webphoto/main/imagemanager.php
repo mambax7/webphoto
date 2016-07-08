@@ -21,49 +21,49 @@
 // added class/xoops/base.php etc
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // xoops system files
 //---------------------------------------------------------
-include_once XOOPS_ROOT_PATH."/class/xoopstree.php" ;
-include_once XOOPS_ROOT_PATH.'/class/pagenav.php' ;
-include_once XOOPS_ROOT_PATH.'/class/template.php' ;
+include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+include_once XOOPS_ROOT_PATH . '/class/template.php';
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-include_once WEBPHOTO_TRUST_PATH.'/main/header_inc_handler.php';
+include_once WEBPHOTO_TRUST_PATH . '/main/header_inc_handler.php';
 
-webphoto_include_once( 'class/lib/multibyte.php' );
-webphoto_include_once( 'class/xoops/base.php' );
-webphoto_include_once( 'class/inc/group_permission.php' );
-webphoto_include_once( 'class/inc/catlist.php' );
-webphoto_include_once( 'class/inc/public.php' );
-webphoto_include_once( 'class/main/imagemanager.php' );
+webphoto_include_once('class/lib/multibyte.php');
+webphoto_include_once('class/xoops/base.php');
+webphoto_include_once('class/inc/group_permission.php');
+webphoto_include_once('class/inc/catlist.php');
+webphoto_include_once('class/inc/public.php');
+webphoto_include_once('class/main/imagemanager.php');
 
-webphoto_include_language( 'main.php' );
+webphoto_include_language('main.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_main_imagemanager::getSingleton( WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_main_imagemanager::getSingleton(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 
 // exit if error
 $manage->check();
 
-list( $param, $photos ) = $manage->main();
+list($param, $photos) = $manage->main();
 
 $xoopsTpl = new XoopsTpl();
-$xoopsTpl->assign( $param ) ;
+$xoopsTpl->assign($param);
 
-if ( is_array($photos) && count($photos) ) {
-	foreach( $photos as $photo ) {
-		$xoopsTpl->append( 'photos' , $photo );
-	}
+if (is_array($photos) && count($photos)) {
+    foreach ($photos as $photo) {
+        $xoopsTpl->append('photos', $photo);
+    }
 }
 
-$xoopsTpl->display( $manage->get_template() ) ;
-exit() ;
-
-?>
+$xoopsTpl->display($manage->get_template());
+exit();

@@ -12,29 +12,29 @@
 // new main/header_submit_imagemanager.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header_submit.php' );
-webphoto_include_once( 'class/edit/action.php' );
-webphoto_include_once( 'class/main/edit.php' );
+webphoto_include_once('main/header_submit.php');
+webphoto_include_once('class/edit/action.php');
+webphoto_include_once('class/main/edit.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_main_edit::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_main_edit::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 
 // exit if execute edit
 $manage->check_action();
 
-$xoopsOption['template_main'] = WEBPHOTO_DIRNAME.'_main_edit.html' ;
-include( XOOPS_ROOT_PATH.'/header.php' ) ;
+$xoopsOption['template_main'] = WEBPHOTO_DIRNAME . '_main_edit.html';
+include(XOOPS_ROOT_PATH . '/header.php');
 
-$xoopsTpl->assign( $manage->form_param() ) ;
+$xoopsTpl->assign($manage->form_param());
 
-include( XOOPS_ROOT_PATH.'/footer.php' ) ;
+include(XOOPS_ROOT_PATH . '/footer.php');
 exit();
-
-?>

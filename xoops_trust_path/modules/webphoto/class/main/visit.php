@@ -12,66 +12,65 @@
 // webphoto_item_public
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_main_visit
 //=========================================================
 class webphoto_main_visit extends webphoto_item_public
 {
-	var $_post_class;
+    public $_post_class;
 
-	var $_FLAG_REDIRECT = true;
+    public $_FLAG_REDIRECT = true;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_main_visit( $dirname , $trust_dirname )
-{
-	$this->webphoto_item_public( $dirname , $trust_dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
 
-	$this->_post_class =& webphoto_lib_post::getInstance();
+        $this->_post_class = webphoto_lib_post::getInstance();
+    }
 
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_main_visit($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function main()
+    {
+        $item_id  = $this->_post_class->get_get_int('item_id');
+        $item_row = $this->get_item_row($item_id);
+        if (!is_array($item_row)) {
+            exit();
+        }
+
+        $this->_item_handler->countup_hits($item_id, true);
+
+        $siteurl   = $item_row['item_siteurl'];
+        $siteurl   = preg_replace('/javascript:/si', 'java script:', $siteurl);
+        $siteurl_s = $this->sanitize($siteurl);
+
+        if ($this->_FLAG_REDIRECT) {
+            header('Location: ' . $siteurl);
+        } else {
+            echo '<html><head>';
+            echo '<meta http-equiv="Refresh" content="0; URL=' . $siteurl_s . '"></meta>';
+            echo '</head><body></body></html>';
+        }
+
+        exit();
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname , $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_main_visit( $dirname , $trust_dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function main()
-{
-	$item_id  = $this->_post_class->get_get_int('item_id') ;
-	$item_row = $this->get_item_row( $item_id );
-	if ( ! is_array($item_row ) ) {
-		exit();
-	}
-
-	$this->_item_handler->countup_hits( $item_id, true );
-
-	$siteurl   = $item_row['item_siteurl'];
-	$siteurl   = preg_replace( '/javascript:/si' , 'java script:', $siteurl );
-	$siteurl_s = $this->sanitize( $siteurl );
-
-	if ( $this->_FLAG_REDIRECT ) {
-		header( 'Location: '.$siteurl );
-
-	} else {
-		echo '<html><head>';
-		echo '<meta http-equiv="Refresh" content="0; URL='. $siteurl_s .'"></meta>';
-		echo '</head><body></body></html>';
-	}
-
-	exit();
-}
-
-// --- class end ---
-}
-?>

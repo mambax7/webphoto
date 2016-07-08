@@ -18,113 +18,111 @@
 // added _B_WEBPHOTO_GPERM_MAIL
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_admin_groupperm
 //=========================================================
 class webphoto_admin_groupperm extends webphoto_edit_base
 {
-	var $_groupperm_class;
-	var $_form_class;
+    public $_groupperm_class;
+    public $_form_class;
 
-	var $_FLAG_SYSTEM = true;
+    public $_FLAG_SYSTEM = true;
 
-	var $_THIS_FCT = 'groupperm';
-	var $_THIS_URL;
+    public $_THIS_FCT = 'groupperm';
+    public $_THIS_URL;
 
-	var $_TIME_SUCCESS = 1;
-	var $_TIME_FAIL    = 5;
-	var $_TIME_DEBUG   = 60;
+    public $_TIME_SUCCESS = 1;
+    public $_TIME_FAIL    = 5;
+    public $_TIME_DEBUG   = 60;
 
-	var $_DEBUG = false;
+    public $_DEBUG = false;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_admin_groupperm( $dirname , $trust_dirname )
-{
-	$this->webphoto_edit_base( $dirname , $trust_dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
 
-	$this->_form_class 
-		=& webphoto_admin_groupperm_form::getInstance( $dirname , $trust_dirname );
+        $this->_form_class = webphoto_admin_groupperm_form::getInstance($dirname, $trust_dirname);
 
-	$this->_groupperm_class =& webphoto_lib_groupperm::getInstance();
+        $this->_groupperm_class = webphoto_lib_groupperm::getInstance();
 
-	$this->_THIS_URL = $this->_MODULE_URL .'/admin/index.php?fct='.$this->_THIS_FCT;
+        $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
+    }
+
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_admin_groupperm($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function main()
+    {
+        $perms = $this->get_post('perms');
+        if (is_array($perms)) {
+            $this->groupperm($perms);
+            exit();
+        }
+
+        xoops_cp_header();
+
+        echo $this->build_admin_menu();
+        echo $this->build_admin_title('GROUPPERM');
+        echo $this->build_form();
+
+        xoops_cp_footer();
+    }
+
+    //---------------------------------------------------------
+    // groupperm
+    //---------------------------------------------------------
+    public function groupperm($perms)
+    {
+        if (!$this->check_token()) {
+            redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $this->get_token_errors());
+            exit();
+        }
+
+        $this->_groupperm_class->modify($this->_MODULE_ID, $perms, $this->_FLAG_SYSTEM);
+        $errors = $this->_groupperm_class->get_errors();
+        $msgs   = $this->_groupperm_class->get_msg_array();
+
+        if ($this->_DEBUG && is_array($errors) && count($errors)) {
+            $msg  = implode("<br />\n", $errors);
+            $msg  = $this->highlight($msg);
+            $time = $this->_TIME_FAIL;
+        } else {
+            $msg  = _AM_WEBPHOTO_GPERMUPDATED;
+            $time = $this->_TIME_SUCCESS;
+        }
+
+        if ($this->_DEBUG && is_array($msgs) && count($msgs)) {
+            $msg .= "<br />\n" . implode("<br />\n", $msgs);
+            $time = $this->_TIME_DEBUG;
+        }
+
+        redirect_header($this->_THIS_URL, $time, $msg);
+        exit();
+    }
+
+    //---------------------------------------------------------
+    // form
+    //---------------------------------------------------------
+    public function build_form()
+    {
+        return $this->_form_class->build_form($this->_THIS_FCT);
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname , $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_admin_groupperm( $dirname , $trust_dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function main()
-{
-	$perms = $this->get_post('perms');
-	if ( is_array($perms) ) {
-		$this->groupperm( $perms );
-		exit();
-	}
-
-	xoops_cp_header() ;
-
-	echo $this->build_admin_menu();
-	echo $this->build_admin_title( 'GROUPPERM' );
-	echo $this->build_form();
-
-	xoops_cp_footer() ;
-}
-
-//---------------------------------------------------------
-// groupperm
-//---------------------------------------------------------
-function groupperm( $perms )
-{
-	if ( ! $this->check_token() ) {
-		redirect_header( $this->_THIS_URL, $this->_TIME_FAIL, $this->get_token_errors() );
-		exit();
-	}
-
-	$this->_groupperm_class->modify( $this->_MODULE_ID, $perms, $this->_FLAG_SYSTEM );
-	$errors = $this->_groupperm_class->get_errors();
-	$msgs   = $this->_groupperm_class->get_msg_array();
-
-	if ( $this->_DEBUG && is_array($errors) && count($errors) ) {
-		$msg  = implode( "<br />\n", $errors );
-		$msg  = $this->highlight( $msg );
-		$time = $this->_TIME_FAIL;
-
-	} else {
-		$msg  = _AM_WEBPHOTO_GPERMUPDATED;
-		$time = $this->_TIME_SUCCESS;
-	}
-
-	if ( $this->_DEBUG && is_array($msgs) && count($msgs) ) {
-		$msg .= "<br />\n". implode( "<br />\n", $msgs );
-		$time = $this->_TIME_DEBUG;
-	}
-
-	redirect_header( $this->_THIS_URL , $time , $msg );
-	exit() ;
-}
-
-//---------------------------------------------------------
-// form
-//---------------------------------------------------------
-function build_form()
-{
-	return $this->_form_class->build_form( $this->_THIS_FCT );
-}
-
-// --- class end ---
-}
-
-?>

@@ -12,19 +12,19 @@
 // header_file.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header_file.php' );
-webphoto_include_once( 'class/main/view_playlist.php' );
+webphoto_include_once('main/header_file.php');
+webphoto_include_once('class/main/view_playlist.php');
 
 //=========================================================
 // main
 //=========================================================
-$webphoto_manage =& webphoto_main_view_playlist::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$webphoto_manage = webphoto_main_view_playlist::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $webphoto_manage->main();
 exit();
-
-?>

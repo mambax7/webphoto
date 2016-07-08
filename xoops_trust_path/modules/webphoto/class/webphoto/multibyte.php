@@ -6,7 +6,9 @@
 // 2009-01-10 K.OHWADA
 //=========================================================
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_multibyte
@@ -15,33 +17,31 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_multibyte extends webphoto_lib_multibyte
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_multibyte()
-{
-	$this->webphoto_lib_multibyte();
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct()
+    {
+        parent::__construct();
 
-	$xoops_class =& webphoto_xoops_base::getInstance();
-	$is_japanese =  $xoops_class->is_japanese( _C_WEBPHOTO_JPAPANESE ) ;
+        $xoops_class = webphoto_xoops_base::getInstance();
+        $is_japanese = $xoops_class->is_japanese(_C_WEBPHOTO_JPAPANESE);
 
-	$this->set_is_japanese( $is_japanese );
-	$this->set_ja_kuten(   _WEBPHOTO_JA_KUTEN );
-	$this->set_ja_dokuten( _WEBPHOTO_JA_DOKUTEN );
-	$this->set_ja_period(  _WEBPHOTO_JA_PERIOD );
-	$this->set_ja_comma(   _WEBPHOTO_JA_COMMA );
+        $this->set_is_japanese($is_japanese);
+        $this->set_ja_kuten(_WEBPHOTO_JA_KUTEN);
+        $this->set_ja_dokuten(_WEBPHOTO_JA_DOKUTEN);
+        $this->set_ja_period(_WEBPHOTO_JA_PERIOD);
+        $this->set_ja_comma(_WEBPHOTO_JA_COMMA);
+    }
+
+    public static function getInstance()
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_multibyte();
+        }
+        return $instance;
+    }
+
+    // --- class end ---
 }
-
-function &getInstance()
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_multibyte();
-	}
-	return $instance;
-}
-
-// --- class end ---
-}
-
-?>

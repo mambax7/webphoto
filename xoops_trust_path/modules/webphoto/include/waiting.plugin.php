@@ -19,38 +19,35 @@
 // $MY_DIRNAME WEBPHOTO_TRUST_PATH are set by caller
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
-include_once WEBPHOTO_TRUST_PATH.'/include/header.php';
+include_once WEBPHOTO_TRUST_PATH . '/include/header.php';
 
-webphoto_include_once( 'class/inc/waiting.php' , $MY_DIRNAME );
+webphoto_include_once('class/inc/waiting.php', $MY_DIRNAME);
 
 //=========================================================
 // search functions
 //=========================================================
 // --- eval begin ---
-eval( '
+eval('
 
-function b_waiting_'.$MY_DIRNAME.'()
+function b_waiting_' . $MY_DIRNAME . '()
 {
-	return webphoto_waiting_base( "'.$MY_DIRNAME.'" ) ;
+    return webphoto_waiting_base( "' . $MY_DIRNAME . '" ) ;
 }
 
-' );
+');
 // --- eval end ---
 
 // === function begin ===
-if( !function_exists( 'webphoto_waiting_base' ) ) 
-{
+if (!function_exists('webphoto_waiting_base')) {
+    function webphoto_waiting_base($dirname)
+    {
+        $inc_class = webphoto_inc_waiting::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+        return $inc_class->waiting();
+    }
 
-function webphoto_waiting_base( $dirname )
-{
-	$inc_class =& webphoto_inc_waiting::getSingleton( 
-		$dirname, WEBPHOTO_TRUST_DIRNAME );
-	return $inc_class->waiting();
+    // === function end ===
 }
-
-// === function end ===
-}
-
-?>

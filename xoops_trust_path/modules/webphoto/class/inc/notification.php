@@ -22,7 +22,9 @@
 // used use_pathinfo
 //---------------------------------------------------------
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_inc_notification
@@ -30,88 +32,85 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 // Fatal error: Call to undefined method webphoto_inc_base_ini()
 class webphoto_inc_notification extends webphoto_inc_base_ini
 {
-	var $_uri_class;
+    public $_uri_class;
 
-	var $_INDEX_URL ;
+    public $_INDEX_URL;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_inc_notification( $dirname , $trust_dirname )
-{
-	$this->webphoto_inc_base_ini();
-	$this->init_base_ini( $dirname , $trust_dirname );
-	$this->init_handler( $dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct();
+        $this->init_base_ini($dirname, $trust_dirname);
+        $this->init_handler($dirname);
 
-	$this->_INDEX_URL = $this->_MODULE_URL .'/index.php';
+        $this->_INDEX_URL = $this->_MODULE_URL . '/index.php';
 
-	$this->_uri_class =& webphoto_inc_uri::getSingleton( $dirname );
+        $this->_uri_class = webphoto_inc_uri::getSingleton($dirname);
+    }
+
+    public static function getSingleton($dirname, $trust_dirname)
+    {
+        static $singletons;
+        if (!isset($singletons[$dirname])) {
+            $singletons[$dirname] = new webphoto_inc_notification($dirname, $trust_dirname);
+        }
+        return $singletons[$dirname];
+    }
+
+    //---------------------------------------------------------
+    // public
+    //---------------------------------------------------------
+    public function notify($category, $id)
+    {
+        $info = array();
+
+        switch ($category) {
+            case 'global':
+                $info['name'] = '';
+                $info['url']  = '';
+                break;
+
+            case 'category':
+                $info['name'] = $this->_get_cat_title($id);
+                $info['url']  = $this->_get_url($category, $id);
+                break;
+
+            case 'photo':
+                $info['name'] = $this->_get_item_title($id);
+                $info['url']  = $this->_get_url($category, $id);
+                break;
+        }
+
+        return $info;
+    }
+
+    public function _get_url($category, $id)
+    {
+        return $this->_uri_claas->build_full_uri_mode_param($category, $id);
+    }
+
+    //---------------------------------------------------------
+    // handler
+    //---------------------------------------------------------
+    public function _get_item_title($item_id)
+    {
+        $row = $this->get_item_row_by_id($item_id);
+        if (isset($row['item_title'])) {
+            return $row['item_title'];
+        }
+        return false;
+    }
+
+    public function _get_cat_title($cat_id)
+    {
+        $row = $this->get_cat_row_by_id($cat_id);
+        if (isset($row['cat_title'])) {
+            return $row['cat_title'];
+        }
+        return false;
+    }
+
+    // --- class end ---
 }
-
-function &getSingleton( $dirname , $trust_dirname )
-{
-	static $singletons;
-	if ( !isset( $singletons[ $dirname ] ) ) {
-		$singletons[ $dirname ] = new webphoto_inc_notification( $dirname , $trust_dirname );
-	}
-	return $singletons[ $dirname ];
-}
-
-//---------------------------------------------------------
-// public
-//---------------------------------------------------------
-function notify( $category, $id )
-{
-	$info = array();
-
-	switch ( $category )
-	{
-		case 'global':
-			$info['name'] = '';
-			$info['url']  = '';
-			break;
-
-		case 'category':
-			$info['name'] = $this->_get_cat_title( $id );
-			$info['url']  = $this->_get_url( $category, $id ) ;
-			break;
-
-		case 'photo':
-			$info['name'] = $this->_get_item_title( $id );
-			$info['url']  = $this->_get_url( $category, $id ) ;
-			break;
-	}
-
-	return $info;
-}
-
-function _get_url( $category, $id )
-{
-	return $this->_uri_claas->build_full_uri_mode_param( $category, $id );
-}
-
-//---------------------------------------------------------
-// handler
-//---------------------------------------------------------
-function _get_item_title( $item_id )
-{
-	$row = $this->get_item_row_by_id( $item_id );
-	if ( isset( $row['item_title'] ) ) {
-		return  $row['item_title'];
-	}
-	return false;
-}
-
-function _get_cat_title( $cat_id )
-{
-	$row = $this->get_cat_row_by_id( $cat_id );
-	if ( isset( $row['cat_title'] ) ) {
-		return  $row['cat_title'];
-	}
-	return false;
-}
-
-// --- class end ---
-}
-
-?>

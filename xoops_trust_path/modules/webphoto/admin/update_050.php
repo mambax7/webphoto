@@ -12,23 +12,23 @@
 // class/edit/item_create.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'admin/header.php' );
-webphoto_include_once( 'class/handler/player_handler.php' );
-webphoto_include_once( 'class/handler/mime_handler.php' );
-webphoto_include_once( 'class/webphoto/mime.php' );
-webphoto_include_once( 'class/edit/item_create.php' );
-webphoto_include_once( 'class/admin/update_050.php' );
+webphoto_include_once('admin/header.php');
+webphoto_include_once('class/handler/player_handler.php');
+webphoto_include_once('class/handler/mime_handler.php');
+webphoto_include_once('class/webphoto/mime.php');
+webphoto_include_once('class/edit/item_create.php');
+webphoto_include_once('class/admin/update_050.php');
 
 //=========================================================
 // main
 //=========================================================
-$manager =& webphoto_admin_update_050::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manager = webphoto_admin_update_050::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manager->main();
 exit();
-
-?>

@@ -18,40 +18,40 @@
 // class/edit/xxx
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header.php' );
-webphoto_include_once( 'class/xoops/user.php' );
-webphoto_include_once( 'class/lib/gtickets.php' );
-webphoto_include_once( 'class/lib/element.php' );
-webphoto_include_once( 'class/lib/form.php' );
-webphoto_include_once( 'class/lib/mail.php' );
-webphoto_include_once( 'class/handler/mime_handler.php' );
-webphoto_include_once( 'class/handler/user_handler.php' );
-webphoto_include_once( 'class/webphoto/mime.php' );
-webphoto_include_once( 'class/edit/item_create.php' );
-webphoto_include_once( 'class/edit/base.php' );
-webphoto_include_once( 'class/edit/form.php' );
-webphoto_include_once( 'class/edit/icon_build.php' );
-webphoto_include_once( 'class/edit/mail_register_form.php' );
-webphoto_include_once( 'class/main/mail_register.php' );
+webphoto_include_once('main/header.php');
+webphoto_include_once('class/xoops/user.php');
+webphoto_include_once('class/lib/gtickets.php');
+webphoto_include_once('class/lib/element.php');
+webphoto_include_once('class/lib/form.php');
+webphoto_include_once('class/lib/mail.php');
+webphoto_include_once('class/handler/mime_handler.php');
+webphoto_include_once('class/handler/user_handler.php');
+webphoto_include_once('class/webphoto/mime.php');
+webphoto_include_once('class/edit/item_create.php');
+webphoto_include_once('class/edit/base.php');
+webphoto_include_once('class/edit/form.php');
+webphoto_include_once('class/edit/icon_build.php');
+webphoto_include_once('class/edit/mail_register_form.php');
+webphoto_include_once('class/main/mail_register.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_main_mail_register::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_main_mail_register::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 
 // exit if execute edit
 $manage->check_action();
 
-include( XOOPS_ROOT_PATH.'/header.php' ) ;
+include(XOOPS_ROOT_PATH . '/header.php');
 
 $manage->print_form();
 
-include( XOOPS_ROOT_PATH.'/footer.php' ) ;
+include(XOOPS_ROOT_PATH . '/footer.php');
 exit();
-
-?>

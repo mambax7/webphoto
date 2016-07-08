@@ -14,98 +14,105 @@
 // typo _allow_in_not_has_htmll
 //---------------------------------------------------------
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_editor_base
 //=========================================================
 class webphoto_editor_base
 {
-	var $_allow_in_not_has_html = false;
-	var $_show_display_options  = false;
-	var $_display_html   = 0 ;
-	var $_display_smiley = 0 ;
-	var $_display_xcode  = 0 ;
-	var $_display_image  = 0 ;
-	var $_display_br     = 0 ;
+    public $_allow_in_not_has_html = false;
+    public $_show_display_options  = false;
+    public $_display_html          = 0;
+    public $_display_smiley        = 0;
+    public $_display_xcode         = 0;
+    public $_display_image         = 0;
+    public $_display_br            = 0;
 
-function webphoto_editor_base()
-{
-	// dummy
-}
+    public function __construct()
+    {
+        // dummy
+    }
 
-function set_allow_in_not_has_html( $val )
-{
-	$this->_allow_in_not_has_html = (bool)$val ;
-}
-function set_show_display_options( $val )
-{
-	$this->_show_display_options = (bool)$val ;
-}
-function set_display_html( $val )
-{
-	$this->_display_html = intval($val) ;
-}
-function set_display_smiley( $val )
-{
-	$this->_display_smiley = intval($val) ;
-}
-function set_display_xcode( $val )
-{
-	$this->_display_xcode = intval($val) ;
-}
-function set_display_image( $val )
-{
-	$this->_display_image = intval($val) ;
-}
-function set_display_br( $val )
-{
-	$this->_display_br = intval($val) ;
-}
+    public function set_allow_in_not_has_html($val)
+    {
+        $this->_allow_in_not_has_html = (bool)$val;
+    }
 
-function allow_in_not_has_html()
-{
-// typo
-	return $this->_allow_in_not_has_html ;
-}
+    public function set_show_display_options($val)
+    {
+        $this->_show_display_options = (bool)$val;
+    }
 
-function show_display_options()
-{
-	return $this->_show_display_options; 
-}
+    public function set_display_html($val)
+    {
+        $this->_display_html = (int)$val;
+    }
 
-function display_options()
-{
-	$arr = array( 
-		'html'   => $this->_display_html, 
-		'smiley' => $this->_display_smiley, 
-		'xcode'  => $this->_display_xcode, 
-		'image'  => $this->_display_image, 
-		'br'     => $this->_display_br 
-	);
-	return $arr;
-}
+    public function set_display_smiley($val)
+    {
+        $this->_display_smiley = (int)$val;
+    }
 
-function exists()
-{
-	return false;
-}
+    public function set_display_xcode($val)
+    {
+        $this->_display_xcode = (int)$val;
+    }
 
-function build_js()
-{
-	return null;
-}
+    public function set_display_image($val)
+    {
+        $this->_display_image = (int)$val;
+    }
 
-function build_textarea( $id, $name, $value, $rows, $cols )
-{
-	return null;
-}
+    public function set_display_br($val)
+    {
+        $this->_display_br = (int)$val;
+    }
 
-function sanitize( $str )
-{
-	return htmlspecialchars( $str, ENT_QUOTES );
-}
+    public function allow_in_not_has_html()
+    {
+        // typo
+        return $this->_allow_in_not_has_html;
+    }
 
-// --- class end ---
+    public function show_display_options()
+    {
+        return $this->_show_display_options;
+    }
+
+    public function display_options()
+    {
+        $arr = array(
+            'html'   => $this->_display_html,
+            'smiley' => $this->_display_smiley,
+            'xcode'  => $this->_display_xcode,
+            'image'  => $this->_display_image,
+            'br'     => $this->_display_br
+        );
+        return $arr;
+    }
+
+    public function exists()
+    {
+        return false;
+    }
+
+    public function build_js()
+    {
+        return null;
+    }
+
+    public function build_textarea($id, $name, $value, $rows, $cols)
+    {
+        return null;
+    }
+
+    public function sanitize($str)
+    {
+        return htmlspecialchars($str, ENT_QUOTES);
+    }
+
+    // --- class end ---
 }
-?>

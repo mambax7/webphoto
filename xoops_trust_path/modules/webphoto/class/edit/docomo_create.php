@@ -12,7 +12,9 @@
 // $trust_dirname
 //---------------------------------------------------------
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_edit_docomo_create
@@ -20,43 +22,41 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_edit_docomo_create extends webphoto_edit_base_create
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_edit_docomo_create( $dirname , $trust_dirname )
-{
-	$this->webphoto_edit_base_create( $dirname , $trust_dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
+    }
+
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_edit_docomo_create($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // create docomo
+    //---------------------------------------------------------
+    public function create_param($param)
+    {
+        $this->clear_msg_array();
+
+        if (!$this->is_video_docomo_ext($param['src_ext'])) {
+            return null;
+        }
+
+        // same file as cont
+        $docomo_param         = $param;
+        $docomo_param['path'] = '';    // null
+        $docomo_param['kind'] = _C_WEBPHOTO_FILE_KIND_VIDEO_DOCOMO;
+        $this->set_msg('create docomo');
+        return $docomo_param;
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname , $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_edit_docomo_create( $dirname , $trust_dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// create docomo
-//---------------------------------------------------------
-function create_param( $param )
-{
-	$this->clear_msg_array();
-
-	if ( ! $this->is_video_docomo_ext( $param['src_ext'] ) ) {
-		return null;
-	}
-
-// same file as cont
-	$docomo_param         = $param ;
-	$docomo_param['path'] = '' ;	// null
-	$docomo_param['kind'] = _C_WEBPHOTO_FILE_KIND_VIDEO_DOCOMO ;
-	$this->set_msg( 'create docomo' );
-	return $docomo_param ;
-}
-
-// --- class end ---
-}
-
-?>

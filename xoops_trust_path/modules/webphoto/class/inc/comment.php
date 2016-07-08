@@ -16,7 +16,9 @@
 // table_photo -> table_item
 //---------------------------------------------------------
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_inc_comment
@@ -24,39 +26,37 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_inc_comment extends webphoto_inc_base_ini
 {
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_inc_comment( $dirname , $trust_dirname )
-{
-	$this->webphoto_inc_base_ini();
-	$this->init_base_ini( $dirname , $trust_dirname );
-	$this->init_handler( $dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct();
+        $this->init_base_ini($dirname, $trust_dirname);
+        $this->init_handler($dirname);
+    }
+
+    public static function getSingleton($dirname, $trust_dirname)
+    {
+        static $singletons;
+        if (!isset($singletons[$dirname])) {
+            $singletons[$dirname] = new webphoto_inc_comment($dirname, $trust_dirname);
+        }
+        return $singletons[$dirname];
+    }
+
+    //---------------------------------------------------------
+    // public
+    //---------------------------------------------------------
+    public function update_photo_comments($item_id, $comments)
+    {
+        $sql = 'UPDATE ' . $this->prefix_dirname('item');
+        $sql .= ' SET ';
+        $sql .= 'item_comments=' . (int)$comments . ' ';
+        $sql .= 'WHERE item_id=' . (int)$item_id;
+
+        return $this->query($sql);
+    }
+
+    // --- class end ---
 }
-
-function &getSingleton( $dirname , $trust_dirname )
-{
-	static $singletons;
-	if ( !isset( $singletons[ $dirname ] ) ) {
-		$singletons[ $dirname ] = new webphoto_inc_comment( $dirname , $trust_dirname );
-	}
-	return $singletons[ $dirname ];
-}
-
-//---------------------------------------------------------
-// public
-//---------------------------------------------------------
-function update_photo_comments( $item_id, $comments )
-{
-	$sql  = 'UPDATE '. $this->prefix_dirname( 'item' );
-	$sql .= ' SET ';
-	$sql .= 'item_comments='. intval($comments) .' ';
-	$sql .= 'WHERE item_id='. intval($item_id);
-
-	return $this->query( $sql );
-}
-
-// --- class end ---
-}
-
-?>

@@ -16,7 +16,9 @@
 // webphoto_cmd_base
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_ffmpeg
@@ -24,173 +26,170 @@ if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 //=========================================================
 class webphoto_ffmpeg extends webphoto_cmd_base
 {
-	var $_ffmpeg_class ;
+    public $_ffmpeg_class;
 
-	var $_cfg_use_ffmpeg = false;
+    public $_cfg_use_ffmpeg = false;
 
-	var $_thumb_id = 0;
+    public $_thumb_id = 0;
 
-	var $_PLURAL_MAX    = _C_WEBPHOTO_VIDEO_THUMB_PLURAL_MAX ;
-	var $_PLURAL_SECOND = 0;
-	var $_PLURAL_FIRST  = 0;
-	var $_PLURAL_OFFSET = 1;
+    public $_PLURAL_MAX    = _C_WEBPHOTO_VIDEO_THUMB_PLURAL_MAX;
+    public $_PLURAL_SECOND = 0;
+    public $_PLURAL_FIRST  = 0;
+    public $_PLURAL_OFFSET = 1;
 
-	var $_SINGLE_SECOND = 1;
+    public $_SINGLE_SECOND = 1;
 
-	var $_THUMB_PREFIX = _C_WEBPHOTO_VIDEO_THUMB_PREFIX ;	// tmp_ffmpeg_
+    public $_THUMB_PREFIX = _C_WEBPHOTO_VIDEO_THUMB_PREFIX;   // tmp_ffmpeg_
 
-	var $_CMD_FFMPEG = 'ffmpeg';
+    public $_CMD_FFMPEG = 'ffmpeg';
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_ffmpeg( $dirname, $trust_dirname )
-{
-	$this->webphoto_cmd_base( $dirname, $trust_dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
 
-	$this->_cfg_use_ffmpeg = $this->_config_class->get_by_name( 'use_ffmpeg' );
-	$cfg_ffmpegpath        = $this->_config_class->get_dir_by_name( 'ffmpegpath' );
+        $this->_cfg_use_ffmpeg = $this->_config_class->get_by_name('use_ffmpeg');
+        $cfg_ffmpegpath        = $this->_config_class->get_dir_by_name('ffmpegpath');
 
-	$this->_ffmpeg_class =& webphoto_lib_ffmpeg::getInstance();
-	$this->_ffmpeg_class->set_tmp_path( $this->_TMP_DIR );
-	$this->_ffmpeg_class->set_cmd_path( $cfg_ffmpegpath );
-	$this->_ffmpeg_class->set_ext( $this->_JPEG_EXT );
-	$this->_ffmpeg_class->set_flag_chmod( true );
+        $this->_ffmpeg_class = webphoto_lib_ffmpeg::getInstance();
+        $this->_ffmpeg_class->set_tmp_path($this->_TMP_DIR);
+        $this->_ffmpeg_class->set_cmd_path($cfg_ffmpegpath);
+        $this->_ffmpeg_class->set_ext($this->_JPEG_EXT);
+        $this->_ffmpeg_class->set_flag_chmod(true);
 
-	$this->set_debug_by_ini_name( $this->_ffmpeg_class );
+        $this->set_debug_by_ini_name($this->_ffmpeg_class);
+    }
+
+    public static function getInstance($dirname = null, $trust_dirname = null)
+    {
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new webphoto_ffmpeg($dirname, $trust_dirname);
+        }
+        return $instance;
+    }
+
+    //---------------------------------------------------------
+    // duration
+    //---------------------------------------------------------
+    public function get_video_info($file)
+    {
+        if (!$this->_cfg_use_ffmpeg) {
+            return null;
+        }
+        return $this->_ffmpeg_class->get_video_info($file);
+    }
+
+    //---------------------------------------------------------
+    // create jpeg
+    //---------------------------------------------------------
+    public function create_jpeg($src_file, $dst_file)
+    {
+        if (!$this->_cfg_use_ffmpeg) {
+            return 0;
+        }
+
+        $this->_ffmpeg_class->create_single_thumb($src_file, $dst_file, $this->_SINGLE_SECOND);
+        if (!is_file($dst_file)) {
+            return -1;
+        }
+
+        return 1;
+    }
+
+    //---------------------------------------------------------
+    // plural images
+    //---------------------------------------------------------
+    public function create_plural_images($id, $file)
+    {
+        if (!$this->_cfg_use_ffmpeg) {
+            return false;
+        }
+
+        $this->_ffmpeg_class->set_prefix($this->build_ffmpeg_prefix($id));
+        $this->_ffmpeg_class->set_offset($this->_PLURAL_OFFSET);
+
+        $count = $this->_ffmpeg_class->create_thumbs($file, $this->_PLURAL_MAX, $this->_PLURAL_SECOND);
+
+        if ($count == 0) {
+            $this->set_error($this->_ffmpeg_class->get_msg_array());
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public function build_ffmpeg_prefix($id)
+    {
+        // prefix_123_
+        $str = $this->_THUMB_PREFIX . $id . '_';
+        return $str;
+    }
+
+    // for misc_form
+    public function build_thumb_name($id, $num)
+    {
+        // prefix_123_456.jpg
+        $str = $this->build_thumb_node($id, $num) . '.' . $this->_JPEG_EXT;
+        return $str;
+    }
+
+    public function build_thumb_node($id, $num)
+    {
+        // prefix_123_456
+        $str = $this->build_ffmpeg_prefix($id) . $num;
+        return $str;
+    }
+
+    //---------------------------------------------------------
+    // flash
+    //---------------------------------------------------------
+    public function create_flash($src_file, $dst_file, $option = null)
+    {
+        if (empty($option)) {
+            $option = $this->get_cmd_option($src_file, $this->_CMD_FFMPEG);
+        }
+
+        $ret = $this->_ffmpeg_class->create_flash($src_file, $dst_file, $option);
+        if (!$ret) {
+            $this->set_error($this->_ffmpeg_class->get_msg_array());
+        }
+        return $ret;
+    }
+
+    //---------------------------------------------------------
+    // mp3
+    //---------------------------------------------------------
+    public function create_mp3($src_file, $dst_file, $option = null)
+    {
+        if (empty($option)) {
+            $option = $this->get_cmd_option($src_file, $this->_CMD_FFMPEG);
+        }
+
+        $ret = $this->_ffmpeg_class->create_mp3($src_file, $dst_file, $option);
+        if (!$ret) {
+            $this->set_error($this->_ffmpeg_class->get_msg_array());
+        }
+        return $ret;
+    }
+
+    //---------------------------------------------------------
+    // wav
+    //---------------------------------------------------------
+    public function create_wav($src_file, $dst_file, $option = null)
+    {
+        if (empty($option)) {
+            $option = $this->get_cmd_option($src_file, $this->_CMD_FFMPEG);
+        }
+
+        $ret = $this->_ffmpeg_class->create_wav($src_file, $dst_file, $option);
+        if (!$ret) {
+            $this->set_error($this->_ffmpeg_class->get_msg_array());
+        }
+        return $ret;
+    }
+
+    // --- class end ---
 }
-
-function &getInstance( $dirname, $trust_dirname )
-{
-	static $instance;
-	if (!isset($instance)) {
-		$instance = new webphoto_ffmpeg( $dirname, $trust_dirname );
-	}
-	return $instance;
-}
-
-//---------------------------------------------------------
-// duration
-//---------------------------------------------------------
-function get_video_info( $file )
-{
-	if ( !$this->_cfg_use_ffmpeg ) {
-		return null;
-	}
-	return $this->_ffmpeg_class->get_video_info( $file );
-}
-
-//---------------------------------------------------------
-// create jpeg
-//---------------------------------------------------------
-function create_jpeg( $src_file, $dst_file )
-{
-	if ( ! $this->_cfg_use_ffmpeg ) {
-		return 0;
-	}
-
-	$this->_ffmpeg_class->create_single_thumb( $src_file, $dst_file, $this->_SINGLE_SECOND );
-	if ( ! is_file($dst_file) ) {
-		return -1;
-	}
-
-	return 1;
-}
-
-//---------------------------------------------------------
-// plural images
-//---------------------------------------------------------
-function create_plural_images( $id, $file )
-{
-	if ( !$this->_cfg_use_ffmpeg ) {
-		return false;
-	}
-
-	$this->_ffmpeg_class->set_prefix( $this->build_ffmpeg_prefix( $id ) );
-	$this->_ffmpeg_class->set_offset( $this->_PLURAL_OFFSET );
-
-	$count = $this->_ffmpeg_class->create_thumbs( 
-		$file, $this->_PLURAL_MAX, $this->_PLURAL_SECOND );
-
-	if ( $count == 0 ) {
-		$this->set_error( $this->_ffmpeg_class->get_msg_array() );
-		return -1;
-	}
-
-	return 1;
-}
-
-function build_ffmpeg_prefix( $id )
-{
-// prefix_123_
-	$str = $this->_THUMB_PREFIX . $id . '_';
-	return $str;
-}
-
-// for misc_form
-function build_thumb_name( $id, $num )
-{
-// prefix_123_456.jpg
-	$str = $this->build_thumb_node( $id, $num ) .'.'. $this->_JPEG_EXT ;
-	return $str;
-}
-
-function build_thumb_node( $id, $num )
-{
-// prefix_123_456
-	$str = $this->build_ffmpeg_prefix( $id ) . $num ;
-	return $str;
-}
-
-//---------------------------------------------------------
-// flash
-//---------------------------------------------------------
-function create_flash( $src_file, $dst_file, $option=null )
-{
-	if ( empty($option) ) {
-		$option = $this->get_cmd_option( $src_file, $this->_CMD_FFMPEG );
-	}
-
-	$ret = $this->_ffmpeg_class->create_flash( $src_file, $dst_file, $option );
-	if ( !$ret ) {
-		$this->set_error( $this->_ffmpeg_class->get_msg_array() );
-	}
-	return $ret;
-}
-
-//---------------------------------------------------------
-// mp3
-//---------------------------------------------------------
-function create_mp3( $src_file, $dst_file, $option=null )
-{
-	if ( empty($option) ) {
-		$option = $this->get_cmd_option( $src_file, $this->_CMD_FFMPEG );
-	}
-
-	$ret = $this->_ffmpeg_class->create_mp3( $src_file, $dst_file, $option );
-	if ( !$ret ) {
-		$this->set_error( $this->_ffmpeg_class->get_msg_array() );
-	}
-	return $ret;
-}
-
-//---------------------------------------------------------
-// wav
-//---------------------------------------------------------
-function create_wav( $src_file, $dst_file, $option=null )
-{
-	if ( empty($option) ) {
-		$option = $this->get_cmd_option( $src_file, $this->_CMD_FFMPEG );
-	}
-
-	$ret = $this->_ffmpeg_class->create_wav( $src_file, $dst_file, $option );
-	if ( !$ret ) {
-		$this->set_error( $this->_ffmpeg_class->get_msg_array() );
-	}
-	return $ret;
-}
-
-// --- class end ---
-}
-
-?>

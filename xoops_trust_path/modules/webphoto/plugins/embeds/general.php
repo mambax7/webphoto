@@ -6,7 +6,9 @@
 // 2008-11-16 K.OHWADA
 //=========================================================
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_embed_general
@@ -14,11 +16,10 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_embed_general extends webphoto_embed_base
 {
 
-function webphoto_embed_general()
-{
-	$this->webphoto_embed_base( 'general' );
-}
+    public function __construct()
+    {
+        parent::__construct('general');
+    }
 
-// --- class end ---
+    // --- class end ---
 }
-?>

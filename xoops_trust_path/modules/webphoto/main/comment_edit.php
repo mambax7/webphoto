@@ -7,6 +7,4 @@
 //=========================================================
 
 // include '../../mainfile.php';
-include XOOPS_ROOT_PATH.'/include/comment_edit.php';
-
-?>
+include XOOPS_ROOT_PATH . '/include/comment_edit.php';

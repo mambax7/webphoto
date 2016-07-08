@@ -14,21 +14,21 @@
 // header_file.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header_file.php' );
-webphoto_include_once( 'class/lib/browser.php' );
-webphoto_include_once( 'class/lib/download_filename.php' );
-webphoto_include_once( 'class/main/download.php' );
+webphoto_include_once('main/header_file.php');
+webphoto_include_once('class/lib/browser.php');
+webphoto_include_once('class/lib/download_filename.php');
+webphoto_include_once('class/main/download.php');
 
 //=========================================================
 // main
 //=========================================================
-$webphoto_manage =& webphoto_main_download::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$webphoto_manage = webphoto_main_download::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $webphoto_manage->main();
 exit();
-
-?>

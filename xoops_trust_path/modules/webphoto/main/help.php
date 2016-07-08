@@ -14,25 +14,25 @@
 // use main()
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header.php' );
-webphoto_include_once( 'class/main/help.php' );
+webphoto_include_once('main/header.php');
+webphoto_include_once('class/main/help.php');
 
 //=========================================================
 // main
 //=========================================================
-$manage =& webphoto_main_help::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manage = webphoto_main_help::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 
-$xoopsOption['template_main'] = WEBPHOTO_DIRNAME.'_main_help.html' ;
-include XOOPS_ROOT_PATH . '/header.php' ;
+$xoopsOption['template_main'] = WEBPHOTO_DIRNAME . '_main_help.html';
+include XOOPS_ROOT_PATH . '/header.php';
 
-$xoopsTpl->assign( $manage->main() ) ;
+$xoopsTpl->assign($manage->main());
 
-include XOOPS_ROOT_PATH .'/footer.php' ;
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();
-
-?>

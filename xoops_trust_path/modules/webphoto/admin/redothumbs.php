@@ -18,25 +18,25 @@
 // added exif.php
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // xoops system files
 //---------------------------------------------------------
-include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php' ;
+include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'admin/header_edit.php' );
-webphoto_include_once( 'class/admin/redo_form.php' );
-webphoto_include_once( 'class/admin/redothumbs.php' );
+webphoto_include_once('admin/header_edit.php');
+webphoto_include_once('class/admin/redo_form.php');
+webphoto_include_once('class/admin/redothumbs.php');
 
 //=========================================================
 // main
 //=========================================================
-$manager =& webphoto_admin_redothumbs::getInstance( WEBPHOTO_DIRNAME , WEBPHOTO_TRUST_DIRNAME );
+$manager = webphoto_admin_redothumbs::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manager->main();
 exit();
-
-?>

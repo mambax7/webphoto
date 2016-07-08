@@ -6,7 +6,9 @@
 // 2008-10-01 K.OHWADA
 //=========================================================
 
-if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_embed_vimeo
@@ -23,38 +25,36 @@ if ( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 class webphoto_embed_vimeo extends webphoto_embed_base
 {
 
-function webphoto_embed_vimeo()
-{
-	$this->webphoto_embed_base( 'vimeo' );
-	$this->set_url( 'http://www.vimeo.com/' );
-	$this->set_sample( '192696' );
-}
+    public function __construct()
+    {
+        parent::__construct('vimeo');
+        $this->set_url('http://www.vimeo.com/');
+        $this->set_sample('192696');
+    }
 
-function embed( $src, $width, $height )
-{
-	$movie = 'http://www.vimeo.com/moogaloop.swf?clip_id='.$src.'&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1';
-	$extra = 'allowfullscreen="true" allowscriptaccess="always"';
- 
-	$str  = $this->build_object_begin( $width, $height );
-	$str .= $this->build_param( 'allowfullscreen',   'true' );
-	$str .= $this->build_param( 'allowscriptaccess', 'always' );
-	$str .= $this->build_param( 'movie', $movie );
-	$str .= $this->build_embed_flash( $movie, $width, $height, $extra );
-	$str .= $this->build_object_end();
-	return $str;
-}
+    public function embed($src, $width, $height)
+    {
+        $movie = 'http://www.vimeo.com/moogaloop.swf?clip_id=' . $src . '&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1';
+        $extra = 'allowfullscreen="true" allowscriptaccess="always"';
 
-function link( $src )
-{
-	return $this->build_link( $src );
-}
+        $str = $this->build_object_begin($width, $height);
+        $str .= $this->build_param('allowfullscreen', 'true');
+        $str .= $this->build_param('allowscriptaccess', 'always');
+        $str .= $this->build_param('movie', $movie);
+        $str .= $this->build_embed_flash($movie, $width, $height, $extra);
+        $str .= $this->build_object_end();
+        return $str;
+    }
 
-function desc()
-{
-	return $this->build_desc();
-}
+    public function link($src)
+    {
+        return $this->build_link($src);
+    }
 
-// --- class end ---
-}
+    public function desc()
+    {
+        return $this->build_desc();
+    }
 
-?>
+    // --- class end ---
+}

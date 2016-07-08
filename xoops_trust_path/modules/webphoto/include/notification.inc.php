@@ -21,42 +21,40 @@
 // $MY_DIRNAME WEBPHOTO_TRUST_PATH are set by caller
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
-include_once WEBPHOTO_TRUST_PATH.'/include/header.php';
+include_once WEBPHOTO_TRUST_PATH . '/include/header.php';
 
-webphoto_include_once( 'class/inc/uri.php' ,          $MY_DIRNAME );
-webphoto_include_once( 'class/inc/notification.php' , $MY_DIRNAME );
+webphoto_include_once('class/inc/uri.php', $MY_DIRNAME);
+webphoto_include_once('class/inc/notification.php', $MY_DIRNAME);
 
 //=========================================================
 // notification functions
 //=========================================================
 // --- eval begin ---
-eval( '
+eval('
 
-function '.$MY_DIRNAME.'_notify_iteminfo( $category, $item_id )
+function ' . $MY_DIRNAME . '_notify_iteminfo( $category, $item_id )
 {
-	return webphoto_notify_iteminfo_base( "'.$MY_DIRNAME.'" , $category, $item_id ) ;
+    return webphoto_notify_iteminfo_base( "' . $MY_DIRNAME . '" , $category, $item_id ) ;
 }
 
-' );
+');
 // --- eval end ---
 
 // === notify_iteminfo_base begin ===
-if( !function_exists( 'webphoto_notify_iteminfo_base' ) ) 
-{
+if (!function_exists('webphoto_notify_iteminfo_base')) {
 
-//---------------------------------------------------------
-// function
-//---------------------------------------------------------
-function webphoto_notify_iteminfo_base( $dirname, $category, $item_id )
-{
-	$inc_class =& webphoto_inc_notification::getSingleton( 
-		$dirname, WEBPHOTO_TRUST_DIRNAME );
-	return $inc_class->notify( $category, $item_id );
+    //---------------------------------------------------------
+    // function
+    //---------------------------------------------------------
+    function webphoto_notify_iteminfo_base($dirname, $category, $item_id)
+    {
+        $inc_class = webphoto_inc_notification::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+        return $inc_class->notify($category, $item_id);
+    }
+
+    // === notify_iteminfo_base end ===
 }
-
-// === notify_iteminfo_base end ===
-}
-
-?>

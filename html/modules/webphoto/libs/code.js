@@ -3,8 +3,7 @@
  * ========================================================
  */
 
-function webphoto_code_focus( box )
-{
-	box.focus();
-	box.select();
+function webphoto_code_focus(box) {
+    box.focus();
+    box.select();
 }

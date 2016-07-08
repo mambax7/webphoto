@@ -25,22 +25,22 @@ This is the album module which manages photos and videos.
 
 * Changes *
 1. timeline
-(1) supoort before 1970 (unixtime) 
+(1) supoort before 1970 (unixtime)
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1186&forum=13
 
 (2) add century and day to unit
 (3) show timeline in category
-(4) When move to a large time from a category, the information on a category is succeeded. 
+(4) When move to a large time from a category, the information on a category is succeeded.
 
 2. map
-(1) When move to a large map from a category, the information on a category is succeeded. 
+(1) When move to a large map from a category, the information on a category is succeeded.
 
 
 * Update *
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -80,17 +80,17 @@ http://www.php.net/manual/en/migration53.deprecated.php
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1189&forum=13
 
 3. Global Permissions on install
-(1) to Registered Users, allow Post (need approval) and othes. 
-(2) to Anonymous Users, allow Module Access. 
+(1) to Registered Users, allow Post (need approval) and othes.
+(2) to Anonymous Users, allow Module Access.
 
 4. Tag management
-in Item Management, the admin can edit all tags. 
+in Item Management, the admin can edit all tags.
 
 * Update *
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -133,11 +133,11 @@ This is the album module which manages photos and videos.
 
 * Changes *
 1. file download
-(1) download file by an original file name. 
+(1) download file by an original file name.
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1167&forum=13
 
 (2) image file show two mode, download and the image display.
-(3) add 'thumb' to the thumbnail file, 
+(3) add 'thumb' to the thumbnail file,
 because the thumbnail file has same name as media file
 
 2. Flash Player
@@ -147,8 +147,8 @@ because the thumbnail file has same name as media file
 3. Mail recive
 (1) support Gmail for POP server
 (2) support the platform dependent Japansese character
-(3) support the file name with space. 
-(3) Title is made from filename when there was no Subject. 
+(3) support the file name with space.
+(3) Title is made from filename when there was no Subject.
 (4) extend to 5 mail address.
 (5) use PEAR library
 
@@ -180,17 +180,17 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1167&forum=13
 6. PEAR library
 enclose the following
 at May, 2011
-(1) Net_Socket 1.0.10 
+(1) Net_Socket 1.0.10
 (2) Net_POP3 1.3.8
 (3) Mail_mime 1.8.1
-(4) Mail_mimeDecode 1.5.5 
+(4) Mail_mimeDecode 1.5.5
 
 
 * Update *
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -248,12 +248,12 @@ Since this version, Webphoto saves an original image.
 
 2.2 Thumbnail image
 (1) Webphoto converts from the media files into the JPEG image,
-and generates the thumbnail image. 
+and generates the thumbnail image.
 In old version, Webphoto not saved the JPEG image.
 Since this version, Webphoto saves the JPEG image.
 
-(2) In old version, Webphoto generated the thumbnail image 
-from the GIF image and the PNG image with the same format. 
+(2) In old version, Webphoto generated the thumbnail image
+from the GIF image and the PNG image with the same format.
 Since this version, Webphoto convertes to the JPEG image,
 and generates the thumbnail image.
 
@@ -282,14 +282,14 @@ changed 'Photo' to 'Photo Video Media'
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
 * Notice *
 In this version, I changed many files, for "Image file".
-Although there are no big problem, 
-but I think that there are any small problem. 
+Although there are no big problem,
+but I think that there are any small problem.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -304,12 +304,12 @@ This is the album module which manages photos and videos.
 1. suport windows
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1107&forum=13
 
-The following command can be operated in the windows OS. 
+The following command can be operated in the windows OS.
 imagemagick ffmpeg lame timidity xpdf java
 
 2. main.in option
 (1) added submit_detail_div_onoff
-in submit, "show detail" is turned "ON" by default. 
+in submit, "show detail" is turned "ON" by default.
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1113&forum=13
 
 (2) added upload_allowed_mimes
@@ -350,12 +350,12 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1116&forum=13
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
 * Special Thanks *
-Special thanks to the plugins of the video site. 
+Special thanks to the plugins of the video site.
 - http://www.how-to.tv/
 
 
@@ -367,7 +367,7 @@ Date:   2010-05-12
 This is the album module which manages photos and videos.
 
 * Changes *
-1. able to replace the template file of mail by preload 
+1. able to replace the template file of mail by preload
 
 2. bug fix
 (1) Fatal error in bin/retrieve.php
@@ -397,7 +397,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1105&forum=13
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -429,7 +429,7 @@ item_exif : Data too long
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -452,7 +452,7 @@ This is the album module which manages photos and videos.
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 
 
@@ -464,7 +464,7 @@ Date:   2010-02-06
 This is the album module which manages photos and videos.
 
 * Changes *
-1. Customize of view 
+1. Customize of view
 The admin can customize easily to show or hidden the map, the timeline and etc
 the map, the timeline and etc are made in component part.
 The admin can set  to show or hidden them with main.ini.
@@ -521,7 +521,7 @@ item_perm_level
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
 Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-(3) Execute "File Valid Check" of "Update" in webphoto's admin control, 
+(3) Execute "File Valid Check" of "Update" in webphoto's admin control,
   and cofirm whether or not necessary files are set.
 (4) Execute "Update" in webphoto's admin control
   set the action when click in detail page for the items which already exist
@@ -529,12 +529,12 @@ Please copy and overwrite in the directory which XOOPS correspond
 
 * Notice *
 In this version, I changed many files, for "Customize of view".
-Although there are no big problem, but I think that there are any small problem. 
+Although there are no big problem, but I think that there are any small problem.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
 * Special Thanks *
-Special thanks to the author of lightbox2 
+Special thanks to the author of lightbox2
 - http://www.lokeshdhakar.com/projects/lightbox2/
 
 
@@ -562,12 +562,12 @@ This feature is experimental.
 It make the area of the member limitation like the community of SNS for each of the modules and the categories.
 
 5. bug fix
-(1) Fatal error in "Rebuild Thumbnails" 
+(1) Fatal error in "Rebuild Thumbnails"
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=1054
 
 (2) Fatal error in "Notifications"
 (3) not show "Max file size" in the submit form.
-(4) not upload in the category form, when the image size is big 
+(4) not upload in the category form, when the image size is big
 
 6. Database structure
 (1) item table: add field item_perm_level
@@ -589,11 +589,11 @@ This is the album module which manages photos and videos.
 
 * Changes *
 1. added main.ini
-In old version, the internal status were set as PHP constant. 
+In old version, the internal status were set as PHP constant.
 In this version, there are able to be set as variable in each module
 
-It is read in following the order. 
-The last set value becomes effective. 
+It is read in following the order.
+The last set value becomes effective.
 (1) XOOPS_TRUST_PATH /include/main.ini
 (2) XOOPS_TRUST_PATH /preload/main.ini (if exists)
 (3) XOOPS_ROOT_PATH  /preload/main.ini (if exists)
@@ -606,16 +606,16 @@ The last set value becomes effective.
 (1) uploaded file
 (2) converted PDF
 
-5. in detail pgae, the screen size of the video in Flash Player is automatically adjusted. 
+5. in detail pgae, the screen size of the video in Flash Player is automatically adjusted.
 
-The screen size is decided in following the order. 
+The screen size is decided in following the order.
 (1) value of item table (if set)
 (2) value of flashvar table (if set)
 (3) the screen size is automatically adjusted to fit value of Flash Player,
 if value of file table (flash video) is set. (new)
 (4) value of Flash Player
 
-6. in submit page, the spin icon is displayed while uploading the file. 
+6. in submit page, the spin icon is displayed while uploading the file.
 
 7. in submit page, the admin can change the default of editor
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=1046
@@ -642,7 +642,7 @@ Please copy and overwrite in the directory which XOOPS correspond
 
 * Notice *
 In this version, I changed many files, because added main.ini.
-Although there are no big problem, but I think that there are any small problem. 
+Although there are no big problem, but I think that there are any small problem.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -656,15 +656,15 @@ This is the album module which manages photos and videos.
 * Changes *
 1. media file
 (1) added media files
-ai, eps, pct, psd, tif, wmf 
+ai, eps, pct, psd, tif, wmf
 
 (2) processing of image files
-convert to JPEG and create thumbnail, when submit image files. 
+convert to JPEG and create thumbnail, when submit image files.
 object: ai, bmp, eps, pct, psd, tif, wmf which are can not be show by WEB browser
 requirement: imagemagick is necessary
 
 (3) processing of audeo files
-convert to MP3 and play in mediaplayer.swf, when submit image files. 
+convert to MP3 and play in mediaplayer.swf, when submit image files.
 object: wav, mid
 requirement: for wav, lame is necessary
              for mid, lame and timidity are necessary
@@ -679,7 +679,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1033&forum=13
 (3) gap at bottom of map
 http://linux2.ohwada.net/modules/newbb/viewtopic.php?&topic_id=463&forum=11
 
-(4) player id is not correctly selected 
+(4) player id is not correctly selected
 
 3. Database structure
 (1) mime table: add field mime_kind, mime_option
@@ -752,7 +752,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=9&topic_id=988
 (1) show "Submitter List" when click "My Photos"
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=1001&forum=13
 
-(2) not show the description in edit form 
+(2) not show the description in edit form
 when editor field of item table is empty
 
 
@@ -997,7 +997,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=936
 (2) add the small image for timeline
 
 4. bug fix
-(1) cannot import from myalbum-P 
+(1) cannot import from myalbum-P
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=932
 
 (2) flash player becomes default in the user edit
@@ -1117,8 +1117,8 @@ define("_C_WEBPHOTO_JODCONVERTER_JAR", "/usr/local/java/jodconverter-2.2.1/lib/j
 
 * Notice *
 In this version, I changed program structure substantially.
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1151,7 +1151,7 @@ add plugins supported file kind
 - video
 
 5. Text file (txt)
-(1) extract the text content from the text file, 
+(1) extract the text content from the text file,
 and show it in 'text content' field.
 (2) limit 'text content' by 500 bytes.
 (3) search in 'text content'
@@ -1160,7 +1160,7 @@ and show it in 'text content' field.
 (1) require 'xpdf'
 http://www.foolabs.com/xpdf/
 (2) create the thumbnail from PDF file
-(3) extract the text content from the PDF file, 
+(3) extract the text content from the PDF file,
 and show it in 'text content' field.
 
 7. Bug fix
@@ -1182,11 +1182,11 @@ add field of table
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
   Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp.
-  the fields are added to the table automatically. 
+  the fields are added to the table automatically.
 
 
 * Notice for usage *
-1. Text file 
+1. Text file
 the character encoding is detected automatically.
 but it does not sometimes work out.
 you should enter the text in 'text content', if character garbage
@@ -1199,8 +1199,8 @@ please teach me.
 
 * Notice *
 In this version, I changed program structure substantially.
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1236,12 +1236,12 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?viewmode=flat&topic_id=905&fo
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
   Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp.
-  the fields are added to the table automatically. 
+  the fields are added to the table automatically.
 
 
 * Notice for usage *
 1. FCKeditor
-(1) Set XOOPS_ROOT_PATH /common/fckeditor 
+(1) Set XOOPS_ROOT_PATH /common/fckeditor
 http://xoops.peak.ne.jp/md/mydownloads/singlefile.php?lid=93
 
 (2) check "Use HTML" in "Global Permissions"
@@ -1252,8 +1252,8 @@ Moreover, you change "description" "HTML tags" "smiley icon" "XOOPS codes" "imag
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1270,7 +1270,7 @@ This is the album module which manages photos and videos.
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=893&forum=13
 
 (1) accedes to the permission of the parent category,
-when adding a new category. 
+when adding a new category.
 
 (2) changes the permission of the child categories,
 when changing a category
@@ -1294,9 +1294,9 @@ when changing a category
 The permission of the category acts independently with the parent category.
 In general make the permission of the category the same as the parent category.
 
-For example, 
+For example,
 when there is category B under category A,
-you set the permisson of category A that the guest can not read 
+you set the permisson of category A that the guest can not read
 and the permisson of category B that the guest can read,
 the guest can read the items which belongs to category B.
 
@@ -1313,8 +1313,8 @@ when you use the post premisson of the category and The download permission of t
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1354,7 +1354,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=890&forum=13
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
   Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-  the fields are added to the table automatically. 
+  the fields are added to the table automatically.
 
 
 =================================================
@@ -1367,7 +1367,7 @@ This is the album module which manages photos and videos.
 * Changes *
 1. Creation of Icon
 In old version, the icon was copied each item.
-In this version, the icon is used just as in images/exts directory. 
+In this version, the icon is used just as in images/exts directory.
 
 2. File Management System
 changed to use the file location in relative path from full path .
@@ -1401,12 +1401,12 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=835&forum=13
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
   Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-  the fields are added to the table automatically. 
+  the fields are added to the table automatically.
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1452,7 +1452,7 @@ http://linux.ohwada.jp/modules/newbb/viewtopic.php?topic_id=873&forum=13
 (2) added general
 the admin can submit HTML embed
 
-(3) added webphoto 
+(3) added webphoto
 the user quotes the video which is posted in other webphoto.
 
 (4) added width and height to youtube
@@ -1474,7 +1474,7 @@ changed figure to thumbnail in list
 (1) When you unzip the zip file, there are two directories html and xoops_trust_path.
   Please copy and overwrite in the directory which XOOPS correspond
 (2) Execute the module update in the admin cp
-  the fields are added to the table automatically. 
+  the fields are added to the table automatically.
 
 
 * Special Thanks *
@@ -1573,8 +1573,8 @@ please move files manually to match with new dirctory.
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1646,7 +1646,7 @@ in following type, play in this player.
 (2) in mp3 type, default (since v0.42)
 (3) in image type (jpg,gif,png), the admin can set
 
-7. add imagerotator.swf 
+7. add imagerotator.swf
 http://www.jeroenwijering.com/?item=JW_Image_Rotator
 
 use for playlist
@@ -1654,7 +1654,7 @@ use for playlist
 8. Playlist
 http://code.jeroenwijering.com/trac/wiki/Playlists3
 
-8.1 in mediaplayer.swf and imagerotator.swf, the admin can play the playlist 
+8.1 in mediaplayer.swf and imagerotator.swf, the admin can play the playlist
 
 8.2 There are two ways in the setting of the playlist.
 (1) specify the URL of the playlist.
@@ -1665,10 +1665,10 @@ http://code.jeroenwijering.com/trac/wiki/Playlists3
 (3-1) photo (jpg) medias/sample_photo/
 (3-2) music (mp3) medias/sample_music/
 
-9. Flash player variables 
+9. Flash player variables
 http://code.jeroenwijering.com/trac/wiki/Flashvars3
 
-(1) the admin can set variables for every media file 
+(1) the admin can set variables for every media file
 in swfobject.swf, mediaplayer.swf, imagerotator.swf
 (2) Only the size and the color are valid in swfobject.swf
 (3) the admin can set more than one pattern about the size and the color of the flash player in "player management".
@@ -1743,8 +1743,8 @@ please move files manually to match with new dirctory.
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1827,17 +1827,17 @@ This is the album module which manages photos and videos.
 1. Supported mobile phone: 2nd version
 1.1 Post from the mobile phone
 (1) Supported GPS
-this module sets GoogleMap, 
-when there is GPS information in the image or this message body. 
+this module sets GoogleMap,
+when there is GPS information in the image or this message body.
 (2) Supported i-phone
 
 1.2 View for the mobile phone
 (1) Show "Send URL to the mobile phone"
 (2) Show QR code with URL
-(3) Creat and show the small image (480~480) for the mobile phone
+(3) Creat and show the small image (480?~480) for the mobile phone
 
 1.3 Command for retrieveing mails
-The user sends email, 
+The user sends email,
 and then the server processes to post the image automatically.
 refer "Notice for usage"
 
@@ -1937,15 +1937,15 @@ fill the following at "Format for comment-integration" in d3forum module
 -----
 webphoto::WebphotoD3commentContent::webphoto
 -----
-First "webphoto" is the directory name in XOOPS_ROOT_PATH 
+First "webphoto" is the directory name in XOOPS_ROOT_PATH
 (you can change with the module duplication)
-Last "webphoto" is the directory name in XOOPS_TRUST_PATH 
+Last "webphoto" is the directory name in XOOPS_TRUST_PATH
 (you can NOT change)
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
@@ -1970,7 +1970,7 @@ This is the album module which manages photos and videos.
 (3) show the explanation to the user in "Help".
 
 1.2 View for the mobile phone
-(1) prepared about 240~320 pixel web page. i.php
+(1) prepared about 240?~320 pixel web page. i.php
 (2) the operation depends on the model of the mobile phone.
 refer "Notice for usage"
 
@@ -2036,7 +2036,7 @@ It is not desirably that preserve emails in the accessible area by the WEB brows
 Recommend to set to this out of the document route.
 
 2. Post by FTP
-Because http protocol has a time limit and file size limit, 
+Because http protocol has a time limit and file size limit,
 the user cannot upload the large file.
 This limitation is eased to use FTP.
 On the other hand, with the FTP, the user can access XOOPS files.
@@ -2046,13 +2046,13 @@ operate by the setting which the user cannot access XOOPS files.
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
 * Special Thanks *
-Referred mailbbs module about mobile phone . 
+Referred mailbbs module about mobile phone .
 - http://xoops.hypweb.net/modules/mailbbs/
 Special thanks to authors.
 
@@ -2095,7 +2095,7 @@ http://www.jeroenwijering.com/?item=JW_FLV_Media_Player
 (1) fatal error in RSS
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=818
 
-(2) 404 error with spinner40.gif 
+(2) 404 error with spinner40.gif
 http://linux.ohwada.jp/modules/newbb/viewtopic.php?forum=13&topic_id=818
 
 (3) typo
@@ -2171,13 +2171,13 @@ remove // at the head.
 
 
 * Notice *
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
 * Special Thanks *
-Referred informations in the internet about ffmpeg . 
+Referred informations in the internet about ffmpeg .
 Specifically, the following page was useful about getting duration time .
 - http://blog.ishiro.com/?p=182
 Special thanks to authors.
@@ -2231,7 +2231,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
 
 6. Implement
 (1) D3 Style
-(2) Preload 
+(2) Preload
 
 7. Others
 (1) Adopt the file name whitch is not easy to analogize
@@ -2267,7 +2267,7 @@ this table store tags
 this table relate photo table and tag table.
 
 8.8 synonym (syno table)
-this table store synonym for ambiguous search 
+this table store synonym for ambiguous search
 
 
 * Install *
@@ -2300,14 +2300,14 @@ remove // at the head.
 copy directory only
 
 for exsample, copy to 'hoge' directory
-XOOPS_ROOT_PATH/modules/webphoto/* 
- -> XOOPS_ROOT_PATH/modules/hoge/* 
+XOOPS_ROOT_PATH/modules/webphoto/*
+ -> XOOPS_ROOT_PATH/modules/hoge/*
 
 2. xoops 2.0.18
 in addition to the above, rename template files.
 
-XOOPS_ROOT_PATH/modules/hoge/templates/webphoto_*.html 
- -> XOOPS_ROOT_PATH/modules/hoge/templates/hoge_*.html 
+XOOPS_ROOT_PATH/modules/hoge/templates/webphoto_*.html
+ -> XOOPS_ROOT_PATH/modules/hoge/templates/hoge_*.html
 
 
 * Piclens *
@@ -2332,17 +2332,17 @@ themes/xxx/theme,html
 
 * Notice *
 This is alpha version of full scratch.
-Although there are no big problem, but I think that there are any small problem. 
-Even if some problems come out, only those who can do somehow personally need to use. 
+Although there are no big problem, but I think that there are any small problem.
+Even if some problems come out, only those who can do somehow personally need to use.
 Welcome a bug report, a bug solution, and your hack, etc.
 
 
 * Special Thanks *
-Referred myalbum module about general specification . 
+Referred myalbum module about general specification .
 - http://xoops.peak.ne.jp/md/mydownloads/singlefile.php?lid=61&cid=1
-Referred gnavi module about google icon . 
+Referred gnavi module about google icon .
 - http://xoops.iko-ze.net/modules/d3downloads/index.php?page=singlefile&cid=1&lid=5
-Referred wf-downloads module about MIME management . 
+Referred wf-downloads module about MIME management .
 - http://smartfactory.ca/modules/wfdownloads/singlefile.php?cid=16&lid=49
 Special thanks to authors.
 

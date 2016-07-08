@@ -16,29 +16,27 @@
 // photo_handler -> item_handler
 //---------------------------------------------------------
 
-if( ! defined( 'WEBPHOTO_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('WEBPHOTO_TRUST_PATH')) {
+    die('not permit');
+}
 
 //---------------------------------------------------------
 // webphoto files
 //---------------------------------------------------------
-webphoto_include_once( 'main/header_item_handler.php' );
+webphoto_include_once('main/header_item_handler.php');
 
 //=========================================================
 // main
 //=========================================================
-$webphoto_item_handler 
-	=& webphoto_item_handler::getInstance( WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME );
+$webphoto_item_handler = webphoto_item_handler::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 
 $com_replytitle = $webphoto_item_handler->get_replytitle();
-if ( $com_replytitle ) {
+if ($com_replytitle) {
 
-// $com_replytitle is required
-	include XOOPS_ROOT_PATH.'/include/comment_new.php';
-
+    // $com_replytitle is required
+    include XOOPS_ROOT_PATH . '/include/comment_new.php';
 } else {
-	echo "No photo matches your request <br>\n";
+    echo "No photo matches your request <br>\n";
 }
 
 exit();
-
-?>

@@ -27,7 +27,9 @@
 // added maillog_manager
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_inc_admin_menu
@@ -35,117 +37,112 @@ if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
 //=========================================================
 class webphoto_inc_admin_menu
 {
-	var $_ini_class ;
+    public $_ini_class;
 
-	var $_DIRNAME;
-	var $_TRUST_DIR;
+    public $_DIRNAME;
+    public $_TRUST_DIR;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_inc_admin_menu( $dirname, $trust_dirname )
-{
-	$this->_DIRNAME = $dirname;
-	$this->_TRUST_DIR = XOOPS_TRUST_PATH .'/modules/'. $trust_dirname;
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        $this->_DIRNAME   = $dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
 
-	$this->_ini_class 
-		=& webphoto_inc_ini::getSingleton( $dirname, $trust_dirname );
-	$this->_ini_class->read_main_ini();
+        $this->_ini_class = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
+        $this->_ini_class->read_main_ini();
+    }
 
+    public static function getSingleton($dirname, $trust_dirname)
+    {
+        static $singletons;
+        if (!isset($singletons[$dirname])) {
+            $singletons[$dirname] = new webphoto_inc_admin_menu($dirname, $trust_dirname);
+        }
+        return $singletons[$dirname];
+    }
+
+    //---------------------------------------------------------
+    // main
+    //---------------------------------------------------------
+    public function build_menu()
+    {
+        $menu_array = $this->explode_ini('admin_menu_list');
+        return $this->build_menu_array($menu_array);
+    }
+
+    public function build_sub_menu()
+    {
+        $menu_array = $this->explode_ini('admin_sub_menu_list');
+        return $this->build_menu_array($menu_array);
+    }
+
+
+    //---------------------------------------------------------
+    // utility
+    //---------------------------------------------------------
+    public function build_menu_array($array)
+    {
+        $arr = array();
+        foreach ($array as $fct) {
+            $arr[] = array(
+                'title' => $this->build_title($fct),
+                'link'  => $this->build_link($fct),
+            );
+        }
+        return $arr;
+    }
+
+    public function build_title($fct)
+    {
+        return $this->get_constant($fct);
+    }
+
+    public function build_link($fct)
+    {
+        $link = 'admin/index.php';
+        if ($this->file_fct_exists($fct)) {
+            $link .= '?fct=' . $fct;
+        }
+        return $link;
+    }
+
+    public function file_fct_exists($fct)
+    {
+        $file = $this->_TRUST_DIR . '/admin/' . $fct . '.php';
+        return file_exists($file);
+    }
+
+    //---------------------------------------------------------
+    // langauge
+    //---------------------------------------------------------
+    public function get_constant($name)
+    {
+        $const_name = $this->get_constant_name($name);
+        if (defined($const_name)) {
+            return constant($const_name);
+        }
+        return $const_name;
+    }
+
+    public function get_constant_name($name)
+    {
+        return strtoupper('_MI_' . $this->_DIRNAME . '_ADMENU_' . $name);
+    }
+
+    //---------------------------------------------------------
+    // ini class
+    //---------------------------------------------------------
+    public function get_ini($name)
+    {
+        return $this->_ini_class->get_ini($name);
+    }
+
+    public function explode_ini($name)
+    {
+        return $this->_ini_class->explode_ini($name);
+    }
+
+    // --- class end ---
 }
-
-function &getSingleton( $dirname, $trust_dirname )
-{
-	static $singletons;
-	if ( !isset( $singletons[ $dirname ] ) ) {
-		$singletons[ $dirname ] = new webphoto_inc_admin_menu( $dirname, $trust_dirname );
-	}
-	return $singletons[ $dirname ];
-}
-
-//---------------------------------------------------------
-// main
-//---------------------------------------------------------
-function build_menu()
-{
-	$menu_array = $this->explode_ini('admin_menu_list');
-	return $this->build_menu_array( $menu_array );
-}
-
-function build_sub_menu( )
-{
-	$menu_array = $this->explode_ini('admin_sub_menu_list');
-	return $this->build_menu_array( $menu_array );
-}
-
-
-//---------------------------------------------------------
-// utility
-//---------------------------------------------------------
-function build_menu_array( $array )
-{
-	$arr = array();
-	foreach( $array as $fct ) 
-	{
-		$arr[] =  array(
-			'title' => $this->build_title( $fct ) ,
-			'link'  => $this->build_link(  $fct ) ,
-		);
-	}
-	return $arr;
-}
-
-function build_title( $fct )
-{
-	return $this->get_constant( $fct ) ;
-}
-
-function build_link( $fct )
-{
-	$link  = 'admin/index.php' ;
-	if ( $this->file_fct_exists( $fct ) ) {
-		$link .= '?fct='. $fct ;
-	}
-	return $link;
-}
-
-function file_fct_exists( $fct )
-{
-	$file = $this->_TRUST_DIR .'/admin/'.$fct.'.php' ;
-	return file_exists( $file );
-}
-
-//---------------------------------------------------------
-// langauge
-//---------------------------------------------------------
-function get_constant( $name )
-{
-	$const_name = $this->get_constant_name( $name );
-	if ( defined($const_name) ) {
-		return constant( $const_name );
-	}
-	return $const_name;
-}
-
-function get_constant_name( $name )
-{
-	return strtoupper( '_MI_' . $this->_DIRNAME . '_ADMENU_' . $name );
-}
-
-//---------------------------------------------------------
-// ini class
-//---------------------------------------------------------
-function get_ini( $name )
-{
-	return $this->_ini_class->get_ini( $name );
-}
-
-function explode_ini( $name )
-{
-	return $this->_ini_class->explode_ini( $name );
-}
-
-// --- class end ---
-}
-
-?>

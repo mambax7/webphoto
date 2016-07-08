@@ -12,46 +12,45 @@
 // isset_ini()
 //---------------------------------------------------------
 
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'not permit' ) ;
+if (!defined('XOOPS_TRUST_PATH')) {
+    die('not permit');
+}
 
 //=========================================================
 // class webphoto_base_ini
 //=========================================================
 class webphoto_base_ini extends webphoto_lib_base
 {
-	var $_ini_class;
+    public $_ini_class;
 
-//---------------------------------------------------------
-// constructor
-//---------------------------------------------------------
-function webphoto_base_ini( $dirname, $trust_dirname )
-{
-	$this->webphoto_lib_base( $dirname, $trust_dirname );
+    //---------------------------------------------------------
+    // constructor
+    //---------------------------------------------------------
+    public function __construct($dirname, $trust_dirname)
+    {
+        parent::__construct($dirname, $trust_dirname);
 
-	$this->_ini_class 
-		=& webphoto_inc_ini::getSingleton( $dirname, $trust_dirname );
-	$this->_ini_class->read_main_ini();
+        $this->_ini_class = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
+        $this->_ini_class->read_main_ini();
+    }
+
+    //---------------------------------------------------------
+    // ini class
+    //---------------------------------------------------------
+    public function get_ini($name)
+    {
+        return $this->_ini_class->get_ini($name);
+    }
+
+    public function explode_ini($name)
+    {
+        return $this->_ini_class->explode_ini($name);
+    }
+
+    public function isset_ini($name)
+    {
+        return $this->_ini_class->isset_ini($name);
+    }
+
+    // --- class end ---
 }
-
-//---------------------------------------------------------
-// ini class
-//---------------------------------------------------------
-function get_ini( $name )
-{
-	return $this->_ini_class->get_ini( $name );
-}
-
-function explode_ini( $name )
-{
-	return $this->_ini_class->explode_ini( $name );
-}
-
-function isset_ini( $name )
-{
-	return $this->_ini_class->isset_ini( $name );
-}
-
-// --- class end ---
-}
-
-?>

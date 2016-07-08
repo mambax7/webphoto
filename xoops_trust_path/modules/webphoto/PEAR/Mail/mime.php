@@ -23,8 +23,8 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the name of the authors, nor the names of its contributors 
- *   may be used to endorse or promote products derived from this 
+ * - Neither the name of the authors, nor the names of its contributors
+ *   may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
@@ -57,7 +57,6 @@
  *            and Sascha Schumann <sascha@schumann.cx>
  */
 
-
 /**
  * require PEAR
  *
@@ -73,7 +72,6 @@ require_once 'PEAR.php';
  * consist of.
  */
 require_once 'Mail/mimePart.php';
-
 
 /**
  * The Mail_Mime class provides an OO interface to create MIME
@@ -100,7 +98,7 @@ class Mail_mime
      * @var string
      * @access private
      */
-    var $_txtbody;
+    public $_txtbody;
 
     /**
      * Contains the html part of the email
@@ -108,7 +106,7 @@ class Mail_mime
      * @var string
      * @access private
      */
-    var $_htmlbody;
+    public $_htmlbody;
 
     /**
      * list of the attached images
@@ -116,7 +114,7 @@ class Mail_mime
      * @var array
      * @access private
      */
-    var $_html_images = array();
+    public $_html_images = array();
 
     /**
      * list of the attachements
@@ -124,7 +122,7 @@ class Mail_mime
      * @var array
      * @access private
      */
-    var $_parts = array();
+    public $_parts = array();
 
     /**
      * Headers for the mail
@@ -132,7 +130,7 @@ class Mail_mime
      * @var array
      * @access private
      */
-    var $_headers = array();
+    public $_headers = array();
 
     /**
      * Build parameters
@@ -140,7 +138,7 @@ class Mail_mime
      * @var array
      * @access private
      */
-    var $_build_params = array(
+    public $_build_params = array(
         // What encoding to use for the headers
         // Options: quoted-printable or base64
         'head_encoding' => 'quoted-printable',
@@ -169,15 +167,14 @@ class Mail_mime
      *                      is built. Should be an associative array.
      *                      See $_build_params.
      *
-     * @return void
      * @access public
      */
-    function Mail_mime($params = array())
+    public function __construct($params = array())
     {
         // Backward-compatible EOL setting
         if (is_string($params)) {
             $this->_build_params['eol'] = $params;
-        } else if (defined('MAIL_MIME_CRLF') && !isset($params['eol'])) {
+        } elseif (defined('MAIL_MIME_CRLF') && !isset($params['eol'])) {
             $this->_build_params['eol'] = MAIL_MIME_CRLF;
         }
 
@@ -197,9 +194,9 @@ class Mail_mime
      *
      * @return void
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function setParam($name, $value)
+    public function setParam($name, $value)
     {
         $this->_build_params[$name] = $value;
     }
@@ -211,9 +208,9 @@ class Mail_mime
      *
      * @return mixed Parameter value
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function getParam($name)
+    public function getParam($name)
     {
         return isset($this->_build_params[$name]) ? $this->_build_params[$name] : null;
     }
@@ -235,7 +232,7 @@ class Mail_mime
      * @return mixed         True on success or PEAR_Error object
      * @access public
      */
-    function setTXTBody($data, $isfile = false, $append = false)
+    public function setTXTBody($data, $isfile = false, $append = false)
     {
         if (!$isfile) {
             if (!$append) {
@@ -262,9 +259,9 @@ class Mail_mime
      *
      * @return string Text body
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function getTXTBody()
+    public function getTXTBody()
     {
         return $this->_txtbody;
     }
@@ -280,7 +277,7 @@ class Mail_mime
      * @return bool          True on success
      * @access public
      */
-    function setHTMLBody($data, $isfile = false)
+    public function setHTMLBody($data, $isfile = false)
     {
         if (!$isfile) {
             $this->_htmlbody = $data;
@@ -300,9 +297,9 @@ class Mail_mime
      *
      * @return string HTML body
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function getHTMLBody()
+    public function getHTMLBody()
     {
         return $this->_htmlbody;
     }
@@ -322,12 +319,8 @@ class Mail_mime
      * @return bool          True on success
      * @access public
      */
-    function addHTMLImage($file,
-        $c_type='application/octet-stream',
-        $name = '',
-        $isfile = true,
-        $content_id = null
-    ) {
+    public function addHTMLImage($file, $c_type = 'application/octet-stream', $name = '', $isfile = true, $content_id = null)
+    {
         $bodyfile = null;
 
         if ($isfile) {
@@ -340,7 +333,7 @@ class Mail_mime
                     return $filedata;
                 }
             }
-            $filename = ($name ? $name : $file);
+            $filename = ($name ?: $file);
         } else {
             $filedata = $file;
             $filename = $name;
@@ -391,20 +384,10 @@ class Mail_mime
      * @return mixed              True on success or PEAR_Error object
      * @access public
      */
-    function addAttachment($file,
-        $c_type      = 'application/octet-stream',
-        $name        = '',
-        $isfile      = true,
-        $encoding    = 'base64',
-        $disposition = 'attachment',
-        $charset     = '',
-        $language    = '',
-        $location    = '',
-        $n_encoding  = null,
-        $f_encoding  = null,
-        $description = '',
-        $h_charset   = null
-    ) {
+    public function addAttachment($file, $c_type = 'application/octet-stream', $name = '', $isfile = true, $encoding = 'base64', $disposition = 'attachment', $charset = '', $language = '',
+                                  $location = '', $n_encoding = null, $f_encoding = null, $description = '', $h_charset = null
+    )
+    {
         $bodyfile = null;
 
         if ($isfile) {
@@ -418,7 +401,7 @@ class Mail_mime
                 }
             }
             // Force the name the user supplied, otherwise use $file
-            $filename = ($name ? $name : $file);
+            $filename = ($name ?: $file);
         } else {
             $filedata = $file;
             $filename = $name;
@@ -432,16 +415,16 @@ class Mail_mime
         $filename = $this->_basename($filename);
 
         $this->_parts[] = array(
-            'body'        => $filedata,
-            'body_file'   => $bodyfile,
-            'name'        => $filename,
-            'c_type'      => $c_type,
-            'charset'     => $charset,
-            'encoding'    => $encoding,
-            'language'    => $language,
-            'location'    => $location,
-            'disposition' => $disposition,
-            'description' => $description,
+            'body'              => $filedata,
+            'body_file'         => $bodyfile,
+            'name'              => $filename,
+            'c_type'            => $c_type,
+            'charset'           => $charset,
+            'encoding'          => $encoding,
+            'language'          => $language,
+            'location'          => $location,
+            'disposition'       => $disposition,
+            'description'       => $description,
             'name_encoding'     => $n_encoding,
             'filename_encoding' => $f_encoding,
             'headers_charset'   => $h_charset,
@@ -458,7 +441,7 @@ class Mail_mime
      * @return string           Contents of $file_name
      * @access private
      */
-    function &_file2str($file_name)
+    public function &_file2str($file_name)
     {
         // Check state of file and raise an error properly
         if (!file_exists($file_name)) {
@@ -497,7 +480,7 @@ class Mail_mime
      * @return object      The text mimePart object
      * @access private
      */
-    function &_addTextPart(&$obj, $text)
+    public function &_addTextPart(&$obj, $text)
     {
         $params['content_type'] = 'text/plain';
         $params['encoding']     = $this->_build_params['text_encoding'];
@@ -523,7 +506,7 @@ class Mail_mime
      * @return object     The html mimePart object
      * @access private
      */
-    function &_addHtmlPart(&$obj)
+    public function &_addHtmlPart(&$obj)
     {
         $params['content_type'] = 'text/html';
         $params['encoding']     = $this->_build_params['html_encoding'];
@@ -547,7 +530,7 @@ class Mail_mime
      * @return object The multipart/mixed mimePart object
      * @access private
      */
-    function &_addMixedPart()
+    public function &_addMixedPart()
     {
         $params                 = array();
         $params['content_type'] = 'multipart/mixed';
@@ -569,7 +552,7 @@ class Mail_mime
      * @return object     The multipart/mixed mimePart object
      * @access private
      */
-    function &_addAlternativePart(&$obj)
+    public function &_addAlternativePart(&$obj)
     {
         $params['content_type'] = 'multipart/alternative';
         $params['eol']          = $this->_build_params['eol'];
@@ -593,7 +576,7 @@ class Mail_mime
      * @return object     The multipart/mixed mimePart object
      * @access private
      */
-    function &_addRelatedPart(&$obj)
+    public function &_addRelatedPart(&$obj)
     {
         $params['content_type'] = 'multipart/related';
         $params['eol']          = $this->_build_params['eol'];
@@ -616,7 +599,7 @@ class Mail_mime
      * @return object       The image mimePart object
      * @access private
      */
-    function &_addHtmlImagePart(&$obj, $value)
+    public function &_addHtmlImagePart(&$obj, $value)
     {
         $params['content_type'] = $value['c_type'];
         $params['encoding']     = 'base64';
@@ -647,15 +630,14 @@ class Mail_mime
      * @return object       The image mimePart object
      * @access private
      */
-    function &_addAttachmentPart(&$obj, $value)
+    public function &_addAttachmentPart(&$obj, $value)
     {
         $params['eol']          = $this->_build_params['eol'];
         $params['filename']     = $value['name'];
         $params['encoding']     = $value['encoding'];
         $params['content_type'] = $value['c_type'];
         $params['body_file']    = $value['body_file'];
-        $params['disposition']  = isset($value['disposition']) ? 
-                                  $value['disposition'] : 'attachment';
+        $params['disposition']  = isset($value['disposition']) ? $value['disposition'] : 'attachment';
 
         // content charset
         if (!empty($value['charset'])) {
@@ -689,9 +671,9 @@ class Mail_mime
      * Returns the complete e-mail, ready to send using an alternative
      * mail delivery method. Note that only the mailpart that is made
      * with Mail_Mime is created. This means that,
-     * YOU WILL HAVE NO TO: HEADERS UNLESS YOU SET IT YOURSELF 
+     * YOU WILL HAVE NO TO: HEADERS UNLESS YOU SET IT YOURSELF
      * using the $headers parameter!
-     * 
+     *
      * @param string $separation The separation between these two parts.
      * @param array  $params     The Build parameters passed to the
      *                           &get() function. See &get for more info.
@@ -703,9 +685,8 @@ class Mail_mime
      * @return mixed The complete e-mail or PEAR error object
      * @access public
      */
-    function getMessage($separation = null, $params = null, $headers = null,
-        $overwrite = false
-    ) {
+    public function getMessage($separation = null, $params = null, $headers = null, $overwrite = false)
+    {
         if ($separation === null) {
             $separation = $this->_build_params['eol'];
         }
@@ -724,22 +705,22 @@ class Mail_mime
     /**
      * Returns the complete e-mail body, ready to send using an alternative
      * mail delivery method.
-     * 
+     *
      * @param array $params The Build parameters passed to the
      *                      &get() function. See &get for more info.
      *
      * @return mixed The e-mail body or PEAR error object
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function getMessageBody($params = null)
+    public function getMessageBody($params = null)
     {
         return $this->get($params, null, true);
     }
 
     /**
      * Writes (appends) the complete e-mail into file.
-     * 
+     *
      * @param string $filename  Output file location
      * @param array  $params    The Build parameters passed to the
      *                          &get() function. See &get for more info.
@@ -750,9 +731,9 @@ class Mail_mime
      *
      * @return mixed True or PEAR error object
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function saveMessage($filename, $params = null, $headers = null, $overwrite = false)
+    public function saveMessage($filename, $params = null, $headers = null, $overwrite = false)
     {
         // Check state of file and raise an error properly
         if (file_exists($filename) && !is_writable($filename)) {
@@ -786,21 +767,21 @@ class Mail_mime
         // Write the rest of the message into file
         $res = $this->get($params, $filename);
 
-        return $res ? $res : true;
+        return $res ?: true;
     }
 
     /**
      * Writes (appends) the complete e-mail body into file.
-     * 
+     *
      * @param string $filename Output file location
      * @param array  $params   The Build parameters passed to the
      *                         &get() function. See &get for more info.
      *
      * @return mixed True or PEAR error object
      * @access public
-     * @since 1.6.0
+     * @since  1.6.0
      */
-    function saveMessageBody($filename, $params = null)
+    public function saveMessageBody($filename, $params = null)
     {
         // Check state of file and raise an error properly
         if (file_exists($filename) && !is_writable($filename)) {
@@ -821,7 +802,7 @@ class Mail_mime
         // Write the rest of the message into file
         $res = $this->get($params, $filename, true);
 
-        return $res ? $res : true;
+        return $res ?: true;
     }
 
     /**
@@ -838,7 +819,7 @@ class Mail_mime
      * @return mixed The MIME message content string, null or PEAR error object
      * @access public
      */
-    function &get($params = null, $filename = null, $skip_head = false)
+    public function &get($params = null, $filename = null, $skip_head = false)
     {
         if (isset($params)) {
             while (list($key, $value) = each($params)) {
@@ -854,8 +835,8 @@ class Mail_mime
                 $domainID = '@localhost';
             }
             foreach ($this->_html_images as $i => $img) {
-                $cid = $this->_html_images[$i]['cid']; 
-                if (!preg_match('#'.preg_quote($domainID).'$#', $cid)) {
+                $cid = $this->_html_images[$i]['cid'];
+                if (!preg_match('#' . preg_quote($domainID) . '$#', $cid)) {
                     $this->_html_images[$i]['cid'] = $cid . $domainID;
                 }
             }
@@ -864,136 +845,133 @@ class Mail_mime
         if (count($this->_html_images) && isset($this->_htmlbody)) {
             foreach ($this->_html_images as $key => $value) {
                 $regex   = array();
-                $regex[] = '#(\s)((?i)src|background|href(?-i))\s*=\s*(["\']?)' .
-                            preg_quote($value['name'], '#') . '\3#';
-                $regex[] = '#(?i)url(?-i)\(\s*(["\']?)' .
-                            preg_quote($value['name'], '#') . '\1\s*\)#';
+                $regex[] = '#(\s)((?i)src|background|href(?-i))\s*=\s*(["\']?)' . preg_quote($value['name'], '#') . '\3#';
+                $regex[] = '#(?i)url(?-i)\(\s*(["\']?)' . preg_quote($value['name'], '#') . '\1\s*\)#';
 
                 $rep   = array();
-                $rep[] = '\1\2=\3cid:' . $value['cid'] .'\3';
+                $rep[] = '\1\2=\3cid:' . $value['cid'] . '\3';
                 $rep[] = 'url(\1cid:' . $value['cid'] . '\1)';
 
-                $this->_htmlbody = preg_replace($regex, $rep, $this->_htmlbody);
-                $this->_html_images[$key]['name']
-                    = $this->_basename($this->_html_images[$key]['name']);
+                $this->_htmlbody                  = preg_replace($regex, $rep, $this->_htmlbody);
+                $this->_html_images[$key]['name'] = $this->_basename($this->_html_images[$key]['name']);
             }
         }
 
         $this->_checkParams();
 
         $null        = null;
-        $attachments = count($this->_parts)                 ? true : false;
-        $html_images = count($this->_html_images)           ? true : false;
-        $html        = strlen($this->_htmlbody)             ? true : false;
-        $text        = (!$html && strlen($this->_txtbody))  ? true : false;
+        $attachments = count($this->_parts) ? true : false;
+        $html_images = count($this->_html_images) ? true : false;
+        $html        = strlen($this->_htmlbody) ? true : false;
+        $text        = (!$html && strlen($this->_txtbody)) ? true : false;
 
         switch (true) {
-        case $text && !$attachments:
-            $message =& $this->_addTextPart($null, $this->_txtbody);
-            break;
+            case $text && !$attachments:
+                $message = $this->_addTextPart($null, $this->_txtbody);
+                break;
 
-        case !$text && !$html && $attachments:
-            $message =& $this->_addMixedPart();
-            for ($i = 0; $i < count($this->_parts); $i++) {
-                $this->_addAttachmentPart($message, $this->_parts[$i]);
-            }
-            break;
-
-        case $text && $attachments:
-            $message =& $this->_addMixedPart();
-            $this->_addTextPart($message, $this->_txtbody);
-            for ($i = 0; $i < count($this->_parts); $i++) {
-                $this->_addAttachmentPart($message, $this->_parts[$i]);
-            }
-            break;
-
-        case $html && !$attachments && !$html_images:
-            if (isset($this->_txtbody)) {
-                $message =& $this->_addAlternativePart($null);
-                $this->_addTextPart($message, $this->_txtbody);
-                $this->_addHtmlPart($message);
-            } else {
-                $message =& $this->_addHtmlPart($null);
-            }
-            break;
-
-        case $html && !$attachments && $html_images:
-            // * Content-Type: multipart/alternative;
-            //    * text
-            //    * Content-Type: multipart/related;
-            //       * html
-            //       * image...
-            if (isset($this->_txtbody)) {
-                $message =& $this->_addAlternativePart($null);
-                $this->_addTextPart($message, $this->_txtbody);
-
-                $ht =& $this->_addRelatedPart($message);
-                $this->_addHtmlPart($ht);
-                for ($i = 0; $i < count($this->_html_images); $i++) {
-                    $this->_addHtmlImagePart($ht, $this->_html_images[$i]);
+            case !$text && !$html && $attachments:
+                $message = $this->_addMixedPart();
+                for ($i = 0; $i < count($this->_parts); ++$i) {
+                    $this->_addAttachmentPart($message, $this->_parts[$i]);
                 }
-            } else {
+                break;
+
+            case $text && $attachments:
+                $message = $this->_addMixedPart();
+                $this->_addTextPart($message, $this->_txtbody);
+                for ($i = 0; $i < count($this->_parts); ++$i) {
+                    $this->_addAttachmentPart($message, $this->_parts[$i]);
+                }
+                break;
+
+            case $html && !$attachments && !$html_images:
+                if (isset($this->_txtbody)) {
+                    $message = $this->_addAlternativePart($null);
+                    $this->_addTextPart($message, $this->_txtbody);
+                    $this->_addHtmlPart($message);
+                } else {
+                    $message = $this->_addHtmlPart($null);
+                }
+                break;
+
+            case $html && !$attachments && $html_images:
+                // * Content-Type: multipart/alternative;
+                //    * text
+                //    * Content-Type: multipart/related;
+                //       * html
+                //       * image...
+                if (isset($this->_txtbody)) {
+                    $message = $this->_addAlternativePart($null);
+                    $this->_addTextPart($message, $this->_txtbody);
+
+                    $ht = $this->_addRelatedPart($message);
+                    $this->_addHtmlPart($ht);
+                    for ($i = 0; $i < count($this->_html_images); ++$i) {
+                        $this->_addHtmlImagePart($ht, $this->_html_images[$i]);
+                    }
+                } else {
+                    // * Content-Type: multipart/related;
+                    //    * html
+                    //    * image...
+                    $message = $this->_addRelatedPart($null);
+                    $this->_addHtmlPart($message);
+                    for ($i = 0; $i < count($this->_html_images); ++$i) {
+                        $this->_addHtmlImagePart($message, $this->_html_images[$i]);
+                    }
+                }
+                /*
+                // #13444, #9725: the code below was a non-RFC compliant hack
                 // * Content-Type: multipart/related;
-                //    * html
+                //    * Content-Type: multipart/alternative;
+                //        * text
+                //        * html
                 //    * image...
-                $message =& $this->_addRelatedPart($null);
-                $this->_addHtmlPart($message);
-                for ($i = 0; $i < count($this->_html_images); $i++) {
+                $message = $this->_addRelatedPart($null);
+                if (isset($this->_txtbody)) {
+                    $alt = $this->_addAlternativePart($message);
+                    $this->_addTextPart($alt, $this->_txtbody);
+                    $this->_addHtmlPart($alt);
+                } else {
+                    $this->_addHtmlPart($message);
+                }
+                for ($i = 0; $i < count($this->_html_images); ++$i) {
                     $this->_addHtmlImagePart($message, $this->_html_images[$i]);
                 }
-            }
-            /*
-            // #13444, #9725: the code below was a non-RFC compliant hack
-            // * Content-Type: multipart/related;
-            //    * Content-Type: multipart/alternative;
-            //        * text
-            //        * html
-            //    * image...
-            $message =& $this->_addRelatedPart($null);
-            if (isset($this->_txtbody)) {
-                $alt =& $this->_addAlternativePart($message);
-                $this->_addTextPart($alt, $this->_txtbody);
-                $this->_addHtmlPart($alt);
-            } else {
-                $this->_addHtmlPart($message);
-            }
-            for ($i = 0; $i < count($this->_html_images); $i++) {
-                $this->_addHtmlImagePart($message, $this->_html_images[$i]);
-            }
-            */
-            break;
+                */
+                break;
 
-        case $html && $attachments && !$html_images:
-            $message =& $this->_addMixedPart();
-            if (isset($this->_txtbody)) {
-                $alt =& $this->_addAlternativePart($message);
-                $this->_addTextPart($alt, $this->_txtbody);
-                $this->_addHtmlPart($alt);
-            } else {
-                $this->_addHtmlPart($message);
-            }
-            for ($i = 0; $i < count($this->_parts); $i++) {
-                $this->_addAttachmentPart($message, $this->_parts[$i]);
-            }
-            break;
+            case $html && $attachments && !$html_images:
+                $message = $this->_addMixedPart();
+                if (isset($this->_txtbody)) {
+                    $alt = $this->_addAlternativePart($message);
+                    $this->_addTextPart($alt, $this->_txtbody);
+                    $this->_addHtmlPart($alt);
+                } else {
+                    $this->_addHtmlPart($message);
+                }
+                for ($i = 0; $i < count($this->_parts); ++$i) {
+                    $this->_addAttachmentPart($message, $this->_parts[$i]);
+                }
+                break;
 
-        case $html && $attachments && $html_images:
-            $message =& $this->_addMixedPart();
-            if (isset($this->_txtbody)) {
-                $alt =& $this->_addAlternativePart($message);
-                $this->_addTextPart($alt, $this->_txtbody);
-                $rel =& $this->_addRelatedPart($alt);
-            } else {
-                $rel =& $this->_addRelatedPart($message);
-            }
-            $this->_addHtmlPart($rel);
-            for ($i = 0; $i < count($this->_html_images); $i++) {
-                $this->_addHtmlImagePart($rel, $this->_html_images[$i]);
-            }
-            for ($i = 0; $i < count($this->_parts); $i++) {
-                $this->_addAttachmentPart($message, $this->_parts[$i]);
-            }
-            break;
+            case $html && $attachments && $html_images:
+                $message = $this->_addMixedPart();
+                if (isset($this->_txtbody)) {
+                    $alt = $this->_addAlternativePart($message);
+                    $this->_addTextPart($alt, $this->_txtbody);
+                    $rel = $this->_addRelatedPart($alt);
+                } else {
+                    $rel = $this->_addRelatedPart($message);
+                }
+                $this->_addHtmlPart($rel);
+                for ($i = 0; $i < count($this->_html_images); ++$i) {
+                    $this->_addHtmlImagePart($rel, $this->_html_images[$i]);
+                }
+                for ($i = 0; $i < count($this->_parts); ++$i) {
+                    $this->_addAttachmentPart($message, $this->_parts[$i]);
+                }
+                break;
 
         }
 
@@ -1017,7 +995,7 @@ class Mail_mime
                 return $headers;
             }
             $this->_headers = array_merge($this->_headers, $headers);
-            $ret = null;
+            $ret            = null;
             return $ret;
         } else {
             $output = $message->encode($boundary, $skip_head);
@@ -1025,7 +1003,7 @@ class Mail_mime
                 return $output;
             }
             $this->_headers = array_merge($this->_headers, $output['headers']);
-            $body = $output['body'];
+            $body           = $output['body'];
             return $body;
         }
     }
@@ -1040,11 +1018,11 @@ class Mail_mime
      * @param bool  $overwrite    Overwrite already existing headers.
      * @param bool  $skip_content Don't return content headers: Content-Type,
      *                            Content-Disposition and Content-Transfer-Encoding
-     * 
+     *
      * @return array              Assoc array with the mime headers
      * @access public
      */
-    function &headers($xtra_headers = null, $overwrite = false, $skip_content = false)
+    public function &headers($xtra_headers = null, $overwrite = false, $skip_content = false)
     {
         // Add mime version header
         $headers['MIME-Version'] = '1.0';
@@ -1073,7 +1051,7 @@ class Mail_mime
             unset($headers['Content-Type']);
             unset($headers['Content-Transfer-Encoding']);
             unset($headers['Content-Disposition']);
-        } else if (!empty($this->_build_params['ctype'])) {
+        } elseif (!empty($this->_build_params['ctype'])) {
             $headers['Content-Type'] = $this->_build_params['ctype'];
         }
 
@@ -1094,7 +1072,7 @@ class Mail_mime
      * @return string             Plain text headers
      * @access public
      */
-    function txtHeaders($xtra_headers = null, $overwrite = false, $skip_content = false)
+    public function txtHeaders($xtra_headers = null, $overwrite = false, $skip_content = false)
     {
         $headers = $this->headers($xtra_headers, $overwrite, $skip_content);
 
@@ -1132,18 +1110,16 @@ class Mail_mime
      *
      * @return void
      * @access public
-     * @since 1.7.0
+     * @since  1.7.0
      */
-    function setContentType($type, $params = array())
+    public function setContentType($type, $params = array())
     {
         $header = $type;
 
-        $eol = !empty($this->_build_params['eol'])
-            ? $this->_build_params['eol'] : "\r\n";
+        $eol = !empty($this->_build_params['eol']) ? $this->_build_params['eol'] : "\r\n";
 
         // add parameters
-        $token_regexp = '#([^\x21,\x23-\x27,\x2A,\x2B,\x2D'
-            . ',\x2E,\x30-\x39,\x41-\x5A,\x5E-\x7E])#';
+        $token_regexp = '#([^\x21,\x23-\x27,\x2A,\x2B,\x2D' . ',\x2E,\x30-\x39,\x41-\x5A,\x5E-\x7E])#';
         if (is_array($params)) {
             foreach ($params as $name => $value) {
                 if ($name == 'boundary') {
@@ -1164,7 +1140,7 @@ class Mail_mime
                 $this->_build_params['boundary'] = '=_' . md5(rand() . microtime());
             }
 
-            $header .= ";$eol boundary=\"".$this->_build_params['boundary']."\"";
+            $header .= ";$eol boundary=\"" . $this->_build_params['boundary'] . "\"";
         }
 
         $this->_build_params['ctype'] = $header;
@@ -1178,7 +1154,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function setSubject($subject)
+    public function setSubject($subject)
     {
         $this->_headers['Subject'] = $subject;
     }
@@ -1191,7 +1167,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function setFrom($email)
+    public function setFrom($email)
     {
         $this->_headers['From'] = $email;
     }
@@ -1205,7 +1181,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function addTo($email)
+    public function addTo($email)
     {
         if (isset($this->_headers['To'])) {
             $this->_headers['To'] .= ", $email";
@@ -1223,7 +1199,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function addCc($email)
+    public function addCc($email)
     {
         if (isset($this->_headers['Cc'])) {
             $this->_headers['Cc'] .= ", $email";
@@ -1241,7 +1217,7 @@ class Mail_mime
      * @return void
      * @access public
      */
-    function addBcc($email)
+    public function addBcc($email)
     {
         if (isset($this->_headers['Bcc'])) {
             $this->_headers['Bcc'] .= ", $email";
@@ -1254,7 +1230,7 @@ class Mail_mime
      * Since the PHP send function requires you to specify
      * recipients (To: header) separately from the other
      * headers, the To: header is not properly encoded.
-     * To fix this, you can use this public method to 
+     * To fix this, you can use this public method to
      * encode your recipients before sending to the send
      * function
      *
@@ -1263,11 +1239,11 @@ class Mail_mime
      * @return string            Encoded data
      * @access public
      */
-    function encodeRecipients($recipients)
+    public function encodeRecipients($recipients)
     {
-        $input = array("To" => $recipients);
+        $input  = array('To' => $recipients);
         $retval = $this->_encodeHeaders($input);
-        return $retval["To"] ;
+        return $retval['To'];
     }
 
     /**
@@ -1279,7 +1255,7 @@ class Mail_mime
      * @return array        Encoded data
      * @access private
      */
-    function _encodeHeaders($input, $params = array())
+    public function _encodeHeaders($input, $params = array())
     {
         $build_params = $this->_build_params;
         while (list($key, $value) = each($params)) {
@@ -1289,16 +1265,10 @@ class Mail_mime
         foreach ($input as $hdr_name => $hdr_value) {
             if (is_array($hdr_value)) {
                 foreach ($hdr_value as $idx => $value) {
-                    $input[$hdr_name][$idx] = $this->encodeHeader(
-                        $hdr_name, $value,
-                        $build_params['head_charset'], $build_params['head_encoding']
-                    );
+                    $input[$hdr_name][$idx] = $this->encodeHeader($hdr_name, $value, $build_params['head_charset'], $build_params['head_encoding']);
                 }
             } else {
-                $input[$hdr_name] = $this->encodeHeader(
-                    $hdr_name, $hdr_value,
-                    $build_params['head_charset'], $build_params['head_encoding']
-                );
+                $input[$hdr_name] = $this->encodeHeader($hdr_name, $hdr_value, $build_params['head_charset'], $build_params['head_encoding']);
             }
         }
 
@@ -1315,24 +1285,22 @@ class Mail_mime
      *
      * @return string          Encoded header data (without a name)
      * @access public
-     * @since 1.5.3
+     * @since  1.5.3
      */
-    function encodeHeader($name, $value, $charset, $encoding)
+    public function encodeHeader($name, $value, $charset, $encoding)
     {
-        return Mail_mimePart::encodeHeader(
-            $name, $value, $charset, $encoding, $this->_build_params['eol']
-        );
+        return Mail_mimePart::encodeHeader($name, $value, $charset, $encoding, $this->_build_params['eol']);
     }
 
     /**
-     * Get file's basename (locale independent) 
+     * Get file's basename (locale independent)
      *
      * @param string $filename Filename
      *
      * @return string          Basename
      * @access private
      */
-    function _basename($filename)
+    public function _basename($filename)
     {
         // basename() is not unicode safe and locale dependent
         if (stristr(PHP_OS, 'win') || stristr(PHP_OS, 'netware')) {
@@ -1348,72 +1316,67 @@ class Mail_mime
      * @return array Headers array
      * @access private
      */
-    function _contentHeaders()
+    public function _contentHeaders()
     {
-        $attachments = count($this->_parts)                 ? true : false;
-        $html_images = count($this->_html_images)           ? true : false;
-        $html        = strlen($this->_htmlbody)             ? true : false;
-        $text        = (!$html && strlen($this->_txtbody))  ? true : false;
+        $attachments = count($this->_parts) ? true : false;
+        $html_images = count($this->_html_images) ? true : false;
+        $html        = strlen($this->_htmlbody) ? true : false;
+        $text        = (!$html && strlen($this->_txtbody)) ? true : false;
         $headers     = array();
 
         // See get()
         switch (true) {
-        case $text && !$attachments:
-            $headers['Content-Type'] = 'text/plain';
-            break;
+            case $text && !$attachments:
+                $headers['Content-Type'] = 'text/plain';
+                break;
 
-        case !$text && !$html && $attachments:
-        case $text && $attachments:
-        case $html && $attachments && !$html_images:
-        case $html && $attachments && $html_images:
-            $headers['Content-Type'] = 'multipart/mixed';
-            break;
+            case !$text && !$html && $attachments:
+            case $text && $attachments:
+            case $html && $attachments && !$html_images:
+            case $html && $attachments && $html_images:
+                $headers['Content-Type'] = 'multipart/mixed';
+                break;
 
-        case $html && !$attachments && !$html_images && isset($this->_txtbody):
-        case $html && !$attachments && $html_images && isset($this->_txtbody):
-            $headers['Content-Type'] = 'multipart/alternative';
-            break;
+            case $html && !$attachments && !$html_images && isset($this->_txtbody):
+            case $html && !$attachments && $html_images && isset($this->_txtbody):
+                $headers['Content-Type'] = 'multipart/alternative';
+                break;
 
-        case $html && !$attachments && !$html_images && !isset($this->_txtbody):
-            $headers['Content-Type'] = 'text/html';
-            break;
+            case $html && !$attachments && !$html_images && !isset($this->_txtbody):
+                $headers['Content-Type'] = 'text/html';
+                break;
 
-        case $html && !$attachments && $html_images && !isset($this->_txtbody):
-            $headers['Content-Type'] = 'multipart/related';
-            break;
+            case $html && !$attachments && $html_images && !isset($this->_txtbody):
+                $headers['Content-Type'] = 'multipart/related';
+                break;
 
-        default:
-            return $headers;
+            default:
+                return $headers;
         }
 
         $this->_checkParams();
 
-        $eol = !empty($this->_build_params['eol'])
-            ? $this->_build_params['eol'] : "\r\n";
+        $eol = !empty($this->_build_params['eol']) ? $this->_build_params['eol'] : "\r\n";
 
         if ($headers['Content-Type'] == 'text/plain') {
             // single-part message: add charset and encoding
             $charset = 'charset=' . $this->_build_params['text_charset'];
             // place charset parameter in the same line, if possible
             // 26 = strlen("Content-Type: text/plain; ")
-            $headers['Content-Type']
-                .= (strlen($charset) + 26 <= 76) ? "; $charset" : ";$eol $charset";
-            $headers['Content-Transfer-Encoding']
-                = $this->_build_params['text_encoding'];
-        } else if ($headers['Content-Type'] == 'text/html') {
+            $headers['Content-Type'] .= (strlen($charset) + 26 <= 76) ? "; $charset" : ";$eol $charset";
+            $headers['Content-Transfer-Encoding'] = $this->_build_params['text_encoding'];
+        } elseif ($headers['Content-Type'] == 'text/html') {
             // single-part message: add charset and encoding
             $charset = 'charset=' . $this->_build_params['html_charset'];
             // place charset parameter in the same line, if possible
-            $headers['Content-Type']
-                .= (strlen($charset) + 25 <= 76) ? "; $charset" : ";$eol $charset";
-            $headers['Content-Transfer-Encoding']
-                = $this->_build_params['html_encoding'];
+            $headers['Content-Type'] .= (strlen($charset) + 25 <= 76) ? "; $charset" : ";$eol $charset";
+            $headers['Content-Transfer-Encoding'] = $this->_build_params['html_encoding'];
         } else {
             // multipart message: and boundary
             if (!empty($this->_build_params['boundary'])) {
                 $boundary = $this->_build_params['boundary'];
-            } else if (!empty($this->_headers['Content-Type'])
-                && preg_match('/boundary="([^"]+)"/', $this->_headers['Content-Type'], $m)
+            } elseif (!empty($this->_headers['Content-Type'])
+                      && preg_match('/boundary="([^"]+)"/', $this->_headers['Content-Type'], $m)
             ) {
                 $boundary = $m[1];
             } else {
@@ -1433,14 +1396,12 @@ class Mail_mime
      * @return void
      * @access private
      */
-    function _checkParams()
+    public function _checkParams()
     {
         $encodings = array('7bit', '8bit', 'base64', 'quoted-printable');
 
-        $this->_build_params['text_encoding']
-            = strtolower($this->_build_params['text_encoding']);
-        $this->_build_params['html_encoding']
-            = strtolower($this->_build_params['html_encoding']);
+        $this->_build_params['text_encoding'] = strtolower($this->_build_params['text_encoding']);
+        $this->_build_params['html_encoding'] = strtolower($this->_build_params['html_encoding']);
 
         if (!in_array($this->_build_params['text_encoding'], $encodings)) {
             $this->_build_params['text_encoding'] = '7bit';
@@ -1464,5 +1425,4 @@ class Mail_mime
             $this->_build_params['html_encoding'] = 'quoted-printable';
         }
     }
-
 } // End of class
