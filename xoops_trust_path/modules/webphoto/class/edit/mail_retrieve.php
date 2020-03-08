@@ -28,6 +28,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_mail_retrieve
 //=========================================================
+
+/**
+ * Class webphoto_edit_mail_retrieve
+ */
 class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
 {
     public $_pop_class;
@@ -35,7 +39,7 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
     public $_flag_retrive_chmod = true;
 
     public $_is_set_mail = false;
-    public $_has_mail    = false;
+    public $_has_mail = false;
 
     public $_mail_count = 0;
     public $_mail_array = null;
@@ -50,6 +54,12 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_mail_retrieve constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -57,9 +67,9 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
 
         $this->_pop_class = webphoto_pear_mail_pop3::getInstance();
 
-        $cfg_mail_host        = $this->get_config_by_name('mail_host');
-        $cfg_mail_user        = $this->get_config_by_name('mail_user');
-        $cfg_mail_pass        = $this->get_config_by_name('mail_pass');
+        $cfg_mail_host = $this->get_config_by_name('mail_host');
+        $cfg_mail_user = $this->get_config_by_name('mail_user');
+        $cfg_mail_pass = $this->get_config_by_name('mail_pass');
         $this->_cfg_makethumb = $this->get_config_by_name('makethumb');
 
         $this->_pop_class->set_host($cfg_mail_host);
@@ -67,23 +77,33 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         $this->_pop_class->set_pass($cfg_mail_pass);
 
         $this->_is_set_mail = $this->_config_class->is_set_mail();
-        $this->_has_mail    = $this->_perm_class->has_mail();
+        $this->_has_mail = $this->_perm_class->has_mail();
 
         $this->_FILE_ACCESS = $this->_MAIL_DIR . '/mail_access';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_mail_photo|\webphoto_edit_mail_retrieve|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_edit_mail_retrieve($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // check
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function check_perm()
     {
         if (!$this->_is_set_mail) {
@@ -97,11 +117,17 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         return 0;
     }
 
+    /**
+     * @return bool
+     */
     public function is_set_mail()
     {
         return $this->_is_set_mail;
     }
 
+    /**
+     * @return bool
+     */
     public function has_mail()
     {
         return $this->_has_mail;
@@ -110,6 +136,10 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
     //---------------------------------------------------------
     // retrieve
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function retrieve()
     {
         if (!$this->check_access_time()) {
@@ -118,6 +148,7 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
             $msg .= $this->get_constant('TEXT_MAIL_RETRY');
             $msg .= "<br>\n";
             $this->set_msg_level_user($msg);
+
             return _C_WEBPHOTO_RETRIEVE_CODE_ACCESS_TIME;
         }
 
@@ -129,6 +160,9 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function check_access_time()
     {
         return $this->_utility_class->check_file_time($this->_FILE_ACCESS, $this->_TIME_ACCESS);
@@ -139,14 +173,17 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         $this->_utility_class->renew_file_time($this->_FILE_ACCESS, $this->_flag_retrive_chmod);
     }
 
+    /**
+     * @return int
+     */
     public function retrieve_exec()
     {
         if ($this->_DEBUG_MAIL_FILE) {
             $this->set_msg_level_user('DEBUG MODE', false, true);
             $this->_mail_count = 1;
-            $this->_mail_array = array(
-                $this->build_mail_file($this->_DEBUG_MAIL_FILE)
-            );
+            $this->_mail_array = [
+                $this->build_mail_file($this->_DEBUG_MAIL_FILE),
+            ];
         } else {
             $ret = $this->mail_pop();
             if ($ret < 0) {
@@ -166,36 +203,42 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         }
 
         $this->add_photos($ret_arr);
+
         return 0;
     }
 
+    /**
+     * @return int
+     */
     public function mail_pop()
     {
         $this->_mail_count = 0;
         $this->_mail_array = null;
-        $file_arr          = array();
+        $file_arr = [];
 
         $msg = '<h4>' . $this->get_constant('SUBTITLE_MAIL_ACCESS') . "</h4>\n";
         $this->set_msg_level_user($msg);
 
         $ret = $this->_pop_class->recv_mails();
-        if ($ret === false) {
+        if (false === $ret) {
             $errors = $this->_pop_class->get_errors();
-            $err    = $this->array_to_str($errors, "\n");
-            $err    = nl2br($this->sanitize($err));
+            $err = $this->array_to_str($errors, "\n");
+            $err = nl2br($this->sanitize($err));
             $this->set_msg_level_admin('POP Error', true, true);
             $this->set_msg_level_admin($err, false, true);
             $this->set_msg_level_user($this->get_constant('TEXT_MAIL_NOT_RETRIEVE'), true);
+
             return _C_WEBPHOTO_RETRIEVE_CODE_NOT_RETRIEVE;
         }
 
         $mail_arr = $this->_pop_class->get_mails();
-        $count    = count($mail_arr);
+        $count = count($mail_arr);
 
         if (!is_array($mail_arr) || !$count) {
             if ($this->check_msg_level_user()) {
                 echo $this->get_constant('TEXT_MAIL_NO_NEW');
             }
+
             return _C_WEBPHOTO_RETRIEVE_CODE_NO_NEW;
         }
 
@@ -214,23 +257,36 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
 
         $this->_mail_count = $count;
         $this->_mail_array = $file_arr;
+
         return 0;
     }
 
+    /**
+     * @return int
+     */
     public function get_mail_count()
     {
         return $this->_mail_count;
     }
 
+    /**
+     * @param $file
+     * @return array
+     */
     public function build_mail_file($file)
     {
-        $arr = array(
+        $arr = [
             'maillog_id' => $this->add_maillog($file),
-            'file'       => $file,
-        );
+            'file' => $file,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $file_arr
+     * @return array
+     */
     public function mail_parse($file_arr)
     {
         $msg = '<h4>' . $this->get_constant('SUBTITLE_MAIL_PARSE') . "</h4>\n";
@@ -246,6 +302,9 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
         return $param_arr;
     }
 
+    /**
+     * @param $file_arr
+     */
     public function add_photos($file_arr)
     {
         $msg = '<h4>' . $this->get_constant('SUBTITLE_MAIL_PHOTO') . "</h4>\n";
@@ -253,16 +312,20 @@ class webphoto_edit_mail_retrieve extends webphoto_edit_mail_photo
 
         $count = $this->add_photos_from_mail($file_arr);
 
-        $msg = "<br />\n";
+        $msg = "<br>\n";
         $msg .= sprintf($this->get_constant('TEXT_MAIL_SUBMITED_FMT'), $count);
         $this->set_msg_level_user($msg, false, true);
     }
 
+    /**
+     * @return bool|null|string
+     */
     public function get_msg()
     {
         if ($this->has_msg_array()) {
             return $this->array_to_str($this->get_msg_array(), ' ');
         }
+
         return null;
     }
 

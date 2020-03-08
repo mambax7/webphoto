@@ -59,6 +59,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_index
 //=========================================================
+
+/**
+ * Class webphoto_admin_index
+ */
 class webphoto_admin_index extends webphoto_base_this
 {
     public $_checkconfig_class;
@@ -73,25 +77,37 @@ class webphoto_admin_index extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_index constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_update_check_class = webphoto_admin_update_check::getInstance($dirname, $trust_dirname);
-        $this->_checkconfig_class  = webphoto_admin_checkconfigs::getInstance($dirname, $trust_dirname);
-        $this->_workdir_class      = webphoto_inc_workdir::getSingleton($dirname, $trust_dirname);
+        $this->_checkconfig_class = webphoto_admin_checkconfigs::getInstance($dirname, $trust_dirname);
+        $this->_workdir_class = webphoto_inc_workdir::getSingleton($dirname, $trust_dirname);
 
         $this->_DIR_TRUST_MOD_UPLOADS = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname . '/uploads/' . $dirname . '/';
 
         $this->_FILE_INSTALL = $this->_TRUST_DIR . '/uploads/install.txt';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_index|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_index($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -105,10 +121,10 @@ class webphoto_admin_index extends webphoto_base_this
         if (isset($_SERVER['PATH_INFO']) && $_SERVER['PATH_INFO']) {
             restore_error_handler();
             error_reporting(E_ALL);
-            echo _AM_WEBPHOTO_PATHINFO_SUCCESS . "<br />\n";
+            echo _AM_WEBPHOTO_PATHINFO_SUCCESS . "<br>\n";
             echo 'PATH_INFO : ' . $_SERVER['PATH_INFO'];
-            echo "<br /><br />\n";
-            echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" />';
+            echo "<br><br>\n";
+            echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" >';
             xoops_cp_footer();
             exit();
         }
@@ -167,24 +183,27 @@ class webphoto_admin_index extends webphoto_base_this
 
         echo $this->_update_check_class->build_msg();
 
-        if ($this->_cat_handler->get_count_all() == 0) {
+        if (0 == $this->_catHandler->get_count_all()) {
             $msg = '<a href="' . $this->_MODULE_URL . '/admin/index.php?fct=catmanager">';
             $msg .= _WEBPHOTO_ERR_MUSTADDCATFIRST;
-            $msg .= '</a><br />';
+            $msg .= '</a><br>';
             $msg .= _WEBPHOTO_OR;
-            $msg .= '<br />';
+            $msg .= '<br>';
             $msg .= '<a href="' . $this->_MODULE_URL . '/admin/index.php?fct=import_myalbum">';
             $msg .= _AM_WEBPHOTO_PLEASE_IMPORT_MYALBUM;
-            $msg .= '</a><br />';
+            $msg .= '</a><br>';
             echo $this->build_error_msg($msg, '', false);
         }
 
         // Waiting Admission
         echo $this->build_check_waiting();
 
-        echo "<br />\n";
+        echo "<br>\n";
     }
 
+    /**
+     * @return bool
+     */
     public function _check_module_version()
     {
         $ver1 = $this->_xoops_class->get_my_module_version();
@@ -193,9 +212,13 @@ class webphoto_admin_index extends webphoto_base_this
         if ((int)$ver1 >= (int)$ver2) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function _get_module_update_url()
     {
         if (defined('XOOPS_CUBE_LEGACY')) {
@@ -203,9 +226,15 @@ class webphoto_admin_index extends webphoto_base_this
         } else {
             $str = XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $this->_DIRNAME;
         }
+
         return $str;
     }
 
+    /**
+     * @param      $dir
+     * @param bool $check_writable
+     * @return string
+     */
     public function _make_dir($dir, $check_writable = true)
     {
         $not_dir = true;
@@ -219,51 +248,54 @@ class webphoto_admin_index extends webphoto_base_this
         }
 
         if (ini_get('safe_mode')) {
-            return $this->highlight('At first create & chmod 777 "' . $dir . '" by ftp or shell.') . "<br />\n";
+            return $this->highlight('At first create & chmod 777 "' . $dir . '" by ftp or shell.') . "<br>\n";
         }
 
         if ($not_dir) {
             $ret = mkdir($dir, $this->_MKDIR_MODE);
             if (!$ret) {
-                return $this->highlight('can not create directory : <b>' . $dir . '</b>') . "<br />\n";
+                return $this->highlight('can not create directory : <b>' . $dir . '</b>') . "<br>\n";
             }
         }
 
         $ret = chmod($dir, $this->_MKDIR_MODE);
         if (!$ret) {
-            return $this->highlight('can not change mode directory : <b>' . $dir . '</b> ', $this->_MKDIR_MODE) . "<br />\n";
+            return $this->highlight('can not change mode directory : <b>' . $dir . '</b> ', $this->_MKDIR_MODE) . "<br>\n";
         }
 
-        $msg = 'create directory: <b>' . $dir . '</b>' . "<br />\n";
+        $msg = 'create directory: <b>' . $dir . '</b>' . "<br>\n";
+
         return $msg;
     }
 
+    /**
+     * @return bool
+     */
     public function _workdir_file()
     {
         $match = $this->_workdir_class->read_workdir($this->_WORK_DIR);
         switch ($match) {
             // complete match
-            case 2 :
+            case 2:
                 return true;
-
             // unmatch
-            case 1 :
+            case 1:
                 $msg = 'ERROR same work dir';
                 echo $this->build_error_msg($msg, '', false);
-                return false;
 
+                return false;
             // not yet
             case 0:
-            default :
+            default:
                 break;
         }
 
         $byte = $this->_workdir_class->write_workdir($this->_WORK_DIR);
         $file = $this->_workdir_class->get_filename();
         if ($byte > 0) {
-            echo "add work dir in workdir.txt <br />\n";
+            echo "add work dir in workdir.txt <br>\n";
         } else {
-            echo $this->highlight('can not write : <b>' . $file . '</b>') . "<br />\n";
+            echo $this->highlight('can not write : <b>' . $file . '</b>') . "<br>\n";
         }
 
         return true;
@@ -274,58 +306,57 @@ class webphoto_admin_index extends webphoto_base_this
         $url = $this->_MODULE_URL . '/admin/index.php?fct=check_file';
 
         echo '<h4>' . _AM_WEBPHOTO_FILE_CHECK . "</h4>\n";
-        echo _AM_WEBPHOTO_FILE_CHECK_DSC . "<br /><br />\n";
+        echo _AM_WEBPHOTO_FILE_CHECK_DSC . "<br><br>\n";
         echo '<a href="' . $url . '">';
         echo _AM_WEBPHOTO_FILE_CHECK;
-        echo "</a><br /><br/>\n";
+        echo "</a><br><br>\n";
     }
 
     public function _print_timeline()
     {
         $timeline_dirname = $this->get_config_by_name('timeline_dirname');
-        $TIMELINE_DIR     = XOOPS_TRUST_PATH . '/modules/' . $timeline_dirname;
-        $version_file     = $TIMELINE_DIR . '/include/version.php';
-        $isactive         = $this->_xoops_class->get_module_value_by_dirname($timeline_dirname, 'isactive');
+        $TIMELINE_DIR = XOOPS_TRUST_PATH . '/modules/' . $timeline_dirname;
+        $version_file = $TIMELINE_DIR . '/include/version.php';
+        $isactive = $this->_xoops_class->get_module_value_by_dirname($timeline_dirname, 'isactive');
 
         echo '<h4>' . _AM_WEBPHOTO_TIMELINE_MODULE . "</h4>\n";
-        echo 'dirname : ' . $timeline_dirname . "<br />\n";
+        echo 'dirname : ' . $timeline_dirname . "<br>\n";
 
         // installed
         if ($isactive) {
-
             // version file
             if (file_exists($version_file)) {
                 include_once $version_file;
-                echo 'version : ' . _C_TIMELINE_VERSION . "<br />\n";
+                echo 'version : ' . _C_TIMELINE_VERSION . "<br>\n";
 
                 // check version
                 if (_C_TIMELINE_VERSION < _C_WEBPHOTO_TIMELINE_VERSION) {
                     $msg = 'require version ' . _C_WEBPHOTO_TIMELINE_VERSION . ' or later';
-                    echo $this->highlight($msg) . "<br />\n";
+                    echo $this->highlight($msg) . "<br>\n";
                 }
 
                 // not find version file
             } else {
-                echo $this->highlight('not find version file') . "<br />\n";
+                echo $this->highlight('not find version file') . "<br>\n";
             }
 
             // not install
         } else {
-            echo $this->highlight(_AM_WEBPHOTO_MODULE_NOT_INSTALL) . "<br />\n";
+            echo $this->highlight(_AM_WEBPHOTO_MODULE_NOT_INSTALL) . "<br>\n";
         }
 
-        echo "<br/>\n";
+        echo "<br>\n";
     }
 
     public function _print_command_url()
     {
         $pass = $this->get_config_by_name('bin_pass');
-        $url  = $this->_MODULE_URL . '/bin/retrieve.php?pass=' . $pass;
+        $url = $this->_MODULE_URL . '/bin/retrieve.php?pass=' . $pass;
 
         echo '<h4>' . _AM_WEBPHOTO_TITLE_BIN . "</h4>\n";
         echo '<a href="' . $url . '">';
         echo _AM_WEBPHOTO_TEST_BIN . ': bin/retrieve.php';
-        echo "</a><br /><br/>\n";
+        echo "</a><br><br>\n";
     }
 
     // --- class end ---

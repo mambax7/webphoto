@@ -19,11 +19,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_base_ini
 //=========================================================
+
+/**
+ * Class webphoto_inc_base_ini
+ */
 class webphoto_inc_base_ini extends webphoto_inc_handler
 {
     public $_ini_class;
 
-    public $_msg_array = array();
+    public $_msg_array = [];
 
     public $_DIRNAME;
     public $_TRUST_DIRNAME;
@@ -38,12 +42,16 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
         parent::__construct();
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function init_base_ini($dirname, $trust_dirname)
     {
-        $this->_DIRNAME       = $dirname;
-        $this->_MODULE_DIR    = XOOPS_ROOT_PATH . '/modules/' . $dirname;
+        $this->_DIRNAME = $dirname;
+        $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
         $this->_TRUST_DIRNAME = $trust_dirname;
-        $this->_TRUST_DIR     = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
 
         $this->_ini_class = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
         $this->_ini_class->read_main_ini();
@@ -55,11 +63,20 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
     //---------------------------------------------------------
     // ini class
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_ini($name)
     {
         return $this->_ini_class->get_ini($name);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function explode_ini($name)
     {
         return $this->_ini_class->explode_ini($name);
@@ -68,6 +85,10 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
     //---------------------------------------------------------
     // msg
     //---------------------------------------------------------
+
+    /**
+     * @param $msg
+     */
     public function set_msg($msg)
     {
         // array type
@@ -85,6 +106,9 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
         }
     }
 
+    /**
+     * @return array
+     */
     public function get_msg_array()
     {
         return $this->_msg_array;
@@ -93,6 +117,10 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
     //---------------------------------------------------------
     // debug
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function set_debug_sql_by_ini_name($name)
     {
         $val = $this->get_ini($name);
@@ -101,6 +129,9 @@ class webphoto_inc_base_ini extends webphoto_inc_handler
         }
     }
 
+    /**
+     * @param $name
+     */
     public function set_debug_error_by_ini_name($name)
     {
         $val = $this->get_ini($name);

@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_bin_base
 // base on happy_linux_bin_base
 //=========================================================
+
+/**
+ * Class webphoto_bin_base
+ */
 class webphoto_bin_base
 {
     public $_preload_class;
@@ -30,42 +34,42 @@ class webphoto_bin_base
     public $_X_MAILER = 'XOOPS';
 
     // test parameter
-    public $_mode       = '';
+    public $_mode = '';
     public $_flag_print = false;
     public $_flag_write = true;
     public $_flag_chmod = false;
 
     // command option
-    public $_pass   = null;
-    public $_limit  = 10;
+    public $_pass = null;
+    public $_limit = 10;
     public $_offset = 0;
 
     public $_FLAG_PRINT_WEB = true;
     public $_FLAG_WRITE_WEB = true;
     public $_FLAG_CHMOD_WEB = true;
-    public $_LIMIT_WEB      = 10;
+    public $_LIMIT_WEB = 10;
 
     public $_FLAG_PRINT_COMMAND = false;
     public $_FLAG_WRITE_COMMAND = true;
     public $_FLAG_CHMOD_COMMAND = false;
-    public $_LIMIT_COMMAND      = 0;   // unlimited
+    public $_LIMIT_COMMAND = 0;   // unlimited
 
     // xoops parameter
-    public $_sitename  = null;
+    public $_sitename = null;
     public $_adminmail = null;
-    public $_CHARSET   = null;
+    public $_CHARSET = null;
 
     // command parameter
     public $_opt_arr = null;
 
     // result file
-    public $_SUB_DIR    = 'cache';
+    public $_SUB_DIR = 'cache';
     public $_GOTO_ADMIN = 'goto admin index';
 
     public $_filename = null;
     public $_file_admin_index;
 
-    public $_mail_to    = null;
+    public $_mail_to = null;
     public $_mail_title = null;
     public $_mail_level = 0;
 
@@ -74,18 +78,28 @@ class webphoto_bin_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_bin_base constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_init($dirname, $trust_dirname);
 
-        $this->_DIRNAME       = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_TRUST_DIRNAME = $trust_dirname;
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function _init($dirname, $trust_dirname)
     {
         $xoops_class = webphoto_xoops_base::getInstance();
-        $LANGUAGE    = $xoops_class->get_language();
+        $LANGUAGE = $xoops_class->get_language();
 
         // read lang file
         $d3_class = webphoto_d3_optional::getInstance();
@@ -123,6 +137,9 @@ class webphoto_bin_base
         $this->_preload_class->init($this->_DIRNAME, $this->_TRUST_DIRNAME);
     }
 
+    /**
+     * @return bool
+     */
     public function preload_constant()
     {
         $arr = $this->_preload_class->get_preload_const_array();
@@ -131,10 +148,10 @@ class webphoto_bin_base
         }
 
         foreach ($arr as $k => $v) {
-            $local_name = strtoupper('_' . $k);
+            $local_name = mb_strtoupper('_' . $k);
 
             // array type
-            if (strpos($k, 'array_') === 0) {
+            if (0 === mb_strpos($k, 'array_')) {
                 $temp = $this->str_to_array($v, '|');
                 if (is_array($temp) && count($temp)) {
                     $this->$local_name = $temp;
@@ -147,33 +164,49 @@ class webphoto_bin_base
         }
     }
 
+    /**
+     * @param $str
+     * @param $pattern
+     * @return array
+     */
     public function str_to_array($str, $pattern)
     {
         $arr1 = explode($pattern, $str);
-        $arr2 = array();
+        $arr2 = [];
         foreach ($arr1 as $v) {
             $v = trim($v);
-            if ($v == '') {
+            if ('' == $v) {
                 continue;
             }
             $arr2[] = $v;
         }
+
         return $arr2;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_sitename($val)
     {
         $this->_sitename = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_adminmail($val)
     {
         $this->_adminmail = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_charset($val)
     {
         $this->_CHARSET = $val;
@@ -189,27 +222,32 @@ class webphoto_bin_base
         if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD']) {
             $this->set_env_param_web();
 
-            // command line
+        // command line
         } else {
             $this->set_env_param_cmd();
         }
     }
 
+    /**
+     * @param $pass
+     * @return bool
+     */
     public function check_pass($pass)
     {
         if ($pass && ($pass == $this->_pass)) {
             return true;
         }
+
         return false;
     }
 
     public function set_env_param_web()
     {
-        $this->_mode       = 'web';
+        $this->_mode = 'web';
         $this->_flag_print = $this->_FLAG_PRINT_WEB;
         $this->_flag_write = $this->_FLAG_WRITE_WEB;
         $this->_flag_chmod = $this->_FLAG_CHMOD_WEB;
-        $this->_limit      = $this->_LIMIT_WEB;
+        $this->_limit = $this->_LIMIT_WEB;
 
         $this->_opt_arr = $_GET;
 
@@ -224,11 +262,11 @@ class webphoto_bin_base
 
     public function set_env_param_cmd()
     {
-        $this->_mode       = 'command';
+        $this->_mode = 'command';
         $this->_flag_print = $this->_FLAG_PRINT_COMMAND;
         $this->_flag_write = $this->_FLAG_WRITE_COMMAND;
         $this->_flag_chmod = $this->_FLAG_CHMOD_COMMAND;
-        $this->_limit      = $this->_LIMIT_COMMAND;
+        $this->_limit = $this->_LIMIT_COMMAND;
 
         $this->set_cmd_option();
 
@@ -247,9 +285,12 @@ class webphoto_bin_base
         }
     }
 
+    /**
+     * @return array
+     */
     public function set_cmd_option()
     {
-        $arr = array();
+        $arr = [];
 
         if ($_SERVER['argc'] > 1) {
             for ($i = 1; $i < $_SERVER['argc']; ++$i) {
@@ -262,22 +303,33 @@ class webphoto_bin_base
         }
 
         $this->_opt_arr = $arr;
+
         return $arr;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function isset_opt($key)
     {
         if (isset($this->_opt_arr[$key])) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function get_opt($key)
     {
         if (isset($this->_opt_arr[$key])) {
             return $this->_opt_arr[$key];
         }
+
         return false;
     }
 
@@ -294,6 +346,9 @@ class webphoto_bin_base
         $this->print_write_data($this->print_write_html_footer());
     }
 
+    /**
+     * @return string
+     */
     public function get_html_header()
     {
         $text = <<<END_OF_TEXT
@@ -303,32 +358,41 @@ class webphoto_bin_base
 <title> $this->_TITLE </title>
 </head><body>
 <h3> $this->_TITLE </h3>
-<hr />
+<hr>
 END_OF_TEXT;
 
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function get_html_footer()
     {
         $url_admin = XOOPS_URL . '/' . $this->_file_admin_index;
 
         $text = <<<END_OF_TEXT
-<br />
-<hr />
-<a href="$url_admin">$this->_GOTO_ADMIN</a><br />
+<br>
+<hr>
+<a href="$url_admin">$this->_GOTO_ADMIN</a><br>
 </head></html>
 END_OF_TEXT;
 
         return $text;
     }
 
+    /**
+     * @param $data
+     */
     public function print_write_data($data)
     {
         $this->print_data($data);
         $this->write_data($data);
     }
 
+    /**
+     * @param $data
+     */
     public function print_data($data)
     {
         if ($this->_flag_print) {
@@ -336,6 +400,9 @@ END_OF_TEXT;
         }
     }
 
+    /**
+     * @param $data
+     */
     public function write_data($data)
     {
         // dummy
@@ -344,29 +411,51 @@ END_OF_TEXT;
     //---------------------------------------------------------
     // mail
     //---------------------------------------------------------
+
+    /**
+     * @param $content
+     * @param $level
+     * @return bool
+     */
     public function send_mail_content_by_level($content, $level)
     {
         if ($this->_mail_level >= $level) {
             return $this->send_mail_content($content);
         }
+
         return true;    // no action
     }
 
+    /**
+     * @param $content
+     * @return bool
+     */
     public function send_mail_content($content)
     {
         return $this->send_mail($this->_mail_to, $this->_mail_title, $content);
     }
 
+    /**
+     * @param $mailto
+     * @param $title
+     * @param $content
+     * @return bool
+     */
     public function send_mail($mailto, $title, $content)
     {
         $subject = '[' . $this->_sitename . '] ' . $title;
-        $body    = $this->build_mail_body($title, $content);
-        $header  = 'From: ' . $this->_adminmail . " \n";
+        $body = $this->build_mail_body($title, $content);
+        $header = 'From: ' . $this->_adminmail . " \n";
         $header .= 'X-Mailer: ' . $this->_X_MAILER . " \n";
 
         return $this->send_mail_mb($mailto, $subject, $body, $header);
     }
 
+    /**
+     * @param $title
+     * @param $body
+     * @return string
+     */
     public function build_mail_body($title, $body)
     {
         $siteurl = XOOPS_URL . '/';
@@ -396,27 +485,44 @@ END_OF_TEXT;
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_mailer($val)
     {
         $this->_X_MAILER = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mail_to($val)
     {
         $this->_mail_to = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mail_title($val)
     {
         $this->_mail_title = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mail_level($val)
     {
         $this->_mail_level = (int)$val;
     }
 
     // not include XOOPS_URL
+
+    /**
+     * @param $file
+     */
     public function set_filename($file)
     {
         $this->_filename = $file;
@@ -430,29 +536,47 @@ END_OF_TEXT;
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param null $encoding
+     * @return bool|string
+     */
     public function set_internal_encoding($encoding = null)
     {
         if (function_exists('mb_internal_encoding')) {
             if ($encoding) {
                 return mb_internal_encoding($encoding);
-            } else {
-                return mb_internal_encoding();
             }
+
+            return mb_internal_encoding();
         }
+
         return true;    // dummy
     }
 
+    /**
+     * @param null $language
+     * @return bool|string
+     */
     public function set_mail_language($language = null)
     {
         if (function_exists('mb_language')) {
             if ($language) {
                 return mb_language($language);
-            } else {
-                return mb_language();
             }
+
+            return mb_language();
         }
     }
 
+    /**
+     * @param      $mailto
+     * @param      $subject
+     * @param      $message
+     * @param null $headers
+     * @param null $parameter
+     * @return bool
+     */
     public function send_mail_mb($mailto, $subject, $message, $headers = null, $parameter = null)
     {
         if (function_exists('mb_send_mail')) {
@@ -460,15 +584,16 @@ END_OF_TEXT;
                 return mb_send_mail($mailto, $subject, $message, $headers, $parameter);
             } elseif ($headers) {
                 return mb_send_mail($mailto, $subject, $message, $headers);
-            } else {
-                return mb_send_mail($mailto, $subject, $message);
             }
+
+            return mb_send_mail($mailto, $subject, $message);
         }
         if ($parameter) {
             return mail($mailto, $subject, $message, $headers, $parameter);
         } elseif ($headers) {
             return mail($mailto, $subject, $message, $headers);
         }
+
         return mail($mailto, $subject, $message);
     }
 

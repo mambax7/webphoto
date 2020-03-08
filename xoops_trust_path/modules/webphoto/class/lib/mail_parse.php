@@ -17,15 +17,19 @@
 // class webphoto_lib_mail_parse
 // base on mailbbs's pop.php
 //=========================================================
+
+/**
+ * Class webphoto_lib_mail_parse
+ */
 class webphoto_lib_mail_parse
 {
     public $_CHARSET_LOCAL = null;
-    public $_CHARSET_FROM  = null;
+    public $_CHARSET_FROM = null;
 
     public $_result = null;
     public $_bodies = null;
     public $_attach = null;
-    public $_gps    = null;
+    public $_gps = null;
 
     //---------------------------------------------------------
     // constructor
@@ -35,18 +39,26 @@ class webphoto_lib_mail_parse
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_mail_parse
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_lib_mail_parse();
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_charset_local($val)
     {
         $this->_CHARSET_LOCAL = $val;
@@ -55,13 +67,18 @@ class webphoto_lib_mail_parse
     //---------------------------------------------------------
     // parse_mail
     //---------------------------------------------------------
+
+    /**
+     * @param $mail_text
+     * @return bool
+     */
     public function parse_mail($mail_text)
     {
         $this->_result = null;
-        $this->_bodies = array();
-        $this->_gps    = null;
+        $this->_bodies = [];
+        $this->_gps = null;
 
-        $attach_arr = array();
+        $attach_arr = [];
 
         list($head, $body) = $this->split_mime_part($mail_text);
         if (empty($head) || empty($body)) {
@@ -79,25 +96,25 @@ class webphoto_lib_mail_parse
 
         foreach ($multi_part as $part) {
             $ret = $this->parse_multi_part($part);
-            if (($ret == 2) && is_array($this->_attach)) {
+            if ((2 == $ret) && is_array($this->_attach)) {
                 $attach_arr[] = $this->_attach;
             }
         }
 
-        $this->_result = array(
-            'mail_to'     => $this->parse_mail_to($head),
-            'mail_from'   => $this->parse_mail_from($head),
-            'reply_to'    => $this->parse_reply_to($head),
+        $this->_result = [
+            'mail_to' => $this->parse_mail_to($head),
+            'mail_from' => $this->parse_mail_from($head),
+            'reply_to' => $this->parse_reply_to($head),
             'return_path' => $this->parse_return_path($head),
-            'mailer'      => $this->parse_mailer($head),
-            'charset'     => $this->parse_charset($head),
-            'subject'     => $this->parse_subject($head),
-            'date'        => $date,
-            'datetime'    => $this->build_datetime($date),
-            'attaches'    => $attach_arr,
-            'bodies'      => $this->_bodies,
-            'gps'         => $this->_gps,
-        );
+            'mailer' => $this->parse_mailer($head),
+            'charset' => $this->parse_charset($head),
+            'subject' => $this->parse_subject($head),
+            'date' => $date,
+            'datetime' => $this->build_datetime($date),
+            'attaches' => $attach_arr,
+            'bodies' => $this->_bodies,
+            'gps' => $this->_gps,
+        ];
 
         return true;
     }
@@ -107,15 +124,22 @@ class webphoto_lib_mail_parse
         return $this->_result;
     }
 
+    /**
+     * @param $head
+     */
     public function parse_mailer($head)
     {
         // X-Mailer: XOOPS Cube
         if (preg_match("/(X-Mailer|X-Mail-Agent):[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $match[2];
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     */
     public function parse_charset($head)
     {
         // normal
@@ -128,127 +152,189 @@ class webphoto_lib_mail_parse
             if ($charset) {
                 $this->_CHARSET_FROM = $charset;
             }
+
             return $charset;
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     */
     public function parse_date($head)
     {
         // Date: Fri, 1 Aug 2008 10:44:39 +0900 (JST)
         if (preg_match("/Date:[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $match[1];
         }
+
         return null;
     }
 
+    /**
+     * @param $date
+     * @return false|int
+     */
     public function build_datetime($date)
     {
         $time = strtotime($date);
         if ($time <= 0) {
             $time = time();
         }
+
         return $time;
     }
 
+    /**
+     * @param $head
+     * @return null|string
+     */
     public function parse_subject($head)
     {
         // Subject: abc
         if (preg_match("/\nSubject:[ \t]*(.+?)(\n[\w-_]+:|$)/is", $head, $match)) {
-            $subject = str_replace(array("\r", "\n"), '', $match[1]);
+            $subject = str_replace(["\r", "\n"], '', $match[1]);
             $subject = $this->remove_space_between_encode($subject);
             list($subject, $flag_b) = $this->decode_if_mime_b($subject);
             list($subject, $flag_q) = $this->decode_if_mime_q($subject);
             if (!$flag_b && !$flag_q) {
                 $subject = $this->convert_to_local($subject);
             }
+
             return trim($subject);
         }
+
         return null;
     }
 
+    /**
+     * @param $str
+     * @return array
+     */
     public function decode_if_mime_b($str)
     {
-        $flag               = false;
+        $flag = false;
         $MIME_B_FORMAT_EREG = "(.*)=\?(iso-[^\?]+)\?B\?([^\?]+)\?=(.*)";
         while (preg_match('#' . $MIME_B_FORMAT_EREG . '#', $str, $regs)) {
-            $flag   = true;
+            $flag = true;
             $decode = $this->convert_to_local(base64_decode($regs[3]), $regs[2]);
-            $str    = $regs[1] . $decode . $regs[4];
+            $str = $regs[1] . $decode . $regs[4];
         }
-        return array($str, $flag);
+
+        return [$str, $flag];
     }
 
+    /**
+     * @param $str
+     * @return array
+     */
     public function decode_if_mime_q($str)
     {
-        $flag               = false;
+        $flag = false;
         $MIME_Q_FORMAT_EREG = "(.*)=\?(iso-[^\?]+)\?Q\?([^\?]+)\?=(.*)";
         while (eregi($MIME_Q_FORMAT_EREG, $str, $regs)) {
-            $flag   = true;
+            $flag = true;
             $decode = $this->convert_to_local(quoted_printable_parse($regs[3]), $regs[2]);
-            $str    = $regs[1] . $decode . $regs[3];
+            $str = $regs[1] . $decode . $regs[3];
         }
-        return array($str, $flag);
+
+        return [$str, $flag];
     }
 
+    /**
+     * @param $head
+     */
     public function parse_mail_to($head)
     {
         // To: user@exsample.com
         if (preg_match("/(?:^|\n|\r)To:[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $match[1];
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     * @return mixed|null
+     */
     public function parse_mail_from($head)
     {
         // From: user@exsample.com
         if (preg_match("/From:[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $this->parse_mail_addr($match[1]);
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     * @return mixed|null
+     */
     public function parse_reply_to($head)
     {
         // Reply-To: user@exsample.com
         if (preg_match("/Reply-To:[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $this->parse_mail_addr($match[1]);
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     * @return mixed|null
+     */
     public function parse_return_path($head)
     {
         // Return-Path: user@exsample.com
         if (preg_match("/Return-Path:[ \t]*([^\r\n]+)/i", $head, $match)) {
             return $this->parse_mail_addr($match[1]);
         }
+
         return null;
     }
 
+    /**
+     * @param $addr
+     * @return mixed|null
+     */
     public function parse_mail_addr($addr)
     {
         $MAIL_FORMAT_EREG = "[-!#$%&\'*+\\./0-9A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+";
-        $match            = array();
+        $match = [];
         if (eregi($MAIL_FORMAT_EREG, $addr, $match)) {
             return $match[0];
         }
+
         return null;
     }
 
+    /**
+     * @param $head
+     * @return null|string
+     */
     public function parse_content_type($head)
     {
         // Content-Type: image/jpeg;
         if (preg_match("/Content-type: *([^;\r\n]+)/i", $head, $match)) {
             return trim($match[1]);
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // multipart
     //---------------------------------------------------------
+
+    /**
+     * @param $head
+     * @param $body
+     * @return array[]|false|null|string[]
+     */
     public function split_multipart($head, $body)
     {
         $part = null;
@@ -264,9 +350,14 @@ class webphoto_lib_mail_parse
                 $part = preg_split("/\r\n--" . urlencode($boureg2[1]) . '-?-?/', $body);
             }
         }
+
         return $part;
     }
 
+    /**
+     * @param $part
+     * @return int
+     */
     public function parse_multi_part($part)
     {
         list($head, $body) = $this->parse_multi_head_body($part);
@@ -275,7 +366,7 @@ class webphoto_lib_mail_parse
         }
 
         $charset = $this->parse_charset($head);
-        $type    = $this->parse_content_type($head);
+        $type = $this->parse_content_type($head);
 
         // maybe boundary
         if (empty($type)) {
@@ -284,31 +375,50 @@ class webphoto_lib_mail_parse
 
         if ($this->is_multi_text($type)) {
             $this->parse_multi_text($head, $body, $charset, $type);
+
             return 1;   // body
         }
 
         $this->parse_multi_attach($head, $body, $charset, $type);
+
         return 2;   // attach
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     public function is_multi_text($type)
     {
         if (preg_match('/text/', $type)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $multi
+     * @return array
+     */
     public function parse_multi_head_body($multi)
     {
         list($head, $body_1) = $this->split_mime_part($multi);
         $body = preg_replace("/\r\n\.\r\n$/", '', $body_1);
-        return array($head, $body);
+
+        return [$head, $body];
     }
 
+    /**
+     * @param $head
+     * @param $body
+     * @param $charset
+     * @param $type
+     * @return bool
+     */
     public function parse_multi_text($head, $body, $charset, $type)
     {
-        $html  = null;
+        $html = null;
         $plane = null;
 
         $text = $this->decode_body($head, $body);
@@ -316,9 +426,8 @@ class webphoto_lib_mail_parse
         $text = $this->remove_boundary($text);
 
         if (preg_match('/html/', $type)
-            || preg_match('#^<html>.*</html>$#is', $text)
-        ) {
-            $html  = $text;
+            || preg_match('#^<html>.*</html>$#is', $text)) {
+            $html = $text;
             $plane = preg_replace('#<head>.*</head>#is', '', $html);
             $plane = strip_tags($plane);
         }
@@ -328,17 +437,22 @@ class webphoto_lib_mail_parse
             $this->_gps = $gps;
         }
 
-        $this->_bodies[] = array(
-            'text'    => $text,
-            'html'    => $html,
-            'plane'   => $plane,
+        $this->_bodies[] = [
+            'text' => $text,
+            'html' => $html,
+            'plane' => $plane,
             'charset' => $charset,
-            'type'    => $type,
-        );
+            'type' => $type,
+        ];
 
         return true;
     }
 
+    /**
+     * @param $head
+     * @param $body
+     * @return bool|string
+     */
     public function decode_body($head, $body)
     {
         if (preg_match('/Content-Transfer-Encoding:.*base64/', $head)) {
@@ -347,27 +461,41 @@ class webphoto_lib_mail_parse
         if (preg_match('/Content-Transfer-Encoding:.*quoted-printable/', $head)) {
             $body = quoted_printable_parse($body);
         }
+
         return $body;
     }
 
+    /**
+     * @param $text
+     * @param $type
+     * @return bool
+     */
     public function parse_body_html_plane($text, $type)
     {
         if (preg_match('/html/', $type)
-            || preg_match('#^<html>.*</html>$#is', $text)
-        ) {
-            $this->_text_html       = $text;
-            $text                   = preg_replace('#<head>.*</head>#is', '', $text);
-            $text                   = strip_tags($text);
+            || preg_match('#^<html>.*</html>$#is', $text)) {
+            $this->_text_html = $text;
+            $text = preg_replace('#<head>.*</head>#is', '', $text);
+            $text = strip_tags($text);
             $this->_text_html_plane = $text;
         }
+
         return true;
     }
 
+    /**
+     * @param $text
+     * @return null|string|string[]
+     */
     public function remove_boundary($text)
     {
         return preg_replace('/Content-type: multipart/appledouble;[[:space:]]boundary=(.*)/', '', $text);
     }
 
+    /**
+     * @param $text
+     * @return null|string|string[]
+     */
     public function remove_space_between_encode($text)
     {
         return preg_replace("/\?=[\s]+?=\?/", '?==?', $text);
@@ -376,39 +504,48 @@ class webphoto_lib_mail_parse
     //---------------------------------------------------------
     // gps
     //---------------------------------------------------------
+
+    /**
+     * @param $data
+     * @return array
+     */
     public function parse_gps_docomo($data)
     {
         // http://www.nttdocomo.co.jp/service/imode/make/content/gps/index.html
         // http://www.docomo.co.jp/gps.cgi?lat=%2B35.00.35.600&lon=%2B135.41.35.600&geo=wgs84&x-acc=3
         // http://docomo.ne.jp/cp/map.cgi?lat=%2B35.00.35.600&lon=%2B135.41.35.600&geo=wgs84
 
-        $flag       = false;
-        $gmap_lat   = null;
-        $gmap_lon   = null;
+        $flag = false;
+        $gmap_lat = null;
+        $gmap_lon = null;
         $docomo_lat = null;
         $docomo_lon = null;
 
         $pattern = '/http:\/\/.*?docomo.*jp\/.*lat=(%2B[\d\.]+)&lon=(%2B[\d\.]+)/i';
 
         if (preg_match($pattern, $data, $match)) {
-            $flag       = true;
+            $flag = true;
             $docomo_lat = rawurldecode($match[1]);
             $docomo_lon = rawurldecode($match[2]);
-            $gmap_lat   = $this->parse_gps_docomo_lonlat($docomo_lat);
-            $gmap_lon   = $this->parse_gps_docomo_lonlat($docomo_lon);
+            $gmap_lat = $this->parse_gps_docomo_lonlat($docomo_lat);
+            $gmap_lon = $this->parse_gps_docomo_lonlat($docomo_lon);
         }
 
-        $arr = array(
-            'flag'             => $flag,
-            'gmap_latitude'    => $gmap_lat,
-            'gmap_longitude'   => $gmap_lon,
-            'docomo_latitude'  => $docomo_lat,
+        $arr = [
+            'flag' => $flag,
+            'gmap_latitude' => $gmap_lat,
+            'gmap_longitude' => $gmap_lon,
+            'docomo_latitude' => $docomo_lat,
             'docomo_longitude' => $docomo_lon,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $str
+     * @return float|int
+     */
     public function parse_gps_docomo_lonlat($str)
     {
         $arr = explode('.', $str);
@@ -425,39 +562,57 @@ class webphoto_lib_mail_parse
         if (isset($arr[3])) {
             $fig += (float)$arr[3] / 3600000;
         }
+
         return $fig;
     }
 
     //---------------------------------------------------------
     // attach
     //---------------------------------------------------------
+
+    /**
+     * @param $head
+     * @param $body
+     * @param $charset
+     * @param $type
+     * @return bool
+     */
     public function parse_multi_attach($head, $body, $charset, $type)
     {
         $this->_attach = null;
 
         $filename = $this->parse_attach_filename($head);
-        $content  = $this->decode_attach_content($head, $body);
+        $content = $this->decode_attach_content($head, $body);
 
         if (empty($content)) {
             return false;
         }
 
-        $this->_attach = array(
+        $this->_attach = [
             'filename' => $filename,
-            'content'  => $content,
-            'charset'  => $charset,
-            'type'     => $type,
-        );
+            'content' => $content,
+            'charset' => $charset,
+            'type' => $type,
+        ];
 
         return true;
     }
 
+    /**
+     * @param $head
+     * @return null|string|string[]
+     */
     public function parse_attach_filename($head)
     {
         $filename = $this->decode_attach_filename($head);
+
         return $this->convert_to_local($filename);
     }
 
+    /**
+     * @param $head
+     * @return mixed|null|string|string[]
+     */
     public function decode_attach_filename($head)
     {
         $filename = null;
@@ -471,15 +626,25 @@ class webphoto_lib_mail_parse
         return $filename;
     }
 
+    /**
+     * @param $head
+     * @param $body
+     * @return bool|null|string
+     */
     public function decode_attach_content($head, $body)
     {
         $val = null;
         if (preg_match('/Content-Transfer-Encoding:.*base64/i', $head)) {
             $val = base64_decode($body);
         }
+
         return $val;
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     public function split_mime_part($data)
     {
         $head = null;
@@ -492,7 +657,7 @@ class webphoto_lib_mail_parse
             $body = $part[1];
         }
 
-        return array($head, $body);
+        return [$head, $body];
     }
 
     //---------------------------------------------------------
@@ -501,8 +666,7 @@ class webphoto_lib_mail_parse
     public function set_internal_encoding()
     {
         if (function_exists('iconv_get_encoding')
-            && function_exists('iconv_set_encoding')
-        ) {
+            && function_exists('iconv_set_encoding')) {
             $current = iconv_get_encoding('internal_encoding');
 
             if (PHP_VERSION_ID < 50600) {
@@ -510,7 +674,7 @@ class webphoto_lib_mail_parse
             } else {
                 $ret = ini_set('default_charset', $this->_CHARSET_LOCAL);
             }
-            if ($ret === false) {
+            if (false === $ret) {
                 if (PHP_VERSION_ID < 50600) {
                     iconv_set_encoding('internal_encoding', $current);
                 } else {
@@ -521,17 +685,22 @@ class webphoto_lib_mail_parse
 
         if (function_exists('mb_internal_encoding')) {
             $current = mb_internal_encoding();
-            $ret     = mb_internal_encoding($this->_CHARSET_LOCAL);
-            if ($ret === false) {
+            $ret = mb_internal_encoding($this->_CHARSET_LOCAL);
+            if (false === $ret) {
                 mb_internal_encoding($current);
             }
         }
     }
 
+    /**
+     * @param      $str
+     * @param null $charset
+     * @return null|string|string[]
+     */
     public function convert_to_local($str, $charset = null)
     {
         $charset_iconv = null;
-        $charset_mb    = null;
+        $charset_mb = null;
 
         if ($charset) {
             $charset_iconv = $charset;

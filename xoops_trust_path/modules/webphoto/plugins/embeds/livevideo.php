@@ -17,21 +17,34 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //
 // <embed src="http://www.livevideo.com/flvplayer/embed/75A082A560464FAEB411D06417E495C4" type="application/x-shockwave-flash" quality="high" WIDTH="445" HEIGHT="369" wmode="transparent"></embed>
 //=========================================================
+
+/**
+ * Class webphoto_embed_livevideo
+ */
 class webphoto_embed_livevideo extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('livevideo');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $movie = 'http://www.livevideo.com/flvplayer/embed/' . $src;
-        $embed = '<embed src="' . $movie . '" type="application/x-shockwave-flash" quality="high" WIDTH="' . $width . '" HEIGHT="' . $height . '" wmode="transparent" />';
+        $embed = '<embed src="' . $movie . '" type="application/x-shockwave-flash" quality="high" WIDTH="' . $width . '" HEIGHT="' . $height . '" wmode="transparent" >';
+
         return $embed;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc_span('http://www.livevideo.com/video/mrmercedesman/', 'F6D925B31BAB4DF080B176AABD5AFD17', '/surrounding-your-internets-.aspx');

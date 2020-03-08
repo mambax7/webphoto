@@ -13,23 +13,38 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_rss_view
 //=========================================================
+
+/**
+ * Class webphoto_admin_rss_view
+ */
 class webphoto_admin_rss_view extends webphoto_rss
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_rss_view constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_rss_view|\webphoto_lib_rss|\webphoto_lib_xml|\webphoto_rss
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_rss_view($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 

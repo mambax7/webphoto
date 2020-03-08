@@ -19,14 +19,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 }
 
 //=========================================================
-// class webphoto_syno_handler
+// class webphoto_synoHandler
 //=========================================================
-class webphoto_syno_handler extends webphoto_handler_base_ini
-{
 
+/**
+ * Class webphoto_synoHandler
+ */
+class webphoto_synoHandler extends webphoto_handler_base_ini
+{
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_synoHandler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,38 +43,48 @@ class webphoto_syno_handler extends webphoto_handler_base_ini
         $this->set_id_name('syno_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_synoHandler
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_syno_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
-
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'syno_id'          => 0,
+        $arr = [
+            'syno_id' => 0,
             'syno_time_create' => $time_create,
             'syno_time_update' => $time_update,
-            'syno_weight'      => 0,
-            'syno_key'         => '',
-            'syno_value'       => '',
-        );
+            'syno_weight' => 0,
+            'syno_key' => '',
+            'syno_value' => '',
+        ];
 
         return $arr;
     }
@@ -73,6 +92,11 @@ class webphoto_syno_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -106,6 +130,11 @@ class webphoto_syno_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -126,15 +155,28 @@ class webphoto_syno_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // rows
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_orderby_weight_asc($limit = 0, $offset = 0)
     {
         $orderby = 'syno_weight ASC, syno_id ASC';
+
         return $this->get_rows_by_orderby($orderby, $limit = 0, $offset = 0);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_orderby_weight_desc($limit = 0, $offset = 0)
     {
         $orderby = 'syno_weight DESC, syno_id DESC';
+
         return $this->get_rows_by_orderby($orderby, $limit = 0, $offset = 0);
     }
 

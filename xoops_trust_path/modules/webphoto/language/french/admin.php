@@ -97,7 +97,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     define('_AM_WEBPHOTO_ERR_SAMEDIR', "Erreur: les chemins d'accès aux photos et aux miniatures doivent être différent.");
     define('_AM_WEBPHOTO_LNK_CHECKGD2', 'Vérifiez que la librairie GD2 fonctionne correctement.');
     define('_AM_WEBPHOTO_CHECKGD2', "Si la page ne s'affiche pas correctement, n'utilisez pas la librairie GD en mode 'True colors'.");
-    define('_AM_WEBPHOTO_GD2SUCCESS', "Test réussi !<br />Votre environnement devrait vous permettre d'utiliser la librairie GD2 en mode 'True colors'.");
+    define('_AM_WEBPHOTO_GD2SUCCESS', "Test réussi !<br>Votre environnement devrait vous permettre d'utiliser la librairie GD2 en mode 'True colors'.");
 
     define('_AM_WEBPHOTO_H4_PHOTOLINK', 'Vérifier les liens des photos et des miniatures');
     define('_AM_WEBPHOTO_NOWCHECKING', 'Vérification en cours.');
@@ -320,13 +320,13 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     // manage
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_MANAGE_DESC', "<b>Attention</b><br />Le présent gestionnaire ne concerne que ce tableau<br />Il n'affecte pas les autres tableaux");
+    define('_AM_WEBPHOTO_MANAGE_DESC', "<b>Attention</b><br>Le présent gestionnaire ne concerne que ce tableau<br>Il n'affecte pas les autres tableaux");
     define('_AM_WEBPHOTO_ERR_NO_RECORD', "Il n'y a aucun enregistrement");
 
     //---------------------------------------------------------
     // cat manager
     //---------------------------------------------------------
-    //define("_AM_WEBPHOTO_DSC_CAT_IMGPATH" , "Veuillez télécharger l'image souhaitée pour la Catégorie<br />et indiquer le chemin depuis le dossier d'installation de Xoops.<br />(le premier caractère doit être '/'.)<br />Si rien n'est indiqué, l'icône figurant un dossier sera employée." ) ;
+    //define("_AM_WEBPHOTO_DSC_CAT_IMGPATH" , "Veuillez télécharger l'image souhaitée pour la Catégorie<br>et indiquer le chemin depuis le dossier d'installation de Xoops.<br>(le premier caractère doit être '/'.)<br>Si rien n'est indiqué, l'icône figurant un dossier sera employée." ) ;
     //define("_AM_WEBPHOTO_OPT_CAT_PERM_POST_ALL" , "Tous les Groupes" ) ;
 
     //---------------------------------------------------------
@@ -341,7 +341,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     define('_AM_WEBPHOTO_PATHINFO_LINK', "Vérifier que 'Pathinfo' fonctionne correctement sur le serveur");
     define('_AM_WEBPHOTO_PATHINFO_DSC', "Si la page ne s'affiche pas correctement, vous ne devrez pas employer 'Pathinfo' ");
-    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', "Test réussi!<br />Votre environnement devrait vous permettre d'utiliser 'Pathinfo'");
+    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', "Test réussi!<br>Votre environnement devrait vous permettre d'utiliser 'Pathinfo'");
     define('_AM_WEBPHOTO_CAP_REDO_EXIF', 'Acquérir les données Exif');
     define('_AM_WEBPHOTO_RADIO_REDO_EXIF_TRY', "Acquérir les données Exif lorsque cela n'est pas établi");
     define('_AM_WEBPHOTO_RADIO_REDO_EXIF_ALWAYS', 'Toujours acquérir les données Exif');
@@ -431,7 +431,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_DSC', 'Veuillez sauvegarder vos modifications avant');
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_LINK', 'Prévisualiser la source');
     define('_AM_WEBPHOTO_PLAYER_NO_ITEM', "Il n'y a aucun élément à lire");
-    define('_AM_WEBPHOTO_PLAYER_WARNING', 'AVERTISSEMENT : êtes-vous certain de vouloir supprimer ce lecteur ?<br />Veuillez modifier au préalable tous les éléments utilisant ce lecteur !');
+    define('_AM_WEBPHOTO_PLAYER_WARNING', 'AVERTISSEMENT : êtes-vous certain de vouloir supprimer ce lecteur ?<br>Veuillez modifier au préalable tous les éléments utilisant ce lecteur !');
     define('_AM_WEBPHOTO_PLAYER_ERR_EXIST', 'Erreur : un titre identique est déjà enregistré dans la base de données !');
     define('_AM_WEBPHOTO_BUTTON_CLONE', 'Cloner');
 
@@ -440,7 +440,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     // cat form
     define('_AM_WEBPHOTO_CAP_CAT_SELECT', "Sélectionner la Catégorie de l'image");
-    define('_AM_WEBPHOTO_DSC_CAT_PATH', "Indiquez le chemin d'accès depuis le répertoire d'installation de Xoops.<br />(le premier caractère doit être '/'.)");
+    define('_AM_WEBPHOTO_DSC_CAT_PATH', "Indiquez le chemin d'accès depuis le répertoire d'installation de Xoops.<br>(le premier caractère doit être '/'.)");
     define('_AM_WEBPHOTO_DSC_CAT_FOLDER', "Affiche l'icône figurant un dossier si aucune information n'est entrée");
 
     //---------------------------------------------------------

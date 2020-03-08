@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_gicon_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_gicon_table_manage
+ */
 class webphoto_admin_gicon_table_manage extends webphoto_lib_manage
 {
     public $_URL_SIZE = 80;
@@ -26,21 +30,33 @@ class webphoto_admin_gicon_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_gicon_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_gicon_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('GICON_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('gicon_title', 'gicon_image_path'));
+        $this->set_manage_list_column_array(['gicon_title', 'gicon_image_path']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_gicon_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_gicon_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -55,33 +71,41 @@ class webphoto_admin_gicon_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'gicon_id'            => $this->_post_class->get_post_get_int('gicon_id'),
-            'gicon_title'         => $this->_post_class->get_post_text('gicon_title'),
-            'gicon_image_url'     => $this->_post_class->get_post_url('gicon_image_url'),
-            'gicon_image_path'    => $this->_post_class->get_post_text('gicon_image_path'),
-            'gicon_image_ext'     => $this->_post_class->get_post_text('gicon_image_ext'),
-            'gicon_shadow_url'    => $this->_post_class->get_post_url('gicon_shadow_url'),
-            'gicon_shadow_path'   => $this->_post_class->get_post_text('gicon_shadow_path'),
-            'gicon_shadow_ext'    => $this->_post_class->get_post_text('gicon_shadow_ext'),
-            'gicon_image_width'   => $this->_post_class->get_post_int('gicon_image_width'),
-            'gicon_image_height'  => $this->_post_class->get_post_int('gicon_image_height'),
-            'gicon_shadow_width'  => $this->_post_class->get_post_int('gicon_shadow_width'),
+        $row = [
+            'gicon_id' => $this->_post_class->get_post_get_int('gicon_id'),
+            'gicon_title' => $this->_post_class->get_post_text('gicon_title'),
+            'gicon_image_url' => $this->_post_class->get_post_url('gicon_image_url'),
+            'gicon_image_path' => $this->_post_class->get_post_text('gicon_image_path'),
+            'gicon_image_ext' => $this->_post_class->get_post_text('gicon_image_ext'),
+            'gicon_shadow_url' => $this->_post_class->get_post_url('gicon_shadow_url'),
+            'gicon_shadow_path' => $this->_post_class->get_post_text('gicon_shadow_path'),
+            'gicon_shadow_ext' => $this->_post_class->get_post_text('gicon_shadow_ext'),
+            'gicon_image_width' => $this->_post_class->get_post_int('gicon_image_width'),
+            'gicon_image_height' => $this->_post_class->get_post_int('gicon_image_height'),
+            'gicon_shadow_width' => $this->_post_class->get_post_int('gicon_shadow_width'),
             'gicon_shadow_height' => $this->_post_class->get_post_int('gicon_shadow_height'),
-            'gicon_anchor_x'      => $this->_post_class->get_post_int('gicon_anchor_x'),
-            'gicon_anchor_y'      => $this->_post_class->get_post_int('gicon_anchor_y'),
-            'gicon_info_x'        => $this->_post_class->get_post_int('gicon_info_x'),
-            'gicon_info_y'        => $this->_post_class->get_post_int('gicon_info_y'),
+            'gicon_anchor_x' => $this->_post_class->get_post_int('gicon_anchor_x'),
+            'gicon_anchor_y' => $this->_post_class->get_post_int('gicon_anchor_y'),
+            'gicon_info_x' => $this->_post_class->get_post_int('gicon_info_x'),
+            'gicon_info_y' => $this->_post_class->get_post_int('gicon_info_y'),
+        ];
 
-        );
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

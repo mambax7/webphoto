@@ -15,7 +15,7 @@
 // 2008-11-29 K.OHWADA
 // get_path_by_name()
 // 2008-07-01 K.OHWADA
-// webphoto_xoops_base -> xoops_gethandler()
+// webphoto_xoops_base -> xoops_getHandler()
 //---------------------------------------------------------
 
 if (!defined('XOOPS_TRUST_PATH')) {
@@ -29,63 +29,96 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // caller inc_xoops_version inc_blocks
 //---------------------------------------------------------
 
+/**
+ * Class webphoto_inc_config
+ */
 class webphoto_inc_config
 {
-    public $_cached_config = array();
+    public $_cached_config = [];
     public $_DIRNAME;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_config constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_DIRNAME = $dirname;
         $this->_get_xoops_config($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_config($dirname);
+            $singletons[$dirname] = new self($dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // cache
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return bool|mixed
+     */
     public function get_by_name($name)
     {
         if (isset($this->_cached_config[$name])) {
             return $this->_cached_config[$name];
         }
+
         return false;
     }
 
+    /**
+     * @param $name
+     * @return null|string
+     */
     public function get_path_by_name($name)
     {
         $path = $this->get_by_name($name);
         if ($path) {
             return $this->_add_slash_to_head($path);
         }
+
         return null;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function _add_slash_to_head($str)
     {
         // ord : the ASCII value of the first character of string
         // 0x2f slash
 
-        if (ord($str) != 0x2f) {
+        if (0x2f != ord($str)) {
             $str = '/' . $str;
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // xoops class
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     */
     public function _get_xoops_config($dirname)
     {
         if (defined('WEBPHOTO_COMMOND_MODE') && (WEBPHOTO_COMMOND_MODE == 1)) {

@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_video_ffmpeg
 //=========================================================
+
+/**
+ * Class webphoto_ext_video_ffmpeg
+ */
 class webphoto_ext_video_ffmpeg extends webphoto_ext_base
 {
     public $_ffmpeg_class;
@@ -20,6 +24,12 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_video_ffmpeg constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -30,6 +40,11 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // check type
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->match_ext_kind($ext, _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG);
@@ -38,9 +53,14 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return int|null
+     */
     public function create_jpeg($param)
     {
-        $src_file  = $param['src_file'];
+        $src_file = $param['src_file'];
         $jpeg_file = $param['jpeg_file'];
 
         return $this->_ffmpeg_class->create_jpeg($src_file, $jpeg_file);
@@ -49,9 +69,14 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // create video_images
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool|int|null
+     */
     public function create_video_images($param)
     {
-        $item_id  = $param['item_id'];
+        $item_id = $param['item_id'];
         $src_file = $param['src_file'];
 
         return $this->_ffmpeg_class->create_plural_images($item_id, $src_file);
@@ -60,13 +85,18 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // create flv
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool|null
+     */
     public function create_flv($param)
     {
         $src_file = $param['src_file'];
         $flv_file = $param['flv_file'];
 
         $ret = $this->_ffmpeg_class->create_flash($src_file, $flv_file);
-        if ($ret == -1) {
+        if (-1 == $ret) {
             $this->set_error($this->_ffmpeg_class->get_errors());
         }
 
@@ -76,9 +106,15 @@ class webphoto_ext_video_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // duration
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function get_video_info($param)
     {
         $src_file = $param['src_file'];
+
         return $this->_ffmpeg_class->get_video_info($src_file);
     }
 

@@ -23,9 +23,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_readfile
 //=========================================================
+
+/**
+ * Class webphoto_lib_readfile
+ */
 class webphoto_lib_readfile
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -34,18 +37,27 @@ class webphoto_lib_readfile
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_readfile
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_readfile();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @param $mime
+     */
     public function readfile_view($file, $mime)
     {
         $this->zlib_off();
@@ -56,6 +68,12 @@ class webphoto_lib_readfile
         readfile($file);
     }
 
+    /**
+     * @param      $file
+     * @param      $mime
+     * @param      $name
+     * @param bool $is_rfc2231
+     */
     public function readfile_down($file, $mime, $name, $is_rfc2231 = false)
     {
         $this->zlib_off();
@@ -66,6 +84,9 @@ class webphoto_lib_readfile
         readfile($file);
     }
 
+    /**
+     * @param $file
+     */
     public function readfile_xml($file)
     {
         $this->zlib_off();
@@ -79,6 +100,11 @@ class webphoto_lib_readfile
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @param $mime
+     */
     public function header_view($file, $mime)
     {
         $size = filesize($file);
@@ -89,10 +115,15 @@ class webphoto_lib_readfile
         header('Content-Length: ' . $size);
     }
 
+    /**
+     * @param      $file
+     * @param      $mime
+     * @param      $name
+     * @param bool $is_rfc2231
+     */
     public function header_down($file, $mime, $name, $is_rfc2231 = false)
     {
         if ($is_rfc2231) {
-            ;
             $dis = 'Content-Disposition: attachment; filename*=';
         } else {
             $dis = 'Content-Disposition: attachment; filename=';
@@ -107,6 +138,11 @@ class webphoto_lib_readfile
         header($dis . $name);
     }
 
+    /**
+     * @param $file
+     * @param $mime
+     * @param $name
+     */
     public function header_down_rfc2131($file, $mime, $name)
     {
         $size = filesize($file);
@@ -133,20 +169,29 @@ class webphoto_lib_readfile
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @return bool|string
+     */
     public function http_output_pass()
     {
         return $this->http_output('pass');
     }
 
+    /**
+     * @param null $encoding
+     * @return bool|string
+     */
     public function http_output($encoding = null)
     {
         if (function_exists('mb_http_output')) {
             if ($encoding) {
                 return mb_http_output($encoding);
-            } else {
-                return mb_http_output();
             }
+
+            return mb_http_output();
         }
+
         return false;
     }
 

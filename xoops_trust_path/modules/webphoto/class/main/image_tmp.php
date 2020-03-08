@@ -23,6 +23,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_image
 //=========================================================
+
+/**
+ * Class webphoto_main_image_tmp
+ */
 class webphoto_main_image_tmp
 {
     public $_config_class;
@@ -34,22 +38,34 @@ class webphoto_main_image_tmp
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_image_tmp constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
-        $this->_config_class   = webphoto_config::getInstance($dirname);
-        $this->_post_class     = webphoto_lib_post::getInstance();
+        $this->_config_class = webphoto_config::getInstance($dirname);
+        $this->_post_class = webphoto_lib_post::getInstance();
         $this->_readfile_class = webphoto_lib_readfile::getInstance();
 
-        $work_dir       = $this->_config_class->get_by_name('workdir');
+        $work_dir = $this->_config_class->get_by_name('workdir');
         $this->_TMP_DIR = $work_dir . '/tmp';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_main_image_tmp
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_image_tmp($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 

@@ -19,24 +19,34 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_embed_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_embed_build
+ */
 class webphoto_edit_embed_build extends webphoto_edit_base
 {
     public $_embed_class;
 
-    public $_item_row    = null;
-    public $_title       = null;
+    public $_item_row = null;
+    public $_title = null;
     public $_description = null;
-    public $_url         = null;
-    public $_thumb       = null;
-    public $_duration    = null;
-    public $_tags        = null;
-    public $_script      = null;
+    public $_url = null;
+    public $_thumb = null;
+    public $_duration = null;
+    public $_tags = null;
+    public $_script = null;
 
     public $_THUMB_EXT_DEFAULT = 'embed';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_embed_build constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -44,38 +54,54 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         $this->_embed_class = webphoto_embed::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_embed_build|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_embed_build($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function is_type($row)
     {
         if ($row['item_embed_type']) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function build($row)
     {
         $this->_item_row = $row;
 
-        $item_title          = $row['item_title'];
-        $item_description    = $row['item_description'];
-        $item_duration       = $row['item_duration'];
-        $item_embed_type     = $row['item_embed_type'];
-        $item_embed_src      = $row['item_embed_src'];
-        $item_embed_text     = $row['item_embed_text'];
+        $item_title = $row['item_title'];
+        $item_description = $row['item_description'];
+        $item_duration = $row['item_duration'];
+        $item_embed_type = $row['item_embed_type'];
+        $item_embed_src = $row['item_embed_src'];
+        $item_embed_text = $row['item_embed_text'];
         $item_external_thumb = $row['item_external_thumb'];
-        $item_siteurl        = $row['item_siteurl'];
+        $item_siteurl = $row['item_siteurl'];
 
         if (!$this->is_type($row)) {
             return 1;  // no action
@@ -128,20 +154,24 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         $row = $this->build_item_row_icon_if_empty($row, $this->_THUMB_EXT_DEFAULT);
 
         $this->_item_row = $row;
+
         return 0;  // OK
     }
 
     public function clear_params()
     {
-        $this->_title       = null;
+        $this->_title = null;
         $this->_description = null;
-        $this->_url         = null;
-        $this->_thumb       = null;
-        $this->_duration    = null;
-        $this->_tags        = null;
-        $this->_script      = null;
+        $this->_url = null;
+        $this->_thumb = null;
+        $this->_duration = null;
+        $this->_tags = null;
+        $this->_script = null;
     }
 
+    /**
+     * @param $params
+     */
     public function set_params($params)
     {
         if (isset($params['title'])) {
@@ -167,13 +197,22 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         }
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function get_xml_params($row)
     {
         $embed_type = $row['item_embed_type'];
-        $embed_src  = $row['item_embed_src'];
+        $embed_src = $row['item_embed_src'];
+
         return $this->_embed_class->get_xml_params($embed_type, $embed_src);
     }
 
+    /**
+     * @param $row
+     * @return null|string
+     */
     public function build_title($row)
     {
         if ($this->_title) {
@@ -181,7 +220,7 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         }
 
         $embed_type = $row['item_embed_type'];
-        $embed_src  = $row['item_embed_src'];
+        $embed_src = $row['item_embed_src'];
 
         if (empty($embed_type)) {
             return null;
@@ -193,9 +232,14 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         $title = $embed_type;
         $title .= ' : ';
         $title .= $embed_src;
+
         return $title;
     }
 
+    /**
+     * @param $row
+     * @return bool|null
+     */
     public function build_thumb($row)
     {
         if ($this->_thumb) {
@@ -203,39 +247,56 @@ class webphoto_edit_embed_build extends webphoto_edit_base
         }
 
         $embed_type = $row['item_embed_type'];
-        $embed_src  = $row['item_embed_src'];
+        $embed_src = $row['item_embed_src'];
+
         return $this->_embed_class->build_thumb($embed_type, $embed_src);
     }
 
+    /**
+     * @param $row
+     */
     public function build_description($row)
     {
         if ($this->_description) {
             return $this->_description;
         }
+
         return null;
     }
 
+    /**
+     * @param $row
+     */
     public function build_url($row)
     {
         if ($this->_url) {
             return $this->_url;
         }
+
         return null;
     }
 
+    /**
+     * @param $row
+     */
     public function build_duration($row)
     {
         if ($this->_duration) {
             return $this->_duration;
         }
+
         return null;
     }
 
+    /**
+     * @param $row
+     */
     public function build_script($row)
     {
         if ($this->_script) {
             return $this->_script;
         }
+
         return null;
     }
 

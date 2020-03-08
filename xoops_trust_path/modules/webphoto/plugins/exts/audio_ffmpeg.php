@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_audio_ffmpeg
 //=========================================================
+
+/**
+ * Class webphoto_ext_audio_ffmpeg
+ */
 class webphoto_ext_audio_ffmpeg extends webphoto_ext_base
 {
     public $_ffmpeg_class;
@@ -20,6 +24,12 @@ class webphoto_ext_audio_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_audio_ffmpeg constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -30,11 +40,20 @@ class webphoto_ext_audio_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // check type
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->is_audio_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_audio_ext($ext)
     {
         return $this->match_ext_kind($ext, _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG);
@@ -43,6 +62,11 @@ class webphoto_ext_audio_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // create wav
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool|null
+     */
     public function create_wav($param)
     {
         $src_file = $param['src_file'];
@@ -54,9 +78,15 @@ class webphoto_ext_audio_ffmpeg extends webphoto_ext_base
     //---------------------------------------------------------
     // duration
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function get_video_info($param)
     {
         $src_file = $param['src_file'];
+
         return $this->_ffmpeg_class->get_video_info($src_file);
     }
 

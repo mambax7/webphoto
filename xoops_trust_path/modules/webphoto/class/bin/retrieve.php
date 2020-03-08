@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_bin_retrieve
 //=========================================================
+
+/**
+ * Class webphoto_bin_retrieve
+ */
 class webphoto_bin_retrieve extends webphoto_bin_base
 {
     public $_config_class;
@@ -26,12 +30,18 @@ class webphoto_bin_retrieve extends webphoto_bin_base
 
     public $_TITLE = 'webphoto mail retrieve';
 
-    public $_FLAG_MAIL_SEND    = true;
+    public $_FLAG_MAIL_SEND = true;
     public $_DEBUG_BIN_RETRIVE = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_bin_retrieve constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -49,18 +59,28 @@ class webphoto_bin_retrieve extends webphoto_bin_base
         $this->preload_constant();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_bin_retrieve
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_bin_retrieve($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function main()
     {
         $pass = $this->_config_class->get_by_name('bin_pass');

@@ -9,7 +9,7 @@
 //---------------------------------------------------------
 // change log
 // 2010-10-01 K.OHWADA
-// ¼Ì¿¿ -> ¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢
+// ï¿½Ì¿ï¿½ -> ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½
 // 2010-04-04 K.OHWADA
 // use $mydirname
 //---------------------------------------------------------
@@ -24,7 +24,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -32,7 +32,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_BL_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_BL_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {
@@ -42,65 +42,65 @@ if (!defined($constpref . 'LANG_LOADED')) {
     // same as myalbum
     //=========================================================
 
-    define($constpref . 'BTITLE_TOPNEW', 'ºÇ¿·¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'BTITLE_TOPHIT', '¥Ò¥Ã¥È¿ô¤ÎÂ¿¤¤¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'BTITLE_RANDOM', '¥Ô¥Ã¥¯¥¢¥Ã¥×¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'TEXT_DISP', 'É½¼¨¿ô');
-    define($constpref . 'TEXT_STRLENGTH', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥¿¥¤¥È¥ë¤ÎºÇÂçÉ½¼¨Ê¸»ú¿ô');
-    define($constpref . 'TEXT_CATLIMITATION', '¥«¥Æ¥´¥ê¸ÂÄê');
+    define($constpref . 'BTITLE_TOPNEW', 'ï¿½Ç¿ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'BTITLE_TOPHIT', 'ï¿½Ò¥Ã¥È¿ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'BTITLE_RANDOM', 'ï¿½Ô¥Ã¥ï¿½ï¿½ï¿½ï¿½Ã¥×¤Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'TEXT_DISP', 'É½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TEXT_STRLENGTH', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½È¥ï¿½Îºï¿½ï¿½ï¿½É½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TEXT_CATLIMITATION', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // v2.30
-    define($constpref . 'TEXT_CATLIMITRECURSIVE', '¥µ¥Ö¥«¥Æ¥´¥ê¤âÂÐ¾Ý<br />¥«¥Æ¥´¥ê¸ÂÄê¤Î¤È¤­Í­¸ú');
+    define($constpref . 'TEXT_CATLIMITRECURSIVE', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð¾ï¿½<br>ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤È¤ï¿½Í­ï¿½ï¿½');
 
-    define($constpref . 'TEXT_BLOCK_WIDTH', 'ºÇÂçÉ½¼¨¥µ¥¤¥º');
-    define($constpref . 'TEXT_BLOCK_WIDTH_NOTES', '¡Ê¢¨ ¤³¤³¤ò0¤Ë¤·¤¿¾ì¹ç¡¢¥µ¥à¥Í¥¤¥ë²èÁü¤ò¤½¤Î¤Þ¤Þ¤Î¥µ¥¤¥º¤ÇÉ½¼¨¤·¤Þ¤¹¡Ë');
-    define($constpref . 'TEXT_RANDOMCYCLE', '²èÁü¤ÎÀÚ¤êÂØ¤¨¼þ´ü¡ÊÃ±°Ì¤ÏÉÃ¡Ë');
-    define($constpref . 'TEXT_COLS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÎó¿ô');
+    define($constpref . 'TEXT_BLOCK_WIDTH', 'ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TEXT_BLOCK_WIDTH_NOTES', 'ï¿½Ê¢ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½ç¡¢ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¤½¤Î¤Þ¤Þ¤Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'TEXT_RANDOMCYCLE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¤ï¿½ï¿½Ø¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã±ï¿½Ì¤ï¿½ï¿½Ã¡ï¿½');
+    define($constpref . 'TEXT_COLS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.20
     //---------------------------------------------------------
-    define($constpref . 'POPBOX_REVERT', '¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢¸µ¤Î¾®¤µ¤¤²èÁü¤Ë¤Ê¤ë');
+    define($constpref . 'POPBOX_REVERT', 'ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤Ê¤ï¿½');
 
     //---------------------------------------------------------
     // v0.30
     //---------------------------------------------------------
-    define($constpref . 'TEXT_CACHETIME', '¥­¥ã¥Ã¥·¥å»þ´Ö');
+    define($constpref . 'TEXT_CACHETIME', 'ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.80
     //---------------------------------------------------------
-    define($constpref . 'TEXT_CATLIST_SUB', '¥µ¥Ö¥«¥Æ¥´¥ê¤ÎÉ½¼¨');
-    define($constpref . 'TEXT_CATLIST_MAIN_IMG', '¥á¥¤¥ó¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÉ½¼¨');
-    define($constpref . 'TEXT_CATLIST_SUB_IMG', '¥µ¥Ö¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÉ½¼¨');
-    define($constpref . 'TEXT_CATLIST_COLS', '²£¤ËÊÂ¤Ù¤ë¥«¥Æ¥´¥ê¤Î¿ô');
-    define($constpref . 'TEXT_TAGCLOUD_LIMIT', '¥¿¥°¤ÎÉ½¼¨¤¹¤ë¿ô');
+    define($constpref . 'TEXT_CATLIST_SUB', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'TEXT_CATLIST_MAIN_IMG', 'ï¿½á¥¤ï¿½ó¥«¥Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'TEXT_CATLIST_SUB_IMG', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'TEXT_CATLIST_COLS', 'ï¿½ï¿½ï¿½ï¿½ï¿½Â¤Ù¤ë¥«ï¿½Æ¥ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'TEXT_TAGCLOUD_LIMIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.20
     //---------------------------------------------------------
     // google map
-    define($constpref . 'GMAP_MODE', 'GoogleMap ¥â¡¼¥É');
-    define($constpref . 'GMAP_MODE_NONE', 'ÈóÉ½¼¨');
-    define($constpref . 'GMAP_MODE_DEFAULT', '¥Ç¥Õ¥©¥ë¥È');
-    define($constpref . 'GMAP_MODE_SET', '²¼µ­¤ÎÀßÄêÃÍ');
-    define($constpref . 'GMAP_LATITUDE', '°ÞÅÙ');
-    define($constpref . 'GMAP_LONGITUDE', '·ÐÅÙ');
-    define($constpref . 'GMAP_ZOOM', '¥º¡¼¥à');
-    define($constpref . 'GMAP_HEIGHT', 'É½¼¨¤Î¹â¤µ');
-    define($constpref . 'PIXEL', '¥Ô¥¯¥»¥ë');
+    define($constpref . 'GMAP_MODE', 'GoogleMap ï¿½â¡¼ï¿½ï¿½');
+    define($constpref . 'GMAP_MODE_NONE', 'ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'GMAP_MODE_DEFAULT', 'ï¿½Ç¥Õ¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GMAP_MODE_SET', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GMAP_LATITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GMAP_LONGITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GMAP_ZOOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GMAP_HEIGHT', 'É½ï¿½ï¿½ï¿½Î¹â¤µ');
+    define($constpref . 'PIXEL', 'ï¿½Ô¥ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.40
     //---------------------------------------------------------
-    define($constpref . 'TIMELINE_LATEST', '¿·¤·¤¤Êý¤«¤éÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'TIMELINE_RANDOM', '¥é¥ó¥À¥à¤ËÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'TIMELINE_HEIGHT', 'É½¼¨¤Î¹â¤µ');
-    define($constpref . 'TIMELINE_SCALE', '¥¿¥¤¥à¥é¥¤¥ó¤Î»þ´ÖÉý');
-    define($constpref . 'TIMELINE_SCALE_WEEK', '£±½µ´Ö');
-    define($constpref . 'TIMELINE_SCALE_MONTH', '£±¥ö·î');
-    define($constpref . 'TIMELINE_SCALE_YEAR', '£±Ç¯');
-    define($constpref . 'TIMELINE_SCALE_DECADE', '£±£°Ç¯');
+    define($constpref . 'TIMELINE_LATEST', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'TIMELINE_RANDOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'TIMELINE_HEIGHT', 'É½ï¿½ï¿½ï¿½Î¹â¤µ');
+    define($constpref . 'TIMELINE_SCALE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TIMELINE_SCALE_WEEK', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TIMELINE_SCALE_MONTH', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'TIMELINE_SCALE_YEAR', 'ï¿½ï¿½Ç¯');
+    define($constpref . 'TIMELINE_SCALE_DECADE', 'ï¿½ï¿½ï¿½ï¿½Ç¯');
 
     // === define end ===
 }

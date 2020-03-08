@@ -26,104 +26,189 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //---------------------------------------------------------
 // topnews
 //---------------------------------------------------------
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_topnews_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->topnews_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_topnews_p_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->topnews_p_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_topnews_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->topnews_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_topnews_p_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->topnews_p_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tophits_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tophits_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tophits_p_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tophits_p_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tophits_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tophits_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tophits_p_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tophits_p_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_rphoto_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->rphoto_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_rphoto_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->rphoto_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_catlist_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->catlist_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_catlist_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->catlist_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tagcloud_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tagcloud_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_tagcloud_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->tagcloud_edit($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_timeline_show($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->timeline_show($options);
 }
 
+/**
+ * @param $options
+ * @return mixed
+ */
 function b_webphoto_timeline_edit($options)
 {
     $inc_class = webphoto_inc_blocks::getSingleton(b_webphoto_dirname($options), WEBPHOTO_TRUST_DIRNAME);
+
     return $inc_class->timeline_edit($options);
 }
 
+/**
+ * @param $options
+ * @return string
+ */
 function b_webphoto_dirname($options)
 {
     $val = isset($options[0]) ? $options[0] : 'webphoto';
+
     return $val;
 }

@@ -21,9 +21,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_pathinfo
 //=========================================================
+
+/**
+ * Class webphoto_lib_pathinfo
+ */
 class webphoto_lib_pathinfo
 {
-    public $_get_param      = null;
+    public $_get_param = null;
     public $_pathinfo_array = null;
 
     public $_PAGE_DEFAULT = 1;
@@ -36,12 +40,16 @@ class webphoto_lib_pathinfo
         $this->_init();
     }
 
+    /**
+     * @return \webphoto_lib_pathinfo
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_pathinfo();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -70,6 +78,10 @@ class webphoto_lib_pathinfo
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @return bool|null
+     */
     public function get_fct_op_0()
     {
         $fct = $this->get('fct');
@@ -85,6 +97,9 @@ class webphoto_lib_pathinfo
         return $this->get_path(0);
     }
 
+    /**
+     * @return bool|null
+     */
     public function get_op_or_0()
     {
         $op = $this->get('op');
@@ -95,37 +110,66 @@ class webphoto_lib_pathinfo
         return $this->get_path(0);
     }
 
+    /**
+     * @return int
+     */
     public function get_page()
     {
         $page = $this->get_int('page');
         if ($page < $this->_PAGE_DEFAULT) {
             $page = $this->_PAGE_DEFAULT;
         }
+
         return $page;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function isset_param($key)
     {
         $ret = isset($this->_get_param[$key]) ? true : false;
+
         return $ret;
     }
 
+    /**
+     * @param      $key
+     * @param null $default
+     */
     public function get($key, $default = null)
     {
         $str = isset($this->_get_param[$key]) ? $this->_get_param[$key] : $default;
+
         return $str;
     }
 
+    /**
+     * @param      $key
+     * @param null $default
+     * @return array|string
+     */
     public function get_text($key, $default = null)
     {
         return $this->strip_slashes_gpc($this->get($key, $default));
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return int
+     */
     public function get_int($key, $default = 0)
     {
         return (int)$this->get($key, $default);
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return float
+     */
     public function get_float($key, $default = 0)
     {
         return (float)$this->get($key, $default);
@@ -134,6 +178,7 @@ class webphoto_lib_pathinfo
     public function get_server_path_info()
     {
         $str = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null;
+
         return $str;
     }
 
@@ -142,20 +187,30 @@ class webphoto_lib_pathinfo
         return $this->_get_param;
     }
 
+    /**
+     * @param $num
+     * @return bool
+     */
     public function get_path($num)
     {
         if (isset($this->_pathinfo_array[$num])) {
             return $this->_pathinfo_array[$num];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // utlity
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return array|string
+     */
     public function strip_slashes_gpc($str)
     {
-        if (!get_magic_quotes_gpc()) {
+        if (@!get_magic_quotes_gpc()) {
             return $str;
         }
 
@@ -163,24 +218,31 @@ class webphoto_lib_pathinfo
             return stripslashes($str);
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($str as $k => $v) {
             $arr[$k] = stripslashes($v);
         }
+
         return $arr;
     }
 
+    /**
+     * @param $str
+     * @param $pattern
+     * @return array
+     */
     public function str_to_array($str, $pattern)
     {
         $arr1 = explode($pattern, $str);
-        $arr2 = array();
+        $arr2 = [];
         foreach ($arr1 as $v) {
             $v = trim($v);
-            if ($v == '') {
+            if ('' == $v) {
                 continue;
             }
             $arr2[] = $v;
         }
+
         return $arr2;
     }
 

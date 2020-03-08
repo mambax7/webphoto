@@ -22,7 +22,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -30,7 +30,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 //---------------------------------------------------------
 // v2.60
@@ -47,7 +47,7 @@ if (!defined($constpref . 'OPT_TIMELINE_SCALE_HOUR')) {
 //---------------------------------------------------------
 if (!defined($constpref . 'CFG_PEAR_PATH')) {
     define($constpref . 'CFG_PEAR_PATH', 'Path of PEAR libraly');
-    define($constpref . 'CFG_PEAR_PATH_DSC', 'Enter the absolute path in the PEAR library with Net_POP3.<br />When not enter, modules/webphoto/PEAR is used.');
+    define($constpref . 'CFG_PEAR_PATH_DSC', 'Enter the absolute path in the PEAR library with Net_POP3.<br>When not enter, modules/webphoto/PEAR is used.');
 }
 
 //---------------------------------------------------------
@@ -76,12 +76,11 @@ if (!defined($constpref . 'CFG_USE_LIGHTBOX')) {
 // v2.00
 //---------------------------------------------------------
 if (!defined($constpref . 'CFG_GROUPID_ADMIN')) {
-
     // config
     define($constpref . 'CFG_GROUPID_ADMIN', 'Admin Group ID');
-    define($constpref . 'CFG_GROUPID_ADMIN_DSC', "The user group ID of the administrator of this module. <br />This value is set in module installation. <br />Don't change rashly. ");
+    define($constpref . 'CFG_GROUPID_ADMIN_DSC', "The user group ID of the administrator of this module. <br>This value is set in module installation. <br>Don't change rashly. ");
     define($constpref . 'CFG_GROUPID_USER', 'User Group ID');
-    define($constpref . 'CFG_GROUPID_USER_DSC', "The user group ID of the user of this module. <br />This value is set in module installation. <br />Don't change rashly. ");
+    define($constpref . 'CFG_GROUPID_USER_DSC', "The user group ID of the user of this module. <br>This value is set in module installation. <br>Don't change rashly. ");
 
     // admin menu
     define($constpref . 'ADMENU_INVITE', 'Invite a friend');
@@ -99,11 +98,10 @@ if (!defined($constpref . 'CFG_GROUPID_ADMIN')) {
 if (!defined($constpref . 'CFG_USE_LAME')) {
     define($constpref . 'CFG_USE_LAME', 'Use lame');
     define($constpref . 'CFG_LAMEPATH', 'Path to lame');
-    define($constpref . 'CFG_LAMEPATH_DSC', "Alhough the full path to 'lame' should be written, leave it blank in most environments.<br />This configuration is significant only when using lame");
+    define($constpref . 'CFG_LAMEPATH_DSC', "Alhough the full path to 'lame' should be written, leave it blank in most environments.<br>This configuration is significant only when using lame");
     define($constpref . 'CFG_USE_TIMIDITY', 'Use timidity');
     define($constpref . 'CFG_TIMIDITYPATH', 'Path to timidity');
-    define($constpref . 'CFG_TIMIDITYPATH_DSC',
-           "Alhough the full path to 'timidity' should be written, leave it blank in most environments.<br />This configuration is significant only when using timidity");
+    define($constpref . 'CFG_TIMIDITYPATH_DSC', "Alhough the full path to 'timidity' should be written, leave it blank in most environments.<br>This configuration is significant only when using timidity");
     define($constpref . 'SMNAME_SEARCH', 'Search');
 }
 
@@ -112,9 +110,9 @@ if (!defined($constpref . 'CFG_USE_LAME')) {
 //---------------------------------------------------------
 if (!defined($constpref . 'CFG_ITEM_SUMMARY')) {
     define($constpref . 'CFG_ITEM_SUMMARY', 'Max characters of photo description');
-    define($constpref . 'CFG_ITEM_SUMMARY_DSC', 'Enter the maximum number of characters of photo description in the photo list.<br />-1 is unlimited');
+    define($constpref . 'CFG_ITEM_SUMMARY_DSC', 'Enter the maximum number of characters of photo description in the photo list.<br>-1 is unlimited');
     define($constpref . 'CFG_CAT_SUMMARY', 'Max characters of category description');
-    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'Enter the maximum number of characters of category description in the category list.<br />-1 is unlimited');
+    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'Enter the maximum number of characters of category description in the category list.<br>-1 is unlimited');
     define($constpref . 'CFG_CAT_CHILD', 'Show photos of subcategoies');
     define($constpref . 'CFG_CAT_CHILD_DSC', 'Enter to show or not photos of subcategoies in category list');
     define($constpref . 'OPT_CAT_CHILD_NON', 'Photos of this category only. Not show photos of subcategoies');
@@ -126,7 +124,6 @@ if (!defined($constpref . 'CFG_ITEM_SUMMARY')) {
 // v1.40
 //---------------------------------------------------------
 if (!defined($constpref . 'CFG_TIMELINE_LATEST')) {
-
     // timeline
     define($constpref . 'CFG_TIMELINE_LATEST', 'Number of latest photos in timeline');
     define($constpref . 'CFG_TIMELINE_RANDOM', 'Number of random photos in timeline');
@@ -169,16 +166,13 @@ if (!defined($constpref . 'ADMENU_RSS_MANAGER')) {
 //---------------------------------------------------------
 // === define begin ===
 if (!defined($constpref . 'CFG_UPLOADSPATH')) {
-
     //---------------------------------------------------------
     // v0.50
     //---------------------------------------------------------
     define($constpref . 'CFG_UPLOADSPATH', 'Path to upload files');
-    define($constpref . 'CFG_UPLOADSPATH_DSC',
-           "Path from the directory installed XOOPS.<br />(The first character must be '/'. The last character should not be '/'.)<br />This directory's permission is 777 or 707 in unix.");
+    define($constpref . 'CFG_UPLOADSPATH_DSC', "Path from the directory installed XOOPS.<br>(The first character must be '/'. The last character should not be '/'.)<br>This directory's permission is 777 or 707 in unix.");
     define($constpref . 'CFG_MEDIASPATH', 'Path to medias');
-    define($constpref . 'CFG_MEDIASPATH_DSC',
-           "The directory where there are media files which are created the playlist. <br />Path from the directory installed XOOPS.<br />(The first character must be '/'. The last character should not be '/'.)");
+    define($constpref . 'CFG_MEDIASPATH_DSC', "The directory where there are media files which are created the playlist. <br>Path from the directory installed XOOPS.<br>(The first character must be '/'. The last character should not be '/'.)");
     define($constpref . 'CFG_LOGO_WIDTH', 'Player Logo Width and Height');
     define($constpref . 'CFG_USE_CALLBACK', 'Use callback log');
     define($constpref . 'CFG_USE_CALLBACK_DSC', 'loggin Flash Player events by callback.');
@@ -193,12 +187,12 @@ if (!defined($constpref . 'CFG_UPLOADSPATH')) {
     // v0.60
     //---------------------------------------------------------
     define($constpref . 'CFG_WORKDIR', 'Work Directory Path');
-    define($constpref . 'CFG_WORKDIR_DSC', "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br />Recommend to set to this out of the document route.");
+    define($constpref . 'CFG_WORKDIR_DSC', "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br>Recommend to set to this out of the document route.");
     define($constpref . 'CFG_CAT_WIDTH', 'Category Image Width and Height');
     define($constpref . 'CFG_CSUB_WIDTH', 'Image Width and Height in Sub Category');
     define($constpref . 'CFG_GICON_WIDTH', 'GoogleMap Icon Width and Height');
     define($constpref . 'CFG_JPEG_QUALITY', 'JPEG Quality');
-    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br />This configuration is significant only when using GD');
+    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br>This configuration is significant only when using GD');
 
     //---------------------------------------------------------
     // v0.80
@@ -222,6 +216,5 @@ if (!defined($constpref . 'CFG_UPLOADSPATH')) {
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_XPDF', 'Use xpdf');
     define($constpref . 'CFG_XPDFPATH', 'Path to xpdf');
-    define($constpref . 'CFG_XPDFPATH_DSC', "Alhough the full path to 'pdftoppm' should be written, leave it blank in most environments.<br />This configuration is significant only when using xpdf");
+    define($constpref . 'CFG_XPDFPATH_DSC', "Alhough the full path to 'pdftoppm' should be written, leave it blank in most environments.<br>This configuration is significant only when using xpdf");
 }// === define begin ===
-;

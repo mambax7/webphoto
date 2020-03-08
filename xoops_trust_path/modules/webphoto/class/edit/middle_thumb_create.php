@@ -25,6 +25,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_middle_thumb_create
 //=========================================================
+
+/**
+ * Class webphoto_edit_middle_thumb_create
+ */
 class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
 {
     public $_image_create_class;
@@ -41,51 +45,68 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
 
     public $_icon_tmp_file = null;
 
-    public $_SUB_DIR_LARGES  = 'larges';
+    public $_SUB_DIR_LARGES = 'larges';
     public $_SUB_DIR_MIDDLES = 'middles';
-    public $_SUB_DIR_THUMBS  = 'thumbs';
-    public $_SUB_DIR_SMALLS  = 'smalls';
-    public $_BORDER_OPTION   = ' -border 1 ';
+    public $_SUB_DIR_THUMBS = 'thumbs';
+    public $_SUB_DIR_SMALLS = 'smalls';
+    public $_BORDER_OPTION = ' -border 1 ';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_middle_thumb_create constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_image_create_class = webphoto_image_create::getInstance($dirname);
 
-        $this->_cfg_makethumb     = $this->get_config_by_name('makethumb');
-        $this->_cfg_width         = $this->get_config_by_name('width');
-        $this->_cfg_height        = $this->get_config_by_name('height');
-        $this->_cfg_middle_width  = $this->get_config_by_name('middle_width');
+        $this->_cfg_makethumb = $this->get_config_by_name('makethumb');
+        $this->_cfg_width = $this->get_config_by_name('width');
+        $this->_cfg_height = $this->get_config_by_name('height');
+        $this->_cfg_middle_width = $this->get_config_by_name('middle_width');
         $this->_cfg_middle_height = $this->get_config_by_name('middle_height');
-        $this->_cfg_thumb_width   = $this->get_config_by_name('thumb_width');
-        $this->_cfg_thumb_height  = $this->get_config_by_name('thumb_height');
-        $this->_cfg_small_width   = $this->get_config_by_name('small_width');
-        $this->_cfg_small_height  = $this->get_config_by_name('small_height');
+        $this->_cfg_thumb_width = $this->get_config_by_name('thumb_width');
+        $this->_cfg_thumb_height = $this->get_config_by_name('thumb_height');
+        $this->_cfg_small_width = $this->get_config_by_name('small_width');
+        $this->_cfg_small_height = $this->get_config_by_name('small_height');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_middle_thumb_create|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_middle_thumb_create($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create image
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array
+     */
     public function create_image_params($param)
     {
         $this->clear_msg_array();
 
         $item_ext = $param['item_ext'];
         $src_file = $param['src_file'];
-        $src_ext  = isset($param['src_ext']) ? $param['src_ext'] : null;
+        $src_ext = isset($param['src_ext']) ? $param['src_ext'] : null;
 
         // add ext
         if (empty($src_ext)) {
@@ -106,7 +127,7 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
             return false;
         }
 
-        $large     = '';
+        $large = '';
         $flag_jpeg = false;
         $icon_name = '';
 
@@ -114,7 +135,7 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         if ($this->is_image_ext($item_ext)) {
             $flag_jpeg = true;
 
-            // set icon if not image
+        // set icon if not image
         } else {
             $icon_name = $item_ext;
         }
@@ -122,19 +143,19 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         $param['icon_name'] = $icon_name;
 
         $middle = $this->create_middle_param($param);
-        $small  = $this->create_small_param($param);
-        $thumb  = $this->create_thumb_param($param);
+        $small = $this->create_small_param($param);
+        $thumb = $this->create_thumb_param($param);
 
         if ($flag_jpeg) {
             $large = $this->create_large_param($param);
         }
 
-        $file_params = array(
-            'large'  => $large,
+        $file_params = [
+            'large' => $large,
             'middle' => $middle,
-            'small'  => $small,
-            'thumb'  => $thumb,
-        );
+            'small' => $small,
+            'thumb' => $thumb,
+        ];
 
         return $file_params;
     }
@@ -142,6 +163,11 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // create copy param
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_copy_param($param)
     {
         $this->clear_msg_array();
@@ -149,18 +175,15 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         $src_kind = $param['src_kind'];
 
         switch ($src_kind) {
-            case _C_WEBPHOTO_FILE_KIND_THUMB :
+            case _C_WEBPHOTO_FILE_KIND_THUMB:
                 $ret = $this->create_thumb_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_LARGE :
+            case _C_WEBPHOTO_FILE_KIND_LARGE:
                 $ret = $this->create_large_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_MIDDLE :
+            case _C_WEBPHOTO_FILE_KIND_MIDDLE:
                 $ret = $this->create_middle_param($param);
                 break;
-
             case _C_WEBPHOTO_FILE_KIND_SMALL:
                 $ret = $this->create_small_param($param);
                 break;
@@ -172,13 +195,18 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // create large image
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_large_param($param)
     {
-        $param['sub_dir']    = $this->_SUB_DIR_LARGES;
-        $param['file_kind']  = _C_WEBPHOTO_FILE_KIND_LARGE;
-        $param['max_width']  = $this->_cfg_width;
+        $param['sub_dir'] = $this->_SUB_DIR_LARGES;
+        $param['file_kind'] = _C_WEBPHOTO_FILE_KIND_LARGE;
+        $param['max_width'] = $this->_cfg_width;
         $param['max_height'] = $this->_cfg_height;
-        $param['msg_name']   = 'large';
+        $param['msg_name'] = 'large';
 
         return $this->create_image_common($param);
     }
@@ -186,13 +214,18 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // create middle image
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_middle_param($param)
     {
-        $param['sub_dir']    = $this->_SUB_DIR_MIDDLES;
-        $param['file_kind']  = _C_WEBPHOTO_FILE_KIND_MIDDLE;
-        $param['max_width']  = $this->_cfg_middle_width;
+        $param['sub_dir'] = $this->_SUB_DIR_MIDDLES;
+        $param['file_kind'] = _C_WEBPHOTO_FILE_KIND_MIDDLE;
+        $param['max_width'] = $this->_cfg_middle_width;
         $param['max_height'] = $this->_cfg_middle_height;
-        $param['msg_name']   = 'middle';
+        $param['msg_name'] = 'middle';
 
         return $this->create_image_common($param);
     }
@@ -200,13 +233,18 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // create thumb image
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_thumb_param($param)
     {
-        $param['sub_dir']    = $this->_SUB_DIR_THUMBS;
-        $param['file_kind']  = _C_WEBPHOTO_FILE_KIND_THUMB;
-        $param['max_width']  = $this->_cfg_thumb_width;
+        $param['sub_dir'] = $this->_SUB_DIR_THUMBS;
+        $param['file_kind'] = _C_WEBPHOTO_FILE_KIND_THUMB;
+        $param['max_width'] = $this->_cfg_thumb_width;
         $param['max_height'] = $this->_cfg_thumb_height;
-        $param['msg_name']   = 'thumb';
+        $param['msg_name'] = 'thumb';
 
         return $this->create_image_common($param);
     }
@@ -214,13 +252,18 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // create small image
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_small_param($param)
     {
-        $param['sub_dir']    = $this->_SUB_DIR_SMALLS;
-        $param['file_kind']  = _C_WEBPHOTO_FILE_KIND_SMALL;
-        $param['max_width']  = $this->_cfg_small_width;
+        $param['sub_dir'] = $this->_SUB_DIR_SMALLS;
+        $param['file_kind'] = _C_WEBPHOTO_FILE_KIND_SMALL;
+        $param['max_width'] = $this->_cfg_small_width;
         $param['max_height'] = $this->_cfg_small_height;
-        $param['msg_name']   = 'small';
+        $param['msg_name'] = 'small';
 
         return $this->create_image_common($param);
     }
@@ -228,6 +271,11 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
     //---------------------------------------------------------
     // common
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_image_common($param)
     {
         $name = $param['msg_name'];
@@ -242,28 +290,31 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         return $param_out;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_image_common_2($param)
     {
-        $item_id    = $param['item_id'];
-        $src_file   = $param['src_file'];
-        $src_ext    = $param['src_ext'];
-        $sub_dir    = $param['sub_dir'];
-        $max_width  = $param['max_width'];
+        $item_id = $param['item_id'];
+        $src_file = $param['src_file'];
+        $src_ext = $param['src_ext'];
+        $sub_dir = $param['sub_dir'];
+        $max_width = $param['max_width'];
         $max_height = $param['max_height'];
-        $file_kind  = $param['file_kind'];
-        $icon_name  = isset($param['icon_name']) ? $param['icon_name'] : null;
+        $file_kind = $param['file_kind'];
+        $icon_name = isset($param['icon_name']) ? $param['icon_name'] : null;
 
         $name_param = $this->build_random_name_param($item_id, $src_ext, $sub_dir);
-        $name       = $name_param['name'];
-        $path       = $name_param['path'];
-        $file       = $name_param['file'];
-        $url        = $name_param['url'];
+        $name = $name_param['name'];
+        $path = $name_param['path'];
+        $file = $name_param['file'];
+        $url = $name_param['url'];
 
         $ret = $this->_image_create_class->cmd_resize($src_file, $file, $max_width, $max_height);
 
-        if (($ret == _C_WEBPHOTO_IMAGE_READFAULT)
-            || ($ret == _C_WEBPHOTO_IMAGE_SKIPPED)
-        ) {
+        if ((_C_WEBPHOTO_IMAGE_READFAULT == $ret)
+            || (_C_WEBPHOTO_IMAGE_SKIPPED == $ret)) {
             return null;
         }
 
@@ -276,6 +327,12 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         return $image_param;
     }
 
+    /**
+     * @param $thumb_file
+     * @param $src_ext
+     * @param $icon_name
+     * @return bool
+     */
     public function add_icon($thumb_file, $src_ext, $icon_name)
     {
         $icon_file = $this->build_icon_file($icon_name, true);
@@ -305,16 +362,22 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         if (is_file($this->_icon_tmp_file)) {
             unlink($this->_icon_tmp_file);
         }
+
         return true;
     }
 
+    /**
+     * @param $thumb_file
+     * @param $icon_file
+     * @return bool|string
+     */
     public function resize_icon($thumb_file, $icon_file)
     {
         $this->_icon_tmp_file = null;
 
         $image_size = getimagesize($thumb_file);
         if (is_array($image_size)) {
-            $thumb_width  = $image_size[0];
+            $thumb_width = $image_size[0];
             $thumb_height = $image_size[1];
         } else {
             return false;
@@ -322,23 +385,22 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
 
         $image_size = getimagesize($icon_file);
         if (is_array($image_size)) {
-            $icon_width  = $image_size[0];
+            $icon_width = $image_size[0];
             $icon_height = $image_size[1];
         } else {
             return false;
         }
 
-        $max_width     = $thumb_width / 2;
-        $max_height    = $thumb_height / 2;
-        $icon_tmp_file = $this->_TMP_DIR . '/' . uniqid('tmp_') . '.' . $this->_EXT_PNG;
+        $max_width = $thumb_width / 2;
+        $max_height = $thumb_height / 2;
+        $icon_tmp_file = $this->_TMP_DIR . '/' . uniqid('tmp_', true) . '.' . $this->_EXT_PNG;
 
         // resize icon
         if (($icon_width > $max_width)
-            || ($icon_height > $max_height)
-        ) {
+            || ($icon_height > $max_height)) {
             $this->_image_create_class->cmd_resize($icon_file, $icon_tmp_file, $max_width, $max_height);
             if (is_file($icon_tmp_file)) {
-                $icon_file            = $icon_tmp_file;
+                $icon_file = $icon_tmp_file;
                 $this->_icon_tmp_file = $icon_tmp_file;
             }
         }
@@ -346,18 +408,29 @@ class webphoto_edit_middle_thumb_create extends webphoto_edit_base_create
         return $icon_file;
     }
 
+    /**
+     * @param $icon_name
+     * @param $flag_ext
+     * @return string
+     */
     public function build_icon_file($icon_name, $flag_ext)
     {
         $file = $this->_ROOT_EXTS_DIR . '/' . $icon_name;
         if ($flag_ext) {
             $file .= '.' . $this->_EXT_PNG;
         }
+
         return $file;
     }
 
+    /**
+     * @param $ext
+     * @return string
+     */
     public function build_tmp_file($ext)
     {
-        $file = $this->_TMP_DIR . '/' . uniqid(_C_WEBPHOTO_UPLOADER_PREFIX) . '.' . $ext;
+        $file = $this->_TMP_DIR . '/' . uniqid(_C_WEBPHOTO_UPLOADER_PREFIX, true) . '.' . $ext;
+
         return $file;
     }
 

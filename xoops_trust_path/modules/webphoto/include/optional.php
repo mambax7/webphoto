@@ -27,68 +27,117 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // optional functions
 // do not replace this file
 //=========================================================
+/**
+ * @return null|string|string[]
+ */
 function webphoto_fct()
 {
-    $page_array = array(
+    $page_array = [
         'photo_id' => 'photo',
-        'cat_id'   => 'category',
-    );
+        'cat_id' => 'category',
+    ];
 
     $d3_class = webphoto_d3_optional::getInstance();
+
     return $d3_class->get_fct($page_array);
 }
 
+/**
+ * @param      $file
+ * @param bool $debug
+ * @return bool
+ */
 function webphoto_include_once_trust($file, $debug = true)
 {
     $d3_class = webphoto_d3_optional::getInstance();
     $d3_class->init_trust(WEBPHOTO_TRUST_DIRNAME);
+
     return $d3_class->include_once_trust_file($file, $debug);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param bool $debug
+ * @return bool
+ */
 function webphoto_include_once($file, $dirname = null, $debug = true)
 {
     $d3_class = webphoto_d3_optional::getInstance();
     $d3_class->init(webphoto_get_dirname($dirname), WEBPHOTO_TRUST_DIRNAME);
+
     return $d3_class->include_once_file($file, $debug);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param null $language
+ * @return bool
+ */
 function webphoto_include_once_language($file, $dirname = null, $language = null)
 {
     $d3_class = webphoto_d3_optional::getInstance();
     $d3_class->init(webphoto_get_dirname($dirname), WEBPHOTO_TRUST_DIRNAME);
     $d3_class->set_language(webphoto_get_language($language));
+
     return $d3_class->include_once_language($file);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ * @param null $language
+ * @return bool
+ */
 function webphoto_include_language($file, $dirname = null, $language = null)
 {
     $d3_class = webphoto_d3_optional::getInstance();
     $d3_class->init(webphoto_get_dirname($dirname), WEBPHOTO_TRUST_DIRNAME);
     $d3_class->set_language(webphoto_get_language($language));
+
     return $d3_class->include_language($file);
 }
 
+/**
+ * @param      $file
+ * @param null $dirname
+ */
 function webphoto_debug_msg($file, $dirname = null)
 {
     $d3_class = webphoto_d3_optional::getInstance();
     $d3_class->init(webphoto_get_dirname($dirname), WEBPHOTO_TRUST_DIRNAME);
+
     return $d3_class->debug_msg_include_file($file);
 }
 
+/**
+ * @param null $dirname
+ * @return bool
+ */
 function webphoto_include_once_preload($dirname = null)
 {
     $preload_class = webphoto_d3_preload::getInstance();
     $preload_class->init(webphoto_get_dirname($dirname), WEBPHOTO_TRUST_DIRNAME);
+
     return $preload_class->include_once_preload_files();
 }
 
+/**
+ * @return bool
+ */
 function webphoto_include_once_preload_trust()
 {
     $preload_class = webphoto_d3_preload::getInstance();
     $preload_class->init_trust(WEBPHOTO_TRUST_DIRNAME);
+
     return $preload_class->include_once_preload_trust_files();
 }
 
+/**
+ * @param $dirname
+ * @return mixed|null|string
+ */
 function webphoto_get_dirname($dirname)
 {
     if (!defined('WEBPHOTO_TRUST_DIRNAME')) {
@@ -106,6 +155,9 @@ function webphoto_get_dirname($dirname)
     return $dirname;
 }
 
+/**
+ * @param null $language
+ */
 function webphoto_get_language($language = null)
 {
     if ($language) {
@@ -113,5 +165,6 @@ function webphoto_get_language($language = null)
     }
 
     global $xoopsConfig;
+
     return $xoopsConfig['language'];
 }

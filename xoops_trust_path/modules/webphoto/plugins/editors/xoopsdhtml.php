@@ -19,9 +19,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_editor_xoopsdhtml
 //=========================================================
+
+/**
+ * Class webphoto_editor_xoopsdhtml
+ */
 class webphoto_editor_xoopsdhtml extends webphoto_editor_base
 {
-    public $_caption    = '';
+    public $_caption = '';
     public $_hiddentext = 'xoopsHiddenText';
 
     public function __construct()
@@ -37,14 +41,26 @@ class webphoto_editor_xoopsdhtml extends webphoto_editor_base
         $this->set_display_br(1);
     }
 
+    /**
+     * @return bool
+     */
     public function exists()
     {
         return true;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $value
+     * @param $rows
+     * @param $cols
+     * @return null|string
+     */
     public function build_textarea($id, $name, $value, $rows, $cols)
     {
         $ele = new XoopsFormDhtmlTextArea($this->_caption, $name, $value, $rows, $cols, $this->_hiddentext);
+
         return $ele->render();
     }
 

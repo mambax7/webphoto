@@ -1,0 +1,3 @@
+S:/wamp64/www/259happylinux/xoops_lib/modules/webphoto/uploads/webphoto, 259happylinux, x4b3, http://localhost/259happylinux, webphoto
+c:/wamp64/www/259happylinux/xoops_lib/modules/webphoto/uploads/webphoto, 259happylinux, x4b3, http://localhost/259happylinux, webphoto
+S:/wamp64/www/257happylinux/xoops_lib/modules/webphoto/uploads/webphoto, 259happylinux, x4b3, http://localhost/259happylinux, webphoto

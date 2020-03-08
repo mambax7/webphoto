@@ -25,6 +25,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_groupperm
 //=========================================================
+
+/**
+ * Class webphoto_admin_groupperm
+ */
 class webphoto_admin_groupperm extends webphoto_edit_base
 {
     public $_groupperm_class;
@@ -36,14 +40,20 @@ class webphoto_admin_groupperm extends webphoto_edit_base
     public $_THIS_URL;
 
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
-    public $_TIME_DEBUG   = 60;
+    public $_TIME_FAIL = 5;
+    public $_TIME_DEBUG = 60;
 
     public $_DEBUG = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_groupperm constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -55,12 +65,18 @@ class webphoto_admin_groupperm extends webphoto_edit_base
         $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_groupperm|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_groupperm($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -87,6 +103,10 @@ class webphoto_admin_groupperm extends webphoto_edit_base
     //---------------------------------------------------------
     // groupperm
     //---------------------------------------------------------
+
+    /**
+     * @param $perms
+     */
     public function groupperm($perms)
     {
         if (!$this->check_token()) {
@@ -96,19 +116,19 @@ class webphoto_admin_groupperm extends webphoto_edit_base
 
         $this->_groupperm_class->modify($this->_MODULE_ID, $perms, $this->_FLAG_SYSTEM);
         $errors = $this->_groupperm_class->get_errors();
-        $msgs   = $this->_groupperm_class->get_msg_array();
+        $msgs = $this->_groupperm_class->get_msg_array();
 
         if ($this->_DEBUG && is_array($errors) && count($errors)) {
-            $msg  = implode("<br />\n", $errors);
-            $msg  = $this->highlight($msg);
+            $msg = implode("<br>\n", $errors);
+            $msg = $this->highlight($msg);
             $time = $this->_TIME_FAIL;
         } else {
-            $msg  = _AM_WEBPHOTO_GPERMUPDATED;
+            $msg = _AM_WEBPHOTO_GPERMUPDATED;
             $time = $this->_TIME_SUCCESS;
         }
 
         if ($this->_DEBUG && is_array($msgs) && count($msgs)) {
-            $msg .= "<br />\n" . implode("<br />\n", $msgs);
+            $msg .= "<br>\n" . implode("<br>\n", $msgs);
             $time = $this->_TIME_DEBUG;
         }
 
@@ -119,6 +139,10 @@ class webphoto_admin_groupperm extends webphoto_edit_base
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @return mixed|string|void
+     */
     public function build_form()
     {
         return $this->_form_class->build_form($this->_THIS_FCT);

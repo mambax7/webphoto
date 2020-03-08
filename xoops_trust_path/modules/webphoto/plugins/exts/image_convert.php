@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_image_convert
 //=========================================================
+
+/**
+ * Class webphoto_ext_image_convert
+ */
 class webphoto_ext_image_convert extends webphoto_ext_base
 {
     public $_imagemagick_class;
@@ -26,6 +30,12 @@ class webphoto_ext_image_convert extends webphoto_ext_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_image_convert constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -38,11 +48,20 @@ class webphoto_ext_image_convert extends webphoto_ext_base
     //---------------------------------------------------------
     // check ext
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->is_image_convert_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_image_convert_ext($ext)
     {
         return $this->match_ext_kind($ext, _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT);
@@ -51,10 +70,16 @@ class webphoto_ext_image_convert extends webphoto_ext_base
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return int|null
+     */
     public function create_jpeg($param)
     {
-        $src_file  = $param['src_file'];
+        $src_file = $param['src_file'];
         $jpeg_file = $param['jpeg_file'];
+
         return $this->_imagemagick_class->create_jpeg($src_file, $jpeg_file);
     }
 

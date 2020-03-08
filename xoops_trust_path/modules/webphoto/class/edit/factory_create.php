@@ -43,6 +43,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_factory_create
 //=========================================================
+
+/**
+ * Class webphoto_edit_factory_create
+ */
 class webphoto_edit_factory_create extends webphoto_edit_base
 {
     public $_cont_create_class;
@@ -73,88 +77,104 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
     // set param
     public $_flag_print_first_msg = false;
-    public $_flag_force_db        = false;
+    public $_flag_force_db = false;
 
     // result
-    public $_item_row                 = null;
-    public $_flag_resized             = false;
+    public $_item_row = null;
+    public $_flag_resized = false;
     public $_flag_video_image_created = false;
-    public $_flag_video_image_failed  = false;
-    public $_flag_flash_created       = false;
-    public $_flag_flash_failed        = false;
-    public $_flag_pdf_created         = false;
-    public $_flag_pdf_failed          = false;
-    public $_flag_swf_created         = false;
-    public $_flag_swf_failed          = false;
-    public $_flag_jpeg_created        = false;
-    public $_flag_jpeg_failed         = false;
-    public $_is_jpeg_cmyk             = false;
-    public $_flag_mp3_created         = false;
-    public $_flag_mp3_failed          = false;
-    public $_flag_wav_created         = false;
-    public $_flag_wav_failed          = false;
+    public $_flag_video_image_failed = false;
+    public $_flag_flash_created = false;
+    public $_flag_flash_failed = false;
+    public $_flag_pdf_created = false;
+    public $_flag_pdf_failed = false;
+    public $_flag_swf_created = false;
+    public $_flag_swf_failed = false;
+    public $_flag_jpeg_created = false;
+    public $_flag_jpeg_failed = false;
+    public $_is_jpeg_cmyk = false;
+    public $_flag_mp3_created = false;
+    public $_flag_mp3_failed = false;
+    public $_flag_wav_created = false;
+    public $_flag_wav_failed = false;
 
-    public $_cont_param  = null;
+    public $_cont_param = null;
     public $_video_param = null;
-    public $_msg_item    = null;
+    public $_msg_item = null;
 
     public $_TITLE_DEFAULT = 'no title';
 
     public $_EXT_JPEG = 'jpg';
-    public $_EXT_WAV  = 'wav';
+    public $_EXT_WAV = 'wav';
 
     public $_CONTENT_LENGTH = 65000; // 64KB
-    public $_GMAP_ZOOM      = _C_WEBPHOTO_GMAP_ZOOM;
+    public $_GMAP_ZOOM = _C_WEBPHOTO_GMAP_ZOOM;
 
     public $_FLAG_ADMIN = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_factory_create constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_search_build_class              = webphoto_edit_search_build::getInstance($dirname, $trust_dirname);
-        $this->_item_build_class                = webphoto_edit_item_build::getInstance($dirname, $trust_dirname);
-        $this->_cont_create_class               = webphoto_edit_cont_create::getInstance($dirname, $trust_dirname);
-        $this->_flash_create_class              = webphoto_edit_flash_create::getInstance($dirname, $trust_dirname);
-        $this->_docomo_create_class             = webphoto_edit_docomo_create::getInstance($dirname, $trust_dirname);
-        $this->_small_create_class              = webphoto_edit_small_create::getInstance($dirname, $trust_dirname);
-        $this->_middle_thumb_create_class       = webphoto_edit_middle_thumb_create::getInstance($dirname, $trust_dirname);
-        $this->_video_images_create_class       = webphoto_edit_video_images_create::getInstance($dirname, $trust_dirname);
-        $this->_pdf_create_class                = webphoto_edit_pdf_create::getInstance($dirname, $trust_dirname);
-        $this->_swf_create_class                = webphoto_edit_swf_create::getInstance($dirname, $trust_dirname);
-        $this->_jpeg_create_class               = webphoto_edit_jpeg_create::getInstance($dirname, $trust_dirname);
-        $this->_mp3_create_class                = webphoto_edit_mp3_create::getInstance($dirname, $trust_dirname);
-        $this->_wav_create_class                = webphoto_edit_wav_create::getInstance($dirname, $trust_dirname);
-        $this->_file_action_class               = webphoto_edit_file_action::getInstance($dirname, $trust_dirname);
+        $this->_search_build_class = webphoto_edit_search_build::getInstance($dirname, $trust_dirname);
+        $this->_item_build_class = webphoto_edit_item_build::getInstance($dirname, $trust_dirname);
+        $this->_cont_create_class = webphoto_edit_cont_create::getInstance($dirname, $trust_dirname);
+        $this->_flash_create_class = webphoto_edit_flash_create::getInstance($dirname, $trust_dirname);
+        $this->_docomo_create_class = webphoto_edit_docomo_create::getInstance($dirname, $trust_dirname);
+        $this->_small_create_class = webphoto_edit_small_create::getInstance($dirname, $trust_dirname);
+        $this->_middle_thumb_create_class = webphoto_edit_middle_thumb_create::getInstance($dirname, $trust_dirname);
+        $this->_video_images_create_class = webphoto_edit_video_images_create::getInstance($dirname, $trust_dirname);
+        $this->_pdf_create_class = webphoto_edit_pdf_create::getInstance($dirname, $trust_dirname);
+        $this->_swf_create_class = webphoto_edit_swf_create::getInstance($dirname, $trust_dirname);
+        $this->_jpeg_create_class = webphoto_edit_jpeg_create::getInstance($dirname, $trust_dirname);
+        $this->_mp3_create_class = webphoto_edit_mp3_create::getInstance($dirname, $trust_dirname);
+        $this->_wav_create_class = webphoto_edit_wav_create::getInstance($dirname, $trust_dirname);
+        $this->_file_action_class = webphoto_edit_file_action::getInstance($dirname, $trust_dirname);
         $this->_video_middle_thumb_create_class = webphoto_edit_video_middle_thumb_create::getInstance($dirname, $trust_dirname);
-        $this->_ext_build_class                 = webphoto_edit_ext_build::getInstance($dirname, $trust_dirname);
-        $this->_image_create_class              = webphoto_image_create::getInstance($dirname);
+        $this->_ext_build_class = webphoto_edit_ext_build::getInstance($dirname, $trust_dirname);
+        $this->_image_create_class = webphoto_image_create::getInstance($dirname);
 
         $this->_icon_build_class = webphoto_edit_icon_build::getInstance($dirname);
-        $this->_multibyte_class  = webphoto_lib_multibyte::getInstance();
+        $this->_multibyte_class = webphoto_lib_multibyte::getInstance();
 
         $this->_msg_main_class = new webphoto_lib_msg();
-        $this->_msg_sub_class  = new webphoto_lib_msg();
+        $this->_msg_sub_class = new webphoto_lib_msg();
 
         $this->_has_image_resize = $this->_image_create_class->has_resize();
         $this->_has_image_rotate = $this->_image_create_class->has_rotate();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_factory_create|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_factory_create($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_flag_admin($val)
     {
         $this->_FLAG_ADMIN = (bool)$val;
@@ -164,6 +184,12 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create from file
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $param
+     * @return int
+     */
     public function create_item_from_param($item_row, $param)
     {
         $this->_msg_main_class->clear_msg_array();
@@ -177,22 +203,24 @@ class webphoto_edit_factory_create extends webphoto_edit_base
                 $msg = $item_row['item_title'] . ' : ' . $this->get_msg_sub_str();
                 $this->_msg_main_class->set_msg($msg);
             }
+
             return $ret;
         }
 
         // --- insert item ---
         $item_row = $this->build_item_row_from_file($item_row, $param['src_file']);
-        $item_id  = $this->insert_item($item_row);
+        $item_id = $this->insert_item($item_row);
         if (!$item_id) {
             if ($this->check_msg_level_admin()) {
                 $msg = $item_row['item_title'] . ' : ' . $this->get_msg_sub_str();
                 $this->_msg_main_class->set_msg($msg);
             }
+
             return _C_WEBPHOTO_ERR_DB;
         }
 
         $item_row['item_id'] = $item_id;
-        $this->_item_row     = $item_row;
+        $this->_item_row = $item_row;
 
         if ($this->_flag_print_first_msg) {
             $msg = ' ';
@@ -201,7 +229,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             $this->_msg_main_class->set_msg($msg);
         }
 
-        $ret             = $this->create_files_from_param($item_row, $param);
+        $ret = $this->create_files_from_param($item_row, $param);
         $this->_item_row = $item_row;
 
         if ($this->check_msg_level_admin()) {
@@ -211,12 +239,17 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $ret;
     }
 
+    /**
+     * @param $item_row
+     * @param $param
+     * @return int
+     */
     public function create_files_from_param($item_row, $param)
     {
-        $item_ext  = $item_row['item_ext'];
+        $item_ext = $item_row['item_ext'];
         $item_kind = $item_row['item_kind'];
 
-        $src_file          = $param['src_file'];
+        $src_file = $param['src_file'];
         $flag_video_plural = isset($param['flag_video_plural']) ? (bool)$param['flag_video_plural'] : false;
 
         if (empty($src_file) || !is_file($src_file)) {
@@ -224,7 +257,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         }
 
         // --- insert cont ---
-        $file_params = array();
+        $file_params = [];
 
         $photo_param = $this->build_photo_param($item_row, $src_file);
 
@@ -235,7 +268,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         if (is_array($this->_cont_param)) {
             $sub_params = $this->create_sub_files($photo_param, $this->_cont_param, $flag_video_plural);
             if (is_array($sub_params)) {
-                $file_params = $file_params + $sub_params;
+                $file_params += $sub_params;
             }
 
             $file_params['jpeg'] = $this->create_jpeg_param($photo_param, $file_params);
@@ -244,7 +277,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             $image_params = $this->create_image_params($photo_param, $file_params);
 
             if (is_array($image_params)) {
-                $file_params = $file_params + $image_params;
+                $file_params += $image_params;
             }
         }
 
@@ -252,7 +285,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         // --- update item ---
         $item_row = $this->build_item_row_submit_update($item_row, $file_id_array);
-        $ret      = $this->update_item($item_row);
+        $ret = $this->update_item($item_row);
         if (!$ret) {
             return _C_WEBPHOTO_ERR_DB;
         }
@@ -261,15 +294,21 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return 0;
     }
 
+    /**
+     * @param $photo_param
+     * @param $cont_param
+     * @param $flag_video_plural
+     * @return array
+     */
     public function create_sub_files($photo_param, $cont_param, $flag_video_plural)
     {
-        $sub_params           = array();
+        $sub_params = [];
         $sub_params['docomo'] = $this->create_docomo_param($photo_param, $cont_param);
-        $sub_params['flash']  = $this->create_flash_param($photo_param);
-        $sub_params['pdf']    = $this->create_pdf_param($photo_param);
-        $sub_params['swf']    = $this->create_swf_param($photo_param);
-        $sub_params['wav']    = $this->create_wav_param($photo_param);
-        $sub_params['mp3']    = $this->create_mp3_param($photo_param, $sub_params['wav']);
+        $sub_params['flash'] = $this->create_flash_param($photo_param);
+        $sub_params['pdf'] = $this->create_pdf_param($photo_param);
+        $sub_params['swf'] = $this->create_swf_param($photo_param);
+        $sub_params['wav'] = $this->create_wav_param($photo_param);
+        $sub_params['mp3'] = $this->create_mp3_param($photo_param, $sub_params['wav']);
 
         if ($flag_video_plural) {
             $this->create_video_images($photo_param);
@@ -278,10 +317,16 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $sub_params;
     }
 
+    /**
+     * @param $item_row
+     * @param $param
+     * @return int
+     */
     public function check_item($item_row, $param)
     {
         if (!isset($param['src_file'])) {
             $this->_msg_sub_class->set_msg('Empty file', true);
+
             return _C_WEBPHOTO_ERR_EMPTY_FILE;
         }
 
@@ -293,6 +338,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         if (!isset($item_row['item_cat_id'])) {
             $this->_msg_sub_class->set_msg('Empty cat_id', true);
+
             return _C_WEBPHOTO_ERR_EMPTY_CAT;
         }
 
@@ -309,6 +355,9 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         echo $this->get_main_msg();
     }
 
+    /**
+     * @return bool|string
+     */
     public function get_main_msg()
     {
         return $this->_msg_main_class->get_msg_str(' ');
@@ -317,6 +366,12 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // item row
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $src_file
+     * @return mixed
+     */
     public function build_item_row_from_file($row, $src_file)
     {
         $row = $this->build_row_ext_kind($row, $src_file);
@@ -330,9 +385,16 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         $row = $this->build_row_icon_if_empty($row);
         $row = $this->build_row_title_if_empty($row);
         $row = $this->build_row_search($row);
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $photo_name
+     * @param $media_name
+     * @return mixed
+     */
     public function build_item_row_photo($row, $photo_name, $media_name)
     {
         $file = $this->_TMP_DIR . '/' . $photo_name;
@@ -342,9 +404,15 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         $row = $this->build_row_title_media($row, $media_name);
         $row = $this->build_row_exif($row, $file);
         $row = $this->build_row_video_info($row, $file);
+
         return $row;
     }
 
+    /**
+     * @param      $row
+     * @param null $tag_name_array
+     * @return mixed
+     */
     public function build_item_row_submit_insert($row, $tag_name_array = null)
     {
         // status onclick search
@@ -355,9 +423,16 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         $row = $this->build_row_detail_onclick($row);
         $row = $this->build_row_title_if_empty($row);
         $row = $this->build_row_search($row, $tag_name_array);
+
         return $row;
     }
 
+    /**
+     * @param      $row
+     * @param      $file_id_array
+     * @param null $tag_name_array
+     * @return mixed
+     */
     public function build_item_row_submit_update($row, $file_id_array, $tag_name_array = null)
     {
         // files content icon search
@@ -367,87 +442,157 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         $row = $this->build_row_cmyk($row);
         $row = $this->build_row_icon_if_empty($row);
         $row = $this->build_row_search($row, $tag_name_array);
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_item_row_submit_small($row)
     {
         // small
         return $this->build_row_small_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @param $checkbox
+     * @return mixed
+     */
     public function build_item_row_modify_post($row, $checkbox)
     {
         return $this->_item_build_class->build_row_modify_by_post($row, $checkbox);
     }
 
+    /**
+     * @param $row
+     * @param $file_id_array
+     * @param $tag_name_array
+     * @return mixed
+     */
     public function build_item_row_modify_update($row, $file_id_array, $tag_name_array)
     {
         // files content search
         $row = $this->build_row_content($row, $file_id_array);
         $row = $this->build_row_files($row, $file_id_array);
         $row = $this->build_row_search($row, $tag_name_array);
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $checkbox
+     * @return mixed
+     */
     public function build_row_submit_by_post($row, $checkbox)
     {
         return $this->_item_build_class->build_row_submit_by_post($row, $checkbox);
     }
 
+    /**
+     * @param $row
+     * @param $file_id_array
+     * @return mixed
+     */
     public function build_row_files($row, $file_id_array)
     {
         return $this->_item_build_class->build_row_files($row, $file_id_array);
     }
 
+    /**
+     * @param $row
+     * @param $file
+     * @return mixed
+     */
     public function build_row_ext_kind($row, $file)
     {
         return $this->_item_build_class->build_row_ext_kind_from_file($row, $file);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_onclick($row)
     {
         return $this->_item_build_class->build_row_onclick($row);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_status($row)
     {
         return $this->_item_build_class->build_row_status_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_uid($row)
     {
         return $this->_item_build_class->build_row_uid_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_displaytype($row)
     {
         return $this->_item_build_class->build_row_displaytype_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_detail_onclick($row)
     {
         return $this->_item_build_class->build_row_detail_onclick_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_title_if_empty($row)
     {
         return $this->_item_build_class->build_row_title_if_empty($row);
     }
 
+    /**
+     * @param $row
+     * @param $media_name
+     * @return mixed
+     */
     public function build_row_title_media($row, $media_name)
     {
         if (empty($row['item_title'])) {
             $row['item_title'] = $this->strip_ext($media_name);
         }
+
         return $row;
     }
 
+    /**
+     * @param $level
+     * @param $cat_id
+     * @return bool|string
+     */
     public function build_item_perm_by_level_catid($level, $cat_id)
     {
         return $this->_item_build_class->build_item_perm_by_level_catid($level, $cat_id);
     }
 
+    /**
+     * @return bool
+     */
     public function use_item_perm_level()
     {
         return $this->_item_build_class->use_item_perm_level();
@@ -456,6 +601,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create copy param
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_single_copy_param($param)
     {
         $src_kind = $param['src_kind'];
@@ -463,25 +613,21 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         $ret = null;
 
         switch ($src_kind) {
-            case _C_WEBPHOTO_FILE_KIND_PDF :
+            case _C_WEBPHOTO_FILE_KIND_PDF:
                 $ret = $this->create_pdf_copy_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_SWF :
+            case _C_WEBPHOTO_FILE_KIND_SWF:
                 $ret = $this->create_swf_copy_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_WAV :
+            case _C_WEBPHOTO_FILE_KIND_WAV:
                 $ret = $this->create_wav_copy_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_MP3 :
+            case _C_WEBPHOTO_FILE_KIND_MP3:
                 $ret = $this->create_mp3_copy_param($param);
                 break;
-
-            case _C_WEBPHOTO_FILE_KIND_THUMB :
-            case _C_WEBPHOTO_FILE_KIND_LARGE :
-            case _C_WEBPHOTO_FILE_KIND_MIDDLE :
+            case _C_WEBPHOTO_FILE_KIND_THUMB:
+            case _C_WEBPHOTO_FILE_KIND_LARGE:
+            case _C_WEBPHOTO_FILE_KIND_MIDDLE:
             case _C_WEBPHOTO_FILE_KIND_SMALL:
                 $ret = $this->create_image_copy_param($param);
                 break;
@@ -493,18 +639,28 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create cont
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $src_file
+     * @return mixed
+     */
     public function build_photo_param($item_row, $src_file)
     {
-        $param             = $item_row;
+        $param = $item_row;
         $param['src_file'] = $src_file;
 
         // Undefined variable: item_ext
-        $param['src_ext']  = $item_row['item_ext'];
+        $param['src_ext'] = $item_row['item_ext'];
         $param['src_kind'] = $item_row['item_kind'];
 
         return $param;
     }
 
+    /**
+     * @param $param
+     * @return int
+     */
     public function create_cont_param($param)
     {
         $ret = $this->_cont_create_class->create_param($param);
@@ -513,10 +669,18 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         }
         $this->_cont_param = $this->_cont_create_class->get_param();
         $this->_msg_sub_class->set_msg($this->_cont_create_class->get_msg_array());
+
         return 0;
     }
 
     // for preview
+
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @param $rotate
+     * @return mixed
+     */
     public function rotate_image($src_file, $dst_file, $rotate)
     {
         return $this->_image_create_class->cmd_resize_rotate($src_file, $dst_file, 0, 0, $rotate);
@@ -527,6 +691,9 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $this->_cont_param;
     }
 
+    /**
+     * @return bool
+     */
     public function get_resized()
     {
         return $this->_flag_resized;
@@ -535,6 +702,12 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create image
     //---------------------------------------------------------
+
+    /**
+     * @param      $photo_param
+     * @param null $file_params
+     * @return array|bool
+     */
     public function create_image_params($photo_param, $file_params = null)
     {
         $param = $photo_param;
@@ -542,7 +715,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         // if jpeg file
         if (isset($file_params['jpeg']['file'])) {
             $param['src_file'] = $file_params['jpeg']['file'];
-            $param['src_ext']  = $file_params['jpeg']['ext'];
+            $param['src_ext'] = $file_params['jpeg']['ext'];
         }
 
         // not valid source
@@ -552,9 +725,14 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         $ret = $this->_middle_thumb_create_class->create_image_params($param);
         $this->_msg_sub_class->set_msg($this->_middle_thumb_create_class->get_msg_array());
+
         return $ret;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_image_copy_param($param)
     {
         // no action if not image
@@ -564,23 +742,36 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         $ret = $this->_middle_thumb_create_class->create_copy_param($param);
         $this->_msg_sub_class->set_msg($this->_middle_thumb_create_class->get_msg_array());
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // small image
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return array|bool|null
+     */
     public function create_small_param_from_external_icon($row)
     {
         // BUG : Notice [PHP]: Undefined variable: ret
         $ret = $this->_small_create_class->create_small_param_from_external_icon($row);
         $this->_msg_sub_class->set_msg($this->_small_create_class->get_msg_array());
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param      $photo_param
+     * @param null $file_params
+     * @return array|null
+     */
     public function create_jpeg_param($photo_param, $file_params = null)
     {
         if (!is_array($photo_param)) {
@@ -592,10 +783,10 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         // if pdf file
         $param['pdf_file'] = isset($file_params['pdf']['file']) ? $file_params['pdf']['file'] : null;
 
-        $jpeg_param               = $this->_jpeg_create_class->create_param($param);
+        $jpeg_param = $this->_jpeg_create_class->create_param($param);
         $this->_flag_jpeg_created = $this->_jpeg_create_class->get_flag_created();
-        $this->_flag_jpeg_failed  = $this->_jpeg_create_class->get_flag_failed();
-        $this->_is_jpeg_cmyk      = $this->_jpeg_create_class->is_cmyk();
+        $this->_flag_jpeg_failed = $this->_jpeg_create_class->get_flag_failed();
+        $this->_is_jpeg_cmyk = $this->_jpeg_create_class->is_cmyk();
         $this->_msg_sub_class->set_msg($this->_jpeg_create_class->get_msg_array());
 
         //print_r($jpeg_param);
@@ -603,6 +794,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $jpeg_param;
     }
 
+    /**
+     * @param $item_row
+     * @param $tmp_name
+     * @return array|null
+     */
     public function create_jpeg_param_by_tmp($item_row, $tmp_name)
     {
         if (empty($tmp_name)) {
@@ -611,21 +807,21 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         $ext = $this->parse_ext($tmp_name);
 
-        $param             = $item_row;
+        $param = $item_row;
         $param['src_file'] = $this->_TMP_DIR . '/' . $tmp_name;
-        $param['src_ext']  = $ext;
+        $param['src_ext'] = $ext;
 
         // jpeg
         if ($this->is_jpeg_ext($ext)) {
             $ret = $this->_jpeg_create_class->create_copy_param($param);
             $this->_msg_sub_class->set_msg($this->_jpeg_create_class->get_msg_array());
 
-            // gif, png
+        // gif, png
         } elseif ($this->is_image_ext($ext)) {
             $ret = $this->_jpeg_create_class->create_image_param($param);
             $this->_msg_sub_class->set_msg($this->_jpeg_create_class->get_msg_array());
 
-            // not image
+        // not image
         } else {
             return null;
         }
@@ -633,11 +829,17 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_jpeg_created()
     {
         return $this->_flag_jpeg_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_jpeg_failed()
     {
         return $this->_flag_jpeg_failed;
@@ -646,6 +848,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create video docomo
     //---------------------------------------------------------
+
+    /**
+     * @param $photo_param
+     * @param $cont_param
+     */
     public function create_docomo_param($photo_param, $cont_param)
     {
         $param = array_merge($photo_param, $cont_param);
@@ -656,32 +863,44 @@ class webphoto_edit_factory_create extends webphoto_edit_base
 
         $ret = $this->_docomo_create_class->create_param($param);
         $this->_msg_sub_class->set_msg($this->_docomo_create_class->get_msg_array());
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // create video flash
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_flash_param($param)
     {
         if ($this->is_flash_ext($param['src_ext'])) {
             return null;
         }
 
-        $flash_param               = $this->_flash_create_class->create($param);
+        $flash_param = $this->_flash_create_class->create($param);
         $this->_flag_flash_created = $this->_flash_create_class->get_flag_created();
-        $this->_flag_flash_failed  = $this->_flash_create_class->get_flag_failed();
+        $this->_flag_flash_failed = $this->_flash_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_flash_create_class->get_msg_array());
         $this->set_error($this->_flash_create_class->get_errors());
 
         return $flash_param;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_flash_created()
     {
         return $this->_flag_flash_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_flash_failed()
     {
         return $this->_flag_flash_failed;
@@ -690,6 +909,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create pdf
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_pdf_param($param)
     {
         // no action if pdf
@@ -697,13 +921,18 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $pdf_param               = $this->_pdf_create_class->create_param($param);
+        $pdf_param = $this->_pdf_create_class->create_param($param);
         $this->_flag_pdf_created = $this->_pdf_create_class->get_flag_created();
-        $this->_flag_pdf_failed  = $this->_pdf_create_class->get_flag_failed();
+        $this->_flag_pdf_failed = $this->_pdf_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_pdf_create_class->get_msg_array());
+
         return $pdf_param;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_pdf_copy_param($param)
     {
         // no action if not pdf
@@ -711,18 +940,25 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $pdf_param               = $this->_pdf_create_class->create_copy_param($param);
+        $pdf_param = $this->_pdf_create_class->create_copy_param($param);
         $this->_flag_pdf_created = $this->_pdf_create_class->get_flag_created();
-        $this->_flag_pdf_failed  = $this->_pdf_create_class->get_flag_failed();
+        $this->_flag_pdf_failed = $this->_pdf_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_pdf_create_class->get_msg_array());
+
         return $pdf_param;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_pdf_created()
     {
         return $this->_flag_pdf_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_pdf_failed()
     {
         return $this->_flag_pdf_failed;
@@ -731,6 +967,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create swf
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_swf_param($param)
     {
         // no action if swf
@@ -738,13 +979,18 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $swf_param               = $this->_swf_create_class->create_param($param);
+        $swf_param = $this->_swf_create_class->create_param($param);
         $this->_flag_swf_created = $this->_swf_create_class->get_flag_created();
-        $this->_flag_swf_failed  = $this->_swf_create_class->get_flag_failed();
+        $this->_flag_swf_failed = $this->_swf_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_swf_create_class->get_msg_array());
+
         return $swf_param;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_swf_copy_param($param)
     {
         // no action if not swf
@@ -752,18 +998,25 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $swf_param               = $this->_swf_create_class->create_copy_param($param);
+        $swf_param = $this->_swf_create_class->create_copy_param($param);
         $this->_flag_swf_created = $this->_swf_create_class->get_flag_created();
-        $this->_flag_swf_failed  = $this->_swf_create_class->get_flag_failed();
+        $this->_flag_swf_failed = $this->_swf_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_swf_create_class->get_msg_array());
+
         return $swf_param;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_swf_created()
     {
         return $this->_flag_swf_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_swf_failed()
     {
         return $this->_flag_swf_failed;
@@ -772,6 +1025,12 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create mp3
     //---------------------------------------------------------
+
+    /**
+     * @param $photo_param
+     * @param $wav_param
+     * @return array|null
+     */
     public function create_mp3_param($photo_param, $wav_param)
     {
         // no action if same ext
@@ -784,7 +1043,7 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         // if wav file
         if (isset($wav_param['file'])) {
             $mp3_param['src_file'] = $wav_param['file'];
-            $mp3_param['src_ext']  = $this->_EXT_WAV;
+            $mp3_param['src_ext'] = $this->_EXT_WAV;
         }
 
         // no action if not wav ext
@@ -792,13 +1051,18 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $param_out               = $this->_mp3_create_class->create_param($mp3_param);
+        $param_out = $this->_mp3_create_class->create_param($mp3_param);
         $this->_flag_mp3_created = $this->_mp3_create_class->get_flag_created();
-        $this->_flag_mp3_failed  = $this->_mp3_create_class->get_flag_failed();
+        $this->_flag_mp3_failed = $this->_mp3_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_mp3_create_class->get_msg_array());
+
         return $param_out;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_mp3_copy__param($param)
     {
         // no action if not mp3t
@@ -806,18 +1070,25 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $param_out               = $this->_mp3_create_class->create_copy_param($param);
+        $param_out = $this->_mp3_create_class->create_copy_param($param);
         $this->_flag_mp3_created = $this->_mp3_create_class->get_flag_created();
-        $this->_flag_mp3_failed  = $this->_mp3_create_class->get_flag_failed();
+        $this->_flag_mp3_failed = $this->_mp3_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_mp3_create_class->get_msg_array());
+
         return $param_out;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_mp3_created()
     {
         return $this->_flag_mp3_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_mp3_failed()
     {
         return $this->_flag_mp3_failed;
@@ -826,6 +1097,11 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // create wav
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_wav_param($param)
     {
         // no action if wave
@@ -833,13 +1109,18 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $wav_param               = $this->_wav_create_class->create_param($param);
+        $wav_param = $this->_wav_create_class->create_param($param);
         $this->_flag_wav_created = $this->_wav_create_class->get_flag_created();
-        $this->_flag_wav_failed  = $this->_wav_create_class->get_flag_failed();
+        $this->_flag_wav_failed = $this->_wav_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_wav_create_class->get_msg_array());
+
         return $wav_param;
     }
 
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_wav_copy_param($param)
     {
         // no action if not wave
@@ -847,18 +1128,25 @@ class webphoto_edit_factory_create extends webphoto_edit_base
             return null;
         }
 
-        $wav_param               = $this->_wav_create_class->create_copy_param($param);
+        $wav_param = $this->_wav_create_class->create_copy_param($param);
         $this->_flag_wav_created = $this->_wav_create_class->get_flag_created();
-        $this->_flag_wav_failed  = $this->_wav_create_class->get_flag_failed();
+        $this->_flag_wav_failed = $this->_wav_create_class->get_flag_failed();
         $this->_msg_sub_class->set_msg($this->_wav_create_class->get_msg_array());
+
         return $wav_param;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_wav_created()
     {
         return $this->_flag_wav_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_wav_failed()
     {
         return $this->_flag_wav_failed;
@@ -867,24 +1155,40 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // vodeo images
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return int
+     */
     public function create_video_images($param)
     {
-        $ret                             = $this->_video_images_create_class->create($param);
+        $ret = $this->_video_images_create_class->create($param);
         $this->_flag_video_image_created = $this->_video_images_create_class->get_flag_created();
-        $this->_flag_video_image_failed  = $this->_video_images_create_class->get_flag_failed();
+        $this->_flag_video_image_failed = $this->_video_images_create_class->get_flag_failed();
+
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_video_image_created()
     {
         return $this->_flag_video_image_created;
     }
 
+    /**
+     * @return bool
+     */
     public function get_flag_video_image_failed()
     {
         return $this->_flag_video_image_failed;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function video_thumb($row)
     {
         return $this->_video_middle_thumb_create_class->video_thumb($row);
@@ -893,21 +1197,27 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // file extention
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $src_file
+     * @return mixed
+     */
     public function build_row_exif($row, $src_file)
     {
         $ret = $this->_ext_build_class->get_exif($row, $src_file);
-        if ($ret != 1) {
+        if (1 != $ret) {
             return $row;
         }
 
         $this->_msg_sub_class->set_msg('get exif');
         $result = $this->_ext_build_class->get_result();
 
-        $datetime  = $result['datetime_mysql'];
+        $datetime = $result['datetime_mysql'];
         $equipment = $result['equipment'];
-        $latitude  = $result['latitude'];
+        $latitude = $result['latitude'];
         $longitude = $result['longitude'];
-        $exif      = $result['all_data'];
+        $exif = $result['all_data'];
 
         if ($datetime) {
             $row['item_datetime'] = $datetime;
@@ -915,10 +1225,10 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         if ($equipment) {
             $row['item_equipment'] = $equipment;
         }
-        if (($latitude != 0) || ($longitude != 0)) {
-            $row['item_gmap_latitude']  = $latitude;
+        if ((0 != $latitude) || (0 != $longitude)) {
+            $row['item_gmap_latitude'] = $latitude;
             $row['item_gmap_longitude'] = $longitude;
-            $row['item_gmap_zoom']      = $this->_GMAP_ZOOM;
+            $row['item_gmap_zoom'] = $this->_GMAP_ZOOM;
         }
         if ($exif) {
             $row['item_exif'] = $exif;
@@ -927,33 +1237,43 @@ class webphoto_edit_factory_create extends webphoto_edit_base
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $src_file
+     * @return mixed
+     */
     public function build_row_video_info($row, $src_file)
     {
         $ret = $this->_ext_build_class->get_video_info($row, $src_file);
-        if ($ret != 1) {
+        if (1 != $ret) {
             return $row;
         }
 
         $this->_msg_sub_class->set_msg('get video info');
-        $result               = $this->_ext_build_class->get_result();
+        $result = $this->_ext_build_class->get_result();
         $row['item_duration'] = $result['duration'];
-        $row['item_width']    = $result['width'];
-        $row['item_height']   = $result['height'];
+        $row['item_width'] = $result['width'];
+        $row['item_height'] = $result['height'];
         if ($result['is_h264_aac']) {
-            $row['item_kind']        = _C_WEBPHOTO_ITEM_KIND_VIDEO_H264;
+            $row['item_kind'] = _C_WEBPHOTO_ITEM_KIND_VIDEO_H264;
             $row['item_displayfile'] = _C_WEBPHOTO_FILE_KIND_CONT;
         }
 
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $file_id_array
+     * @return mixed
+     */
     public function build_row_content($row, $file_id_array)
     {
         $ret = $this->_ext_build_class->get_text_content($row, $file_id_array);
-        if ($ret == 1) {
+        if (1 == $ret) {
             $row['item_content'] = $this->_ext_build_class->get_result();
             $this->_msg_sub_class->set_msg('get content');
-        } elseif ($ret == -1) {
+        } elseif (-1 == $ret) {
             $this->set_error($this->_ext_build_class->get_errors());
         }
 
@@ -963,31 +1283,47 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // width cmyk
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_width($row)
     {
         if (isset($this->_cont_param['width']) && $this->_cont_param['width']
             && isset($this->_cont_param['height'])
-            && $this->_cont_param['height']
-        ) {
-            $row['item_width']  = $this->_cont_param['width'];
+            && $this->_cont_param['height']) {
+            $row['item_width'] = $this->_cont_param['width'];
             $row['item_height'] = $this->_cont_param['height'];
         }
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_cmyk($row)
     {
         if ($this->_is_jpeg_cmyk) {
-            $row['item_kind']           = _C_WEBPHOTO_ITEM_KIND_IMAGE_CMYK;
-            $row['item_onclick']        = _C_WEBPHOTO_ONCLICK_PAGE;
+            $row['item_kind'] = _C_WEBPHOTO_ITEM_KIND_IMAGE_CMYK;
+            $row['item_onclick'] = _C_WEBPHOTO_ONCLICK_PAGE;
             $row['item_detail_onclick'] = _C_WEBPHOTO_DETAIL_ONCLICK_DOWNLOAD;
         }
+
         return $row;
     }
 
     //---------------------------------------------------------
     // icon
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param null $ext
+     * @return mixed
+     */
     public function build_row_icon_if_empty($row, $ext = null)
     {
         return $this->_icon_build_class->build_row_icon_if_empty($row, $ext);
@@ -996,6 +1332,12 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // search
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param null $tag_name_array
+     * @return mixed
+     */
     public function build_row_search($row, $tag_name_array = null)
     {
         return $this->_search_build_class->build_row($row, $tag_name_array);
@@ -1004,57 +1346,97 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // item handler
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert_item($row)
     {
         $newid = $this->format_and_insert_item($row, $this->_flag_force_db);
         if (!$newid) {
             $this->_msg_sub_class->set_msg('DB Error', true);
+
             return false;
         }
+
         return $newid;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function update_item($row)
     {
         $ret = $this->format_and_update_item($row, $this->_flag_force_db);
         if (!$ret) {
             $this->_msg_sub_class->set_msg('DB Error', true);
+
             return false;
         }
+
         return true;
     }
 
     //---------------------------------------------------------
     // file handler
     //---------------------------------------------------------
+
+    /**
+     * @param $item_id
+     * @param $params
+     * @return array|bool
+     */
     public function insert_files_from_params($item_id, $params)
     {
         return $this->_file_action_class->insert_files_from_params($item_id, $params);
     }
 
+    /**
+     * @param $item_id
+     * @param $params
+     * @return array|bool
+     */
     public function update_files_from_params($item_id, $params)
     {
         return $this->_file_action_class->update_files_from_params($item_id, $params);
     }
 
     // action.php
+
+    /**
+     * @param $item_id
+     * @param $param
+     * @return bool|void
+     */
     public function insert_file_by_param($item_id, $param)
     {
         return $this->_file_action_class->insert_file_by_param($item_id, $param);
     }
 
+    /**
+     * @param $arr
+     * @param $key
+     * @return mixed|null
+     */
     public function get_file_full_by_key($arr, $key)
     {
         $id = isset($arr[$key]) ? (int)$arr[$key] : 0;
         if ($id > 0) {
-            return $this->_file_handler->get_full_path_by_id($id);
+            return $this->_fileHandler->get_full_path_by_id($id);
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // msg
     //---------------------------------------------------------
+
+    /**
+     * @return bool|string
+     */
     public function get_msg_sub_str()
     {
         return $this->_msg_sub_class->get_msg_str(', ');
@@ -1063,22 +1445,35 @@ class webphoto_edit_factory_create extends webphoto_edit_base
     //---------------------------------------------------------
     // set & get param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_flag_force_db($val)
     {
         $this->_flag_force_db = (bool)$val;
         $this->_file_action_class->set_flag_force_db($val);
     }
 
+    /**
+     * @param $val
+     */
     public function set_flag_print_first_msg($val)
     {
         $this->_flag_print_first_msg = (bool)$val;
     }
 
+    /**
+     * @return bool
+     */
     public function has_image_resize()
     {
         return $this->_has_image_resize;
     }
 
+    /**
+     * @return bool
+     */
     public function has_image_rotate()
     {
         return $this->_has_image_rotate;

@@ -21,12 +21,21 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_gicon_handler
 //=========================================================
+
+/**
+ * Class webphoto_gicon_handler
+ */
 class webphoto_gicon_handler extends webphoto_handler_base_ini
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_gicon_handler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,50 +43,60 @@ class webphoto_gicon_handler extends webphoto_handler_base_ini
         $this->set_id_name('gicon_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_gicon_handler|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_gicon_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
-
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'gicon_id'            => 0,
-            'gicon_time_create'   => $time_create,
-            'gicon_time_update'   => $time_update,
-            'gicon_title'         => '',
-            'gicon_image_path'    => '',
-            'gicon_image_name'    => '',
-            'gicon_image_ext'     => '',
-            'gicon_shadow_path'   => '',
-            'gicon_shadow_name'   => '',
-            'gicon_shadow_ext'    => '',
-            'gicon_image_width'   => 0,
-            'gicon_image_height'  => 0,
-            'gicon_shadow_width'  => 0,
+        $arr = [
+            'gicon_id' => 0,
+            'gicon_time_create' => $time_create,
+            'gicon_time_update' => $time_update,
+            'gicon_title' => '',
+            'gicon_image_path' => '',
+            'gicon_image_name' => '',
+            'gicon_image_ext' => '',
+            'gicon_shadow_path' => '',
+            'gicon_shadow_name' => '',
+            'gicon_shadow_ext' => '',
+            'gicon_image_width' => 0,
+            'gicon_image_height' => 0,
+            'gicon_shadow_width' => 0,
             'gicon_shadow_height' => 0,
-            'gicon_anchor_x'      => 0,
-            'gicon_anchor_y'      => 0,
-            'gicon_info_x'        => 0,
-            'gicon_info_y'        => 0,
-        );
+            'gicon_anchor_x' => 0,
+            'gicon_anchor_y' => 0,
+            'gicon_info_x' => 0,
+            'gicon_info_y' => 0,
+        ];
 
         return $arr;
     }
@@ -85,6 +104,11 @@ class webphoto_gicon_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -142,6 +166,11 @@ class webphoto_gicon_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -174,17 +203,24 @@ class webphoto_gicon_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param bool   $none
+     * @param string $none_name
+     * @return array
+     */
     public function get_sel_options($none = false, $none_name = '---')
     {
         $rows = $this->get_rows_all_asc();
 
-        $arr = array();
+        $arr = [];
         if ($none) {
             $arr[0] = $none_name;
         }
         foreach ($rows as $row) {
             $arr[$row['gicon_id']] = $row['gicon_title'];
         }
+
         return $arr;
     }
 

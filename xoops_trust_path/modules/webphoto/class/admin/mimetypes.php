@@ -33,43 +33,59 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_mimetypes
 //=========================================================
+
+/**
+ * Class webphoto_admin_mimetypes
+ */
 class webphoto_admin_mimetypes extends webphoto_base_this
 {
-    public $_mime_handler;
+    public $_mimeHandler;
 
-    public $_xoops_group_objs   = null;
+    public $_xoops_group_objs = null;
     public $_allowed_mime_array = null;
-    public $_image_online       = null;
-    public $_image_offline      = null;
+    public $_image_online = null;
+    public $_image_offline = null;
 
     public $_ADMIN_MIME_PHP;
     public $_PERPAGE = 20;
 
-    public $_STYLE_LEGEND  = 'font-weight:bold; color:#900;';
+    public $_STYLE_LEGEND = 'font-weight:bold; color:#900;';
     public $_STYLE_PADDING = 'padding:8px;';
-    public $_STYLE_NAVI    = 'text-align:right; padding:8px;';
-    public $_GLUE_ALLOWED  = ' '; // space
+    public $_STYLE_NAVI = 'text-align:right; padding:8px;';
+    public $_GLUE_ALLOWED = ' '; // space
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_mimetypes constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_mime_handler = webphoto_mime_handler::getInstance($dirname, $trust_dirname);
+        $this->_mimeHandler = webphoto_mime_handler::getInstance($dirname, $trust_dirname);
 
         $this->_xoops_group_objs = $this->get_xoops_group_objs();
 
         $this->_ADMIN_MIME_PHP = $this->_MODULE_URL . '/admin/index.php?fct=mimetypes';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_mimetypes|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_mimetypes($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -82,31 +98,24 @@ class webphoto_admin_mimetypes extends webphoto_base_this
             case 'openurl':
                 $this->_openurl();
                 break;
-
-            case 'update';
+            case 'update':
                 $this->_update();
                 break;
-
             case 'save':
                 $this->_save();
                 break;
-
             case 'saveall':
                 $this->_saveall();
                 break;
-
             case 'delete':
                 $this->_delete();
                 break;
-
             case 'delete_confirm':
                 $this->_delete_confirm();
                 break;
-
             case 'edit':
                 $this->_print_edit_form();
                 break;
-
             case 'main':
             case 'list':
             default:
@@ -115,18 +124,22 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         }
     }
 
+    /**
+     * @return array|string
+     */
     public function _get_op()
     {
-        $op      = $this->_post_class->get_post_get_text('op');
-        $delete  = $this->_post_class->get_post_text('delete');
+        $op = $this->_post_class->get_post_get_text('op');
+        $delete = $this->_post_class->get_post_text('delete');
         $confirm = $this->_post_class->get_post_int('confirm');
 
         if ($delete) {
             $op = 'delete';
         }
-        if (($op == 'delete') && ($confirm == 0)) {
+        if (('delete' == $op) && (0 == $confirm)) {
             $op = 'delete_confirm';
         }
+
         return $op;
     }
 
@@ -140,7 +153,7 @@ class webphoto_admin_mimetypes extends webphoto_base_this
             exit();
         }
 
-        $post_mime_id  = $this->_post_class->get_post_int('mime_id');
+        $post_mime_id = $this->_post_class->get_post_int('mime_id');
         $post_mime_ext = $this->_post_class->get_post_text('mime_ext');
 
         if (empty($post_mime_ext)) {
@@ -149,37 +162,37 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         }
 
         if ($post_mime_id > 0) {
-            $row = $this->_mime_handler->get_row_by_id($post_mime_id);
+            $row = $this->_mimeHandler->get_row_by_id($post_mime_id);
             if (!is_array($row)) {
                 redirect_header($this->_ADMIN_MIME_PHP, 3, _AM_WEBPHOTO_NO_RECORD);
                 exit();
             }
         } else {
-            $row = $this->_mime_handler->create(true);
+            $row = $this->_mimeHandler->create(true);
         }
 
-        $row['mime_ext']  = $this->_post_class->get_post_text('mime_ext');
+        $row['mime_ext'] = $this->_post_class->get_post_text('mime_ext');
         $row['mime_name'] = $this->_post_class->get_post_text('mime_name');
         $row['mime_type'] = $this->_post_class->get_post_text('mime_type');
         //  $row['mime_ffmpeg'] = $this->_post_class->get_post_text('mime_ffmpeg');
-        $row['mime_kind']   = $this->_post_class->get_post_int('mime_kind');
+        $row['mime_kind'] = $this->_post_class->get_post_int('mime_kind');
         $row['mime_option'] = $this->_post_class->get_post_text('mime_option');
-        $row['mime_perms']  = $this->get_group_perms_str_by_post('mime_perms_ids');
+        $row['mime_perms'] = $this->get_group_perms_str_by_post('mime_perms_ids');
 
         if ($post_mime_id > 0) {
-            $res = $this->_mime_handler->update($row);
+            $res = $this->_mimeHandler->update($row);
         } else {
-            $res = $this->_mime_handler->insert($row);
+            $res = $this->_mimeHandler->insert($row);
         }
 
         if (!$res) {
-            $msg = "DB Error <br/>\n";
-            $msg .= $this->_mime_handler->get_format_error();
+            $msg = "DB Error <br>\n";
+            $msg .= $this->_mimeHandler->get_format_error();
             redirect_header($this->_ADMIN_MIME_PHP, 5, $msg);
             exit();
         }
 
-        $msg = ($post_mime_id == 0) ? _AM_WEBPHOTO_MIME_CREATED : _AM_WEBPHOTO_MIME_MODIFIED;
+        $msg = (0 == $post_mime_id) ? _AM_WEBPHOTO_MIME_CREATED : _AM_WEBPHOTO_MIME_MODIFIED;
 
         redirect_header($this->_ADMIN_MIME_PHP, 1, $msg);
         exit();
@@ -197,16 +210,16 @@ class webphoto_admin_mimetypes extends webphoto_base_this
 
         $post_mime_id = $this->_post_class->get_post_int('mime_id');
 
-        $row = $this->_mime_handler->get_row_by_id($post_mime_id);
+        $row = $this->_mimeHandler->get_row_by_id($post_mime_id);
         if (!is_array($row)) {
             redirect_header($this->_ADMIN_MIME_PHP, 3, _AM_WEBPHOTO_NO_RECORD);
             exit();
         }
 
-        $res = $this->_mime_handler->delete($row);
+        $res = $this->_mimeHandler->delete($row);
         if (!$res) {
-            $msg = "DB Error <br/>\n";
-            $msg .= $this->_mime_handler->get_format_error();
+            $msg = "DB Error <br>\n";
+            $msg .= $this->_mimeHandler->get_format_error();
             redirect_header($this->_ADMIN_MIME_PHP, 5, $msg);
             exit();
         }
@@ -223,7 +236,7 @@ class webphoto_admin_mimetypes extends webphoto_base_this
     {
         $post_mime_id = $this->_post_class->get_post_int('mime_id');
 
-        $row = $this->_mime_handler->get_row_by_id($post_mime_id);
+        $row = $this->_mimeHandler->get_row_by_id($post_mime_id);
         if (!is_array($row)) {
             redirect_header($this->_ADMIN_MIME_PHP, 3, _AM_WEBPHOTO_NO_RECORD);
             exit();
@@ -231,14 +244,14 @@ class webphoto_admin_mimetypes extends webphoto_base_this
 
         xoops_cp_header();
 
-        $hiddens = array(
-            'op'             => 'delete',
-            'mime_id'        => $row['mime_id'],
-            'confirm'        => 1,
+        $hiddens = [
+            'op' => 'delete',
+            'mime_id' => $row['mime_id'],
+            'confirm' => 1,
             'XOOPS_G_TICKET' => $this->get_token(),
-        );
+        ];
 
-        $msg = _AM_WEBPHOTO_MIME_DELETETHIS . "<br /><br />\n" . $row['mime_name'];
+        $msg = _AM_WEBPHOTO_MIME_DELETETHIS . "<br><br>\n" . $row['mime_name'];
         xoops_confirm($hiddens, $this->_ADMIN_MIME_PHP, $msg, _DELETE);
 
         xoops_cp_footer();
@@ -259,21 +272,26 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         xoops_cp_footer();
     }
 
+    /**
+     * @param int $mime_id
+     * @return bool
+     */
     public function _print_form_mimetype($mime_id = 0)
     {
         $mime_id = (int)$mime_id;
 
         if ($mime_id > 0) {
-            $row = $this->_mime_handler->get_row_by_id($mime_id);
+            $row = $this->_mimeHandler->get_row_by_id($mime_id);
             if (!is_array($row)) {
                 echo _AM_WEBPHOTO_NO_RECORD;
+
                 return false;
             }
         } else {
-            $row = $this->_mime_handler->create(true);
+            $row = $this->_mimeHandler->create(true);
 
             // Fatal error: Call to undefined method build_perms_with_separetor()
-            $row['mime_perms'] = $this->_mime_handler->perm_str_with_separetor(XOOPS_GROUP_ADMIN);
+            $row['mime_perms'] = $this->_mimeHandler->perm_str_with_separetor(XOOPS_GROUP_ADMIN);
         }
 
         $this->_print_mime_form_mimetype($row);
@@ -285,34 +303,34 @@ class webphoto_admin_mimetypes extends webphoto_base_this
     public function _print_list()
     {
         $get_group_id = $this->_post_class->get_get_int('group_id');
-        $get_start    = $this->_post_class->get_get_int('start');
+        $get_start = $this->_post_class->get_get_int('start');
 
-        $standard_groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+        $standard_groups = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
         if (empty($get_group_id) || in_array($get_group_id, $standard_groups)) {
             $group_id = XOOPS_GROUP_ANONYMOUS;
         } else {
             $group_id = $get_group_id;
         }
 
-        $image_edit           = $this->_build_image('edit', _AM_WEBPHOTO_MIME_ICO_EDIT);
-        $image_delete         = $this->_build_image('delete', _AM_WEBPHOTO_MIME_ICO_DELETE);
-        $this->_image_online  = $this->_build_image('online', _AM_WEBPHOTO_MIME_ICO_ONLINE);
+        $image_edit = $this->_build_image('edit', _AM_WEBPHOTO_MIME_ICO_EDIT);
+        $image_delete = $this->_build_image('delete', _AM_WEBPHOTO_MIME_ICO_DELETE);
+        $this->_image_online = $this->_build_image('online', _AM_WEBPHOTO_MIME_ICO_ONLINE);
         $this->_image_offline = $this->_build_image('offline', _AM_WEBPHOTO_MIME_ICO_OFFLINE);
 
-        $rows_all       = $this->_mime_handler->get_rows_all_orderby_ext();
-        $mime_total_all = $this->_mime_handler->get_count_all();
+        $rows_all = $this->_mimeHandler->get_rows_all_orderby_ext();
+        $mime_total_all = $this->_mimeHandler->get_count_all();
 
-        $mime_admin     = array();
-        $mime_users     = array();
-        $mime_anonymous = array();
+        $mime_admin = [];
+        $mime_users = [];
+        $mime_anonymous = [];
 
-        $this->_allowed_mime_array = array();
+        $this->_allowed_mime_array = [];
 
-        $i        = 0;
-        $rows_sel = array();
+        $i = 0;
+        $rows_sel = [];
 
         foreach ($rows_all as $row) {
-            $this->_build_allowed_mime_array_all($row['mime_ext'], $this->_mime_handler->build_perms_row_to_array($row));
+            $this->_build_allowed_mime_array_all($row['mime_ext'], $this->_mimeHandler->build_perms_row_to_array($row));
 
             if (($i >= $get_start) && ($i < ($get_start + $this->_PERPAGE))) {
                 $rows_sel[] = $row;
@@ -332,7 +350,7 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         echo '<div style="' . $this->_STYLE_PADDING . '">';
         echo _AM_WEBPHOTO_MIME_INFOTEXT;
         echo "</div>\n";
-        echo "</fieldset><br />\n";
+        echo "</fieldset><br>\n";
 
         $this->_print_show_allowed_mime_all();
 
@@ -355,8 +373,8 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         echo '</tr>';
 
         foreach ($rows_sel as $row) {
-            $perm_array = $this->_mime_handler->build_perms_row_to_array($row);
-            $url        = $this->_ADMIN_MIME_PHP . '&amp;op=edit&amp;mime_id=' . $row['mime_id'];
+            $perm_array = $this->_mimeHandler->build_perms_row_to_array($row);
+            $url = $this->_ADMIN_MIME_PHP . '&amp;op=edit&amp;mime_id=' . $row['mime_id'];
 
             echo '<tr>';
 
@@ -403,15 +421,26 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         xoops_cp_footer();
     }
 
+    /**
+     * @param $id
+     * @param $perm_array
+     */
     public function _build_show_on_off($id, $perm_array)
     {
         $text = in_array($id, $perm_array) ? $this->_image_online : $this->_image_offline;
+
         return $text;
     }
 
+    /**
+     * @param $icon
+     * @param $alt
+     * @return string
+     */
     public function _build_image($icon, $alt)
     {
         $text = '<img src="' . $this->_MODULE_URL . '/images/mime_icons/' . $icon . '.png" alt="' . $alt . '" align="middle">';
+
         return $text;
     }
 
@@ -432,19 +461,24 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         $url = $this->_ADMIN_MIME_PHP . '&amp;op=edit';
         echo '<a href="' . $url . '">';
         echo _AM_WEBPHOTO_MIME_ADD_NEW;
-        echo "</a><br />\n";
+        echo "</a><br>\n";
 
-        echo "</fieldset><br />\n";
+        echo "</fieldset><br>\n";
     }
 
+    /**
+     * @param $group_id
+     * @param $name_s
+     * @return string
+     */
     public function _build_show_allowed_mime_single($group_id, $name_s)
     {
         $mimes = $this->_get_allowed_mime_array($group_id);
-        $url   = $this->_ADMIN_MIME_PHP . '&amp;op=list&amp;group_id=' . $group_id;
+        $url = $this->_ADMIN_MIME_PHP . '&amp;op=list&amp;group_id=' . $group_id;
 
         $text = '<a href="' . $url . '">';
         $text .= $name_s;
-        $text .= "</a><br />\n";
+        $text .= "</a><br>\n";
 
         $div = '<div style="' . $this->_STYLE_PADDING . '">';
 
@@ -453,9 +487,14 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         } else {
             $text .= $div . _AM_WEBPHOTO_MIME_NOMIMEINFO . "</div>\n";
         }
+
         return $text;
     }
 
+    /**
+     * @param $mime_ext
+     * @param $perm_array
+     */
     public function _build_allowed_mime_array_all($mime_ext, $perm_array)
     {
         foreach ($this->_xoops_group_objs as $obj) {
@@ -463,6 +502,11 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         }
     }
 
+    /**
+     * @param $id
+     * @param $mime_ext
+     * @param $perm_array
+     */
     public function _build_allowed_mime_array_single($id, $mime_ext, $perm_array)
     {
         $perm = in_array($id, $perm_array);
@@ -471,17 +515,25 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         }
     }
 
+    /**
+     * @param $id
+     */
     public function _get_allowed_mime_array($id)
     {
         if (isset($this->_allowed_mime_array[$id])) {
             return $this->_allowed_mime_array[$id];
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // admin_mime_form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function _print_mime_form_mimetype($row)
     {
         $mime_form = webphoto_admin_mime_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
@@ -501,7 +553,7 @@ class webphoto_admin_mimetypes extends webphoto_base_this
     public function openurl()
     {
         $post_fileext = $this->_post_class->get_post_text('fileext');
-        $url          = 'http://filext.com/detaillist.php?extdetail=' . $post_fileext . '';
+        $url = 'http://filext.com/detaillist.php?extdetail=' . $post_fileext . '';
         if (!headers_sent()) {
             header("Location: $url");
         } else {
@@ -517,32 +569,32 @@ class webphoto_admin_mimetypes extends webphoto_base_this
         }
 
         $post_mime_id = $this->_post_class->get_post_int('mime_id');
-        $post_admin   = $this->_post_class->get_post_int('admin');
-        $post_user    = $this->_post_class->get_post_int('user');
-        $get_start    = $this->_post_class->get_get_int('start');
+        $post_admin = $this->_post_class->get_post_int('admin');
+        $post_user = $this->_post_class->get_post_int('user');
+        $get_start = $this->_post_class->get_get_int('start');
 
-        $row = $this->_mime_handler->get_row_by_id($mime_id);
+        $row = $this->_mimeHandler->get_row_by_id($mime_id);
 
-        if ($post_admin == 1) {
-            if ($row['mime_admin'] == 1) {
+        if (1 == $post_admin) {
+            if (1 == $row['mime_admin']) {
                 $row['mime_admin'] = 0;
             } else {
                 $row['mime_admin'] = 1;
             }
         }
 
-        if ($post_user == 1) {
-            if ($row['mime_user'] == 1) {
+        if (1 == $post_user) {
+            if (1 == $row['mime_user']) {
                 $row['mime_user'] = 0;
             } else {
                 $row['mime_user'] = 1;
             }
         }
 
-        $res = $this->_mime_handler->insert($row);
+        $res = $this->_mimeHandler->insert($row);
         if (!$result) {
-            $msg = "DB Error <br/>\n";
-            $msg .= $this->_mime_handler->get_format_error();
+            $msg = "DB Error <br>\n";
+            $msg .= $this->_mimeHandler->get_format_error();
             redirect_header($this->_ADMIN_MIME_PHP, 5, $msg);
             exit();
         }
@@ -557,19 +609,19 @@ class webphoto_admin_mimetypes extends webphoto_base_this
             exit();
         }
 
-        $post_admin    = $this->_post_class->get_post_int('admin');
-        $post_user     = $this->_post_class->get_post_int('user');
+        $post_admin = $this->_post_class->get_post_int('admin');
+        $post_user = $this->_post_class->get_post_int('user');
         $post_type_all = $this->_post_class->get_post_int('type_all');
 
-        if ($post_admin == 1) {
-            $res = $this->_mime_handler->update_admin_all($post_type_all);
+        if (1 == $post_admin) {
+            $res = $this->_mimeHandler->update_admin_all($post_type_all);
         } else {
-            $res = $this->_mime_handler->update_user_all($post_type_all);
+            $res = $this->_mimeHandler->update_user_all($post_type_all);
         }
 
         if (!$res) {
-            $msg = "DB Error <br/>\n";
-            $msg .= $this->_mime_handler->get_format_error();
+            $msg = "DB Error <br>\n";
+            $msg .= $this->_mimeHandler->get_format_error();
             redirect_header($this->_ADMIN_MIME_PHP, 5, $msg);
             exit();
         }

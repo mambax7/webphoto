@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_jodconverter
 // wrapper for webphoto_lib_jodconverter
 //=========================================================
+
+/**
+ * Class webphoto_jodconverter
+ */
 class webphoto_jodconverter extends webphoto_cmd_base
 {
     public $_config_class;
@@ -31,15 +35,15 @@ class webphoto_jodconverter extends webphoto_cmd_base
     public $_multibyte_class;
     public $_utility_class;
 
-    public $_use_jod    = false;
-    public $_java_path  = '';
+    public $_use_jod = false;
+    public $_java_path = '';
     public $_junk_words = null;
 
     public $_TMP_DIR;
     public $_TEXT_EXT = 'txt';
     public $_HTML_EXT = 'html';
 
-    public $_JUNK_WORDS_ENG = array(
+    public $_JUNK_WORDS_ENG = [
         'Slide',
         'First page',
         'Last page',
@@ -48,20 +52,26 @@ class webphoto_jodconverter extends webphoto_cmd_base
         'Graphics',
         'Text',
         'Overview',
-        'Sheet'
-    );
+        'Sheet',
+    ];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_jodconverter constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_config_class    = webphoto_config::getInstance($dirname);
-        $this->_jod_class       = webphoto_lib_jodconverter::getInstance();
+        $this->_config_class = webphoto_config::getInstance($dirname);
+        $this->_jod_class = webphoto_lib_jodconverter::getInstance();
         $this->_multibyte_class = webphoto_multibyte::getInstance();
-        $this->_utility_class   = webphoto_lib_utility::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
 
         $this->_TMP_DIR = $this->_config_class->get_work_dir('tmp');
 
@@ -87,18 +97,30 @@ class webphoto_jodconverter extends webphoto_cmd_base
         $this->set_debug_by_ini_name($this->_jod_class);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_jodconverter|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_jodconverter($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create pdf
     //---------------------------------------------------------
+
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @return int
+     */
     public function create_pdf($src_file, $dst_file)
     {
         return $this->convert_single($src_file, $dst_file);
@@ -107,6 +129,12 @@ class webphoto_jodconverter extends webphoto_cmd_base
     //---------------------------------------------------------
     // create swf
     //---------------------------------------------------------
+
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @return int
+     */
     public function create_swf($src_file, $dst_file)
     {
         return $this->convert_single($src_file, $dst_file);
@@ -115,6 +143,11 @@ class webphoto_jodconverter extends webphoto_cmd_base
     //---------------------------------------------------------
     // text content
     //---------------------------------------------------------
+
+    /**
+     * @param $src_file
+     * @return array|null
+     */
     public function get_text_content_for_doc($src_file)
     {
         if (empty($src_file)) {
@@ -127,13 +160,14 @@ class webphoto_jodconverter extends webphoto_cmd_base
             return null;   // no action
         }
 
-        $txt_file = $this->_TMP_DIR . '/' . uniqid('tmp_') . '.' . $this->_TEXT_EXT;
-        $ret      = $this->convert_single($src_file, $txt_file);
+        $txt_file = $this->_TMP_DIR . '/' . uniqid('tmp_', true) . '.' . $this->_TEXT_EXT;
+        $ret = $this->convert_single($src_file, $txt_file);
         if (!$ret) {
-            $arr = array(
-                'flag'   => false,
+            $arr = [
+                'flag' => false,
                 'errors' => $this->get_errors(),
-            );
+            ];
+
             return $arr;
         }
 
@@ -143,13 +177,18 @@ class webphoto_jodconverter extends webphoto_cmd_base
 
         unlink($txt_file);
 
-        $arr = array(
-            'flag'    => true,
+        $arr = [
+            'flag' => true,
             'content' => $text,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $src_file
+     * @return array
+     */
     public function get_text_content_for_xls_ppt($src_file)
     {
         if (empty($src_file)) {
@@ -163,18 +202,18 @@ class webphoto_jodconverter extends webphoto_cmd_base
         }
 
         $flag_dir = false;
-        $dir_new  = null;
+        $dir_new = null;
 
-        $node    = uniqid('n');
-        $dir     = $this->_TMP_DIR;
-        $dir_new = $this->_TMP_DIR . '/' . uniqid('d');
+        $node = uniqid('n', true);
+        $dir = $this->_TMP_DIR;
+        $dir_new = $this->_TMP_DIR . '/' . uniqid('d', true);
 
         // make tmp dir, if not safe_mode
         if (!$this->_ini_safe_mode) {
             mkdir($dir_new);
             if (is_dir($dir_new)) {
                 chmod($dir_new, $this->_CHMOD_MODE);
-                $dir      = $dir_new;
+                $dir = $dir_new;
                 $flag_dir = true;
             }
         }
@@ -184,22 +223,23 @@ class webphoto_jodconverter extends webphoto_cmd_base
 
         $file_arr = $this->get_files_in_dir($dir, $this->_HTML_EXT, false, true);
         if (!is_array($file_arr)) {
-            $arr = array(
-                'flag'   => false,
+            $arr = [
+                'flag' => false,
                 'errors' => $this->_jod_class->get_msg_array(),
-            );
+            ];
+
             return $arr;
         }
 
         $flag_match = false;
-        $text       = '';
+        $text = '';
 
         foreach ($file_arr as $file) {
             $flag_file = false;
-            if (strpos($file, $node) === 0) {
+            if (0 === mb_strpos($file, $node)) {
                 $flag_file = true;
             }
-            if ($flag_dir && (strpos($file, 'text') === 0)) {
+            if ($flag_dir && (0 === mb_strpos($file, 'text'))) {
                 $flag_file = true;
             }
             if (!$flag_file) {
@@ -207,7 +247,7 @@ class webphoto_jodconverter extends webphoto_cmd_base
             }
 
             $flag_match = true;
-            $file_full  = $dir . '/' . $file;
+            $file_full = $dir . '/' . $file;
             $text .= file_get_contents($file_full);
 
             // remove tmp file
@@ -228,10 +268,11 @@ class webphoto_jodconverter extends webphoto_cmd_base
 
         // no match file
         if (!$flag_match) {
-            $arr = array(
-                'flag'   => false,
-                'errors' => array('no match file'),
-            );
+            $arr = [
+                'flag' => false,
+                'errors' => ['no match file'],
+            ];
+
             return $arr;
         }
 
@@ -239,13 +280,18 @@ class webphoto_jodconverter extends webphoto_cmd_base
         $text = $this->remove_junk($text);
         $text = $this->_multibyte_class->build_plane_text($text);
 
-        $arr = array(
-            'flag'    => true,
+        $arr = [
+            'flag' => true,
             'content' => $text,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $text
+     * @return mixed|null|string|string[]
+     */
     public function remove_junk($text)
     {
         foreach ($this->_junk_words as $word) {
@@ -255,12 +301,19 @@ class webphoto_jodconverter extends webphoto_cmd_base
             $text = str_replace(' ' . $word . ' ', '   ', $text);
             $text = preg_replace("/[\n|\r]" . preg_quote($word) . ' /i', ' ', $text);
         }
+
         return $text;
     }
 
     //---------------------------------------------------------
     // convert
     //---------------------------------------------------------
+
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @return int
+     */
     public function convert_single($src_file, $dst_file)
     {
         if (!$this->_use_jod) {
@@ -270,26 +323,38 @@ class webphoto_jodconverter extends webphoto_cmd_base
         $ret = $this->_jod_class->convert($src_file, $dst_file);
         if (is_file($dst_file)) {
             $this->chmod_file($dst_file);
+
             return 1;  // suceess
         }
 
         $this->set_error($this->_jod_class->get_msg_array());
+
         return -1; // fail
     }
 
     //---------------------------------------------------------
     // version
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function use_jod()
     {
         return $this->_use_jod;
     }
 
+    /**
+     * @return string
+     */
     public function java_path()
     {
         return $this->_java_path;
     }
 
+    /**
+     * @return array
+     */
     public function version()
     {
         return $this->_jod_class->version();

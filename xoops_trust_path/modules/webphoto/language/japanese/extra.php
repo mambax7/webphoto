@@ -37,16 +37,20 @@ if (!defined('_EX_WEBPHOTO_LANG_LOADED')) {
     // Vodafone/1.0/V904SH/SHJ001/SN1234
     // SoftBank/1.0/910T/TJ001/SN1234
     //---------------------------------------------------------
+    /**
+     * @return array
+     */
     function webphoto_mobile_carrier_array()
     {
-        $arr = array(
-            'DoCoMo'     => 'docomo',
-            'KDDI'       => 'au',
+        $arr = [
+            'DoCoMo' => 'docomo',
+            'KDDI' => 'au',
             'UP.Browser' => 'au',
-            'SoftBank'   => 'softbank',
-            'Vodafone'   => 'softbank',
-            'J-PHONE'    => 'softbank',
-        );
+            'SoftBank' => 'softbank',
+            'Vodafone' => 'softbank',
+            'J-PHONE' => 'softbank',
+        ];
+
         return $arr;
     }
 

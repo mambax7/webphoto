@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_oninstall_mime
 //=========================================================
+
+/**
+ * Class webphoto_inc_oninstall_mime
+ */
 class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
 {
     public $_table_mime;
@@ -20,21 +24,33 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_oninstall_mime constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_table_mime = $this->prefix_dirname('mime');
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_oninstall_mime($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -56,9 +72,11 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         $this->_mime_delete_record_asx();
     }
 
+    /**
+     * @return bool
+     */
     public function _mime_add_column_ffmpeg()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_mime, 'mime_ffmpeg')) {
             return true;
@@ -70,16 +88,19 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
 
         if ($ret) {
             $this->set_msg('Add mime_ffmpeg in <b>' . $this->_table_mime . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_mime . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_mime . '</b>.'));
+
+        return false;
     }
 
+    /**
+     * @return bool
+     */
     public function _mime_add_column_kind_etc()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_mime, 'mime_kind')) {
             return true;
@@ -94,60 +115,61 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
 
         if ($ret) {
             $this->set_msg('Add mime_kind in <b>' . $this->_table_mime . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_mime . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_mime . '</b>.'));
+
+        return false;
     }
 
     public function _mime_add_record_asf_etc()
     {
-        $mime_list = array();
+        $mime_list = [];
 
-        $mime_list[] = array(
+        $mime_list[] = [
             'mime_time_create' => 0,
             'mime_time_update' => 0,
-            'mime_name'        => 'Third Generation Partnership Project 2 File Format',
-            'mime_ext'         => '3g2',
-            'mime_medium'      => 'video',
-            'mime_type'        => 'video/3gpp2',
-            'mime_perms'       => '&1&',
-            'mime_option'      => 'ffmpeg:-ar 44100',
-        );
+            'mime_name' => 'Third Generation Partnership Project 2 File Format',
+            'mime_ext' => '3g2',
+            'mime_medium' => 'video',
+            'mime_type' => 'video/3gpp2',
+            'mime_perms' => '&1&',
+            'mime_option' => 'ffmpeg:-ar 44100',
+        ];
 
-        $mime_list[] = array(
+        $mime_list[] = [
             'mime_time_create' => 0,
             'mime_time_update' => 0,
-            'mime_name'        => 'Third Generation Partnership Project File Format',
-            'mime_ext'         => '3gp',
-            'mime_medium'      => 'video',
-            'mime_type'        => 'video/3gpp',
-            'mime_perms'       => '&1&',
-            'mime_option'      => 'ffmpeg:-ar 44100',
-        );
+            'mime_name' => 'Third Generation Partnership Project File Format',
+            'mime_ext' => '3gp',
+            'mime_medium' => 'video',
+            'mime_type' => 'video/3gpp',
+            'mime_perms' => '&1&',
+            'mime_option' => 'ffmpeg:-ar 44100',
+        ];
 
-        $mime_list[] = array(
+        $mime_list[] = [
             'mime_time_create' => 0,
             'mime_time_update' => 0,
-            'mime_name'        => 'Advanced Systems Format',
-            'mime_ext'         => 'asf',
-            'mime_medium'      => 'video',
-            'mime_type'        => 'video/x-ms-asf',
-            'mime_perms'       => '&1&',
-            'mime_option'      => 'ffmpeg:-ar 44100',
-        );
+            'mime_name' => 'Advanced Systems Format',
+            'mime_ext' => 'asf',
+            'mime_medium' => 'video',
+            'mime_type' => 'video/x-ms-asf',
+            'mime_perms' => '&1&',
+            'mime_option' => 'ffmpeg:-ar 44100',
+        ];
 
-        $mime_list[] = array(
+        $mime_list[] = [
             'mime_time_create' => 0,
             'mime_time_update' => 0,
-            'mime_name'        => 'Flash Video',
-            'mime_ext'         => 'flv',
-            'mime_medium'      => 'video',
-            'mime_type'        => 'video/x-flv application/octet-stream',
-            'mime_perms'       => '&1&',
-            'mime_option'      => 'ffmpeg:-ar 44100',
-        );
+            'mime_name' => 'Flash Video',
+            'mime_ext' => 'flv',
+            'mime_medium' => 'video',
+            'mime_type' => 'video/x-flv application/octet-stream',
+            'mime_perms' => '&1&',
+            'mime_option' => 'ffmpeg:-ar 44100',
+        ];
 
         foreach ($mime_list as $mime_row) {
             $ext = $mime_row['mime_ext'];
@@ -169,227 +191,227 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
 
     public function _mime_add_record_ai_etc()
     {
-        $mime_list = array();
+        $mime_list = [];
 
-        $mime_list[] = array(
-            'mime_name'  => 'Adobe Illustrator',
-            'mime_ext'   => 'ai',
-            'mime_type'  => 'application/postscript',
+        $mime_list[] = [
+            'mime_name' => 'Adobe Illustrator',
+            'mime_ext' => 'ai',
+            'mime_type' => 'application/postscript',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'Encapsulated PostScript',
-            'mime_ext'   => 'eps',
-            'mime_type'  => 'application/postscript',
+        $mime_list[] = [
+            'mime_name' => 'Encapsulated PostScript',
+            'mime_ext' => 'eps',
+            'mime_type' => 'application/postscript',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'Apple Macintosh QuickDraw/PICT',
-            'mime_ext'   => 'pct',
-            'mime_type'  => 'image/x-pict',
+        $mime_list[] = [
+            'mime_name' => 'Apple Macintosh QuickDraw/PICT',
+            'mime_ext' => 'pct',
+            'mime_type' => 'image/x-pict',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Adobe Photoshop',
-            'mime_ext'    => 'psd',
-            'mime_type'   => 'image/x-photshop application/octet-stream',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        $mime_list[] = [
+            'mime_name' => 'Adobe Photoshop',
+            'mime_ext' => 'psd',
+            'mime_type' => 'image/x-photshop application/octet-stream',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
             'mime_option' => 'convert:-flatten;',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'Tag Image File Format',
-            'mime_ext'   => 'tif',
-            'mime_type'  => 'image/tiff',
+        $mime_list[] = [
+            'mime_name' => 'Tag Image File Format',
+            'mime_ext' => 'tif',
+            'mime_type' => 'image/tiff',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'Windows Meta File',
-            'mime_ext'   => 'wmf',
-            'mime_type'  => 'image/wmf application/octet-stream',
+        $mime_list[] = [
+            'mime_name' => 'Windows Meta File',
+            'mime_ext' => 'wmf',
+            'mime_type' => 'image/wmf application/octet-stream',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        ];
 
         $this->_mime_add_record_list($mime_list);
     }
 
     public function _mime_add_record_docx_etc()
     {
-        $mime_list = array();
+        $mime_list = [];
 
-        $mime_list[] = array(
-            'mime_name'  => 'MS Word 2007',
-            'mime_ext'   => 'docx',
-            'mime_type'  => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        $mime_list[] = [
+            'mime_name' => 'MS Word 2007',
+            'mime_ext' => 'docx',
+            'mime_type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_OFFICE_DOC,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_OFFICE_DOC,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'MS Power Point 2007',
-            'mime_ext'   => 'pptx',
-            'mime_type'  => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        $mime_list[] = [
+            'mime_name' => 'MS Power Point 2007',
+            'mime_ext' => 'pptx',
+            'mime_type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_OFFICE_PPT,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_OFFICE_PPT,
+        ];
 
-        $mime_list[] = array(
-            'mime_name'  => 'MS Excel 2007',
-            'mime_ext'   => 'xlsx',
-            'mime_type'  => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        $mime_list[] = [
+            'mime_name' => 'MS Excel 2007',
+            'mime_ext' => 'xlsx',
+            'mime_type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'mime_perms' => '&1&',
-            'mime_kind'  => _C_WEBPHOTO_MIME_KIND_OFFICE_XLS,
-        );
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_OFFICE_XLS,
+        ];
 
         $this->_mime_add_record_list($mime_list);
     }
 
     public function _mime_add_record_svg_etc()
     {
-        $mime_list = array();
+        $mime_list = [];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Scalable Vector Graphics',
-            'mime_ext'    => 'svg',
-            'mime_type'   => 'image/svg+xml',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
+        $mime_list[] = [
+            'mime_name' => 'Scalable Vector Graphics',
+            'mime_ext' => 'svg',
+            'mime_type' => 'image/svg+xml',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
             'mime_option' => 'convert:-size 1200;',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Windows Media Audio',
-            'mime_ext'    => 'wma',
-            'mime_type'   => 'audio/x-ms-wma',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Windows Media Audio',
+            'mime_ext' => 'wma',
+            'mime_type' => 'audio/x-ms-wma',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Audio Interchange File Format',
-            'mime_ext'    => 'aif',
-            'mime_type'   => 'audio/aiff',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Audio Interchange File Format',
+            'mime_ext' => 'aif',
+            'mime_type' => 'audio/aiff',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Audio Interchange File Format',
-            'mime_ext'    => 'aifc',
-            'mime_type'   => 'audio/aiff',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Audio Interchange File Format',
+            'mime_ext' => 'aifc',
+            'mime_type' => 'audio/aiff',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Audio Interchange File Format',
-            'mime_ext'    => 'aiff',
-            'mime_type'   => 'audio/aiff',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Audio Interchange File Format',
+            'mime_ext' => 'aiff',
+            'mime_type' => 'audio/aiff',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Audio UNIX',
-            'mime_ext'    => 'au',
-            'mime_type'   => 'audio/basic',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Audio UNIX',
+            'mime_ext' => 'au',
+            'mime_type' => 'audio/basic',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Sound UNIX',
-            'mime_ext'    => 'snd',
-            'mime_type'   => 'audio/basic',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Sound UNIX',
+            'mime_ext' => 'snd',
+            'mime_type' => 'audio/basic',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Indeo Video Files',
-            'mime_ext'    => 'ivf',
-            'mime_type'   => 'application/octet-stream',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'Indeo Video Files',
+            'mime_ext' => 'ivf',
+            'mime_type' => 'application/octet-stream',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Musical Instrument Digital Interface MIDI-sequention Sound',
-            'mime_ext'    => 'midi',
-            'mime_type'   => 'audio/mid',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_MID,
+        $mime_list[] = [
+            'mime_name' => 'Musical Instrument Digital Interface MIDI-sequention Sound',
+            'mime_ext' => 'midi',
+            'mime_type' => 'audio/mid',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_MID,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'Musical Instrument Digital Interface MIDI-sequention Sound',
-            'mime_ext'    => 'rmi',
-            'mime_type'   => 'audio/mid',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_MID,
+        $mime_list[] = [
+            'mime_name' => 'Musical Instrument Digital Interface MIDI-sequention Sound',
+            'mime_ext' => 'rmi',
+            'mime_type' => 'audio/mid',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_MID,
             'mime_option' => '',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'MPEG-1 Audio Layer-III',
-            'mime_ext'    => 'mpa',
-            'mime_type'   => 'video/x-mpg',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'MPEG-1 Audio Layer-III',
+            'mime_ext' => 'mpa',
+            'mime_type' => 'video/x-mpg',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
             'mime_option' => 'ffmpeg:-ar 44100',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'MPEG-1 Audio Layer-III',
-            'mime_ext'    => 'm1v',
-            'mime_type'   => 'video/mpeg video/x-mpeg',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'MPEG-1 Audio Layer-III',
+            'mime_ext' => 'm1v',
+            'mime_type' => 'video/mpeg video/x-mpeg',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
             'mime_option' => 'ffmpeg:-ar 44100',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'MPEG-1 Audio Layer-III',
-            'mime_ext'    => 'mpe',
-            'mime_type'   => 'video/mpeg video/x-mpeg',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'MPEG-1 Audio Layer-III',
+            'mime_ext' => 'mpe',
+            'mime_type' => 'video/mpeg video/x-mpeg',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
             'mime_option' => 'ffmpeg:-ar 44100',
-        );
+        ];
 
-        $mime_list[] = array(
-            'mime_name'   => 'MPEG-4',
-            'mime_ext'    => 'mp4',
-            'mime_type'   => 'video/mp4 video/mpeg4',
-            'mime_perms'  => '&1&',
-            'mime_kind'   => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
+        $mime_list[] = [
+            'mime_name' => 'MPEG-4',
+            'mime_ext' => 'mp4',
+            'mime_type' => 'video/mp4 video/mpeg4',
+            'mime_perms' => '&1&',
+            'mime_kind' => _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
             'mime_option' => 'ffmpeg:-ar 44100',
-        );
+        ];
 
         $this->_mime_add_record_list($mime_list);
     }
 
     public function _mime_update_record_ffmpeg_s()
     {
-        $list = array('avi', 'mov', 'mpeg', 'mpg', 'wmv');
+        $list = ['avi', 'mov', 'mpeg', 'mpg', 'wmv'];
 
         foreach ($list as $ext) {
             $row = $this->_mime_get_row_by_ext($ext);
@@ -459,7 +481,7 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
             }
 
             $row['mime_option'] = 'ffmpeg:' . $row['mime_ffmpeg'] . ';';
-            $ret                = $this->_mime_update_record($row);
+            $ret = $this->_mime_update_record($row);
             if ($ret) {
                 $this->set_msg('Update ' . $row['mime_ext'] . ' in <b>' . $this->_table_mime . '</b>');
             } else {
@@ -468,6 +490,9 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         }
     }
 
+    /**
+     * @return bool
+     */
     public function _mime_delete_record_asx()
     {
         $row = $this->_mime_get_row_by_ext('asx');
@@ -478,13 +503,17 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         $ret = $this->_mime_delete_by_id($row['mime_id']);
         if ($ret) {
             $this->set_msg('Delete asx in <b>' . $this->_table_mime . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not delete <b>' . $this->_table_mime . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not delete <b>' . $this->_table_mime . '</b>.'));
+
+        return false;
     }
 
+    /**
+     * @param $mime_list
+     */
     public function _mime_add_record_list($mime_list)
     {
         foreach ($mime_list as $mime_row) {
@@ -521,6 +550,10 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         }
     }
 
+    /**
+     * @param $ext
+     * @param $kind
+     */
     public function _mime_update_record_kind($ext, $kind)
     {
         $row = $this->_mime_get_row_by_ext($ext);
@@ -545,6 +578,10 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         }
     }
 
+    /**
+     * @param $ext
+     * @param $type
+     */
     public function _mime_update_record_type($ext, $type)
     {
         $row = $this->_mime_get_row_by_ext($ext);
@@ -571,6 +608,10 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         }
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function _mime_insert_record($row)
     {
         extract($row);
@@ -611,6 +652,10 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         return $this->_db->getInsertId();
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function _mime_update_record($row)
     {
         extract($row);
@@ -633,24 +678,38 @@ class webphoto_inc_oninstall_mime extends webphoto_inc_base_ini
         return $this->query($sql);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function _mime_delete_by_id($id)
     {
         $sql = 'DELETE FROM ' . $this->_table_mime;
         $sql .= ' WHERE mime_id=' . (int)$id;
+
         return $this->query($sql);
     }
 
+    /**
+     * @return array|bool
+     */
     public function _mime_get_rows_all()
     {
         $sql = 'SELECT * FROM ' . $this->_table_mime;
         $sql .= ' ORDER BY mime_id';
+
         return $this->get_rows_by_sql($sql);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function _mime_get_row_by_ext($ext)
     {
         $sql = 'SELECT * FROM ' . $this->_table_mime;
         $sql .= ' WHERE mime_ext=' . $this->quote($ext);
+
         return $this->get_row_by_sql($sql);
     }
 

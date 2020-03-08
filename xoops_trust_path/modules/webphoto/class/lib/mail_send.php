@@ -15,13 +15,17 @@
 //=========================================================
 // class webphoto_lib_mail_send
 //=========================================================
+
+/**
+ * Class webphoto_lib_mail_send
+ */
 class webphoto_lib_mail_send extends webphoto_lib_error
 {
     public $_mail_class;
 
     public $_xoops_sitename;
     public $_xoops_adminmail;
-    public $_msg_array = array();
+    public $_msg_array = [];
 
     public $_LANG_ERR_NO_TO_EMAIL = 'Not Set Email Address';
 
@@ -34,35 +38,45 @@ class webphoto_lib_mail_send extends webphoto_lib_error
 
         $this->_mail_class = webphoto_lib_mail::getInstance();
 
-        $this->_xoops_sitename  = $this->get_xoops_sitename();
+        $this->_xoops_sitename = $this->get_xoops_sitename();
         $this->_xoops_adminmail = $this->get_xoops_adminmail();
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_lib_mail_send
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_mail_send();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // send email
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool
+     */
     public function send($param)
     {
-        $to_emails  = isset($param['to_emails']) ? $param['to_emails'] : null;
-        $users      = isset($param['users']) ? $param['users'] : null;
-        $subject    = isset($param['subject']) ? $param['subject'] : null;
-        $body       = isset($param['body']) ? $param['body'] : null;
-        $tags       = isset($param['tags']) ? $param['tags'] : null;
-        $debug      = isset($param['debug']) ? $param['debug'] : false;
-        $from_name  = isset($param['from_name']) ? $param['from_name'] : $this->_xoops_sitename;
+        $to_emails = isset($param['to_emails']) ? $param['to_emails'] : null;
+        $users = isset($param['users']) ? $param['users'] : null;
+        $subject = isset($param['subject']) ? $param['subject'] : null;
+        $body = isset($param['body']) ? $param['body'] : null;
+        $tags = isset($param['tags']) ? $param['tags'] : null;
+        $debug = isset($param['debug']) ? $param['debug'] : false;
+        $from_name = isset($param['from_name']) ? $param['from_name'] : $this->_xoops_sitename;
         $from_email = isset($param['from_email']) ? $param['from_email'] : $this->_xoops_adminmail;
 
         if (empty($to_emails) && empty($users)) {
             $this->set_error($this->_LANG_ERR_NO_TO_EMAIL);
+
             return false;
         }
 
@@ -70,7 +84,7 @@ class webphoto_lib_mail_send extends webphoto_lib_error
         $this->clear_msg_array();
 
         // mail start
-        $mailer =& getMailer();
+        $mailer = &getMailer();
         $mailer->reset();
         $mailer->setFromName($from_name);
         $mailer->setFromEmail($from_email);
@@ -93,13 +107,19 @@ class webphoto_lib_mail_send extends webphoto_lib_error
         $ret = $mailer->send($debug);
         if (!$ret) {
             $this->set_error($mailer->getErrors(false));
+
             return false;
         }
 
         $this->set_msg($mailer->getSuccess(false));
+
         return true;
     }
 
+    /**
+     * @param $addr
+     * @return mixed|null
+     */
     public function get_valid_mail_addr($addr)
     {
         return $this->_mail_class->get_valid_addr($addr);
@@ -110,25 +130,32 @@ class webphoto_lib_mail_send extends webphoto_lib_error
     //---------------------------------------------------------
     public function clear_msg_array()
     {
-        $this->_msg_array = array();
+        $this->_msg_array = [];
     }
 
+    /**
+     * @return array
+     */
     public function get_msg_array()
     {
         return $this->_msg_array;
     }
 
+    /**
+     * @param      $msg
+     * @param bool $flag_highlight
+     */
     public function set_msg($msg, $flag_highlight = false)
     {
         // array type
         if (is_array($msg)) {
             $arr = $msg;
 
-            // string type
+        // string type
         } else {
             $arr = $this->str_to_array($msg, "\n");
             if ($flag_highlight) {
-                $arr2 = array();
+                $arr2 = [];
                 foreach ($arr as $m) {
                     $arr2[] = $this->highlight($m);
                 }
@@ -147,15 +174,24 @@ class webphoto_lib_mail_send extends webphoto_lib_error
     //---------------------------------------------------------
     // XOOPS system
     //---------------------------------------------------------
+
+    /**
+     * @return mixed
+     */
     public function get_xoops_sitename()
     {
         global $xoopsConfig;
+
         return $xoopsConfig['sitename'];
     }
 
+    /**
+     * @return mixed
+     */
     public function get_xoops_adminmail()
     {
         global $xoopsConfig;
+
         return $xoopsConfig['adminmail'];
     }
 

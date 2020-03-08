@@ -21,6 +21,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_maillog_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_maillog_table_manage
+ */
 class webphoto_admin_maillog_table_manage extends webphoto_lib_manage
 {
     public $_unlink_class;
@@ -28,23 +32,35 @@ class webphoto_admin_maillog_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_maillog_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_maillog_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('MAILLOG_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('maillog_from', 'maillog_subject'));
+        $this->set_manage_list_column_array(['maillog_from', 'maillog_subject']);
 
         $this->_unlink_class = webphoto_edit_mail_unlink::getInstance($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_maillog_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_maillog_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -59,21 +75,25 @@ class webphoto_admin_maillog_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'maillog_id'          => $this->_post_class->get_post_get_int('maillog_id'),
+        $row = [
+            'maillog_id' => $this->_post_class->get_post_get_int('maillog_id'),
             'maillog_time_create' => $this->_post_class->get_post_int('maillog_time_create'),
             'maillog_time_update' => $this->_post_class->get_post_int('maillog_time_update'),
-            'maillog_photo_ids'   => $this->_post_class->get_post_int('maillog_photo_ids'),
-            'maillog_status'      => $this->_post_class->get_post_int('maillog_status'),
-            'maillog_from'        => $this->_post_class->get_post_text('maillog_from'),
-            'maillog_subject'     => $this->_post_class->get_post_text('maillog_subject'),
-            'maillog_body'        => $this->_post_class->get_post_int('maillog_body'),
-            'maillog_file'        => $this->_post_class->get_post_text('maillog_file'),
-            'maillog_attach'      => $this->_post_class->get_post_text('maillog_attach'),
-            'maillog_comment'     => $this->_post_class->get_post_text('maillog_comment'),
-        );
+            'maillog_photo_ids' => $this->_post_class->get_post_int('maillog_photo_ids'),
+            'maillog_status' => $this->_post_class->get_post_int('maillog_status'),
+            'maillog_from' => $this->_post_class->get_post_text('maillog_from'),
+            'maillog_subject' => $this->_post_class->get_post_text('maillog_subject'),
+            'maillog_body' => $this->_post_class->get_post_int('maillog_body'),
+            'maillog_file' => $this->_post_class->get_post_text('maillog_file'),
+            'maillog_attach' => $this->_post_class->get_post_text('maillog_attach'),
+            'maillog_comment' => $this->_post_class->get_post_text('maillog_comment'),
+        ];
 
         return $row;
     }
@@ -81,11 +101,18 @@ class webphoto_admin_maillog_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // delete
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function _manage_delete_option($row)
     {
         $this->_unlink_class->unlink_by_maillog_row($row);
     }
 
+    /**
+     * @param $row
+     */
     public function _manage_delete_all_each_option($row)
     {
         $this->_unlink_class->unlink_by_maillog_row($row);
@@ -94,6 +121,10 @@ class webphoto_admin_maillog_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

@@ -21,37 +21,56 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_redo_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_redo_form
+ */
 class webphoto_admin_redo_form extends webphoto_edit_form
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_redo_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_redo_form|\webphoto_edit_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_redo_form($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // redothumbs
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     */
     public function print_form_redothumbs($param)
     {
-        $cfg_width  = $this->_config_class->get_by_name('width');
+        $cfg_width = $this->_config_class->get_by_name('width');
         $cfg_height = $this->_config_class->get_by_name('height');
 
         $this->set_row($param);
 
-        $cap_size   = _AM_WEBPHOTO_TEXT_NUMBERATATIME . "<br /><br /><span style='font-weight:normal'>" . _AM_WEBPHOTO_LABEL_DESCNUMBERATATIME . '</span>';
+        $cap_size = _AM_WEBPHOTO_TEXT_NUMBERATATIME . "<br><br><span style='font-weight:normal'>" . _AM_WEBPHOTO_LABEL_DESCNUMBERATATIME . '</span>';
         $cap_resize = _AM_WEBPHOTO_RADIO_RESIZE . ' ( ' . $cfg_width . ' x ' . $cfg_width . ' )';
 
         if ($param['counter'] && ($param['counter'] < $param['size'])) {
@@ -80,14 +99,18 @@ class webphoto_admin_redo_form extends webphoto_edit_form
         echo $this->build_form_end();
     }
 
+    /**
+     * @return null|string
+     */
     public function _build_ele_exif()
     {
-        $value   = $this->get_row_by_key('exif');
-        $options = array(
-            _NO                                 => 0,
-            _AM_WEBPHOTO_RADIO_REDO_EXIF_TRY    => 1,
+        $value = $this->get_row_by_key('exif');
+        $options = [
+            _NO => 0,
+            _AM_WEBPHOTO_RADIO_REDO_EXIF_TRY => 1,
             _AM_WEBPHOTO_RADIO_REDO_EXIF_ALWAYS => 2,
-        );
+        ];
+
         return $this->build_form_radio('exif', $value, $options);
     }
 

@@ -16,37 +16,37 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
 
     define('_WEBPHOTO_CATEGORY', 'Categoria');
     define('_WEBPHOTO_SUBMITTER', 'Enviar');
-    define('_WEBPHOTO_NOMATCH_PHOTO', 'Não há imagem correspondente a seu pedido');
+    define('_WEBPHOTO_NOMATCH_PHOTO', 'Nï¿½o hï¿½ imagem correspondente a seu pedido');
 
     define('_WEBPHOTO_ICON_NEW', 'Novo');
     define('_WEBPHOTO_ICON_UPDATE', 'Atualizado');
     define('_WEBPHOTO_ICON_POPULAR', 'Popular');
-    define('_WEBPHOTO_ICON_LASTUPDATE', 'última Atualização');
+    define('_WEBPHOTO_ICON_LASTUPDATE', 'ï¿½ltima Atualizaï¿½ï¿½o');
     define('_WEBPHOTO_ICON_HITS', 'Hits');
-    define('_WEBPHOTO_ICON_COMMENTS', 'Comentários');
+    define('_WEBPHOTO_ICON_COMMENTS', 'Comentï¿½rios');
 
-    define('_WEBPHOTO_SORT_IDA', 'Gravar número (ID menor para as maiores)');
-    define('_WEBPHOTO_SORT_IDD', 'Gravar número (ID maiorpra as menores)');
+    define('_WEBPHOTO_SORT_IDA', 'Gravar nï¿½mero (ID menor para as maiores)');
+    define('_WEBPHOTO_SORT_IDD', 'Gravar nï¿½mero (ID maiorpra as menores)');
     define('_WEBPHOTO_SORT_HITSA', 'Popularidade (Menos para muitos Hits)');
     define('_WEBPHOTO_SORT_HITSD', 'Popularidade (Muitos para menos Hits)');
-    define('_WEBPHOTO_SORT_TITLEA', 'Título (A a Z)');
-    define('_WEBPHOTO_SORT_TITLED', 'Título (Z a A))');
-    define('_WEBPHOTO_SORT_DATEA', 'Data da atualização (Imagens antigas listadas primeiros)');
-    define('_WEBPHOTO_SORT_DATED', 'Data da atualização (Imagens recentes listadas primeiro)');
-    define('_WEBPHOTO_SORT_RATINGA', 'Avaliação (Escore mais baixo para escore maior)');
-    define('_WEBPHOTO_SORT_RATINGD', 'Avaliação (Escore mais alto para escore menor)');
-    define('_WEBPHOTO_SORT_RANDOM', 'Aleatório');
+    define('_WEBPHOTO_SORT_TITLEA', 'Tï¿½tulo (A a Z)');
+    define('_WEBPHOTO_SORT_TITLED', 'Tï¿½tulo (Z a A))');
+    define('_WEBPHOTO_SORT_DATEA', 'Data da atualizaï¿½ï¿½o (Imagens antigas listadas primeiros)');
+    define('_WEBPHOTO_SORT_DATED', 'Data da atualizaï¿½ï¿½o (Imagens recentes listadas primeiro)');
+    define('_WEBPHOTO_SORT_RATINGA', 'Avaliaï¿½ï¿½o (Escore mais baixo para escore maior)');
+    define('_WEBPHOTO_SORT_RATINGD', 'Avaliaï¿½ï¿½o (Escore mais alto para escore menor)');
+    define('_WEBPHOTO_SORT_RANDOM', 'Aleatï¿½rio');
 
-    define('_WEBPHOTO_SORT_SORTBY', 'Classificação por:');
-    define('_WEBPHOTO_SORT_TITLE', 'Título');
-    define('_WEBPHOTO_SORT_DATE', 'Data da atualização');
+    define('_WEBPHOTO_SORT_SORTBY', 'Classificaï¿½ï¿½o por:');
+    define('_WEBPHOTO_SORT_TITLE', 'Tï¿½tulo');
+    define('_WEBPHOTO_SORT_DATE', 'Data da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_SORT_HITS', 'Popularidade');
-    define('_WEBPHOTO_SORT_RATING', 'Avaliação');
+    define('_WEBPHOTO_SORT_RATING', 'Avaliaï¿½ï¿½o');
     define('_WEBPHOTO_SORT_S_CURSORTEDBY', 'Imagens atualmente classificadas por: %s');
 
     define('_WEBPHOTO_NAVI_PREVIOUS', 'Anterior');
-    define('_WEBPHOTO_NAVI_NEXT', 'Próxima');
-    define('_WEBPHOTO_S_NAVINFO', 'Imágem nº. %s - %s (fora de %s hit imagens)');
+    define('_WEBPHOTO_NAVI_NEXT', 'Prï¿½xima');
+    define('_WEBPHOTO_S_NAVINFO', 'Imï¿½gem nï¿½. %s - %s (fora de %s hit imagens)');
     define('_WEBPHOTO_S_THEREARE', 'Existe <b>%s</b> Imagens em nosso banco de dados.');
     define('_WEBPHOTO_S_MOREPHOTOS', 'Mais fotos de %s');
     define('_WEBPHOTO_ONEVOTE', '1 voto');
@@ -55,7 +55,7 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_S_NUMPOSTS', '%s posts');
     define('_WEBPHOTO_VOTETHIS', 'Vote nesta');
     define('_WEBPHOTO_TELLAFRIEND', 'Diga a um amigo');
-    define('_WEBPHOTO_SUBJECT4TAF', 'Uma imagem para você');
+    define('_WEBPHOTO_SUBJECT4TAF', 'Uma imagem para vocï¿½');
 
     //---------------------------------------------------------
     // submit
@@ -65,26 +65,26 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
 
     define('_WEBPHOTO_TITLE_ADDPHOTO', 'Adicionar Imagem');
     define('_WEBPHOTO_TITLE_PHOTOUPLOAD', 'Enviar imagem');
-    define('_WEBPHOTO_CAP_MAXPIXEL', 'Tamanho máximo em pixel');
-    define('_WEBPHOTO_CAP_MAXSIZE', 'Tamanho máximo do arquivo (byte)');
-    define('_WEBPHOTO_CAP_VALIDPHOTO', 'Válido');
-    define('_WEBPHOTO_DSC_TITLE_BLANK', 'Deixe o título em branco para usar os nomes de arquivo como título');
+    define('_WEBPHOTO_CAP_MAXPIXEL', 'Tamanho mï¿½ximo em pixel');
+    define('_WEBPHOTO_CAP_MAXSIZE', 'Tamanho mï¿½ximo do arquivo (byte)');
+    define('_WEBPHOTO_CAP_VALIDPHOTO', 'Vï¿½lido');
+    define('_WEBPHOTO_DSC_TITLE_BLANK', 'Deixe o tï¿½tulo em branco para usar os nomes de arquivo como tï¿½tulo');
 
-    define('_WEBPHOTO_RADIO_ROTATETITLE', 'Rotação da imagem');
-    define('_WEBPHOTO_RADIO_ROTATE0', 'não girar');
+    define('_WEBPHOTO_RADIO_ROTATETITLE', 'Rotaï¿½ï¿½o da imagem');
+    define('_WEBPHOTO_RADIO_ROTATE0', 'nï¿½o girar');
     define('_WEBPHOTO_RADIO_ROTATE90', 'girar a direita');
     define('_WEBPHOTO_RADIO_ROTATE180', 'girar 180 graus');
     define('_WEBPHOTO_RADIO_ROTATE270', 'girar a esquerda');
 
-    define('_WEBPHOTO_SUBMIT_RECEIVED', 'Nós recebemos sua foto. Obrigado!');
-    define('_WEBPHOTO_SUBMIT_ALLPENDING', 'Todas as fotos postadas dependenm de verificação.');
+    define('_WEBPHOTO_SUBMIT_RECEIVED', 'Nï¿½s recebemos sua foto. Obrigado!');
+    define('_WEBPHOTO_SUBMIT_ALLPENDING', 'Todas as fotos postadas dependenm de verificaï¿½ï¿½o.');
 
-    define('_WEBPHOTO_ERR_MUSTREGFIRST', 'Desculpe, você não tem permissão para executar essa ação. <br />Por favor, registre-se ou faça seu login primeiro!');
-    define('_WEBPHOTO_ERR_MUSTADDCATFIRST', 'Desculpe, não há categorias ainda para acrescentar.<br />Por favor, crie uma categoria primeiro!');
+    define('_WEBPHOTO_ERR_MUSTREGFIRST', 'Desculpe, vocï¿½ nï¿½o tem permissï¿½o para executar essa aï¿½ï¿½o. <br>Por favor, registre-se ou faï¿½a seu login primeiro!');
+    define('_WEBPHOTO_ERR_MUSTADDCATFIRST', 'Desculpe, nï¿½o hï¿½ categorias ainda para acrescentar.<br>Por favor, crie uma categoria primeiro!');
     define('_WEBPHOTO_ERR_NOIMAGESPECIFIED', 'Nenhuma imagem foi enviada');
-    define('_WEBPHOTO_ERR_FILE', 'As imagens são grandes demais ou há um problema com a configruação');
-    define('_WEBPHOTO_ERR_FILEREAD', 'Imagens estão sem permissão de leitura.');
-    define('_WEBPHOTO_ERR_TITLE', "Você de informar 'Título' ");
+    define('_WEBPHOTO_ERR_FILE', 'As imagens sï¿½o grandes demais ou hï¿½ um problema com a configruaï¿½ï¿½o');
+    define('_WEBPHOTO_ERR_FILEREAD', 'Imagens estï¿½o sem permissï¿½o de leitura.');
+    define('_WEBPHOTO_ERR_TITLE', "Vocï¿½ de informar 'Tï¿½tulo' ");
 
     //---------------------------------------------------------
     // edit
@@ -98,17 +98,17 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     // rate
     //---------------------------------------------------------
-    define('_WEBPHOTO_RATE_VOTEONCE', 'Por favor, não vote para a mesma imagem mais de uma vez.');
-    define('_WEBPHOTO_RATE_RATINGSCALE', 'A escala é de 1 a 10, sendo que 1 é pior e 10 excelente.');
-    define('_WEBPHOTO_RATE_BEOBJECTIVE', 'Por favor, seja objetivo. Se todos receberem um 1 ou um 10, as avaliações não serão úteis.');
-    define('_WEBPHOTO_RATE_DONOTVOTE', 'Não vote para seu próprio recurso.');
+    define('_WEBPHOTO_RATE_VOTEONCE', 'Por favor, nï¿½o vote para a mesma imagem mais de uma vez.');
+    define('_WEBPHOTO_RATE_RATINGSCALE', 'A escala ï¿½ de 1 a 10, sendo que 1 ï¿½ pior e 10 excelente.');
+    define('_WEBPHOTO_RATE_BEOBJECTIVE', 'Por favor, seja objetivo. Se todos receberem um 1 ou um 10, as avaliaï¿½ï¿½es nï¿½o serï¿½o ï¿½teis.');
+    define('_WEBPHOTO_RATE_DONOTVOTE', 'Nï¿½o vote para seu prï¿½prio recurso.');
     define('_WEBPHOTO_RATE_IT', 'Avaliar a imagem!');
-    define('_WEBPHOTO_RATE_VOTEAPPRE', 'Seu voto será apreciado.');
+    define('_WEBPHOTO_RATE_VOTEAPPRE', 'Seu voto serï¿½ apreciado.');
     define('_WEBPHOTO_RATE_S_THANKURATE', 'Obrigado por ter tomado seu tempo avaliando uma de nossas imagens %s.');
 
-    define('_WEBPHOTO_ERR_NORATING', 'Nenhuma avaliação selecionada.');
-    define('_WEBPHOTO_ERR_CANTVOTEOWN', 'Você não pode votar em um recurso enviado por você.<br />Todos os votos são registrados e revisados.');
-    define('_WEBPHOTO_ERR_VOTEONCE', 'Vote para os recursos selecionados apenas uma vez.<br />Todos os votos são registrados e revisados.');
+    define('_WEBPHOTO_ERR_NORATING', 'Nenhuma avaliaï¿½ï¿½o selecionada.');
+    define('_WEBPHOTO_ERR_CANTVOTEOWN', 'Vocï¿½ nï¿½o pode votar em um recurso enviado por vocï¿½.<br>Todos os votos sï¿½o registrados e revisados.');
+    define('_WEBPHOTO_ERR_VOTEONCE', 'Vote para os recursos selecionados apenas uma vez.<br>Todos os votos sï¿½o registrados e revisados.');
 
     //---------------------------------------------------------
     // movo to admin.php
@@ -349,41 +349,41 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     // photo table
     define('_WEBPHOTO_PHOTO_TABLE', 'Tabela da Imagem');
     define('_WEBPHOTO_PHOTO_ID', 'ID da Imagem');
-    define('_WEBPHOTO_PHOTO_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_PHOTO_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_PHOTO_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_PHOTO_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_PHOTO_CAT_ID', 'ID da categoria');
     define('_WEBPHOTO_PHOTO_GICON_ID', 'ID do icone');
-    define('_WEBPHOTO_PHOTO_UID', 'ID do usuário');
+    define('_WEBPHOTO_PHOTO_UID', 'ID do usuï¿½rio');
     define('_WEBPHOTO_PHOTO_DATETIME', 'Data da imagem');
-    define('_WEBPHOTO_PHOTO_TITLE', 'Título da Imagem');
+    define('_WEBPHOTO_PHOTO_TITLE', 'Tï¿½tulo da Imagem');
     define('_WEBPHOTO_PHOTO_PLACE', 'Lugar');
     define('_WEBPHOTO_PHOTO_EQUIPMENT', 'Equipamento');
     define('_WEBPHOTO_PHOTO_FILE_URL', 'URL do arquivo');
     define('_WEBPHOTO_PHOTO_FILE_PATH', 'Percurso do arquivo');
     define('_WEBPHOTO_PHOTO_FILE_NAME', 'Nome do Arquivo');
-    define('_WEBPHOTO_PHOTO_FILE_EXT', 'Extensão do arquivo');
+    define('_WEBPHOTO_PHOTO_FILE_EXT', 'Extensï¿½o do arquivo');
     define('_WEBPHOTO_PHOTO_FILE_MIME', 'MIME tipo do arquivo');
-    define('_WEBPHOTO_PHOTO_FILE_MEDIUM', 'Tipo do arquivo médio');
+    define('_WEBPHOTO_PHOTO_FILE_MEDIUM', 'Tipo do arquivo mï¿½dio');
     define('_WEBPHOTO_PHOTO_FILE_SIZE', 'Tamanho do arquivo');
     define('_WEBPHOTO_PHOTO_CONT_URL', 'URL da Imagem');
     define('_WEBPHOTO_PHOTO_CONT_PATH', 'Percurso da imagem');
     define('_WEBPHOTO_PHOTO_CONT_NAME', 'Nome da imagem');
-    define('_WEBPHOTO_PHOTO_CONT_EXT', 'Extensão da Imagem');
+    define('_WEBPHOTO_PHOTO_CONT_EXT', 'Extensï¿½o da Imagem');
     define('_WEBPHOTO_PHOTO_CONT_MIME', 'MIME tipo da imagem');
-    define('_WEBPHOTO_PHOTO_CONT_MEDIUM', 'Imagem tipo média');
+    define('_WEBPHOTO_PHOTO_CONT_MEDIUM', 'Imagem tipo mï¿½dia');
     define('_WEBPHOTO_PHOTO_CONT_SIZE', 'Tamanho do arquivo da foto');
     define('_WEBPHOTO_PHOTO_CONT_WIDTH', 'Largura da imagem');
     define('_WEBPHOTO_PHOTO_CONT_HEIGHT', 'Altura da imagem');
-    define('_WEBPHOTO_PHOTO_CONT_DURATION', 'Tempo de duração do vídeo');
-    define('_WEBPHOTO_PHOTO_CONT_EXIF', 'Informação Exif');
-    define('_WEBPHOTO_PHOTO_MIDDLE_WIDTH', 'Largura da imagem média');
-    define('_WEBPHOTO_PHOTO_MIDDLE_HEIGHT', 'Altura da imagem média');
+    define('_WEBPHOTO_PHOTO_CONT_DURATION', 'Tempo de duraï¿½ï¿½o do vï¿½deo');
+    define('_WEBPHOTO_PHOTO_CONT_EXIF', 'Informaï¿½ï¿½o Exif');
+    define('_WEBPHOTO_PHOTO_MIDDLE_WIDTH', 'Largura da imagem mï¿½dia');
+    define('_WEBPHOTO_PHOTO_MIDDLE_HEIGHT', 'Altura da imagem mï¿½dia');
     define('_WEBPHOTO_PHOTO_THUMB_URL', 'URL da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_PATH', 'Percurso da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_NAME', 'Nome da miniatura');
-    define('_WEBPHOTO_PHOTO_THUMB_EXT', 'Extensão da miniatura');
+    define('_WEBPHOTO_PHOTO_THUMB_EXT', 'Extensï¿½o da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_MIME', 'MIME tipo da miniatura');
-    define('_WEBPHOTO_PHOTO_THUMB_MEDIUM', 'Tipo médio da miniatura');
+    define('_WEBPHOTO_PHOTO_THUMB_MEDIUM', 'Tipo mï¿½dio da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_SIZE', 'Tamanho do arquivo da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_WIDTH', 'Largura da miniatura');
     define('_WEBPHOTO_PHOTO_THUMB_HEIGHT', 'Altura da miniatura');
@@ -391,12 +391,12 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_PHOTO_GMAP_LONGITUDE', 'Longitude no GoogleMap');
     define('_WEBPHOTO_PHOTO_GMAP_ZOOM', 'Zoom do GoogleMap');
     define('_WEBPHOTO_PHOTO_GMAP_TYPE', 'Tipo de GoogleMap');
-    define('_WEBPHOTO_PHOTO_PERM_READ', 'Permissão de leitura');
-    define('_WEBPHOTO_PHOTO_STATUS', 'Situação');
+    define('_WEBPHOTO_PHOTO_PERM_READ', 'Permissï¿½o de leitura');
+    define('_WEBPHOTO_PHOTO_STATUS', 'Situaï¿½ï¿½o');
     define('_WEBPHOTO_PHOTO_HITS', 'Hits');
-    define('_WEBPHOTO_PHOTO_RATING', 'Avaliação');
+    define('_WEBPHOTO_PHOTO_RATING', 'Avaliaï¿½ï¿½o');
     define('_WEBPHOTO_PHOTO_VOTES', 'Votos');
-    define('_WEBPHOTO_PHOTO_COMMENTS', 'Comentário');
+    define('_WEBPHOTO_PHOTO_COMMENTS', 'Comentï¿½rio');
     define('_WEBPHOTO_PHOTO_TEXT1', 'text1');
     define('_WEBPHOTO_PHOTO_TEXT2', 'text2');
     define('_WEBPHOTO_PHOTO_TEXT3', 'text3');
@@ -407,20 +407,20 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_PHOTO_TEXT8', 'text8');
     define('_WEBPHOTO_PHOTO_TEXT9', 'text9');
     define('_WEBPHOTO_PHOTO_TEXT10', 'text10');
-    define('_WEBPHOTO_PHOTO_DESCRIPTION', 'Descrição da Imagem');
+    define('_WEBPHOTO_PHOTO_DESCRIPTION', 'Descriï¿½ï¿½o da Imagem');
     define('_WEBPHOTO_PHOTO_SEARCH', 'Busca');
 
     // category table
     define('_WEBPHOTO_CAT_TABLE', 'Tabela da Categoria');
     define('_WEBPHOTO_CAT_ID', 'ID da categoria');
-    define('_WEBPHOTO_CAT_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_CAT_TIME_UPDATE', 'Hora da atualização');
-    define('_WEBPHOTO_CAT_GICON_ID', 'ID do ícone');
+    define('_WEBPHOTO_CAT_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_CAT_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
+    define('_WEBPHOTO_CAT_GICON_ID', 'ID do ï¿½cone');
     define('_WEBPHOTO_CAT_FORUM_ID', 'ID do forum');
     define('_WEBPHOTO_CAT_PID', 'ID relacionado');
-    define('_WEBPHOTO_CAT_TITLE', 'Título da categoria');
+    define('_WEBPHOTO_CAT_TITLE', 'Tï¿½tulo da categoria');
     define('_WEBPHOTO_CAT_IMG_PATH', 'Percurso relativo para a imagem');
-    define('_WEBPHOTO_CAT_IMG_MODE', 'Modo de exibição da imagem');
+    define('_WEBPHOTO_CAT_IMG_MODE', 'Modo de exibiï¿½ï¿½o da imagem');
     define('_WEBPHOTO_CAT_ORIG_WIDTH', 'Lagura da imagem original');
     define('_WEBPHOTO_CAT_ORIG_HEIGHT', 'Altura da imagem original');
     define('_WEBPHOTO_CAT_MAIN_WIDTH', 'Largura da imagem na categoria proncipal');
@@ -429,101 +429,101 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_CAT_SUB_HEIGHT', 'Altura da imagem na sub-categoria');
     define('_WEBPHOTO_CAT_WEIGHT', 'Peso');
     define('_WEBPHOTO_CAT_DEPTH', 'Profundidade');
-    define('_WEBPHOTO_CAT_ALLOWED_EXT', 'Extensões Permitidas');
+    define('_WEBPHOTO_CAT_ALLOWED_EXT', 'Extensï¿½es Permitidas');
     define('_WEBPHOTO_CAT_ITEM_TYPE', 'Tipo de item');
-    define('_WEBPHOTO_CAT_GMAP_MODE', 'Modo de exibição no GoogleMap');
+    define('_WEBPHOTO_CAT_GMAP_MODE', 'Modo de exibiï¿½ï¿½o no GoogleMap');
     define('_WEBPHOTO_CAT_GMAP_LATITUDE', 'Latitude no GoogleMap');
     define('_WEBPHOTO_CAT_GMAP_LONGITUDE', 'Longitude no GoogleMap');
     define('_WEBPHOTO_CAT_GMAP_ZOOM', 'Zoom no GoogleMap');
     define('_WEBPHOTO_CAT_GMAP_TYPE', 'Tipo no GoogleMap');
-    define('_WEBPHOTO_CAT_PERM_READ', 'Permissão de leitura');
-    define('_WEBPHOTO_CAT_PERM_POST', 'Permisão de Postagem');
+    define('_WEBPHOTO_CAT_PERM_READ', 'Permissï¿½o de leitura');
+    define('_WEBPHOTO_CAT_PERM_POST', 'Permisï¿½o de Postagem');
     define('_WEBPHOTO_CAT_TEXT1', 'text1');
     define('_WEBPHOTO_CAT_TEXT2', 'text2');
     define('_WEBPHOTO_CAT_TEXT3', 'text3');
     define('_WEBPHOTO_CAT_TEXT4', 'text4');
     define('_WEBPHOTO_CAT_TEXT5', 'text5');
-    define('_WEBPHOTO_CAT_DESCRIPTION', 'Descrição da Categoria');
+    define('_WEBPHOTO_CAT_DESCRIPTION', 'Descriï¿½ï¿½o da Categoria');
 
     // vote table
     define('_WEBPHOTO_VOTE_TABLE', 'Tabela de Voto');
     define('_WEBPHOTO_VOTE_ID', 'ID do voto');
-    define('_WEBPHOTO_VOTE_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_VOTE_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_VOTE_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_VOTE_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_VOTE_PHOTO_ID', 'IID da imagem');
-    define('_WEBPHOTO_VOTE_UID', 'ID do usuário');
-    define('_WEBPHOTO_VOTE_RATING', 'Avaliação');
-    define('_WEBPHOTO_VOTE_HOSTNAME', 'Endereço de IP');
+    define('_WEBPHOTO_VOTE_UID', 'ID do usuï¿½rio');
+    define('_WEBPHOTO_VOTE_RATING', 'Avaliaï¿½ï¿½o');
+    define('_WEBPHOTO_VOTE_HOSTNAME', 'Endereï¿½o de IP');
 
     // google icon table
     define('_WEBPHOTO_GICON_TABLE', 'Tabela do icone Google');
-    define('_WEBPHOTO_GICON_ID', 'ID do ícone');
-    define('_WEBPHOTO_GICON_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_GICON_TIME_UPDATE', 'Hora da atualização');
-    define('_WEBPHOTO_GICON_TITLE', 'Título do ícone');
+    define('_WEBPHOTO_GICON_ID', 'ID do ï¿½cone');
+    define('_WEBPHOTO_GICON_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_GICON_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
+    define('_WEBPHOTO_GICON_TITLE', 'Tï¿½tulo do ï¿½cone');
     define('_WEBPHOTO_GICON_IMAGE_PATH', 'Percurso da imagem');
     define('_WEBPHOTO_GICON_IMAGE_NAME', 'Nome da imagem');
     define('_WEBPHOTO_GICON_IMAGE_EXT', 'Extntion da imagem');
     define('_WEBPHOTO_GICON_SHADOW_PATH', 'Percurso da sombra');
     define('_WEBPHOTO_GICON_SHADOW_NAME', 'Nome da sombra');
-    define('_WEBPHOTO_GICON_SHADOW_EXT', 'Extensão da sombra');
+    define('_WEBPHOTO_GICON_SHADOW_EXT', 'Extensï¿½o da sombra');
     define('_WEBPHOTO_GICON_IMAGE_WIDTH', 'Largura da imagem');
     define('_WEBPHOTO_GICON_IMAGE_HEIGHT', 'Altura da imagem');
     define('_WEBPHOTO_GICON_SHADOW_WIDTH', 'Altura da sombra');
     define('_WEBPHOTO_GICON_SHADOW_HEIGHT', 'Tamanho da sombra Y');
-    define('_WEBPHOTO_GICON_ANCHOR_X', 'Âncora X Tamanho');
-    define('_WEBPHOTO_GICON_ANCHOR_Y', 'Âncora Y Tamanho');
-    define('_WEBPHOTO_GICON_INFO_X', 'Informação do tamanho da janela X');
-    define('_WEBPHOTO_GICON_INFO_Y', 'Informação do tamanho da janela Y');
+    define('_WEBPHOTO_GICON_ANCHOR_X', 'ï¿½ncora X Tamanho');
+    define('_WEBPHOTO_GICON_ANCHOR_Y', 'ï¿½ncora Y Tamanho');
+    define('_WEBPHOTO_GICON_INFO_X', 'Informaï¿½ï¿½o do tamanho da janela X');
+    define('_WEBPHOTO_GICON_INFO_Y', 'Informaï¿½ï¿½o do tamanho da janela Y');
 
     // mime type table
     define('_WEBPHOTO_MIME_TABLE', 'Tabela MIME Tipo');
     define('_WEBPHOTO_MIME_ID', 'ID MIME');
-    define('_WEBPHOTO_MIME_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_MIME_TIME_UPDATE', 'Hora da atualização');
-    define('_WEBPHOTO_MIME_EXT', 'Extensão');
-    define('_WEBPHOTO_MIME_MEDIUM', 'Tipo médio');
+    define('_WEBPHOTO_MIME_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_MIME_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
+    define('_WEBPHOTO_MIME_EXT', 'Extensï¿½o');
+    define('_WEBPHOTO_MIME_MEDIUM', 'Tipo mï¿½dio');
     define('_WEBPHOTO_MIME_TYPE', 'Tipo de MIME');
     define('_WEBPHOTO_MIME_NAME', 'Nome do MIME');
-    define('_WEBPHOTO_MIME_PERMS', 'Permissão');
+    define('_WEBPHOTO_MIME_PERMS', 'Permissï¿½o');
 
     // added in v0.20
-    define('_WEBPHOTO_MIME_FFMPEG', 'Opção ffmpeg');
+    define('_WEBPHOTO_MIME_FFMPEG', 'Opï¿½ï¿½o ffmpeg');
 
     // tag table
     define('_WEBPHOTO_TAG_TABLE', 'Tabela de Tag');
     define('_WEBPHOTO_TAG_ID', 'ID da Tag');
-    define('_WEBPHOTO_TAG_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_TAG_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_TAG_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_TAG_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_TAG_NAME', 'Nome da Tag');
 
     // photo-to-tag table
-    define('_WEBPHOTO_P2T_TABLE', 'Tabela Relação Imagem Tag');
+    define('_WEBPHOTO_P2T_TABLE', 'Tabela Relaï¿½ï¿½o Imagem Tag');
     define('_WEBPHOTO_P2T_ID', 'ID Imagem-Tag');
-    define('_WEBPHOTO_P2T_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_P2T_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_P2T_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_P2T_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_P2T_PHOTO_ID', 'ID da imagem');
     define('_WEBPHOTO_P2T_TAG_ID', 'ID da Tag');
-    define('_WEBPHOTO_P2T_UID', 'ID do usuário');
+    define('_WEBPHOTO_P2T_UID', 'ID do usuï¿½rio');
 
     // synonym table
-    define('_WEBPHOTO_SYNO_TABLE', 'Tabela Sinônimo');
-    define('_WEBPHOTO_SYNO_ID', 'ID do sinônimo');
-    define('_WEBPHOTO_SYNO_TIME_CREATE', 'Época da criação');
-    define('_WEBPHOTO_SYNO_TIME_UPDATE', 'Época da atualização');
+    define('_WEBPHOTO_SYNO_TABLE', 'Tabela Sinï¿½nimo');
+    define('_WEBPHOTO_SYNO_ID', 'ID do sinï¿½nimo');
+    define('_WEBPHOTO_SYNO_TIME_CREATE', 'ï¿½poca da criaï¿½ï¿½o');
+    define('_WEBPHOTO_SYNO_TIME_UPDATE', 'ï¿½poca da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_SYNO_WEIGHT', 'Peso');
-    define('_WEBPHOTO_SYNO_KEY', 'Código');
-    define('_WEBPHOTO_SYNO_VALUE', 'Sinônimo');
+    define('_WEBPHOTO_SYNO_KEY', 'Cï¿½digo');
+    define('_WEBPHOTO_SYNO_VALUE', 'Sinï¿½nimo');
 
     //---------------------------------------------------------
     // title
     //---------------------------------------------------------
-    define('_WEBPHOTO_TITLE_LATEST', 'Última');
+    define('_WEBPHOTO_TITLE_LATEST', 'ï¿½ltima');
     define('_WEBPHOTO_TITLE_SUBMIT', 'Enviar');
     define('_WEBPHOTO_TITLE_POPULAR', 'Popular');
     define('_WEBPHOTO_TITLE_HIGHRATE', 'Melhor avaliada');
     define('_WEBPHOTO_TITLE_MYPHOTO', 'Minhas Imagens');
-    define('_WEBPHOTO_TITLE_RANDOM', 'Imagens Aleatórias');
+    define('_WEBPHOTO_TITLE_RANDOM', 'Imagens Aleatï¿½rias');
     define('_WEBPHOTO_TITLE_HELP', 'Ajuda');
     define('_WEBPHOTO_TITLE_CATEGORY_LIST', 'Lista de Categoria');
     define('_WEBPHOTO_TITLE_TAG_LIST', 'Lista de Tag');
@@ -543,26 +543,26 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_GMAP_ON', 'Mostrar GoogleMap');
     define('_WEBPHOTO_GMAP_OFF', 'Esconder GoogleMap');
 
-    define('_WEBPHOTO_NO_TAG', 'Não configurar Tag');
+    define('_WEBPHOTO_NO_TAG', 'Nï¿½o configurar Tag');
 
     //---------------------------------------------------------
     // google maps
     //---------------------------------------------------------
-    define('_WEBPHOTO_TITLE_GET_LOCATION', 'Configuração da Latitude e Longitude');
+    define('_WEBPHOTO_TITLE_GET_LOCATION', 'Configuraï¿½ï¿½o da Latitude e Longitude');
     define('_WEBPHOTO_GMAP_DESC', 'Mostrar miniatura da imagem, quando clicar no GoogleMaps');
-    define('_WEBPHOTO_GMAP_ICON', 'Ícones do GoogleMap');
+    define('_WEBPHOTO_GMAP_ICON', 'ï¿½cones do GoogleMap');
     define('_WEBPHOTO_GMAP_LATITUDE', 'Latitude do GoogleMap');
     define('_WEBPHOTO_GMAP_LONGITUDE', 'Longitude do GoogleMap');
     define('_WEBPHOTO_GMAP_ZOOM', 'Zoom do GoogleMap');
-    define('_WEBPHOTO_GMAP_ADDRESS', 'Endereço');
+    define('_WEBPHOTO_GMAP_ADDRESS', 'Endereï¿½o');
     define('_WEBPHOTO_GMAP_GET_LOCATION', 'Obter latitude e longitude');
     define('_WEBPHOTO_GMAP_SEARCH_LIST', 'Lista de Busca');
-    define('_WEBPHOTO_GMAP_CURRENT_LOCATION', 'Locação atual');
-    define('_WEBPHOTO_GMAP_CURRENT_ADDRESS', 'Endreço atual');
-    define('_WEBPHOTO_GMAP_NO_MATCH_PLACE', 'Não há lugar correspondente');
-    define('_WEBPHOTO_GMAP_NOT_COMPATIBLE', 'Não mostrar o GoogleMaps em seu navegador');
-    define('_WEBPHOTO_JS_INVALID', 'Não use JavaScript em seu navegador');
-    define('_WEBPHOTO_IFRAME_NOT_SUPPORT', 'Não use iframe em seu navegador');
+    define('_WEBPHOTO_GMAP_CURRENT_LOCATION', 'Locaï¿½ï¿½o atual');
+    define('_WEBPHOTO_GMAP_CURRENT_ADDRESS', 'Endreï¿½o atual');
+    define('_WEBPHOTO_GMAP_NO_MATCH_PLACE', 'Nï¿½o hï¿½ lugar correspondente');
+    define('_WEBPHOTO_GMAP_NOT_COMPATIBLE', 'Nï¿½o mostrar o GoogleMaps em seu navegador');
+    define('_WEBPHOTO_JS_INVALID', 'Nï¿½o use JavaScript em seu navegador');
+    define('_WEBPHOTO_IFRAME_NOT_SUPPORT', 'Nï¿½o use iframe em seu navegador');
 
     //---------------------------------------------------------
     // search
@@ -579,45 +579,45 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     define('_WEBPHOTO_TAGS', 'Tags');
     define('_WEBPHOTO_EDIT_TAG', 'Editar Tags');
-    define('_WEBPHOTO_DSC_TAG_DIVID', 'divida com a vírgula(,) quando confogurar duas os mais');
-    define('_WEBPHOTO_DSC_TAG_EDITABLE', 'Você pode editar somente as tags que você postou');
+    define('_WEBPHOTO_DSC_TAG_DIVID', 'divida com a vï¿½rgula(,) quando confogurar duas os mais');
+    define('_WEBPHOTO_DSC_TAG_EDITABLE', 'Vocï¿½ pode editar somente as tags que vocï¿½ postou');
 
     //---------------------------------------------------------
     // submit form
     //---------------------------------------------------------
-    define('_WEBPHOTO_CAP_ALLOWED_EXTS', 'Extensões permitidas');
+    define('_WEBPHOTO_CAP_ALLOWED_EXTS', 'Extensï¿½es permitidas');
     define('_WEBPHOTO_CAP_PHOTO_SELECT', 'Selecione a imagem principal');
     define('_WEBPHOTO_CAP_THUMB_SELECT', 'Selecione a imagem miniatura');
-    define('_WEBPHOTO_DSC_THUMB_SELECT', 'Cria da imagem principal, quando não selecionado');
+    define('_WEBPHOTO_DSC_THUMB_SELECT', 'Cria da imagem principal, quando nï¿½o selecionado');
     define('_WEBPHOTO_DSC_SET_DATETIME', 'Configurar datetime da imagem');
-    define('_WEBPHOTO_DSC_SET_TIME_UPDATE', 'Configurar hora da atualização');
+    define('_WEBPHOTO_DSC_SET_TIME_UPDATE', 'Configurar hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_DSC_PIXCEL_RESIZE', 'Redimensionar automaticamente se maior que este tamanho');
-    define('_WEBPHOTO_DSC_PIXCEL_REJECT', 'Não pode ser enviada, se maior que este temanho');
+    define('_WEBPHOTO_DSC_PIXCEL_REJECT', 'Nï¿½o pode ser enviada, se maior que este temanho');
     define('_WEBPHOTO_BUTTON_CLEAR', 'Limpar');
-    define('_WEBPHOTO_SUBMIT_RESIZED', 'Redimensionada, porque a imagem é grande demais ');
+    define('_WEBPHOTO_SUBMIT_RESIZED', 'Redimensionada, porque a imagem ï¿½ grande demais ');
 
     // PHP upload error
     // http://www.php.net/manual/en/features.file-upload.errors.php
-    define('_WEBPHOTO_PHP_UPLOAD_ERR_OK', 'Não houve erro, o arquivo enviado com sucesso.');
+    define('_WEBPHOTO_PHP_UPLOAD_ERR_OK', 'Nï¿½o houve erro, o arquivo enviado com sucesso.');
     define('_WEBPHOTO_PHP_UPLOAD_ERR_INI_SIZE', 'O arquivo enviado excedeu o upload_max_filesize.');
     define('_WEBPHOTO_PHP_UPLOAD_ERR_FORM_SIZE', 'O arquivo enviado excedeu %s .');
     define('_WEBPHOTO_PHP_UPLOAD_ERR_PARTIAL', 'O arquivo enviado foi somente carregado parcialmente.');
     define('_WEBPHOTO_PHP_UPLOAD_ERR_NO_FILE', 'Nenhum arquivo foi enviado.');
-    define('_WEBPHOTO_PHP_UPLOAD_ERR_NO_TMP_DIR', 'Pasta temporaria está faltando.');
-    define('_WEBPHOTO_PHP_UPLOAD_ERR_CANT_WRITE', 'Falhou a gravação do arquivo no disco.');
-    define('_WEBPHOTO_PHP_UPLOAD_ERR_EXTENSION', 'O arquivo enviado parou devido a estensão.');
+    define('_WEBPHOTO_PHP_UPLOAD_ERR_NO_TMP_DIR', 'Pasta temporaria estï¿½ faltando.');
+    define('_WEBPHOTO_PHP_UPLOAD_ERR_CANT_WRITE', 'Falhou a gravaï¿½ï¿½o do arquivo no disco.');
+    define('_WEBPHOTO_PHP_UPLOAD_ERR_EXTENSION', 'O arquivo enviado parou devido a estensï¿½o.');
 
     // upload error
-    define('_WEBPHOTO_UPLOADER_ERR_NOT_FOUND', 'Arquivo enviado não encontrado');
-    define('_WEBPHOTO_UPLOADER_ERR_INVALID_FILE_SIZE', 'Tamanho do arquivo inválido');
-    define('_WEBPHOTO_UPLOADER_ERR_EMPTY_FILE_NAME', 'Nome do arquivo está vazio');
+    define('_WEBPHOTO_UPLOADER_ERR_NOT_FOUND', 'Arquivo enviado nï¿½o encontrado');
+    define('_WEBPHOTO_UPLOADER_ERR_INVALID_FILE_SIZE', 'Tamanho do arquivo invï¿½lido');
+    define('_WEBPHOTO_UPLOADER_ERR_EMPTY_FILE_NAME', 'Nome do arquivo estï¿½ vazio');
     define('_WEBPHOTO_UPLOADER_ERR_NO_FILE', 'Nenhum arquivo enviado');
-    define('_WEBPHOTO_UPLOADER_ERR_NOT_SET_DIR', 'Diretório do upload não configurado');
-    define('_WEBPHOTO_UPLOADER_ERR_NOT_ALLOWED_EXT', 'Extensão não permitida');
+    define('_WEBPHOTO_UPLOADER_ERR_NOT_SET_DIR', 'Diretï¿½rio do upload nï¿½o configurado');
+    define('_WEBPHOTO_UPLOADER_ERR_NOT_ALLOWED_EXT', 'Extensï¿½o nï¿½o permitida');
     define('_WEBPHOTO_UPLOADER_ERR_PHP_OCCURED', 'Erro ocorrido: Erro #');
-    define('_WEBPHOTO_UPLOADER_ERR_NOT_OPEN_DIR', 'Falhou a abertura do diretório: ');
-    define('_WEBPHOTO_UPLOADER_ERR_NO_PERM_DIR', 'Falhou a abertura do diretório com pemissão de escrita: ');
-    define('_WEBPHOTO_UPLOADER_ERR_NOT_ALLOWED_MIME', 'Tipo de MIME não permitido: ');
+    define('_WEBPHOTO_UPLOADER_ERR_NOT_OPEN_DIR', 'Falhou a abertura do diretï¿½rio: ');
+    define('_WEBPHOTO_UPLOADER_ERR_NO_PERM_DIR', 'Falhou a abertura do diretï¿½rio com pemissï¿½o de escrita: ');
+    define('_WEBPHOTO_UPLOADER_ERR_NOT_ALLOWED_MIME', 'Tipo de MIME nï¿½o permitido: ');
     define('_WEBPHOTO_UPLOADER_ERR_LARGE_FILE_SIZE', 'Tamanho do arquivo muito grande: ');
     define('_WEBPHOTO_UPLOADER_ERR_LARGE_WIDTH', 'A largura do arquivo deve ser menor que ');
     define('_WEBPHOTO_UPLOADER_ERR_LARGE_HEIGHT', 'A altura do arquivo deve ser menor que');
@@ -626,25 +626,25 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     // help
     //---------------------------------------------------------
-    define('_WEBPHOTO_HELP_DSC', 'Esta é a descrição da aplicação que trabalha em seu PC');
+    define('_WEBPHOTO_HELP_DSC', 'Esta ï¿½ a descriï¿½ï¿½o da aplicaï¿½ï¿½o que trabalha em seu PC');
 
     define('_WEBPHOTO_HELP_PICLENS_TITLE', 'PicLens');
     define('_WEBPHOTO_HELP_PICLENS_DSC', '
-Piclens é o complemento o qual a Cooliris Inc fornece para o FireFox<br />
-Esta é uma visão das imagens no site<br /><br />
-<b>Configuração</b><br />
-(1) Baixar FireFox<br />
+Piclens ï¿½ o complemento o qual a Cooliris Inc fornece para o FireFox<br>
+Esta ï¿½ uma visï¿½o das imagens no site<br><br>
+<b>Configuraï¿½ï¿½o</b><br>
+(1) Baixar FireFox<br>
 <a href="http://www.mozilla-japan.org/products/firefox/" target="_blank">
 http://www.mozilla-japan.org/products/firefox/
-</a><br /><br />
-(2) Baixar o complemento Piclens<br />
+</a><br><br>
+(2) Baixar o complemento Piclens<br>
 <a href="http://www.piclens.com/" target="_blank">
 http://www.piclens.com/
-</a><br /><br />
-(3) Ver webphoto em webphoto<br />
-http://THIS-SITE/modules/webphoto/ <br /><br />
-(4) Clique no ícone azul no canto superior dirito do Firefox<br />
-Você não pode usar o Piclens, quando o ícone é preto<br />');
+</a><br><br>
+(3) Ver webphoto em webphoto<br>
+http://THIS-SITE/modules/webphoto/ <br><br>
+(4) Clique no ï¿½cone azul no canto superior dirito do Firefox<br>
+Vocï¿½ nï¿½o pode usar o Piclens, quando o ï¿½cone ï¿½ preto<br>');
 
     //
     // dummy lines , adjusts line number for Japanese lang file.
@@ -652,27 +652,27 @@ Você não pode usar o Piclens, quando o ícone é preto<br />');
 
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_TITLE', 'Media RSS Slide Show');
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_DSC', '
-"Media RSS  Slide Show" is the google desktop gadget<br />
-This shows photos from the internet with the slide show<br /><br />
-<b>Setting</b><br />
-(1) Download "Google Desktop"<br />
+"Media RSS  Slide Show" is the google desktop gadget<br>
+This shows photos from the internet with the slide show<br><br>
+<b>Setting</b><br>
+(1) Download "Google Desktop"<br>
 <a href="http://desktop.google.co.jp/" target="_blank">
 http://desktop.google.co.jp/
-</a><br /><br />
-(2) Download "Media RSS  Slide Show" gadget<br />
+</a><br><br>
+(2) Download "Media RSS  Slide Show" gadget<br>
 <a href="http://desktop.google.com/plugins/i/mediarssslideshow.html" target="_blank">
 http://desktop.google.com/plugins/i/mediarssslideshow.html
-</a><br /><br />
-(3) Change "URL of MediaRSS" into the following, using the option of the gadget<br />');
+</a><br><br>
+(3) Change "URL of MediaRSS" into the following, using the option of the gadget<br>');
 
     //---------------------------------------------------------
     // others
     //---------------------------------------------------------
-    define('_WEBPHOTO_RANDOM_MORE', 'Mais imagens Aleatórias');
+    define('_WEBPHOTO_RANDOM_MORE', 'Mais imagens Aleatï¿½rias');
     define('_WEBPHOTO_USAGE_PHOTO', 'Abre uma janela Pop-up com a imagem grande, quando a miniatura for clicada');
-    define('_WEBPHOTO_USAGE_TITLE', 'Move para a página da imagem, quando o título da imagem for clicado');
-    define('_WEBPHOTO_DATE_NOT_SET', 'Não configurado a data da imagem');
-    define('_WEBPHOTO_PLACE_NOT_SET', 'Não configurado o lugar da imagem');
+    define('_WEBPHOTO_USAGE_TITLE', 'Move para a pï¿½gina da imagem, quando o tï¿½tulo da imagem for clicado');
+    define('_WEBPHOTO_DATE_NOT_SET', 'Nï¿½o configurado a data da imagem');
+    define('_WEBPHOTO_PLACE_NOT_SET', 'Nï¿½o configurado o lugar da imagem');
     define('_WEBPHOTO_GOTO_ADMIN', 'Ir para a o Painel Administrativo');
 
     //---------------------------------------------------------
@@ -690,16 +690,16 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     //---------------------------------------------------------
     // v0.20
     //---------------------------------------------------------
-    define('_WEBPHOTO_TITLE_VIDEO_THUMB_SEL', 'Selecionar miniatura do vídeo');
-    define('_WEBPHOTO_TITLE_VIDEO_REDO', 'Re-criar Flash e Miniatura do vídeo enviado');
+    define('_WEBPHOTO_TITLE_VIDEO_THUMB_SEL', 'Selecionar miniatura do vï¿½deo');
+    define('_WEBPHOTO_TITLE_VIDEO_REDO', 'Re-criar Flash e Miniatura do vï¿½deo enviado');
     define('_WEBPHOTO_CAP_REDO_THUMB', 'Criar miniatura');
-    define('_WEBPHOTO_CAP_REDO_FLASH', 'Croiar vídeo Flash');
-    define('_WEBPHOTO_ERR_VIDEO_FLASH', 'Não criar vídeo Flash');
-    define('_WEBPHOTO_ERR_VIDEO_THUMB', 'Substituir com o ícone, porque não pode criar miniatura do vídeo');
+    define('_WEBPHOTO_CAP_REDO_FLASH', 'Croiar vï¿½deo Flash');
+    define('_WEBPHOTO_ERR_VIDEO_FLASH', 'Nï¿½o criar vï¿½deo Flash');
+    define('_WEBPHOTO_ERR_VIDEO_THUMB', 'Substituir com o ï¿½cone, porque nï¿½o pode criar miniatura do vï¿½deo');
     define('_WEBPHOTO_BUTTON_SELECT', 'Selecionar');
 
-    define('_WEBPHOTO_DSC_DOWNLOAD_PLAY', 'Tocar após o download');
-    define('_WEBPHOTO_ICON_VIDEO', 'Vídeo');
+    define('_WEBPHOTO_DSC_DOWNLOAD_PLAY', 'Tocar apï¿½s o download');
+    define('_WEBPHOTO_ICON_VIDEO', 'Vï¿½deo');
     define('_WEBPHOTO_HOUR', 'hora');
     define('_WEBPHOTO_MINUTE', 'min');
     define('_WEBPHOTO_SECOND', 'seg');
@@ -708,13 +708,13 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     // v0.30
     //---------------------------------------------------------
     // user table
-    define('_WEBPHOTO_USER_TABLE', 'Tabela Uusário Aux');
-    define('_WEBPHOTO_USER_ID', 'ID do Usuário Aux');
-    define('_WEBPHOTO_USER_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_USER_TIME_UPDATE', 'Hora da atualização');
-    define('_WEBPHOTO_USER_UID', 'ID do usuário');
+    define('_WEBPHOTO_USER_TABLE', 'Tabela Uusï¿½rio Aux');
+    define('_WEBPHOTO_USER_ID', 'ID do Usuï¿½rio Aux');
+    define('_WEBPHOTO_USER_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_USER_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
+    define('_WEBPHOTO_USER_UID', 'ID do usuï¿½rio');
     define('_WEBPHOTO_USER_CAT_ID', 'Categoria do ID');
-    define('_WEBPHOTO_USER_EMAIL', 'Endereço de E-mail');
+    define('_WEBPHOTO_USER_EMAIL', 'Endereï¿½o de E-mail');
     define('_WEBPHOTO_USER_TEXT1', 'text1');
     define('_WEBPHOTO_USER_TEXT2', 'text2');
     define('_WEBPHOTO_USER_TEXT3', 'text3');
@@ -724,25 +724,25 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     // maillog
     define('_WEBPHOTO_MAILLOG_TABLE', 'Tabela do Maillog');
     define('_WEBPHOTO_MAILLOG_ID', 'ID do Maillog');
-    define('_WEBPHOTO_MAILLOG_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_MAILLOG_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_MAILLOG_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_MAILLOG_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_MAILLOG_PHOTO_IDS', 'ID da Imagem');
-    define('_WEBPHOTO_MAILLOG_STATUS', 'Situação');
-    define('_WEBPHOTO_MAILLOG_FROM', 'Mail do endereço');
+    define('_WEBPHOTO_MAILLOG_STATUS', 'Situaï¿½ï¿½o');
+    define('_WEBPHOTO_MAILLOG_FROM', 'Mail do endereï¿½o');
     define('_WEBPHOTO_MAILLOG_SUBJECT', 'Assunto');
     define('_WEBPHOTO_MAILLOG_BODY', 'Corpo');
     define('_WEBPHOTO_MAILLOG_FILE', 'Nome do arquivo');
     define('_WEBPHOTO_MAILLOG_ATTACH', 'Arquivos anexados');
-    define('_WEBPHOTO_MAILLOG_COMMENT', 'Commntário');
+    define('_WEBPHOTO_MAILLOG_COMMENT', 'Commntï¿½rio');
 
     // mail register
-    define('_WEBPHOTO_TITLE_MAIL_REGISTER', 'Endereço de E-mail do Registro');
+    define('_WEBPHOTO_TITLE_MAIL_REGISTER', 'Endereï¿½o de E-mail do Registro');
     define('_WEBPHOTO_MAIL_HELP', "Por favor, consulte 'Ajuda' para uso");
-    define('_WEBPHOTO_CAT_USER', 'Nome do Usuário');
+    define('_WEBPHOTO_CAT_USER', 'Nome do Usuï¿½rio');
     define('_WEBPHOTO_BUTTON_REGISTER', 'Registro');
-    define('_WEBPHOTO_NOMATCH_USER', 'Não há usuário');
-    define('_WEBPHOTO_ERR_MAIL_EMPTY', "Voc~e deve informar 'Endereço de E-mail' ");
-    define('_WEBPHOTO_ERR_MAIL_ILLEGAL', 'Formato ilegal do endereço de e-mail');
+    define('_WEBPHOTO_NOMATCH_USER', 'Nï¿½o hï¿½ usuï¿½rio');
+    define('_WEBPHOTO_ERR_MAIL_EMPTY', "Voc~e deve informar 'Endereï¿½o de E-mail' ");
+    define('_WEBPHOTO_ERR_MAIL_ILLEGAL', 'Formato ilegal do endereï¿½o de e-mail');
 
     // mail retrieve
     define('_WEBPHOTO_TITLE_MAIL_RETRIEVE', 'Recupera E-mail');
@@ -751,14 +751,14 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_SUBTITLE_MAIL_ACCESS', 'Acessando o servidor de e-mail');
     define('_WEBPHOTO_SUBTITLE_MAIL_PARSE', 'Analisando os emails recebidos');
     define('_WEBPHOTO_SUBTITLE_MAIL_PHOTO', 'Enviando imagens anexadas aos e-mails');
-    define('_WEBPHOTO_TEXT_MAIL_ACCESS_TIME', 'Limitação no acesso');
+    define('_WEBPHOTO_TEXT_MAIL_ACCESS_TIME', 'Limitaï¿½ï¿½o no acesso');
     define('_WEBPHOTO_TEXT_MAIL_RETRY', 'Acesse 1 minuto mais tarde');
-    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE', 'E-mail não pode ser recuperado.<br />Provavelmente a comunicação temporaria falhou.<br />Por favor, retorne mais tarde');
-    define('_WEBPHOTO_TEXT_MAIL_NO_NEW', 'Não há um novo e-mail');
+    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE', 'E-mail nï¿½o pode ser recuperado.<br>Provavelmente a comunicaï¿½ï¿½o temporaria falhou.<br>Por favor, retorne mais tarde');
+    define('_WEBPHOTO_TEXT_MAIL_NO_NEW', 'Nï¿½o hï¿½ um novo e-mail');
     define('_WEBPHOTO_TEXT_MAIL_RETRIEVED_FMT', 'Recuperado %s e-mails');
-    define('_WEBPHOTO_TEXT_MAIL_NO_VALID', 'Não há e-mail válido');
+    define('_WEBPHOTO_TEXT_MAIL_NO_VALID', 'Nï¿½o hï¿½ e-mail vï¿½lido');
     define('_WEBPHOTO_TEXT_MAIL_SUBMITED_FMT', 'Enviado %s imagens');
-    define('_WEBPHOTO_GOTO_INDEX', 'Ir ao módulo topo da página');
+    define('_WEBPHOTO_GOTO_INDEX', 'Ir ao mï¿½dulo topo da pï¿½gina');
 
     // i.php
     define('_WEBPHOTO_TITLE_MAIL_POST', 'Postado por e-mail');
@@ -766,32 +766,32 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     // file
     define('_WEBPHOTO_TITLE_FILE', 'Adicionada imagem do arquivo');
     define('_WEBPHOTO_CAP_FILE_SELECT', 'Selecionar arquivo');
-    define('_WEBPHOTO_ERR_EMPTY_FILE', 'Você deve selecionar o arquivo');
-    define('_WEBPHOTO_ERR_EMPTY_CAT', 'Você deve selecionar a categoria');
-    define('_WEBPHOTO_ERR_INVALID_CAT', 'Categoria Inválida');
-    define('_WEBPHOTO_ERR_CREATE_PHOTO', 'Imagem não pode ser criada');
-    define('_WEBPHOTO_ERR_CREATE_THUMB', 'Miniatura da imagem não pode ser criada');
+    define('_WEBPHOTO_ERR_EMPTY_FILE', 'Vocï¿½ deve selecionar o arquivo');
+    define('_WEBPHOTO_ERR_EMPTY_CAT', 'Vocï¿½ deve selecionar a categoria');
+    define('_WEBPHOTO_ERR_INVALID_CAT', 'Categoria Invï¿½lida');
+    define('_WEBPHOTO_ERR_CREATE_PHOTO', 'Imagem nï¿½o pode ser criada');
+    define('_WEBPHOTO_ERR_CREATE_THUMB', 'Miniatura da imagem nï¿½o pode ser criada');
 
     // help
     define('_WEBPHOTO_HELP_MUST_LOGIN', 'Por favor, efetue seu login caso deseje saber mais detalhes');
-    define('_WEBPHOTO_HELP_NOT_PERM', 'Você não tem permissão. Por favor contate com o Webmaster');
+    define('_WEBPHOTO_HELP_NOT_PERM', 'Vocï¿½ nï¿½o tem permissï¿½o. Por favor contate com o Webmaster');
 
     define('_WEBPHOTO_HELP_MOBILE_TITLE', 'Celular');
-    define('_WEBPHOTO_HELP_MOBILE_DSC', 'Você pode ver a imagem e o vídeo no celular<br/>o tamanho da tela é de aproximadamente 240x320 ');
+    define('_WEBPHOTO_HELP_MOBILE_DSC', 'Vocï¿½ pode ver a imagem e o vï¿½deo no celular<br>o tamanho da tela ï¿½ de aproximadamente 240x320 ');
     define('_WEBPHOTO_HELP_MOBILE_TEXT_FMT', '
-<b>URL de Acesso</b><br />
+<b>URL de Acesso</b><br>
 <a href="{MODULE_URL}/i.php" target="_blank">{MODULE_URL}/i.php</a>');
 
     define('_WEBPHOTO_HELP_MAIL_TITLE', 'E-mail do celular');
-    define('_WEBPHOTO_HELP_MAIL_DSC', 'Você pode postar a imagem e o vìdeo por e-mail de seu telefone celular');
-    define('_WEBPHOTO_HELP_MAIL_GUEST', 'Este é um exemplo. Você pode ver o endereço REAL do e-mail, se tiver permissão.');
+    define('_WEBPHOTO_HELP_MAIL_DSC', 'Vocï¿½ pode postar a imagem e o vï¿½deo por e-mail de seu telefone celular');
+    define('_WEBPHOTO_HELP_MAIL_GUEST', 'Este ï¿½ um exemplo. Vocï¿½ pode ver o endereï¿½o REAL do e-mail, se tiver permissï¿½o.');
 
     define('_WEBPHOTO_HELP_FILE_TITLE', 'Enviar por FTP');
-    define('_WEBPHOTO_HELP_FILE_DSC', 'Você pode enviar a imagem tamanho grande e o vídeo, quando você envia o arquivo por FTP');
+    define('_WEBPHOTO_HELP_FILE_DSC', 'Vocï¿½ pode enviar a imagem tamanho grande e o vï¿½deo, quando vocï¿½ envia o arquivo por FTP');
     define('_WEBPHOTO_HELP_FILE_TEXT_FMT', '
-<b>Enviar Imagem</b><br />
-(1) Enviar o arquivo pelo servidor FTP<br />
-(2) Clique <a href="{MODULE_URL}/index.php?fct=submit_file" target="_blank">Adicionar imagem do arquivo</a><br />
+<b>Enviar Imagem</b><br>
+(1) Enviar o arquivo pelo servidor FTP<br>
+(2) Clique <a href="{MODULE_URL}/index.php?fct=submit_file" target="_blank">Adicionar imagem do arquivo</a><br>
 (3) Selecione o arquivo enviado e postado');
 
     // mail check
@@ -806,35 +806,35 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     // item table
     define('_WEBPHOTO_ITEM_TABLE', 'Tabela Item');
     define('_WEBPHOTO_ITEM_ID', 'ID do Item');
-    define('_WEBPHOTO_ITEM_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_ITEM_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_ITEM_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_ITEM_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_ITEM_CAT_ID', 'ID da categoria');
     define('_WEBPHOTO_ITEM_GICON_ID', 'ID do icone GoogleMap');
-    define('_WEBPHOTO_ITEM_UID', 'ID do usuário');
+    define('_WEBPHOTO_ITEM_UID', 'ID do usuï¿½rio');
     define('_WEBPHOTO_ITEM_KIND', 'Tipo de arquivo');
-    define('_WEBPHOTO_ITEM_EXT', 'Extensão do arquivo');
+    define('_WEBPHOTO_ITEM_EXT', 'Extensï¿½o do arquivo');
     define('_WEBPHOTO_ITEM_DATETIME', 'Datetime da imagem');
-    define('_WEBPHOTO_ITEM_TITLE', 'Título da imagem');
+    define('_WEBPHOTO_ITEM_TITLE', 'Tï¿½tulo da imagem');
     define('_WEBPHOTO_ITEM_PLACE', 'Lugar');
     define('_WEBPHOTO_ITEM_EQUIPMENT', 'Equipamento');
     define('_WEBPHOTO_ITEM_GMAP_LATITUDE', 'Latitude do GoogleMap');
     define('_WEBPHOTO_ITEM_GMAP_LONGITUDE', 'Longitude no GoogleMap');
     define('_WEBPHOTO_ITEM_GMAP_ZOOM', 'Zoom no GoogleMap');
     define('_WEBPHOTO_ITEM_GMAP_TYPE', 'Tipo no GoogleMap');
-    define('_WEBPHOTO_ITEM_PERM_READ', 'Permissão de leitura');
-    define('_WEBPHOTO_ITEM_STATUS', 'Situação');
+    define('_WEBPHOTO_ITEM_PERM_READ', 'Permissï¿½o de leitura');
+    define('_WEBPHOTO_ITEM_STATUS', 'Situaï¿½ï¿½o');
     define('_WEBPHOTO_ITEM_HITS', 'Hits');
-    define('_WEBPHOTO_ITEM_RATING', 'Avaliação');
+    define('_WEBPHOTO_ITEM_RATING', 'Avaliaï¿½ï¿½o');
     define('_WEBPHOTO_ITEM_VOTES', 'Votos');
-    define('_WEBPHOTO_ITEM_DESCRIPTION', 'Descrição da imagem');
-    define('_WEBPHOTO_ITEM_EXIF', 'Informação Exif');
+    define('_WEBPHOTO_ITEM_DESCRIPTION', 'Descriï¿½ï¿½o da imagem');
+    define('_WEBPHOTO_ITEM_EXIF', 'Informaï¿½ï¿½o Exif');
     define('_WEBPHOTO_ITEM_SEARCH', 'Busca');
-    define('_WEBPHOTO_ITEM_COMMENTS', 'Comentários');
-    define('_WEBPHOTO_ITEM_FILE_ID_1', 'ID do arquivo: Conteúdo');
+    define('_WEBPHOTO_ITEM_COMMENTS', 'Comentï¿½rios');
+    define('_WEBPHOTO_ITEM_FILE_ID_1', 'ID do arquivo: Conteï¿½do');
     define('_WEBPHOTO_ITEM_FILE_ID_2', 'ID do arquivo: Miniatura');
-    define('_WEBPHOTO_ITEM_FILE_ID_3', 'ID do arquivo: Médio');
-    define('_WEBPHOTO_ITEM_FILE_ID_4', 'ID do arquivo: Vídeo Flash');
-    define('_WEBPHOTO_ITEM_FILE_ID_5', 'ID do arquivo: Vídeo Docomo');
+    define('_WEBPHOTO_ITEM_FILE_ID_3', 'ID do arquivo: Mï¿½dio');
+    define('_WEBPHOTO_ITEM_FILE_ID_4', 'ID do arquivo: Vï¿½deo Flash');
+    define('_WEBPHOTO_ITEM_FILE_ID_5', 'ID do arquivo: Vï¿½deo Docomo');
     define('_WEBPHOTO_ITEM_FILE_ID_6', 'file6');
     define('_WEBPHOTO_ITEM_FILE_ID_7', 'file7');
     define('_WEBPHOTO_ITEM_FILE_ID_8', 'file8');
@@ -854,27 +854,27 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     // file table
     define('_WEBPHOTO_FILE_TABLE', 'Tabela Arquivo');
     define('_WEBPHOTO_FILE_ID', 'ID do arquivo');
-    define('_WEBPHOTO_FILE_TIME_CREATE', 'Hora da criação');
-    define('_WEBPHOTO_FILE_TIME_UPDATE', 'Hora da atualização');
+    define('_WEBPHOTO_FILE_TIME_CREATE', 'Hora da criaï¿½ï¿½o');
+    define('_WEBPHOTO_FILE_TIME_UPDATE', 'Hora da atualizaï¿½ï¿½o');
     define('_WEBPHOTO_FILE_ITEM_ID', 'ID do item');
     define('_WEBPHOTO_FILE_KIND', 'Tipo de arquivo');
     define('_WEBPHOTO_FILE_URL', 'URL');
     define('_WEBPHOTO_FILE_PATH', 'Percurso do arquivo');
     define('_WEBPHOTO_FILE_NAME', 'Nome do arquivo');
-    define('_WEBPHOTO_FILE_EXT', 'Extensão do arquivo');
+    define('_WEBPHOTO_FILE_EXT', 'Extensï¿½o do arquivo');
     define('_WEBPHOTO_FILE_MIME', 'Tipo de MIME');
-    define('_WEBPHOTO_FILE_MEDIUM', 'Tipo médio');
+    define('_WEBPHOTO_FILE_MEDIUM', 'Tipo mï¿½dio');
     define('_WEBPHOTO_FILE_SIZE', 'Tamanho do arquivo');
     define('_WEBPHOTO_FILE_WIDTH', 'Largura da imagem');
     define('_WEBPHOTO_FILE_HEIGHT', 'Altura da imagem');
-    define('_WEBPHOTO_FILE_DURATION', 'Tempo de duração do vídeo');
+    define('_WEBPHOTO_FILE_DURATION', 'Tempo de duraï¿½ï¿½o do vï¿½deo');
 
     // file kind ( for admin checktables )
-    define('_WEBPHOTO_FILE_KIND_1', 'Conteúdo');
+    define('_WEBPHOTO_FILE_KIND_1', 'Conteï¿½do');
     define('_WEBPHOTO_FILE_KIND_2', 'Miniatura');
-    define('_WEBPHOTO_FILE_KIND_3', 'Médio');
-    define('_WEBPHOTO_FILE_KIND_4', 'Vídeo Flash');
-    define('_WEBPHOTO_FILE_KIND_5', 'Vídeo Docomo');
+    define('_WEBPHOTO_FILE_KIND_3', 'Mï¿½dio');
+    define('_WEBPHOTO_FILE_KIND_4', 'Vï¿½deo Flash');
+    define('_WEBPHOTO_FILE_KIND_5', 'Vï¿½deo Docomo');
     define('_WEBPHOTO_FILE_KIND_6', 'file6');
     define('_WEBPHOTO_FILE_KIND_7', 'file7');
     define('_WEBPHOTO_FILE_KIND_8', 'file8');
@@ -888,29 +888,29 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_TITLE_MAIL_JUDGE', 'Juiz da operadora do celular');
     define('_WEBPHOTO_MAIL_MODEL', 'Operadora do celular');
     define('_WEBPHOTO_MAIL_BROWSER', 'Navegador WEB');
-    define('_WEBPHOTO_MAIL_NOT_JUDGE', 'Não foi possível julgar a operadora do celular');
+    define('_WEBPHOTO_MAIL_NOT_JUDGE', 'Nï¿½o foi possï¿½vel julgar a operadora do celular');
     define('_WEBPHOTO_MAIL_TO_WEBMASTER', 'E-mail para o webmaster');
 
     // help
     define('_WEBPHOTO_HELP_MAIL_POST_FMT', '
-<b>Preparar</b><br />
-Registre o endereço de e-mail do celular<br />
-<a href="{MODULE_URL}/index.php?fct=mail_register" target="_blank">Registrar o endereço de e-mail</a><br /><br />
-<b>Enviar Imagem</b><br />
-Enviar e-mail para o seguinte endereço com o arquivo da imagem anexo.<br />
-<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br /><br />
-<b>Rotação da Imagem</b><br />
-Você pode girar a imagem para a direita ou esquerda, desde que você informe o fim do "Assunto" como segue<br />
- R@ : girar a direita <br />
- L@ : girar a esquerda <br /><br />');
-    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>Recuperar e-mail e enviar imagem</b><br />');
+<b>Preparar</b><br>
+Registre o endereï¿½o de e-mail do celular<br>
+<a href="{MODULE_URL}/index.php?fct=mail_register" target="_blank">Registrar o endereï¿½o de e-mail</a><br><br>
+<b>Enviar Imagem</b><br>
+Enviar e-mail para o seguinte endereï¿½o com o arquivo da imagem anexo.<br>
+<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br><br>
+<b>Rotaï¿½ï¿½o da Imagem</b><br>
+Vocï¿½ pode girar a imagem para a direita ou esquerda, desde que vocï¿½ informe o fim do "Assunto" como segue<br>
+ R@ : girar a direita <br>
+ L@ : girar a esquerda <br><br>');
+    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>Recuperar e-mail e enviar imagem</b><br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_FMT', '
-Clique<a href="{MODULE_URL}/i.php?op=post" target="_blank">Enviar por e-mai</a>, depois de alguns segundos envie e-mail.<br />
-Webphoto recuperou o e-mail para o qual você enviou, submeter e mostrar a imagem anexa<br />');
-    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'Webphoto recuperou o e-mail para o qual você enviou, submeter e mostrar a imagem anexa<br />');
+Clique<a href="{MODULE_URL}/i.php?op=post" target="_blank">Enviar por e-mai</a>, depois de alguns segundos envie e-mail.<br>
+Webphoto recuperou o e-mail para o qual vocï¿½ enviou, submeter e mostrar a imagem anexa<br>');
+    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'Webphoto recuperou o e-mail para o qual vocï¿½ enviou, submeter e mostrar a imagem anexa<br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_AUTO_FMT', '
-O e-mail é enviado automaticamente %s segundos mais tarde, quando você envia e-mail.<br />
-Por favor, clique <a href="{MODULE_URL}/i.php?op=post" target="_blank">Postar por e-mail</a>, se não enviada.<br />');
+O e-mail ï¿½ enviado automaticamente %s segundos mais tarde, quando vocï¿½ envia e-mail.<br>
+Por favor, clique <a href="{MODULE_URL}/i.php?op=post" target="_blank">Postar por e-mail</a>, se nï¿½o enviada.<br>');
 
     // === define end ===
 }

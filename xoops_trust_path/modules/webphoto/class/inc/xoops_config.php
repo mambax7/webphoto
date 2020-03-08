@@ -14,9 +14,11 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_inc_xoops_config
 //=========================================================
 
+/**
+ * Class webphoto_inc_xoops_config
+ */
 class webphoto_inc_xoops_config
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -25,37 +27,57 @@ class webphoto_inc_xoops_config
         // dummy
     }
 
+    /**
+     * @return \webphoto_inc_xoops_config
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_inc_xoops_config();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // xoops class
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public function get_config_by_dirname($dirname)
     {
         $modid = $this->get_modid_by_dirname($dirname);
+
         return $this->get_config_by_modid($modid);
     }
 
+    /**
+     * @param $modid
+     * @return mixed
+     */
     public function get_config_by_modid($modid)
     {
-        $config_handler = xoops_getHandler('config');
-        return $config_handler->getConfigsByCat(0, $modid);
+        $configHandler = xoops_getHandler('config');
+
+        return $configHandler->getConfigsByCat(0, $modid);
     }
 
+    /**
+     * @param $dirname
+     * @return bool
+     */
     public function get_modid_by_dirname($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+        $module = $moduleHandler->getByDirname($dirname);
         if (!is_object($module)) {
             return false;
         }
+
         return $module->getVar('mid');
     }
 

@@ -28,6 +28,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_config
 //=========================================================
+
+/**
+ * Class webphoto_config
+ */
 class webphoto_config
 {
     public $_utility_class;
@@ -35,6 +39,11 @@ class webphoto_config
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_config constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_init($dirname);
@@ -42,103 +51,160 @@ class webphoto_config
         $this->_utility_class = webphoto_lib_utility::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_config
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_config($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // init
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     */
     public function _init($dirname)
     {
-        $xoops_class         = webphoto_xoops_base::getInstance();
+        $xoops_class = webphoto_xoops_base::getInstance();
         $this->_config_array = $xoops_class->get_module_config_by_dirname($dirname);
     }
 
     //---------------------------------------------------------
     // get
     //---------------------------------------------------------
+
+    /**
+     * @return mixed
+     */
     public function get_config_array()
     {
         return $this->_config_array;
     }
 
+    /**
+     * @param $name
+     */
     public function get_by_name($name)
     {
         if (isset($this->_config_array[$name])) {
             return $this->_config_array[$name];
         }
+
         return null;
     }
 
+    /**
+     * @param $name
+     * @return array
+     */
     public function get_array_by_name($name)
     {
         $str = $this->get_by_name($name);
         if ($str) {
             $arr = explode('|', $str);
         } else {
-            $arr = array();
+            $arr = [];
         }
+
         return $arr;
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function get_dir_by_name($name)
     {
         $str = $this->get_by_name($name);
+
         return $this->add_separator_to_tail($str);
     }
 
+    /**
+     * @param null $sub_dir
+     * @return null|string
+     */
     public function get_work_dir($sub_dir = null)
     {
         $dir = $this->get_by_name('workdir');
         if ($sub_dir) {
             $dir .= '/' . $sub_dir;
         }
+
         return $dir;
     }
 
+    /**
+     * @param null $sub_dir
+     * @return null|string
+     */
     public function get_uploads_path($sub_dir = null)
     {
         $path = $this->_get_path_by_name('uploadspath');
         if ($sub_dir) {
             $path .= '/' . $sub_dir;
         }
+
         return $path;
     }
 
+    /**
+     * @return null|string
+     */
     public function get_medias_path()
     {
         return $this->_get_path_by_name('mediaspath');
     }
 
+    /**
+     * @return array
+     */
     public function get_large_wh()
     {
         return $this->get_wh_common('width', 'height');
     }
 
+    /**
+     * @return array
+     */
     public function get_middle_wh()
     {
         return $this->get_wh_common('middle_width', 'middle_height');
     }
 
+    /**
+     * @return array
+     */
     public function get_small_wh()
     {
         return $this->get_wh_common('small_width', 'small_height');
     }
 
+    /**
+     * @return array
+     */
     public function get_thumb_wh()
     {
         return $this->get_wh_common('thumb_width', 'thumb_height');
     }
 
+    /**
+     * @param $name_width
+     * @param $name_height
+     * @return array
+     */
     public function get_wh_common($name_width, $name_height)
     {
-        $width  = $this->get_by_name($name_width);
+        $width = $this->get_by_name($name_width);
         $height = $this->get_by_name($name_height);
 
         if ($width && empty($height)) {
@@ -147,18 +213,26 @@ class webphoto_config
             $width = $height;
         }
 
-        return array($width, $height);
+        return [$width, $height];
     }
 
+    /**
+     * @param $name
+     * @return null|string
+     */
     public function _get_path_by_name($name)
     {
         $path = $this->get_by_name($name);
         if ($path) {
             return $this->add_slash_to_head($path);
         }
+
         return null;
     }
 
+    /**
+     * @return bool
+     */
     public function is_set_mail()
     {
         $host = $this->get_by_name('mail_host');
@@ -168,17 +242,27 @@ class webphoto_config
         if ($host && $user && $pass) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // utlity class
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function add_slash_to_head($str)
     {
         return $this->_utility_class->add_slash_to_head($str);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function add_separator_to_tail($str)
     {
         return $this->_utility_class->add_separator_to_tail($str);

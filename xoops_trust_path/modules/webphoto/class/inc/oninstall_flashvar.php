@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_oninstall_flashvar
 //=========================================================
+
+/**
+ * Class webphoto_inc_oninstall_flashvar
+ */
 class webphoto_inc_oninstall_flashvar extends webphoto_inc_base_ini
 {
     public $_table_flashvar;
@@ -20,21 +24,33 @@ class webphoto_inc_oninstall_flashvar extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_oninstall_flashvar constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_table_flashvar = $this->prefix_dirname('flashvar');
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_oninstall_flashvar($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -46,9 +62,11 @@ class webphoto_inc_oninstall_flashvar extends webphoto_inc_base_ini
         $this->_flashvar_add_column_240();
     }
 
+    /**
+     * @return bool
+     */
     public function _flashvar_add_column_240()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_flashvar, 'flashvar_dock')) {
             return true;
@@ -92,11 +110,12 @@ class webphoto_inc_oninstall_flashvar extends webphoto_inc_base_ini
 
         if ($ret) {
             $this->set_msg('Add flashvar_player_repeat in <b>' . $this->_table_flashvar . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_flashvar . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_flashvar . '</b>.'));
+
+        return false;
     }
 
     // --- class end ---

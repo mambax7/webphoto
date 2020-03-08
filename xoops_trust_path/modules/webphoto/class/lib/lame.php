@@ -20,13 +20,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_lib_lame
 //=========================================================
 
+/**
+ * Class webphoto_lib_lame
+ */
 class webphoto_lib_lame
 {
     public $_cmd_lame = 'lame';
 
-    public $_cmd_path  = null;
-    public $_msg_array = array();
-    public $_DEBUG     = false;
+    public $_cmd_path = null;
+    public $_msg_array = [];
+    public $_DEBUG = false;
 
     //---------------------------------------------------------
     // constructor
@@ -36,18 +39,26 @@ class webphoto_lib_lame
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_lame
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_lib_lame();
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_cmd_path($val)
     {
         $this->_cmd_path = $val;
@@ -58,32 +69,54 @@ class webphoto_lib_lame
         }
     }
 
+    /**
+     * @param $val
+     */
     public function set_debug($val)
     {
         $this->_DEBUG = (bool)$val;
     }
 
+    /**
+     * @param        $wav
+     * @param        $mp3
+     * @param string $option
+     * @return mixed
+     */
     public function wav_to_mp3($wav, $mp3, $option = '')
     {
         $cmd_option = ' -V2 ' . $option;
+
         return $this->lame($wav, $mp3, $cmd_option);
     }
 
+    /**
+     * @param        $wav
+     * @param        $mp3
+     * @param string $option
+     * @return mixed
+     */
     public function lame($wav, $mp3, $option = '')
     {
         $cmd = $this->_cmd_lame . ' ' . $option . ' ' . $wav . ' ' . $mp3;
         exec("$cmd 2>&1", $ret_array, $ret_code);
         if ($this->_DEBUG) {
-            echo $cmd . "<br />\n";
+            echo $cmd . "<br>\n";
         }
         $this->set_msg($cmd);
         $this->set_msg($ret_array);
+
         return $ret_code;
     }
 
     //---------------------------------------------------------
     // version
     //---------------------------------------------------------
+
+    /**
+     * @param $path
+     * @return array
+     */
     public function version($path)
     {
         // LAME 32bits version 3.97 (http://www.mp3dev.org/)
@@ -103,23 +136,33 @@ class webphoto_lib_lame
             $msg = 'Error: ' . $lame . " can't be executed";
         }
 
-        return array($ret, $msg);
+        return [$ret, $msg];
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function is_win_os()
     {
-        if (strpos(PHP_OS, 'WIN') === 0) {
+        if (0 === mb_strpos(PHP_OS, 'WIN')) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $cmd
+     * @return string
+     */
     public function conv_win_cmd($cmd)
     {
         $str = '"' . $cmd . '.exe"';
+
         return $str;
     }
 
@@ -128,14 +171,20 @@ class webphoto_lib_lame
     //---------------------------------------------------------
     public function clear_msg_array()
     {
-        $this->_msg_array = array();
+        $this->_msg_array = [];
     }
 
+    /**
+     * @return array
+     */
     public function get_msg_array()
     {
         return $this->_msg_array;
     }
 
+    /**
+     * @param $ret_array
+     */
     public function set_msg($ret_array)
     {
         if (is_array($ret_array)) {

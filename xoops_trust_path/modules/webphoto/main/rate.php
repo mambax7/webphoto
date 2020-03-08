@@ -30,10 +30,10 @@ $manage = webphoto_main_rate::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNA
 // exit if execute rate
 $manage->rate();
 
-$xoopsOption['template_main'] = WEBPHOTO_DIRNAME . '_main_rate.html';
+$GLOBALS['xoopsOption']['template_main'] = WEBPHOTO_DIRNAME . '_main_rate.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign($manage->main());
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();

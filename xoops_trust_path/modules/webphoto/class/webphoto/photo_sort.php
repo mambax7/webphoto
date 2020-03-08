@@ -29,12 +29,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_photo_sort
 //=========================================================
+
+/**
+ * Class webphoto_photo_sort
+ */
 class webphoto_photo_sort
 {
     public $_config_class;
     public $_ini_class;
 
-    public $_DIRNAME       = null;
+    public $_DIRNAME = null;
     public $_TRUST_DIRNAME = null;
     public $_MODULE_URL;
     public $_MODULE_DIR;
@@ -56,6 +60,12 @@ class webphoto_photo_sort
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_photo_sort constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         $this->_config_class = webphoto_config::getInstance($dirname);
@@ -71,22 +81,28 @@ class webphoto_photo_sort
 
         $this->_MODE_DEFAULT = $this->_ini_class->get_ini('view_mode_default');
 
-        $this->_SORT_TO_ORDER_ARRAY       = $this->_ini_class->hash_ini('sort_to_order');
+        $this->_SORT_TO_ORDER_ARRAY = $this->_ini_class->hash_ini('sort_to_order');
         $this->_SORT_TO_ORDER_ADMIN_ARRAY = $this->_ini_class->hash_ini('sort_to_order_admin');
-        $this->_MODE_TO_KIND_ARRAY        = $this->_ini_class->hash_ini('mode_to_kind');
-        $this->_MODE_TO_SORT_ARRAY        = $this->_ini_class->hash_ini('mode_to_sort');
-        $this->_KIND_TO_NAME_ARRAY        = $this->_ini_class->hash_ini('kind_to_name');
-        $this->_NAME_DEFAULT              = $this->_ini_class->get_ini('name_default');
+        $this->_MODE_TO_KIND_ARRAY = $this->_ini_class->hash_ini('mode_to_kind');
+        $this->_MODE_TO_SORT_ARRAY = $this->_ini_class->hash_ini('mode_to_sort');
+        $this->_KIND_TO_NAME_ARRAY = $this->_ini_class->hash_ini('kind_to_name');
+        $this->_NAME_DEFAULT = $this->_ini_class->get_ini('name_default');
 
         $this->_PHOTO_KIND_ARRAY = array_keys($this->_KIND_TO_NAME_ARRAY);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_photo_sort
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_photo_sort($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -101,6 +117,11 @@ class webphoto_photo_sort
     //---------------------------------------------------------
     // mode
     //---------------------------------------------------------
+
+    /**
+     * @param $mode_input
+     * @return array
+     */
     public function input_to_mode($mode_input)
     {
         $mode_orig = $mode_input;
@@ -126,20 +147,27 @@ class webphoto_photo_sort
             case 'photo':
                 $mode = $mode_orig;
                 break;
-
             case 'myphoto':
                 $mode = 'user';
                 break;
-
             default:
-                $mode      = $this->_MODE_DEFAULT;
+                $mode = $this->_MODE_DEFAULT;
                 $mode_orig = $this->_MODE_DEFAULT;
                 break;
         }
 
-        return array($mode, $mode_orig);
+        return [$mode, $mode_orig];
     }
 
+    /**
+     * @param $mode
+     * @param $input
+     * @param $second
+     * @param $cat_id
+     * @param $uid
+     * @param $my_uid
+     * @return mixed
+     */
     public function input_to_param($mode, $input, $second, $cat_id, $uid, $my_uid)
     {
         $p = $input;
@@ -148,15 +176,12 @@ class webphoto_photo_sort
             case 'category':
                 $p = $cat_id;
                 break;
-
             case 'user':
                 $p = $uid;
                 break;
-
             case 'myphoto':
                 $p = $my_uid;
                 break;
-
             case 'tag':
             case 'date':
             case 'place':
@@ -168,55 +193,87 @@ class webphoto_photo_sort
         return $p;
     }
 
+    /**
+     * @param $mode
+     * @param $input
+     * @return mixed
+     */
     public function input_to_param_for_rss($mode, $input)
     {
         $second = $input;
         $cat_id = $input;
-        $uid    = $input;
+        $uid = $input;
         $my_uid = $input;
 
         return $this->input_to_param($mode, $input, $second, $cat_id, $uid, $my_uid);
     }
 
+    /**
+     * @param $mode
+     * @param $sort_in
+     * @return null|string
+     */
     public function mode_to_orderby($mode, $sort_in)
     {
         $sort = $this->mode_to_sort($mode);
         if (empty($sort)) {
             $sort = $this->get_photo_sort_name($sort_in, true);
         }
+
         return $this->sort_to_orderby($sort);
     }
 
+    /**
+     * @param $mode
+     * @return mixed
+     */
     public function mode_to_name($mode)
     {
         $kind = $this->mode_to_kind($mode);
+
         return $this->kind_to_name($kind);
     }
 
+    /**
+     * @param $mode
+     */
     public function mode_to_kind($mode)
     {
         if (isset($this->_MODE_TO_KIND_ARRAY[$mode])) {
             return $this->_MODE_TO_KIND_ARRAY[$mode];
         }
+
         return null;
     }
 
+    /**
+     * @param $mode
+     */
     public function mode_to_sort($mode)
     {
         if (isset($this->_MODE_TO_SORT_ARRAY[$mode])) {
             return $this->_MODE_TO_SORT_ARRAY[$mode];
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // photo sort
     //---------------------------------------------------------
+
+    /**
+     * @return mixed
+     */
     public function get_sort_to_order_array()
     {
         return $this->_SORT_TO_ORDER_ARRAY;
     }
 
+    /**
+     * @param $sort
+     * @return null|string
+     */
     public function sort_to_orderby($sort)
     {
         $order = null;
@@ -226,22 +283,36 @@ class webphoto_photo_sort
             $order = $this->_SORT_TO_ORDER_ARRAY[$this->_PHOTO_SORT_DEFAULT];
         }
 
-        if (($order != 'item_id DESC') && ($order != 'rand()')) {
-            $order = $order . ', item_id DESC';
+        if (('item_id DESC' != $order) && ('rand()' != $order)) {
+            $order .= ', item_id DESC';
         }
+
         return $order;
     }
 
+    /**
+     * @param $sort
+     * @return mixed
+     */
     public function sort_to_lang($sort)
     {
         return $this->get_constant('sort_' . $sort);
     }
 
+    /**
+     * @param $sort
+     * @return string
+     */
     public function get_lang_sortby($sort)
     {
         return sprintf($this->get_constant('SORT_S_CURSORTEDBY'), $this->sort_to_lang($sort));
     }
 
+    /**
+     * @param      $name
+     * @param bool $flag
+     * @return bool
+     */
     public function get_photo_sort_name($name, $flag = false)
     {
         if ($name && isset($this->_SORT_TO_ORDER_ARRAY[$name])) {
@@ -249,14 +320,21 @@ class webphoto_photo_sort
         } elseif ($flag && isset($this->_SORT_TO_ORDER_ARRAY[$this->_PHOTO_SORT_DEFAULT])) {
             return $this->_PHOTO_SORT_DEFAULT;
         }
+
         return false;
     }
 
+    /**
+     * @param $val
+     */
     public function set_photo_sort_default($val)
     {
         $this->_PHOTO_SORT_DEFAULT = $val;
     }
 
+    /**
+     * @return string
+     */
     public function get_random_orderby()
     {
         return $this->_ORDERBY_RANDOM;
@@ -265,25 +343,40 @@ class webphoto_photo_sort
     //---------------------------------------------------------
     // kind
     //---------------------------------------------------------
+
+    /**
+     * @param $kind
+     * @return mixed
+     */
     public function kind_to_name($kind)
     {
         if (isset($this->_KIND_TO_NAME_ARRAY[$kind])) {
             return $this->_KIND_TO_NAME_ARRAY[$kind];
         }
+
         return $this->_NAME_DEFAULT;
     }
 
+    /**
+     * @param $name
+     */
     public function get_photo_kind_name($name)
     {
         if ($name && in_array($name, $this->_PHOTO_KIND_ARRAY)) {
             return $name;
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // join sql
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function convert_orderby_join($str)
     {
         return str_replace('item_', 'i.item_', $str);
@@ -292,26 +385,41 @@ class webphoto_photo_sort
     //---------------------------------------------------------
     // d3 language
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function _init_d3_language($dirname, $trust_dirname)
     {
         $this->_language_class = webphoto_d3_language::getInstance();
         $this->_language_class->init($dirname, $trust_dirname);
     }
 
+    /**
+     * @return mixed
+     */
     public function get_lang_array()
     {
         return $this->_language_class->get_lang_array();
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_constant($name)
     {
         return $this->_language_class->get_constant($name);
     }
 
+    /**
+     * @param $trust_dirname
+     */
     public function set_trust_dirname($trust_dirname)
     {
         $this->_TRUST_DIRNAME = $trust_dirname;
-        $this->_TRUST_DIR     = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
     }
 
     // --- class end ---

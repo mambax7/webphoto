@@ -30,13 +30,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_mime_handler
 //=========================================================
+
+/**
+ * Class webphoto_mime_handler
+ */
 class webphoto_mime_handler extends webphoto_handler_base_ini
 {
-    public $_cached_ext_array = array();
+    public $_cached_ext_array = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_mime_handler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -45,43 +55,53 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
         $this->set_id_name('mime_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_mime_handler
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_mime_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
-
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'mime_id'          => 0,
+        $arr = [
+            'mime_id' => 0,
             'mime_time_create' => $time_create,
             'mime_time_update' => $time_update,
-            'mime_name'        => '',
-            'mime_medium'      => '',
-            'mime_ext'         => '',
-            'mime_type'        => '',
-            'mime_perms'       => '',
-            'mime_ffmpeg'      => '',
-            'mime_kind'        => 0,
-            'mime_option'      => '',
-        );
+            'mime_name' => '',
+            'mime_medium' => '',
+            'mime_ext' => '',
+            'mime_type' => '',
+            'mime_perms' => '',
+            'mime_ffmpeg' => '',
+            'mime_kind' => 0,
+            'mime_option' => '',
+        ];
 
         return $arr;
     }
@@ -89,6 +109,11 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -131,6 +156,11 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -153,6 +183,10 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
         return $this->query($sql);
     }
 
+    /**
+     * @param $mime_admin
+     * @return mixed
+     */
     public function update_admin_all($mime_admin)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -161,6 +195,10 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
         return $this->query($sql);
     }
 
+    /**
+     * @param $mime_user
+     * @return mixed
+     */
     public function update_user_all($mime_user)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -172,13 +210,23 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get row
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function get_row_by_ext($ext)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE mime_ext=' . $this->quote($ext);
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $ext
+     * @return bool|mixed
+     */
     public function get_cached_row_by_ext($ext)
     {
         if (isset($this->_cached_ext_array[$ext])) {
@@ -191,79 +239,111 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
         }
 
         $this->_cached_ext_array[$ext] = $row;
+
         return $row;
     }
 
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_all_orderby_ext($limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' ORDER BY mime_ext ASC, mime_id ASC';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
+    /**
+     * @param     $groups
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_mygroups($groups, $limit = 0, $offset = 0)
     {
-        $arr = array();
+        $arr = [];
         foreach ($groups as $group) {
-            $like  = $this->perm_str_with_like_separetor((int)$group);
+            $like = $this->perm_str_with_like_separetor((int)$group);
             $arr[] = 'mime_perms LIKE ' . $this->quote($like);
         }
         $where = implode(' OR ', $arr);
+
         return $this->get_rows_by_where($where, $limit, $offset);
     }
 
+    /**
+     * @param     $exts
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_exts($exts, $limit = 0, $offset = 0)
     {
-        $arr = array();
+        $arr = [];
         foreach ($exts as $ext) {
             $arr[] = 'mime_ext=' . $this->quote($ext);
         }
         $where = implode(' OR ', $arr);
+
         return $this->get_rows_by_where($where, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // get option
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_kind_options()
     {
-        $arr = array(
-            _C_WEBPHOTO_MIME_KIND_GENERAL    => _WEBPHOTO_MIME_KIND_GENERAL,
-            _C_WEBPHOTO_MIME_KIND_IMAGE      => _WEBPHOTO_MIME_KIND_IMAGE,
+        $arr = [
+            _C_WEBPHOTO_MIME_KIND_GENERAL => _WEBPHOTO_MIME_KIND_GENERAL,
+            _C_WEBPHOTO_MIME_KIND_IMAGE => _WEBPHOTO_MIME_KIND_IMAGE,
 
             // v2.30
             _C_WEBPHOTO_MIME_KIND_IMAGE_JPEG => _WEBPHOTO_MIME_KIND_IMAGE_JPEG,
 
             _C_WEBPHOTO_MIME_KIND_IMAGE_CONVERT => _WEBPHOTO_MIME_KIND_IMAGE_CONVERT,
-            _C_WEBPHOTO_MIME_KIND_VIDEO         => _WEBPHOTO_MIME_KIND_VIDEO,
+            _C_WEBPHOTO_MIME_KIND_VIDEO => _WEBPHOTO_MIME_KIND_VIDEO,
 
             // v2.30
-            _C_WEBPHOTO_MIME_KIND_VIDEO_FLV     => _WEBPHOTO_MIME_KIND_VIDEO_FLV,
+            _C_WEBPHOTO_MIME_KIND_VIDEO_FLV => _WEBPHOTO_MIME_KIND_VIDEO_FLV,
 
             _C_WEBPHOTO_MIME_KIND_VIDEO_FFMPEG => _WEBPHOTO_MIME_KIND_VIDEO_FFMPEG,
-            _C_WEBPHOTO_MIME_KIND_AUDIO        => _WEBPHOTO_MIME_KIND_AUDIO,
-            _C_WEBPHOTO_MIME_KIND_AUDIO_MID    => _WEBPHOTO_MIME_KIND_AUDIO_MID,
-            _C_WEBPHOTO_MIME_KIND_AUDIO_WAV    => _WEBPHOTO_MIME_KIND_AUDIO_WAV,
+            _C_WEBPHOTO_MIME_KIND_AUDIO => _WEBPHOTO_MIME_KIND_AUDIO,
+            _C_WEBPHOTO_MIME_KIND_AUDIO_MID => _WEBPHOTO_MIME_KIND_AUDIO_MID,
+            _C_WEBPHOTO_MIME_KIND_AUDIO_WAV => _WEBPHOTO_MIME_KIND_AUDIO_WAV,
 
             // v2.30
-            _C_WEBPHOTO_MIME_KIND_AUDIO_MP3    => _WEBPHOTO_MIME_KIND_AUDIO_MP3,
+            _C_WEBPHOTO_MIME_KIND_AUDIO_MP3 => _WEBPHOTO_MIME_KIND_AUDIO_MP3,
             _C_WEBPHOTO_MIME_KIND_AUDIO_FFMPEG => _WEBPHOTO_MIME_KIND_AUDIO_FFMPEG,
 
-            _C_WEBPHOTO_MIME_KIND_OFFICE     => _WEBPHOTO_MIME_KIND_OFFICE,
+            _C_WEBPHOTO_MIME_KIND_OFFICE => _WEBPHOTO_MIME_KIND_OFFICE,
             _C_WEBPHOTO_MIME_KIND_OFFICE_DOC => _WEBPHOTO_MIME_KIND_OFFICE_DOC,
             _C_WEBPHOTO_MIME_KIND_OFFICE_XLS => _WEBPHOTO_MIME_KIND_OFFICE_XLS,
             _C_WEBPHOTO_MIME_KIND_OFFICE_PPT => _WEBPHOTO_MIME_KIND_OFFICE_PPT,
             _C_WEBPHOTO_MIME_KIND_OFFICE_PDF => _WEBPHOTO_MIME_KIND_OFFICE_PDF,
-        );
+        ];
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // build
     //---------------------------------------------------------
+
+    /**
+     * @param $arr
+     * @return null|string
+     */
     public function build_perms_array_to_str($arr)
     {
         if (!is_array($arr) || !count($arr)) {
@@ -273,9 +353,14 @@ class webphoto_mime_handler extends webphoto_handler_base_ini
         // array -> &1&2&3&
         $str = $this->parm_array_to_str($arr);
         $ret = $this->perm_str_with_separetor($str);
+
         return $ret;
     }
 
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_perms_row_to_array($row)
     {
         return $this->perm_str_to_array($row['mime_perms']);

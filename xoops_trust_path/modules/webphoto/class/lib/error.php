@@ -22,10 +22,14 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_error
 //=========================================================
+
+/**
+ * Class webphoto_lib_error
+ */
 class webphoto_lib_error
 {
     public $_error_code = 0;
-    public $_errors     = array();
+    public $_errors = [];
 
     // color: red;
     public $_SPAN_STYLE_ERROR = 'color: #ff0000;';
@@ -41,12 +45,16 @@ class webphoto_lib_error
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_error
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_lib_error();
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -58,11 +66,17 @@ class webphoto_lib_error
         $this->_error_code = 0;
     }
 
+    /**
+     * @param $code
+     */
     public function set_error_code($code)
     {
         $this->_error_code = (int)$code;
     }
 
+    /**
+     * @return int
+     */
     public function get_error_code()
     {
         return $this->_error_code;
@@ -71,32 +85,49 @@ class webphoto_lib_error
     //---------------------------------------------------------
     // error
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function return_code()
     {
         if (count($this->_errors)) {
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function has_error()
     {
         if (count($this->_errors)) {
             return true;
         }
+
         return false;
     }
 
     public function clear_errors()
     {
-        $this->_errors = array();
+        $this->_errors = [];
     }
 
+    /**
+     * @return array
+     */
     public function get_errors()
     {
         return $this->_errors;
     }
 
+    /**
+     * @param bool $flag_sanitize
+     * @param bool $flag_highlight
+     * @return string
+     */
     public function get_format_error($flag_sanitize = true, $flag_highlight = true)
     {
         $val = '';
@@ -104,15 +135,19 @@ class webphoto_lib_error
             if ($flag_sanitize) {
                 $msg = $this->sanitize($msg);
             }
-            $val .= $msg . "<br />\n";
+            $val .= $msg . "<br>\n";
         }
 
         if ($flag_highlight) {
             $val = $this->highlight($val);
         }
+
         return $val;
     }
 
+    /**
+     * @param $msg
+     */
     public function set_error($msg)
     {
         // array type
@@ -130,6 +165,9 @@ class webphoto_lib_error
         }
     }
 
+    /**
+     * @param $msg
+     */
     public function set_error_in_head($msg)
     {
         array_unshift($this->_errors, $msg);
@@ -138,37 +176,63 @@ class webphoto_lib_error
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
+    /**
+     * @param $str
+     * @param $length
+     * @return string
+     */
     public function shorten_strings($str, $length)
     {
-        if (strlen($str) > $length) {
+        if (mb_strlen($str) > $length) {
             $str = webphoto_substr($str, 0, $length) . ' ...';
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @param $length
+     * @return string
+     */
     public function shorten_strings_with_nl2br($str, $length)
     {
         return nl2br($this->sanitize($this->shorten_strings($str, $length)));
     }
 
+    /**
+     * @param $msg
+     * @return string
+     */
     public function highlight($msg)
     {
         $str = '<span style="' . $this->_SPAN_STYLE_ERROR . '">';
         $str .= $msg;
         $str .= "</span>\n";
+
         return $str;
     }
 
+    /**
+     * @param $msg
+     * @return string
+     */
     public function error_in_box($msg)
     {
         $str = '<div style="' . $this->_DIV_STYLE_ERROR . '">';
         $str .= $msg;
         $str .= "</div>\n";
+
         return $str;
     }
 

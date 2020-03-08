@@ -19,29 +19,48 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_mail_register_form
 //=========================================================
+
+/**
+ * Class webphoto_mail_register_form
+ */
 class webphoto_mail_register_form extends webphoto_form_this
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_mail_register_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_mail_register_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_mail_register_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // user form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function print_user_form($row)
     {
         $this->set_row($row);
@@ -61,16 +80,25 @@ class webphoto_mail_register_form extends webphoto_form_this
         echo $this->build_form_end();
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_ele_user_submitter()
     {
-        $uid  = $this->get_row_by_key('user_uid');
+        $uid = $this->get_row_by_key('user_uid');
         $text = $this->build_form_user_select('user_uid', $uid, false);
+
         return $text;
     }
 
     //---------------------------------------------------------
     // submit form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $param
+     */
     public function print_submit_form($row, $param)
     {
         $mode = $param['mode'];
@@ -79,7 +107,6 @@ class webphoto_mail_register_form extends webphoto_form_this
             case 'edit':
                 $submit = _EDIT;
                 break;
-
             case 'add':
             default:
                 $submit = $this->get_constant('BUTTON_REGISTER');
@@ -108,17 +135,24 @@ class webphoto_mail_register_form extends webphoto_form_this
         echo $this->build_form_end();
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_ele_category()
     {
-        return $this->_cat_handler->build_selbox_with_perm_post($this->get_row_by_key('user_cat_id'), 'user_cat_id');
+        return $this->_catHandler->build_selbox_with_perm_post($this->get_row_by_key('user_cat_id'), 'user_cat_id');
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_submitter()
     {
-        $uid  = $this->get_row_by_key('user_uid');
+        $uid = $this->get_row_by_key('user_uid');
         $text = $this->_xoops_class->get_user_uname_from_id($uid);
         $text .= ' ';
         $text .= $this->build_input_hidden('user_uid', $uid);
+
         return $text;
     }
 

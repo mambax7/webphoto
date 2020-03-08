@@ -21,21 +21,31 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_swf_create
 //=========================================================
+
+/**
+ * Class webphoto_edit_swf_create
+ */
 class webphoto_edit_swf_create extends webphoto_edit_base_create
 {
     public $_ext_class;
 
-    public $_param_ext    = 'swf';
-    public $_param_dir    = 'swfs';
-    public $_param_mime   = 'application/x-shockwave-flash';
+    public $_param_ext = 'swf';
+    public $_param_dir = 'swfs';
+    public $_param_mime = 'application/x-shockwave-flash';
     public $_param_medium = '';
-    public $_param_kind   = _C_WEBPHOTO_FILE_KIND_SWF;
-    public $_msg_created  = 'create swf';
-    public $_msg_failed   = 'fail to create swf';
+    public $_param_kind = _C_WEBPHOTO_FILE_KIND_SWF;
+    public $_msg_created = 'create swf';
+    public $_msg_failed = 'fail to create swf';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_swf_create constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -43,25 +53,36 @@ class webphoto_edit_swf_create extends webphoto_edit_base_create
         $this->_ext_class = webphoto_ext::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_swf_create|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_swf_create($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create swf
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_param($param)
     {
         $this->clear_msg_array();
 
-        $item_id  = $param['item_id'];
+        $item_id = $param['item_id'];
         $src_file = $param['src_file'];
-        $src_ext  = $param['src_ext'];
+        $src_ext = $param['src_ext'];
         $src_kind = $param['src_kind'];
 
         // return input file is swf
@@ -77,16 +98,22 @@ class webphoto_edit_swf_create extends webphoto_edit_base_create
         return $swf_param;
     }
 
+    /**
+     * @param $item_id
+     * @param $src_file
+     * @param $src_ext
+     * @return array|null
+     */
     public function create_swf($item_id, $src_file, $src_ext)
     {
         $name_param = $this->build_name_param($item_id);
-        $file       = $name_param['file'];
+        $file = $name_param['file'];
 
-        $param = array(
+        $param = [
             'src_file' => $src_file,
-            'src_ext'  => $src_ext,
+            'src_ext' => $src_ext,
             'swf_file' => $file,
-        );
+        ];
 
         $ret = $this->_ext_class->execute('swf', $param);
 

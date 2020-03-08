@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_imode
 //=========================================================
+
+/**
+ * Class webphoto_imode
+ */
 class webphoto_imode extends webphoto_show_photo
 {
     public $_agent_class;
@@ -36,14 +40,14 @@ class webphoto_imode extends webphoto_show_photo
     public $_MOBILE_TEMPLATE = null;
 
     public $_MOBILE_CHARSET_INTERNAL = _CHARSET;
-    public $_MOBILE_CHARSET_OUTPUT   = _CHARSET;
+    public $_MOBILE_CHARSET_OUTPUT = _CHARSET;
 
-    public $_MOBILE_LATEST_LIMIT   = 1;
-    public $_MOBILE_RANDOM_LIMIT   = 1;
+    public $_MOBILE_LATEST_LIMIT = 1;
+    public $_MOBILE_RANDOM_LIMIT = 1;
     public $_MOBILE_RANDOM_ORDERBY = 'rand()';
-    public $_MOBILE_LIST_LIMIT     = 10;
-    public $_MOBILE_LIST_ORDERBY   = 'item_time_update DESC, item_id DESC';
-    public $_MOBILE_NAVI_WINDOWS   = 4;
+    public $_MOBILE_LIST_LIMIT = 10;
+    public $_MOBILE_LIST_ORDERBY = 'item_time_update DESC, item_id DESC';
+    public $_MOBILE_NAVI_WINDOWS = 4;
 
     // preload
     public $_ARRAY_MOBILE_TEXT = null;
@@ -51,34 +55,46 @@ class webphoto_imode extends webphoto_show_photo
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_imode constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_agent_class        = webphoto_lib_user_agent::getInstance();
-        $this->_pagenavi_class     = webphoto_lib_pagenavi::getInstance();
-        $this->_multibyte_class    = webphoto_lib_multibyte::getInstance();
+        $this->_agent_class = webphoto_lib_user_agent::getInstance();
+        $this->_pagenavi_class = webphoto_lib_pagenavi::getInstance();
+        $this->_multibyte_class = webphoto_lib_multibyte::getInstance();
         $this->_photo_public_class = webphoto_photo_public::getInstance($dirname, $trust_dirname);
-        $this->_item_public_class  = webphoto_item_public::getInstance($dirname, $trust_dirname);
+        $this->_item_public_class = webphoto_item_public::getInstance($dirname, $trust_dirname);
 
         $this->set_charset_output();
         $this->set_mobile_carrier_array();
 
         $this->_is_set_mail = $this->_config_class->is_set_mail();
-        $this->_has_mail    = $this->_perm_class->has_mail();
+        $this->_has_mail = $this->_perm_class->has_mail();
 
-        $this->_MOBILE_TEMPLATE = 'db:' . $dirname . '_main_i.html';
+        $this->_MOBILE_TEMPLATE = 'db:' . $dirname . '_main_i.tpl';
 
         $this->_xoops_sitename = $this->_xoops_class->get_config_by_name('sitename');
-        $this->_TITLE_S        = $this->sanitize($this->_MODULE_NAME . ' - ' . $this->_xoops_sitename);
+        $this->_TITLE_S = $this->sanitize($this->_MODULE_NAME . ' - ' . $this->_xoops_sitename);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_imode|\webphoto_lib_error|\webphoto_show_photo
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_imode($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -104,11 +120,14 @@ class webphoto_imode extends webphoto_show_photo
         }
     }
 
+    /**
+     * @return array
+     */
     public function get_encode_type_array()
     {
         $encode_type_array = $this->_item_handler->get_encode_type_array();
 
-        $arr = array('uname');
+        $arr = ['uname'];
 
         foreach ($encode_type_array as $name) {
             $arr[] = str_replace('item_', '', $name);
@@ -135,6 +154,9 @@ class webphoto_imode extends webphoto_show_photo
         header('Content-Type:text/html; charset=' . $this->_MOBILE_CHARSET_OUTPUT);
     }
 
+    /**
+     * @return bool
+     */
     public function check_perm()
     {
         if (!$this->_is_set_mail) {
@@ -146,27 +168,41 @@ class webphoto_imode extends webphoto_show_photo
         if ($this->_agent_class->parse_mobile_carrier()) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function build_goto()
     {
-        $url  = $this->_MODULE_URL . '/i.php?op=latest';
+        $url = $this->_MODULE_URL . '/i.php?op=latest';
         $text = "<br><br>\n";
         $text .= '<a href="' . $url . '">';
         $text .= $this->sanitize($this->_MODULE_NAME);
         $text .= "</a><br>\n";
+
         return $text;
     }
 
     //---------------------------------------------------------
     // multibyte
     //---------------------------------------------------------
+
+    /**
+     * @param $encoding
+     * @return bool|string
+     */
     public function http_output($encoding)
     {
         return $this->_multibyte_class->m_mb_http_output($encoding);
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function conv($str)
     {
         return $this->_multibyte_class->convert_encoding($str, $this->_MOBILE_CHARSET_OUTPUT, $this->_MOBILE_CHARSET_INTERNAL);

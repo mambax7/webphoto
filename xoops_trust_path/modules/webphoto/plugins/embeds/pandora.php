@@ -18,17 +18,20 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // http://www.pandora.tv/my.kichel/33571093
 //
 // <object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,115,0' width='448' height='385' id='movie' align='middle'>
-// <param name='quality' value='high' />
+// <param name='quality' value='high' >
 // <param name='movie' value='http://flvr.pandora.tv/flv2pan/flvmovie.dll/userid=kichel&prgid=33571093&lang=jp'></param>
 // <param name='wmode' value='window'></param>
-// <param name='allowFullScreen' value='true' />
-// <param name='allowScriptAccess' value='always' />
+// <param name='allowFullScreen' value='true' >
+// <param name='allowScriptAccess' value='always' >
 // <embed src='http://flvr.pandora.tv/flv2pan/flvmovie.dll/userid=kichel&prgid=33571093&lang=jp' type='application/x-shockwave-flash' wmode='window'  allowScriptAccess='always' allowFullScreen='true' pluginspage='http://www.macromedia.com/go/getflashplayer' width='448' height='385'></embed>
 // </object>
 //=========================================================
+
+/**
+ * Class webphoto_embed_pandora
+ */
 class webphoto_embed_pandora extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('pandora');
@@ -36,18 +39,24 @@ class webphoto_embed_pandora extends webphoto_embed_base
         $this->set_sample('my.kichel/33571093');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $src_array = explode('/', $src);
-        $src1      = str_replace('my.', '', $src_array[0]);
-        $src2      = $src_array[1];
-        $param     = 'userid=' . $src1 . '&prgid=' . $src2;
-        $movie     = 'http://flvr.pandora.tv/flv2pan/flvmovie.dll/' . $param;
+        $src1 = str_replace('my.', '', $src_array[0]);
+        $src2 = $src_array[1];
+        $param = 'userid=' . $src1 . '&prgid=' . $src2;
+        $movie = 'http://flvr.pandora.tv/flv2pan/flvmovie.dll/' . $param;
 
-        $wmode   = 'window';
+        $wmode = 'window';
         $quality = 'high';
-        $access  = 'true';
-        $screen  = 'always';
+        $access = 'true';
+        $screen = 'always';
 
         $object_extra = 'id="movie" ';
         $object_extra .= 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
@@ -66,32 +75,50 @@ class webphoto_embed_pandora extends webphoto_embed_base
         $str .= $this->build_param('allowScriptAccess', $screen);
         $str .= $this->build_embed_flash($movie, $width, $height, $embed_extra);
         $str .= $this->build_object_end();
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return int
+     */
     public function width()
     {
         return 448;
     }
 
+    /**
+     * @return int
+     */
     public function height()
     {
         return 385;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();
     }
 
+    /**
+     * @return null|string
+     */
     public function lang_desc()
     {
         $str = 'Enter the video id from the shortcut url.';
+
         return $str;
     }
 

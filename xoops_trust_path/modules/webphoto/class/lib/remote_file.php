@@ -20,6 +20,10 @@ define('_C_WEBPHOTO_REMOTE_FILE_ERR_NO_RESULT', -2);
 // class webphoto_lib_remote_file
 // use class snoopy
 //=========================================================
+
+/**
+ * Class webphoto_lib_remote_file
+ */
 class webphoto_lib_remote_file extends webphoto_lib_error
 {
     // class instance
@@ -36,18 +40,27 @@ class webphoto_lib_remote_file extends webphoto_lib_error
         $this->_snoopy = new Snoopy();
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_lib_remote_file
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_remote_file();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // read_file
     //---------------------------------------------------------
+
+    /**
+     * @param $url
+     * @return bool|string
+     */
     public function read_file($url)
     {
         return $this->snoppy_fetch($url);
@@ -56,6 +69,13 @@ class webphoto_lib_remote_file extends webphoto_lib_error
     //---------------------------------------------------------
     // use class spoopy
     //---------------------------------------------------------
+
+    /**
+     * @param        $host
+     * @param string $port
+     * @param string $user
+     * @param string $pass
+     */
     public function set_snoopy_proxy($host, $port = '8080', $user = '', $pass = '')
     {
         $this->_snoopy->proxy_host = $host;
@@ -69,6 +89,9 @@ class webphoto_lib_remote_file extends webphoto_lib_error
         }
     }
 
+    /**
+     * @param $time
+     */
     public function set_snoopy_timeout_connect($time)
     {
         if ((int)$time > 0) {
@@ -76,6 +99,9 @@ class webphoto_lib_remote_file extends webphoto_lib_error
         }
     }
 
+    /**
+     * @param $time
+     */
     public function set_snoopy_timeout_read($time)
     {
         if ((int)$time > 0) {
@@ -83,6 +109,10 @@ class webphoto_lib_remote_file extends webphoto_lib_error
         }
     }
 
+    /**
+     * @param $url
+     * @return bool|string
+     */
     public function snoppy_fetch($url)
     {
         $this->clear_error_code();
@@ -97,22 +127,22 @@ class webphoto_lib_remote_file extends webphoto_lib_error
 
             if ($res) {
                 return $res;
-            } else {
-                $this->set_error_code(_C_WEBPHOTO_REMOTE_FILE_ERR_NO_RESULT);
-                $this->set_error('remote_file: remote data is empty:');
-                if ($this->_snoopy->error) {
-                    $this->set_error('snoopy: ' . $this->_snoopy->error);
-                }
-                return false;
             }
-        } else {
-            $this->set_error_code(_C_WEBPHOTO_REMOTE_FILE_ERR_NOT_FETCH);
-            $this->set_error('remote_file: cannot fetch remote data:');
+            $this->set_error_code(_C_WEBPHOTO_REMOTE_FILE_ERR_NO_RESULT);
+            $this->set_error('remote_file: remote data is empty:');
             if ($this->_snoopy->error) {
                 $this->set_error('snoopy: ' . $this->_snoopy->error);
             }
+
             return false;
         }
+        $this->set_error_code(_C_WEBPHOTO_REMOTE_FILE_ERR_NOT_FETCH);
+        $this->set_error('remote_file: cannot fetch remote data:');
+        if ($this->_snoopy->error) {
+            $this->set_error('snoopy: ' . $this->_snoopy->error);
+        }
+
+        return false;
     }
 
     //----- class end -----

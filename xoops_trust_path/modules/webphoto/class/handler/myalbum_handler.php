@@ -1,5 +1,5 @@
 <?php
-// $Id: myalbum_handler.php,v 1.2 2009/03/15 12:38:00 ohwada Exp $
+// $Id: myalbumHandler.php,v 1.2 2009/03/15 12:38:00 ohwada Exp $
 
 //=========================================================
 // webphoto module
@@ -17,9 +17,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 }
 
 //=========================================================
-// class webphoto_myalbum_handler
+// class webphoto_myalbumHandler
 //=========================================================
-class webphoto_myalbum_handler extends webphoto_lib_handler
+
+/**
+ * Class webphoto_myalbumHandler
+ */
+class webphoto_myalbumHandler extends webphoto_lib_handler
 {
     public $_cat_table;
     public $_photos_table;
@@ -36,18 +40,27 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
         parent::__construct();
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_myalbumHandler
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_myalbum_handler();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // init
     //---------------------------------------------------------
+
+    /**
+     * @param $myalbum_dirname
+     * @return bool|int
+     */
     public function init($myalbum_dirname)
     {
         $module = $this->_get_module_by_dirname($myalbum_dirname);
@@ -58,16 +71,16 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
         // BUG: wrong table name
         $number = '';
         preg_match('/^\D+(\d*)$/', $myalbum_dirname, $matches);
-        if (isset($matches[1]) && ($matches[1] !== '')) {
+        if (isset($matches[1]) && ('' !== $matches[1])) {
             $number = (int)$matches[1];
         }
 
         $table = 'myalbum' . $number;
 
-        $this->_MYALBUM_MID    = $module->getVar('mid');
-        $this->_cat_table      = $this->db_prefix($table . '_cat');
-        $this->_photos_table   = $this->db_prefix($table . '_photos');
-        $this->_text_table     = $this->db_prefix($table . '_text');
+        $this->_MYALBUM_MID = $module->getVar('mid');
+        $this->_cat_table = $this->db_prefix($table . '_cat');
+        $this->_photos_table = $this->db_prefix($table . '_photos');
+        $this->_text_table = $this->db_prefix($table . '_text');
         $this->_votedata_table = $this->db_prefix($table . '_votedata');
 
         return $this->_MYALBUM_MID;
@@ -76,87 +89,146 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // photos thumbs dir
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_photos_thumbs_dir()
     {
-        $config     = $this->_get_xoops_config($this->_MYALBUM_MID);
+        $config = $this->_get_xoops_config($this->_MYALBUM_MID);
         $photos_dir = XOOPS_ROOT_PATH . $this->_add_slash_to_head($config['myalbum_photospath']);
         $thumbs_dir = XOOPS_ROOT_PATH . $this->_add_slash_to_head($config['myalbum_thumbspath']);
-        return array($photos_dir, $thumbs_dir);
+
+        return [$photos_dir, $thumbs_dir];
     }
 
     //---------------------------------------------------------
     // cat table
     //---------------------------------------------------------
+
+    /**
+     * @param $cid
+     * @return bool
+     */
     public function get_cat_row_by_id($cid)
     {
         $sql = 'SELECT * FROM ' . $this->_cat_table;
         $sql .= ' WHERE cid=' . (int)$cid;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_cat_rows($limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_cat_table;
         $sql .= ' ORDER BY cid';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // photos table
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function get_photos_count_all()
     {
         $sql = 'SELECT count(*) FROM ' . $this->_photos_table;
+
         return $this->get_count_by_sql($sql);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_photos_rows($limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_photos_table;
         $sql .= ' ORDER BY lid';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
+    /**
+     * @param     $cid
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_photos_rows_by_cid($cid, $limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_photos_table;
         $sql .= ' WHERE cid=' . (int)$cid;
         $sql .= ' ORDER BY lid';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // text table
     //---------------------------------------------------------
+
+    /**
+     * @param $lid
+     * @return bool
+     */
     public function get_text_row_by_id($lid)
     {
         $sql = 'SELECT * FROM ' . $this->_text_table . ' WHERE lid=' . $lid;
+
         return $this->get_row_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // votedata table
     //---------------------------------------------------------
+
+    /**
+     * @param $lid
+     * @return bool
+     */
     public function get_votedata_row_by_lid($lid)
     {
         $sql = 'SELECT * FROM ' . $this->_votedata_table;
         $sql .= ' WHERE lid=' . (int)$lid;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_votedata_rows($limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_votedata_table;
         $sql .= ' ORDER BY ratingid';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // selbox
     //---------------------------------------------------------
+
+    /**
+     * @param        $number
+     * @param string $sel_name
+     * @return string
+     */
     public function build_cat_selbox($number, $sel_name = 'cid')
     {
-        $myalbum_cat_table    = $this->db_prefix('myalbum' . $number . '_cat');
+        $myalbum_cat_table = $this->db_prefix('myalbum' . $number . '_cat');
         $myalbum_photos_table = $this->db_prefix('myalbum' . $number . '_photos');
 
         $options = myalbum_get_cat_options('title', 0, '--', '----', $myalbum_cat_table, $myalbum_photos_table);
@@ -171,6 +243,10 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // myalbum module
     //---------------------------------------------------------
+
+    /**
+     * @return array|null
+     */
     public function get_myalbum_module_array()
     {
         $arr1 = $this->_get_modules_myalbum_dirname_array();
@@ -179,8 +255,7 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
 
         if (is_array($arr1) && count($arr1)
             && is_array($arr2)
-            && count($arr2)
-        ) {
+            && count($arr2)) {
             $arr3 = array_unique(array_merge($arr1, $arr2));
         } elseif (is_array($arr1) && count($arr1)) {
             $arr3 = $arr1;
@@ -192,7 +267,7 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
             return null;
         }
 
-        $ret = array();
+        $ret = [];
 
         foreach ($arr3 as $dirname) {
             $module = $this->_get_module_by_dirname($dirname);
@@ -209,13 +284,13 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
                 continue;
             }
 
-            $number = $regs[2] === '' ? '' : (int)$regs[2];
+            $number = '' === $regs[2] ? '' : (int)$regs[2];
 
-            $ret[] = array(
+            $ret[] = [
                 'dirname' => $dirname,
-                'number'  => $number,
-                'name'    => $module->name(),
-            );
+                'number' => $number,
+                'name' => $module->name(),
+            ];
         }
 
         return $ret;
@@ -224,6 +299,12 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // modules  table
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|null
+     */
     public function _get_modules_myalbum_dirname_array($limit = 0, $offset = 0)
     {
         $rows = $this->_get_modules_myalbum_rows($limit, $offset);
@@ -231,24 +312,37 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($rows as $row) {
             $arr[] = $row['dirname'];
         }
+
         return $arr;
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function _get_modules_myalbum_rows($limit = 0, $offset = 0)
     {
         // From myalbum*
         $sql = 'SELECT * FROM ' . $this->db_prefix('modules');
         $sql .= ' WHERE dirname LIKE ' . $this->quote('myalbum%');
+
         return $this->get_rows_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // newblocks  table
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|null
+     */
     public function _get_newblocks_myalbum_dirname_array($limit = 0, $offset = 0)
     {
         $rows = $this->_get_newblocks_myalbum_rows($limit, $offset);
@@ -256,62 +350,93 @@ class webphoto_myalbum_handler extends webphoto_lib_handler
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($rows as $row) {
             $arr[] = $row['dirname'];
         }
+
         return $arr;
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function _get_newblocks_myalbum_rows($limit = 0, $offset = 0)
     {
         // get all instances of TinyD using newblocks table
         $sql = 'SELECT distinct dirname FROM ' . $this->db_prefix('newblocks');
         $sql .= ' WHERE func_file=' . $this->quote('myalbum_rphoto.php');
+
         return $this->get_rows_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // module handler
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public function _get_module_by_dirname($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        return $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+
+        return $moduleHandler->getByDirname($dirname);
     }
 
     //---------------------------------------------------------
     // config handler
     //---------------------------------------------------------
+
+    /**
+     * @param $mid
+     * @return mixed
+     */
     public function _get_xoops_config($mid)
     {
-        $config_handler = xoops_getHandler('config');
-        return $config_handler->getConfigsByCat(0, $mid);
+        $configHandler = xoops_getHandler('config');
+
+        return $configHandler->getConfigsByCat(0, $mid);
     }
 
     //---------------------------------------------------------
     // utlity class
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function _add_slash_to_head($str)
     {
         // ord : the ASCII value of the first character of string
         // 0x2f slash
 
-        if (ord($str) != 0x2f) {
+        if (0x2f != ord($str)) {
             $str = '/' . $str;
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // xoops param
     //---------------------------------------------------------
+
+    /**
+     * @param $mid
+     * @return bool
+     */
     public function _is_xoops_user_admin($mid)
     {
         global $xoopsUser;
         if (is_object($xoopsUser)) {
             return $xoopsUser->isAdmin($mid);
         }
+
         return false;
     }
 

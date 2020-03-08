@@ -72,11 +72,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_form
 //=========================================================
+
+/**
+ * Class webphoto_edit_form
+ */
 class webphoto_edit_form extends webphoto_lib_form
 {
-    public $_cat_handler;
+    public $_catHandler;
     public $_item_handler;
-    public $_file_handler;
+    public $_fileHandler;
     public $_config_class;
     public $_preload_class;
     public $_perm_class;
@@ -98,12 +102,12 @@ class webphoto_edit_form extends webphoto_lib_form
     public $_has_deletable;
 
     // post
-    public $_post_form_editor   = 0;
-    public $_post_form_embed    = 0;
+    public $_post_form_editor = 0;
+    public $_post_form_embed = 0;
     public $_post_form_playlist = 0;
 
-    public $_is_japanese    = false;
-    public $_checkbox_array = array();
+    public $_is_japanese = false;
+    public $_checkbox_array = [];
 
     public $_FILED_COUNTER_1 = 1;
     public $_FILED_COUNTER_2 = 2;
@@ -136,99 +140,111 @@ class webphoto_edit_form extends webphoto_lib_form
     public $_ROOT_EXTS_URL;
     public $_LIBS_URL;
 
-    public $_PHOTO_FIELD_NAME  = _C_WEBPHOTO_UPLOAD_FIELD_PHOTO;
-    public $_THUMB_FIELD_NAME  = _C_WEBPHOTO_UPLOAD_FIELD_THUMB;
+    public $_PHOTO_FIELD_NAME = _C_WEBPHOTO_UPLOAD_FIELD_PHOTO;
+    public $_THUMB_FIELD_NAME = _C_WEBPHOTO_UPLOAD_FIELD_THUMB;
     public $_MIDDLE_FIELD_NAME = _C_WEBPHOTO_UPLOAD_FIELD_MIDDLE;
-    public $_SMALL_FIELD_NAME  = _C_WEBPHOTO_UPLOAD_FIELD_SMALL;
+    public $_SMALL_FIELD_NAME = _C_WEBPHOTO_UPLOAD_FIELD_SMALL;
 
     public $_THIS_FCT_IMAGEMANEGER = 'submit_imagemanager';
-    public $_THIS_FCT_SUBMIT       = 'submit';
-    public $_THIS_FCT_EDIT         = 'edit';
-    public $_THIS_FCT_ADMIN        = 'item_manager';
-    public $_THIS_FCT_ADMIN_BATCH  = 'batch';
+    public $_THIS_FCT_SUBMIT = 'submit';
+    public $_THIS_FCT_EDIT = 'edit';
+    public $_THIS_FCT_ADMIN = 'item_manager';
+    public $_THIS_FCT_ADMIN_BATCH = 'batch';
 
     public $_FLAG_PERM_ADMIN = true;
 
     public $_FORM_ACTION = null;
-    public $_THIS_FCT    = null;
+    public $_THIS_FCT = null;
 
     public $_USER_LIMIT = 200;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_config_class = webphoto_config::getInstance($dirname);
 
-        $this->_cat_handler         = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
-        $this->_item_handler        = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_file_handler        = webphoto_file_handler::getInstance($dirname, $trust_dirname);
-        $this->_perm_class          = webphoto_permission::getInstance($dirname, $trust_dirname);
-        $this->_embed_class         = webphoto_embed::getInstance($dirname, $trust_dirname);
+        $this->_catHandler = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_perm_class = webphoto_permission::getInstance($dirname, $trust_dirname);
+        $this->_embed_class = webphoto_embed::getInstance($dirname, $trust_dirname);
         $this->_mysql_utility_class = webphoto_lib_mysql_utility::getInstance();
-        $this->_ini_class           = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
+        $this->_ini_class = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
 
         $this->_ini_class->read_main_ini();
 
-        $this->_cfg_gmap_apikey    = $this->_config_class->get_by_name('gmap_apikey');
-        $this->_cfg_width          = $this->_config_class->get_by_name('width');
-        $this->_cfg_height         = $this->_config_class->get_by_name('height');
-        $this->_cfg_fsize          = $this->_config_class->get_by_name('fsize');
-        $this->_cfg_makethumb      = $this->_config_class->get_by_name('makethumb');
-        $this->_cfg_file_size      = $this->_config_class->get_by_name('file_size');
+        $this->_cfg_gmap_apikey = $this->_config_class->get_by_name('gmap_apikey');
+        $this->_cfg_width = $this->_config_class->get_by_name('width');
+        $this->_cfg_height = $this->_config_class->get_by_name('height');
+        $this->_cfg_fsize = $this->_config_class->get_by_name('fsize');
+        $this->_cfg_makethumb = $this->_config_class->get_by_name('makethumb');
+        $this->_cfg_file_size = $this->_config_class->get_by_name('file_size');
         $this->_cfg_perm_item_read = $this->_config_class->get_by_name('perm_item_read');
-        $this->_cfg_perm_cat_read  = $this->_config_class->get_by_name('perm_cat_read');
+        $this->_cfg_perm_cat_read = $this->_config_class->get_by_name('perm_cat_read');
 
         // cat_form.php
-        $this->_cfg_cat_width    = $this->_config_class->get_by_name('cat_width');
+        $this->_cfg_cat_width = $this->_config_class->get_by_name('cat_width');
         $this->_cfg_use_pathinfo = $this->_config_class->get_by_name('use_pathinfo');
 
         $this->_has_deletable = $this->_perm_class->has_deletable();
 
         $this->_UPLOADS_PATH = $this->_config_class->get_uploads_path();
-        $this->_MEDIAS_PATH  = $this->_config_class->get_medias_path();
-        $this->_WORK_DIR     = $this->_config_class->get_by_name('workdir');
-        $this->_FILE_DIR     = $this->_config_class->get_by_name('file_dir');
+        $this->_MEDIAS_PATH = $this->_config_class->get_medias_path();
+        $this->_WORK_DIR = $this->_config_class->get_by_name('workdir');
+        $this->_FILE_DIR = $this->_config_class->get_by_name('file_dir');
 
         $this->_PHOTOS_PATH = $this->_UPLOADS_PATH . '/photos';
         $this->_THUMBS_PATH = $this->_UPLOADS_PATH . '/thumbs';
-        $this->_CATS_PATH   = $this->_UPLOADS_PATH . '/categories';
-        $playlists_path     = $this->_UPLOADS_PATH . '/playlists';
+        $this->_CATS_PATH = $this->_UPLOADS_PATH . '/categories';
+        $playlists_path = $this->_UPLOADS_PATH . '/playlists';
 
-        $this->_PHOTOS_DIR    = XOOPS_ROOT_PATH . $this->_PHOTOS_PATH;
-        $this->_THUMBS_DIR    = XOOPS_ROOT_PATH . $this->_THUMBS_PATH;
-        $this->_CATS_DIR      = XOOPS_ROOT_PATH . $this->_CATS_PATH;
-        $this->_MEDIAS_DIR    = XOOPS_ROOT_PATH . $this->_MEDIAS_PATH;
+        $this->_PHOTOS_DIR = XOOPS_ROOT_PATH . $this->_PHOTOS_PATH;
+        $this->_THUMBS_DIR = XOOPS_ROOT_PATH . $this->_THUMBS_PATH;
+        $this->_CATS_DIR = XOOPS_ROOT_PATH . $this->_CATS_PATH;
+        $this->_MEDIAS_DIR = XOOPS_ROOT_PATH . $this->_MEDIAS_PATH;
         $this->_PLAYLISTS_DIR = XOOPS_ROOT_PATH . $playlists_path;
 
-        $this->_PHOTOS_URL    = XOOPS_URL . $this->_PHOTOS_PATH;
-        $this->_THUMBS_URL    = XOOPS_URL . $this->_THUMBS_PATH;
-        $this->_CATS_URL      = XOOPS_URL . $this->_CATS_PATH;
-        $this->_MEDIAS_URL    = XOOPS_URL . $this->_MEDIAS_PATH;
+        $this->_PHOTOS_URL = XOOPS_URL . $this->_PHOTOS_PATH;
+        $this->_THUMBS_URL = XOOPS_URL . $this->_THUMBS_PATH;
+        $this->_CATS_URL = XOOPS_URL . $this->_CATS_PATH;
+        $this->_MEDIAS_URL = XOOPS_URL . $this->_MEDIAS_PATH;
         $this->_PLAYLISTS_URL = XOOPS_URL . $playlists_path;
 
-        $this->_TMP_DIR  = $this->_WORK_DIR . '/tmp';
+        $this->_TMP_DIR = $this->_WORK_DIR . '/tmp';
         $this->_MAIL_DIR = $this->_WORK_DIR . '/mail';
-        $this->_LOG_DIR  = $this->_WORK_DIR . '/log';
+        $this->_LOG_DIR = $this->_WORK_DIR . '/log';
 
-        $this->_ICONS_URL       = $this->_MODULE_URL . '/images/icons';
+        $this->_ICONS_URL = $this->_MODULE_URL . '/images/icons';
         $this->_ICON_ROTATE_URL = $this->_MODULE_URL . '/images/uploader';
-        $this->_ROOT_EXTS_URL   = $this->_MODULE_URL . '/images/exts';
-        $this->_ROOT_EXTS_DIR   = $this->_MODULE_DIR . '/images/exts';
-        $this->_LIBS_URL        = $this->_MODULE_URL . '/libs';
+        $this->_ROOT_EXTS_URL = $this->_MODULE_URL . '/images/exts';
+        $this->_ROOT_EXTS_DIR = $this->_MODULE_DIR . '/images/exts';
+        $this->_LIBS_URL = $this->_MODULE_URL . '/libs';
 
         $this->_is_japanese = $this->_xoops_class->is_japanese(_C_WEBPHOTO_JPAPANESE);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_edit_form($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -236,25 +252,39 @@ class webphoto_edit_form extends webphoto_lib_form
     // photo form
     // submit.php submit_file.php etc
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return mixed
+     */
     public function set_default_item_row($item_row)
     {
         if (empty($item_row['item_editor'])) {
             $item_row['item_editor'] = $this->get_ini('item_editor_default');
         }
+
         return $item_row;
     }
 
+    /**
+     * @param $has_resize
+     * @return string
+     */
     public function ele_maxpixel($has_resize)
     {
-        $text = $this->_cfg_width . ' x ' . $this->_cfg_height . "<br />\n";
+        $text = $this->_cfg_width . ' x ' . $this->_cfg_height . "<br>\n";
         if ($has_resize) {
             $text .= $this->get_constant('DSC_PIXCEL_RESIZE');
         } else {
             $text .= $this->get_constant('DSC_PIXCEL_REJECT');
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function ele_maxsize()
     {
         $size_desc = '';
@@ -264,213 +294,338 @@ class webphoto_edit_form extends webphoto_lib_form
 
         $text = $this->format_filesize($this->_cfg_fsize);
         $text .= $size_desc;
+
         return $text;
     }
 
+    /**
+     * @param $allowed_exts
+     * @return string
+     */
     public function ele_allowed_exts($allowed_exts)
     {
         $text = implode(' ', $allowed_exts);
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function item_cat_id_options()
     {
         return $this->build_cat_id_options($this->get_row_by_key('item_cat_id'), $this->_FLAG_PERM_ADMIN);
     }
 
+    /**
+     * @param      $cat_id
+     * @param bool $flag_admin
+     * @return string
+     */
     public function build_cat_id_options($cat_id, $flag_admin = false)
     {
         $show = true;
-        if ($this->_cfg_perm_cat_read == _C_WEBPHOTO_OPT_PERM_READ_NO_CAT) {
+        if (_C_WEBPHOTO_OPT_PERM_READ_NO_CAT == $this->_cfg_perm_cat_read) {
             $show = false;
         }
 
-        return $this->_cat_handler->build_options_with_perm_post($cat_id, $show, $flag_admin);
+        return $this->_catHandler->build_options_with_perm_post($cat_id, $show, $flag_admin);
     }
 
+    /**
+     * @param $is_edit
+     * @return bool
+     */
     public function show_err_invalid_cat($is_edit)
     {
         if (!$is_edit) {
             return false;
         }
         $value = $this->get_row_by_key('item_cat_id');
-        $count = $this->_cat_handler->get_count_by_id($value);
+        $count = $this->_catHandler->get_count_by_id($value);
+
         return !(bool)$count;
     }
 
+    /**
+     * @return string
+     */
     public function item_description_dhtml()
     {
-        $name  = 'item_description';
+        $name = 'item_description';
         $value = $this->get_row_by_key($name);
+
         return $this->build_form_dhtml($name, $value);
     }
 
     // for misc_form.php
+
+    /**
+     * @param $flag
+     * @return mixed|null|string
+     */
     public function get_item_editor($flag)
     {
         $value = $this->get_row_by_key('item_editor');
         if ($flag && empty($value)) {
             $value = $this->get_ini('item_editor_default');
         }
+
         return $value;
     }
 
+    /**
+     * @param $flag
+     * @return mixed|null|string
+     */
     public function get_item_embed_type($flag)
     {
         $value = $this->get_row_by_key('item_embed_type');
         if ($flag && empty($value)) {
             $value = $this->get_ini('submit_embed_type_default');
         }
+
         return $value;
     }
 
     //---------------------------------------------------------
     // file handler
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function exists_photo($item_row)
     {
         $file_id = $this->_item_handler->build_value_fileid_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_CONT);
         if ($file_id > 0) {
-            return $this->_file_handler->exists_full_path_by_id($file_id);
+            return $this->_fileHandler->exists_full_path_by_id($file_id);
         }
+
         return false;
     }
 
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return mixed|null
+     */
     public function build_file_url_by_kind($item_row, $kind)
     {
         $file_row = $this->get_cached_file_extend_row_by_kind($item_row, $kind);
         if (is_array($file_row)) {
             return $this->build_file_url_by_file_row($file_row);
         }
+
         return null;
     }
 
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return array|bool|mixed|null
+     */
     public function get_cached_file_extend_row_by_kind($item_row, $kind)
     {
         $file_id = $this->_item_handler->build_value_fileid_by_kind($item_row, $kind);
         if ($file_id > 0) {
-            return $this->_file_handler->get_cached_extend_row_by_id($file_id);
+            return $this->_fileHandler->get_cached_extend_row_by_id($file_id);
         }
+
         return null;
     }
 
+    /**
+     * @param $file_row
+     * @return mixed
+     */
     public function build_file_url_by_file_row($file_row)
     {
-        list($url, $width, $height) = $this->_file_handler->build_show_file_image($file_row);
+        list($url, $width, $height) = $this->_fileHandler->build_show_file_image($file_row);
+
         return $url;
     }
 
     //---------------------------------------------------------
     // embed class
     //---------------------------------------------------------
+
+    /**
+     * @return null|string
+     */
     public function item_embed_type_select_options()
     {
-        $value   = $this->get_item_embed_type(true);
+        $value = $this->get_item_embed_type(true);
         $options = $this->_embed_class->build_type_options($this->_is_module_admin);
+
         return $this->build_form_options($value, $options);
     }
 
     //---------------------------------------------------------
     // build image
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_img_pictadd()
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/pictadd.png" width="18" height="15" border="0" alt="' . _WEBPHOTO_TITLE_ADDPHOTO . '" title="' . _WEBPHOTO_TITLE_ADDPHOTO . '" />' . "\n";
+        $str = '<img src="' . $this->_ICONS_URL . '/pictadd.png" width="18" height="15" border="0" alt="' . _WEBPHOTO_TITLE_ADDPHOTO . '" title="' . _WEBPHOTO_TITLE_ADDPHOTO . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_img_edit()
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/edit.png" width="18" height="15" border="0" alt="' . _WEBPHOTO_TITLE_EDIT . '" title="' . _WEBPHOTO_TITLE_EDIT . '" />' . "\n";
+        $str = '<img src="' . $this->_ICONS_URL . '/edit.png" width="18" height="15" border="0" alt="' . _WEBPHOTO_TITLE_EDIT . '" title="' . _WEBPHOTO_TITLE_EDIT . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_img_deadlink()
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/deadlink.png"  width="16" height="16" border="0" alt="' . _AM_WEBPHOTO_DEADLINKMAINPHOTO . '" title="' . _AM_WEBPHOTO_DEADLINKMAINPHOTO . '" />'
-               . "\n";
+        $str = '<img src="' . $this->_ICONS_URL . '/deadlink.png"  width="16" height="16" border="0" alt="' . _AM_WEBPHOTO_DEADLINKMAINPHOTO . '" title="' . _AM_WEBPHOTO_DEADLINKMAINPHOTO . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $width
+     * @param $height
+     * @return string
+     */
     public function build_img_pixel($width, $height)
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/pixel_trans.png" width="' . $width . '" height="' . $height . '" border="0" alt="" />';
+        $str = '<img src="' . $this->_ICONS_URL . '/pixel_trans.png" width="' . $width . '" height="' . $height . '" border="0" alt="" >';
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_img_catadd()
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/cat_add.png" width="18" height="15"  border="0" alt="' . _AM_WEBPHOTO_CAT_LINK_MAKESUBCAT . '" title="' . _AM_WEBPHOTO_CAT_LINK_MAKESUBCAT . '" />'
-               . "\n";
+        $str = '<img src="' . $this->_ICONS_URL . '/cat_add.png" width="18" height="15"  border="0" alt="' . _AM_WEBPHOTO_CAT_LINK_MAKESUBCAT . '" title="' . _AM_WEBPHOTO_CAT_LINK_MAKESUBCAT . '" >' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_img_catedit()
     {
-        $str = '<img src="' . $this->_ICONS_URL . '/cat_edit.png" width="18" height="15"  border="0" alt="' . _AM_WEBPHOTO_CAT_LINK_EDIT . '" title="' . _AM_WEBPHOTO_CAT_LINK_EDIT . '" />' . "\n";
+        $str = '<img src="' . $this->_ICONS_URL . '/cat_edit.png" width="18" height="15"  border="0" alt="' . _AM_WEBPHOTO_CAT_LINK_EDIT . '" title="' . _AM_WEBPHOTO_CAT_LINK_EDIT . '" >' . "\n";
+
         return $str;
     }
 
     //---------------------------------------------------------
     // group perms
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_ele_group_perms_by_key($name)
     {
         $text = $this->build_group_perms_check_all_by_key($name);
         $text .= $this->get_constant('GROUP_PERM_ALL');
-        $text .= "<br />\n";
+        $text .= "<br>\n";
         $text .= $this->build_group_perms_checkboxs_by_key($name);
+
         return $text;
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function build_group_perms_check_all_by_key($name)
     {
         $all_name = $name . '_all';
-        $id_name  = $name . '_ids';
+        $id_name = $name . '_ids';
+
         return $this->build_input_checkbox_js_check_all($all_name, $id_name);
     }
 
+    /**
+     * @param $name
+     * @return array
+     */
     public function build_group_perms_param_by_key($name)
     {
         $id_name = $name . '_ids';
-        $groups  = $this->get_cached_xoops_db_groups();
-        $perms   = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
+        $groups = $this->get_cached_xoops_db_groups();
+        $perms = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
         $all_yes = $this->get_all_yes_group_perms_by_key($name);
         $options = $this->build_options_group_perms($id_name, $groups, $perms, $all_yes);
-        $ret1    = $this->build_form_checkboxs_yes($options);
-        $ret2    = $this->build_list_select_multi($options);
-        $ret3    = $this->build_form_hiddens_yes($options);
-        return array($ret1, $ret2, $ret3);
+        $ret1 = $this->build_form_checkboxs_yes($options);
+        $ret2 = $this->build_list_select_multi($options);
+        $ret3 = $this->build_form_hiddens_yes($options);
+
+        return [$ret1, $ret2, $ret3];
     }
 
+    /**
+     * @param      $name
+     * @param bool $flag_admin
+     * @return null|string
+     */
     public function build_group_perms_checkboxs_by_key($name, $flag_admin = false)
     {
         $id_name = $name . '_ids';
-        $groups  = $this->get_cached_xoops_db_groups();
-        $perms   = $this->get_group_perms_for_group_perms_checkboxs($name, $groups, $flag_admin);
+        $groups = $this->get_cached_xoops_db_groups();
+        $perms = $this->get_group_perms_for_group_perms_checkboxs($name, $groups, $flag_admin);
         $all_yes = $this->get_all_yes_group_perms_by_key($name);
+
         return $this->build_form_checkboxs_group_perms($id_name, $groups, $perms, $all_yes);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function build_group_perms_hiddens_by_key($name)
     {
         $id_name = $name . '_ids';
-        $groups  = $this->get_cached_xoops_db_groups();
-        $perms   = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
+        $groups = $this->get_cached_xoops_db_groups();
+        $perms = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
         $all_yes = $this->get_all_yes_group_perms_by_key($name);
+
         return $this->build_form_hiddens_group_perms($id_name, $groups, $perms, $all_yes);
     }
 
+    /**
+     * @param $name
+     * @return null|string
+     */
     public function build_group_perms_list($name)
     {
         $id_name = $name . '_ids';
-        $groups  = $this->get_cached_xoops_db_groups();
-        $perms   = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
+        $groups = $this->get_cached_xoops_db_groups();
+        $perms = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
         $all_yes = $this->get_all_yes_group_perms_by_key($name);
         $options = $this->build_options_group_perms($id_name, $groups, $perms, $all_yes);
+
         return $this->build_list_select_multi($options);
     }
 
+    /**
+     * @param      $name
+     * @param      $groups
+     * @param bool $flag_admin
+     * @return array
+     */
     public function get_group_perms_for_group_perms_checkboxs($name, $groups, $flag_admin = false)
     {
         $arr1 = $this->get_group_perms_array_by_row_name($this->get_row(), $name);
@@ -480,46 +635,71 @@ class webphoto_edit_form extends webphoto_lib_form
         $arr2 = $this->get_group_perms_of_module_admin($groups);
         $arr3 = array_merge($arr1, $arr2);
         $arr4 = array_unique($arr3);
+
         return $arr4;
     }
 
+    /**
+     * @param $groups
+     * @return array
+     */
     public function get_group_perms_of_module_admin($groups)
     {
-        $arr = array();
+        $arr = [];
         foreach ($groups as $id => $name) {
             if ($this->get_module_admin_value($id)) {
                 $arr[] = $id;
             }
         }
         print_r($arr);
+
         return $arr;
     }
 
+    /**
+     * @param $group_id
+     * @return bool
+     */
     public function get_module_admin_value($group_id)
     {
-        $this->_groupperm_handler = xoops_getHandler('groupperm');
-        $arr                      = $this->_groupperm_handler->getItemIds('module_admin', $group_id, 1);
+        $this->_grouppermHandler = xoops_getHandler('groupperm');
+        $arr = $this->_grouppermHandler->getItemIds('module_admin', $group_id, 1);
         if (isset($arr[0])) {
             return $arr[0];
         }
+
         return false;
     }
 
+    /**
+     * @param $row
+     * @param $name
+     * @return array
+     */
     public function get_group_perms_array_by_row_name($row, $name)
     {
         if (isset($row[$name])) {
             return $this->get_group_perms_array($row[$name]);
-        } else {
-            return array();
         }
+
+        return [];
     }
 
+    /**
+     * @param $val
+     * @return array
+     */
     public function get_group_perms_array($val)
     {
         return $this->str_to_array($val, $this->_PERM_SEPARATOR);
     }
 
-    public function build_list_select_multi($options, $del = '<br />')
+    /**
+     * @param        $options
+     * @param string $del
+     * @return null|string
+     */
+    public function build_list_select_multi($options, $del = '<br>')
     {
         if (!is_array($options) || !count($options)) {
             return null;
@@ -533,9 +713,14 @@ class webphoto_edit_form extends webphoto_lib_form
             $str .= '</span>';
             $str .= $del;
         }
+
         return $str;
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function build_list_select_multi_span($value)
     {
         if ($value == $this->_C_YES) {
@@ -544,6 +729,7 @@ class webphoto_edit_form extends webphoto_lib_form
             $color = 'graytext';
         }
         $str = '<span style="color:' . $color . ';">';
+
         return $str;
     }
 
@@ -551,26 +737,45 @@ class webphoto_edit_form extends webphoto_lib_form
     // java script
     // admin/cat_form.php, mime_form.php
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function build_script_edit_js()
     {
         return $this->build_script_js_libs('edit.js');
     }
 
+    /**
+     * @param $js
+     * @return string
+     */
     public function build_script_js_libs($js)
     {
         return $this->build_script_js($this->_LIBS_URL . '/' . $js);
     }
 
+    /**
+     * @param $src
+     * @return string
+     */
     public function build_script_js($src)
     {
         $str = '<script src="' . $src . '" type="text/javascript"></script>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @param $id_name
+     * @return string
+     */
     public function build_input_checkbox_js_check_all($name, $id_name)
     {
         $onclick = "webphoto_check_all(this, '" . $id_name . "')";
-        $extra   = 'onclick="' . $onclick . '"';
+        $extra = 'onclick="' . $onclick . '"';
+
         return $this->build_input_checkbox_yes($name, 0, $extra);
     }
 
@@ -589,6 +794,9 @@ class webphoto_edit_form extends webphoto_lib_form
         $this->_preload_class->init($this->_DIRNAME, $this->_TRUST_DIRNAME);
     }
 
+    /**
+     * @return bool
+     */
     public function preload_constant()
     {
         $arr = $this->_preload_class->get_preload_const_array();
@@ -598,10 +806,10 @@ class webphoto_edit_form extends webphoto_lib_form
         }
 
         foreach ($arr as $k => $v) {
-            $local_name = strtoupper('_' . $k);
+            $local_name = mb_strtoupper('_' . $k);
 
             // array type
-            if (strpos($k, 'array_') === 0) {
+            if (0 === mb_strpos($k, 'array_')) {
                 $temp = $this->str_to_array($v, '|');
                 if (is_array($temp) && count($temp)) {
                     $this->$local_name = $temp;
@@ -617,11 +825,18 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // config
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config_by_name($name)
     {
         return $this->_config_class->get_by_name($name);
     }
 
+    /**
+     * @return mixed
+     */
     public function get_config_array()
     {
         return $this->_config_class->get_config_array();
@@ -630,52 +845,81 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // xoops param
     //---------------------------------------------------------
+
+    /**
+     * @param $uid
+     * @param $userstart
+     * @return array
+     */
     public function get_user_param($uid, $userstart)
     {
         list($show, $list) = $this->get_user_param_list();
 
         $options = $this->get_user_param_options($uid, $userstart);
 
-        return array($show, $list, $options);
+        return [$show, $list, $options];
     }
 
+    /**
+     * @return array
+     */
     public function get_user_param_list()
     {
         $show = false;
-        $list = array();
+        $list = [];
 
         $count = $this->get_xoops_user_count();
         if ($count <= $this->_USER_LIMIT) {
-            return array($show, $list);
+            return [$show, $list];
         }
 
-        $show  = true;
-        $limit = (int)($count - 1);
+        $show = true;
+        $limit = ($count - 1);
 
         for ($i = 0; $i <= $limit; ++$i) {
-            $list[] = array(
-                'page'      => $i + 1,
+            $list[] = [
+                'page' => $i + 1,
                 'userstart' => $i * $this->_USER_LIMIT,
-            );
+            ];
         }
 
-        return array($show, $list);
+        return [$show, $list];
     }
 
+    /**
+     * @param $uid
+     * @param $userstart
+     * @return string
+     */
     public function get_user_param_options($uid, $userstart)
     {
         $list = $this->get_user_list($uid, $userstart);
+
         return $this->build_form_user_select_options($list, $uid);
     }
 
+    /**
+     * @param      $list
+     * @param      $sel_name
+     * @param      $sel_value
+     * @param bool $none
+     * @return string
+     */
     public function build_form_user_select($list, $sel_name, $sel_value, $none = false)
     {
         $text = '<select name="' . $sel_name . '">';
         $text .= $this->build_form_user_select_options($list, $sel_value, $none);
         $text .= "</select>\n";
+
         return $text;
     }
 
+    /**
+     * @param      $list
+     * @param      $sel_value
+     * @param bool $none
+     * @return string
+     */
     public function build_form_user_select_options($list, $sel_value, $none = false)
     {
         $opt = '';
@@ -696,6 +940,11 @@ class webphoto_edit_form extends webphoto_lib_form
         return $opt;
     }
 
+    /**
+     * @param $uid
+     * @param $userstart
+     * @return mixed
+     */
     public function get_user_list($uid, $userstart)
     {
         $list = $this->get_xoops_user_list($this->_USER_LIMIT, $userstart);
@@ -708,9 +957,13 @@ class webphoto_edit_form extends webphoto_lib_form
         if ($name) {
             $list[$uid] = $name;
         }
+
         return $list;
     }
 
+    /**
+     * @return mixed
+     */
     public function get_xoops_user_count()
     {
         return $this->_xoops_class->get_member_user_count();
@@ -719,6 +972,11 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // xoops class
     //---------------------------------------------------------
+
+    /**
+     * @param string $format
+     * @return bool|mixed
+     */
     public function xoops_module_name($format = 's')
     {
         return $this->_xoops_class->get_my_module_name($format);
@@ -727,6 +985,11 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // is show
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function is_show_form_admin($item_row)
     {
         if (!$this->is_show_form_photomanager($item_row)) {
@@ -735,78 +998,112 @@ class webphoto_edit_form extends webphoto_lib_form
         if ($this->is_show_form_embed() && $this->is_show_form_playlist()) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function is_show_form_photomanager($item_row)
     {
         // from photomanager
         if ($item_row['item_cat_id'] > 0) {
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param $options
+     * @return bool
+     */
     public function is_show_form_editor_option($options)
     {
         if (!is_array($options) || !count($options)) {
             return false;
         }
+
         return $this->is_show_form_editor();
     }
 
+    /**
+     * @return bool
+     */
     public function is_show_form_editor()
     {
         if (!$this->get_ini('submit_show_form_editor')) {
             return false;
         }
+
         return $this->_is_show_form($this->_post_form_editor);
     }
 
+    /**
+     * @return bool
+     */
     public function is_show_form_embed()
     {
         if (!$this->get_ini('submit_show_form_embed')) {
             return false;
         }
+
         return $this->_is_show_form($this->_post_form_embed);
     }
 
+    /**
+     * @return bool
+     */
     public function is_show_form_playlist()
     {
         return $this->_is_show_form($this->_post_form_playlist);
     }
 
+    /**
+     * @param $val
+     * @return bool
+     */
     public function _is_show_form($val)
     {
         $ret = $val ? false : true;
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // common
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function build_form_base_param()
     {
         $arr = array_merge($this->build_base_param(), $this->build_system_language(), $this->get_lang_array());
 
         $arr['action'] = $this->_FORM_ACTION;
-        $arr['fct']    = $this->_THIS_FCT;
+        $arr['fct'] = $this->_THIS_FCT;
 
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_base_param()
     {
-        $arr = array(
-            'mydirname'        => $this->_DIRNAME,
-            'xoops_g_ticket'   => $this->get_token(),
-            'is_module_admin'  => $this->_is_module_admin,
-            'has_deletable'    => $this->_has_deletable,
+        $arr = [
+            'mydirname' => $this->_DIRNAME,
+            'xoops_g_ticket' => $this->get_token(),
+            'is_module_admin' => $this->_is_module_admin,
+            'has_deletable' => $this->_has_deletable,
 
             // for XOOPS 2.0.18
-            'xoops_dirname'    => $this->_DIRNAME,
+            'xoops_dirname' => $this->_DIRNAME,
             'xoops_modulename' => $this->xoops_module_name('s'),
-        );
+        ];
 
         // config
         $config_array = $this->get_config_array();
@@ -817,36 +1114,51 @@ class webphoto_edit_form extends webphoto_lib_form
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_system_language()
     {
-        $arr = array(
-            'lang_add'     => _ADD,
-            'lang_edit'    => _EDIT,
+        $arr = [
+            'lang_add' => _ADD,
+            'lang_edit' => _EDIT,
             'lang_preview' => _PREVIEW,
-            'lang_cancel'  => _CANCEL,
-            'lang_delete'  => _DELETE,
-            'lang_close'   => _CLOSE,
-            'lang_yes'     => _YES,
-            'lang_no'      => _NO,
-        );
+            'lang_cancel' => _CANCEL,
+            'lang_delete' => _DELETE,
+            'lang_close' => _CLOSE,
+            'lang_yes' => _YES,
+            'lang_no' => _NO,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_item_row($row)
     {
-        $arr = array();
+        $arr = [];
         foreach ($row as $k => $v) {
-            $arr[$k]        = $v;
+            $arr[$k] = $v;
             $arr[$k . '_s'] = $this->sanitize($v);
         }
+
         return $arr;
     }
 
+    /**
+     * @param $val
+     */
     public function set_fct($val)
     {
         $this->_THIS_FCT = $val;
     }
 
+    /**
+     * @param $flag_admin
+     */
     public function set_form_action($flag_admin)
     {
         if ($flag_admin) {
@@ -861,38 +1173,56 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     public function get_post_select_param()
     {
-        $this->_post_form_editor   = $this->get_post_int('form_editor');
-        $this->_post_form_embed    = $this->get_post_int('form_embed');
+        $this->_post_form_editor = $this->get_post_int('form_editor');
+        $this->_post_form_embed = $this->get_post_int('form_embed');
         $this->_post_form_playlist = $this->get_post_int('form_playlist');
     }
 
+    /**
+     * @param null $mode
+     * @return array
+     */
     public function build_form_select_param($mode = null)
     {
-        $arr = array(
-            'mode'          => $this->get_form_mode_default($mode),
-            'form_editor'   => $this->_post_form_editor,
-            'form_embed'    => $this->_post_form_embed,
+        $arr = [
+            'mode' => $this->get_form_mode_default($mode),
+            'form_editor' => $this->_post_form_editor,
+            'form_embed' => $this->_post_form_embed,
             'form_playlist' => $this->_post_form_playlist,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $mode
+     * @return array
+     */
     public function build_form_mode_param($mode)
     {
-        $arr = array(
+        $arr = [
             'mode' => $this->get_form_mode_default($mode),
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $mode
+     * @return mixed
+     */
     public function get_form_mode_default($mode)
     {
         if (empty($mode)) {
             $mode = $this->_FORM_MODE;
         }
+
         return $mode;
     }
 
+    /**
+     * @param $val
+     */
     public function set_form_mode($val)
     {
         $this->_FORM_MODE = $val;
@@ -901,33 +1231,57 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // checkbox
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_checkbox_array($val)
     {
         $this->_checkbox_array = $val;
     }
 
+    /**
+     * @param $name
+     * @return mixed|null
+     */
     public function get_checkbox_by_name($name)
     {
         if (isset($this->_checkbox_array[$name])) {
             return $this->_checkbox_array[$name];
         }
+
         return null;
     }
 
+    /**
+     * @param     $name
+     * @param int $compare
+     * @return string
+     */
     public function build_checkbox_checked($name, $compare = 1)
     {
         $val = $this->get_checkbox_by_name($name);
+
         return $this->build_form_checked($val, $compare);
     }
 
     //---------------------------------------------------------
     // ini class
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_ini($name)
     {
         return $this->_ini_class->get_ini($name);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function explode_ini($name)
     {
         return $this->_ini_class->explode_ini($name);
@@ -936,11 +1290,19 @@ class webphoto_edit_form extends webphoto_lib_form
     //---------------------------------------------------------
     // mysql
     //---------------------------------------------------------
+
+    /**
+     * @return false|string
+     */
     public function get_mysql_date_today()
     {
         return $this->_mysql_utility_class->get_mysql_date_today();
     }
 
+    /**
+     * @param $date
+     * @return mixed
+     */
     public function mysql_datetime_to_str($date)
     {
         return $this->_mysql_utility_class->mysql_datetime_to_str($date);

@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_icon_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_icon_build
+ */
 class webphoto_edit_icon_build
 {
     public $_DIRNAME;
@@ -21,15 +25,20 @@ class webphoto_edit_icon_build
     public $_ROOT_EXTS_DIR;
     public $_ROOT_EXTS_URL;
 
-    public $_EXT_PNG           = 'png';
+    public $_EXT_PNG = 'png';
     public $_ICON_NAME_DEFAULT = 'default.png';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_icon_build constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
-        $this->_DIRNAME    = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_MODULE_URL = XOOPS_URL . '/modules/' . $dirname;
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
 
@@ -37,18 +46,29 @@ class webphoto_edit_icon_build
         $this->_ROOT_EXTS_DIR = $this->_MODULE_DIR . '/images/exts';
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_edit_icon_build
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_icon_build($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // icon
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param null $ext
+     * @return mixed
+     */
     public function build_row_icon_if_empty($row, $ext = null)
     {
         if ($row[_C_WEBPHOTO_ITEM_FILE_THUMB]) {
@@ -60,9 +80,15 @@ class webphoto_edit_icon_build
         if ($row['item_icon_name']) {
             return $row;
         }
+
         return $this->build_row_icon($row, $ext);
     }
 
+    /**
+     * @param      $row
+     * @param null $ext
+     * @return mixed
+     */
     public function build_row_icon($row, $ext = null)
     {
         if (empty($ext)) {
@@ -73,16 +99,21 @@ class webphoto_edit_icon_build
         }
 
         list($name, $width, $height) = $this->build_icon_image($ext);
-        $row['item_icon_name']   = $name;
-        $row['item_icon_width']  = $width;
+        $row['item_icon_name'] = $name;
+        $row['item_icon_width'] = $width;
         $row['item_icon_height'] = $height;
+
         return $row;
     }
 
+    /**
+     * @param $ext
+     * @return array
+     */
     public function build_icon_image($ext)
     {
-        $name   = null;
-        $width  = 0;
+        $name = null;
+        $width = 0;
         $height = 0;
 
         if ($ext) {
@@ -94,12 +125,12 @@ class webphoto_edit_icon_build
             }
             $size = getimagesize($file);
             if (is_array($size)) {
-                $width  = $size[0];
+                $width = $size[0];
                 $height = $size[1];
             }
         }
 
-        return array($name, $width, $height);
+        return [$name, $width, $height];
     }
 
     // --- class end ---

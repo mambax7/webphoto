@@ -30,9 +30,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_rate
 //=========================================================
+
+/**
+ * Class webphoto_main_rate
+ */
 class webphoto_main_rate extends webphoto_base_this
 {
-    public $_vote_handler;
+    public $_voteHandler;
     public $_rate_check_class;
     public $_page_class;
 
@@ -40,16 +44,16 @@ class webphoto_main_rate extends webphoto_base_this
     public $_item_row = null;
 
     public $_RATE_SESSION_NAME = null;
-    public $_RATE_MIN_RATING   = 1;
-    public $_RATE_MAX_RATING   = 10;
+    public $_RATE_MIN_RATING = 1;
+    public $_RATE_MAX_RATING = 10;
 
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     public $_INDEX_PHP;
 
     // overwrite by preload
-    public $_ARRAY_RATING_OPTIONS = array(
+    public $_ARRAY_RATING_OPTIONS = [
         '10',
         '9',
         '8',
@@ -59,23 +63,29 @@ class webphoto_main_rate extends webphoto_base_this
         '4',
         '3',
         '2',
-        '1'
-    );
+        '1',
+    ];
 
-    public $_RATE_SELECT_TYPE    = '';
+    public $_RATE_SELECT_TYPE = '';
     public $_RATE_SELECT_DELMITA = ' ';
-    public $_RATE_RADIO_DELMITA  = '';
+    public $_RATE_RADIO_DELMITA = '';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_rate constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_vote_handler     = webphoto_vote_handler::getInstance($dirname, $trust_dirname);
+        $this->_voteHandler = webphoto_vote_handler::getInstance($dirname, $trust_dirname);
         $this->_rate_check_class = webphoto_rate_check::getInstance($dirname, $trust_dirname);
-        $this->_page_class       = webphoto_page::getInstance($dirname, $trust_dirname);
+        $this->_page_class = webphoto_page::getInstance($dirname, $trust_dirname);
 
         $this->_RATE_SESSION_NAME = $dirname . '_rate_uri';
 
@@ -86,12 +96,18 @@ class webphoto_main_rate extends webphoto_base_this
         $this->preload_constant();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_main_rate
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_main_rate($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -120,10 +136,10 @@ class webphoto_main_rate extends webphoto_base_this
         $url = $this->_INDEX_PHP;
 
         // store the referer
-        if (!empty($_SERVER['HTTP_REFERER'])) {
-            $referer = $_SERVER['HTTP_REFERER'];
+        if (!empty(\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'))) {
+            $referer = \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER');
             if (!preg_match('/fct=rate/i', $referer)) {
-                $url                                 = $referer;
+                $url = $referer;
                 $_SESSION[$this->_RATE_SESSION_NAME] = $referer;
             }
         }
@@ -143,6 +159,9 @@ class webphoto_main_rate extends webphoto_base_this
         $this->_item_row = $row;
     }
 
+    /**
+     * @return array|string
+     */
     public function _is_rate()
     {
         return $this->_post_class->get_post_text('submit');
@@ -154,14 +173,14 @@ class webphoto_main_rate extends webphoto_base_this
 
         $ret = $this->_exec_rate();
         switch ($ret) {
-            case _C_WEBPHOTO_ERR_NO_RATING :
+            case _C_WEBPHOTO_ERR_NO_RATING:
                 redirect_header($url_rate, $this->_TIME_FAIL, $this->get_constant('ERR_NORATING'));
                 exit();
 
             case _C_WEBPHOTO_ERR_TOKEN:
                 $msg = 'Token Error';
                 if ($this->_is_module_admin) {
-                    $msg .= '<br />' . $this->get_token_errors();
+                    $msg .= '<br>' . $this->get_token_errors();
                 }
                 redirect_header($url_rate, $this->_TIME_FAIL, $msg);
                 exit();
@@ -169,7 +188,7 @@ class webphoto_main_rate extends webphoto_base_this
             case _C_WEBPHOTO_ERR_DB:
                 $msg = 'DB Error';
                 if ($this->_is_module_admin) {
-                    $msg .= '<br />' . $this->get_format_error();
+                    $msg .= '<br>' . $this->get_format_error();
                 }
                 redirect_header($url_rate, $this->_TIME_FAIL, $msg);
                 exit();
@@ -180,7 +199,7 @@ class webphoto_main_rate extends webphoto_base_this
         }
 
         $url = $this->_INDEX_PHP;
-        $msg = $this->get_constant('RATE_VOTEAPPRE') . "<br />\n";
+        $msg = $this->get_constant('RATE_VOTEAPPRE') . "<br>\n";
         $msg .= sprintf($this->get_constant('RATE_S_THANKURATE'), $this->_xoops_sitename);
 
         if (isset($_SESSION[$this->_RATE_SESSION_NAME])) {
@@ -192,6 +211,9 @@ class webphoto_main_rate extends webphoto_base_this
         exit();
     }
 
+    /**
+     * @return int
+     */
     public function _exec_rate()
     {
         if (!$this->check_token()) {
@@ -202,19 +224,18 @@ class webphoto_main_rate extends webphoto_base_this
 
         // Check if rating is valid
         if ($post_rating < $this->_RATE_MIN_RATING
-            || $post_rating > $this->_RATE_MAX_RATING
-        ) {
+            || $post_rating > $this->_RATE_MAX_RATING) {
             return _C_WEBPHOTO_ERR_NO_RATING;
         }
 
         // All is well.  Add to Line Item Rate to DB.
-        $row                  = $this->_vote_handler->create(true);
+        $row = $this->_voteHandler->create(true);
         $row['vote_photo_id'] = $this->_photo_id;
-        $row['vote_uid']      = $this->_xoops_uid;
-        $row['vote_rating']   = $post_rating;
+        $row['vote_uid'] = $this->_xoops_uid;
+        $row['vote_rating'] = $post_rating;
         $row['vote_hostname'] = getenv('REMOTE_ADDR');
 
-        $ret = $this->_vote_handler->insert($row);
+        $ret = $this->_voteHandler->insert($row);
         if (!$ret) {
             return _C_WEBPHOTO_ERR_DB;
         }
@@ -228,17 +249,22 @@ class webphoto_main_rate extends webphoto_base_this
         return 0;
     }
 
+    /**
+     * @param $photo_id
+     * @return bool
+     */
     public function update_rating_by_photoid($photo_id)
     {
-        list($votes, $total, $rating) = $this->_vote_handler->calc_rating_by_photoid($photo_id);
+        list($votes, $total, $rating) = $this->_voteHandler->calc_rating_by_photoid($photo_id);
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             return true;    // no action
         }
 
         $ret = $this->_item_handler->update_rating_by_id($photo_id, $votes, $rating);
         if (!$ret) {
             $this->set_error($this->_item_handler->get_errors());
+
             return false;
         }
 
@@ -248,39 +274,51 @@ class webphoto_main_rate extends webphoto_base_this
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         // Parse error: syntax error
         $ret = array_merge($this->_page_class->build_main_param(), $this->get_photo());
+
         return $ret;
     }
 
+    /**
+     * @return array
+     */
     public function get_photo()
     {
         $show_class = webphoto_show_image::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
-        $arr = array(
-            'photo'          => $show_class->build_image_title_by_item_row($this->_item_row),
-            'token_name'     => $this->get_token_name(),
-            'token_value'    => $this->get_token(),
+        $arr = [
+            'photo' => $show_class->build_image_title_by_item_row($this->_item_row),
+            'token_name' => $this->get_token_name(),
+            'token_value' => $this->get_token(),
             'rating_options' => $this->_build_rating_options(),
-            'select_type'    => $this->_RATE_SELECT_TYPE,
+            'select_type' => $this->_RATE_SELECT_TYPE,
             'select_delmita' => $this->_RATE_SELECT_DELMITA,
-            'radio_delmita'  => $this->_RATE_RADIO_DELMITA,
-        );
+            'radio_delmita' => $this->_RATE_RADIO_DELMITA,
+        ];
 
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function _build_rating_options()
     {
-        $arr = array();
+        $arr = [];
         foreach ($this->_ARRAY_RATING_OPTIONS as $key) {
-            $arr[] = array(
+            $arr[] = [
                 'value' => $key,
-                'name'  => $this->get_constant('VOTE_RATING_' . $key),
-            );
+                'name' => $this->get_constant('VOTE_RATING_' . $key),
+            ];
         }
+
         return $arr;
     }
 

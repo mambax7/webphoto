@@ -19,7 +19,11 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_handler_base_ini
 //=========================================================
-class webphoto_handler_base_ini extends webphoto_lib_tree_handler
+
+/**
+ * Class webphoto_handler_base_ini
+ */
+class webphoto_handler_base_ini extends webphoto_lib_treeHandler
 {
     public $_utility_class;
     public $_mysql_utility_class;
@@ -32,15 +36,21 @@ class webphoto_handler_base_ini extends webphoto_lib_tree_handler
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_handler_base_ini constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname);
 
-        $this->_MODULE_DIR    = XOOPS_ROOT_PATH . '/modules/' . $dirname;
+        $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
         $this->_TRUST_DIRNAME = $trust_dirname;
-        $this->_TRUST_DIR     = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
 
-        $this->_utility_class       = webphoto_lib_utility::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
         $this->_mysql_utility_class = webphoto_lib_mysql_utility::getInstance();
 
         $this->_ini_class = webphoto_inc_ini::getSingleton($dirname, $trust_dirname);
@@ -53,11 +63,22 @@ class webphoto_handler_base_ini extends webphoto_lib_tree_handler
     //---------------------------------------------------------
     // ini class
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_ini($name)
     {
         return $this->_ini_class->get_ini($name);
     }
 
+    /**
+     * @param        $name
+     * @param string $grue
+     * @param null   $prefix
+     * @return mixed
+     */
     public function explode_ini($name, $grue = '|', $prefix = null)
     {
         return $this->_ini_class->explode_ini($name, $grue, $prefix);
@@ -66,43 +87,75 @@ class webphoto_handler_base_ini extends webphoto_lib_tree_handler
     //---------------------------------------------------------
     // utility class
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return array
+     */
     public function perm_str_to_array($str)
     {
         return $this->_utility_class->str_to_array($str, _C_WEBPHOTO_PERM_SEPARATOR);
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function perm_array_to_str($str)
     {
         return $this->_utility_class->array_to_str($str, _C_WEBPHOTO_PERM_SEPARATOR);
     }
 
+    /**
+     * @param $str
+     * @return array
+     */
     public function info_str_to_array($str)
     {
         return $this->_utility_class->str_to_array($str, _C_WEBPHOTO_INFO_SEPARATOR);
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function info_array_to_str($str)
     {
         return $this->_utility_class->array_to_str($str, _C_WEBPHOTO_INFO_SEPARATOR);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function perm_str_with_separetor($str)
     {
         // &123&
         $ret = _C_WEBPHOTO_PERM_SEPARATOR . $str . _C_WEBPHOTO_PERM_SEPARATOR;
+
         return $ret;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function perm_str_with_like_separetor($str)
     {
         // %&123&%
         $like = '%' . $this->perm_str_with_separetor($str) . '%';
+
         return $like;
     }
 
     //---------------------------------------------------------
     // mysql
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_datetime($str)
     {
         return $this->_mysql_utility_class->str_to_mysql_datetime($str);
@@ -111,6 +164,10 @@ class webphoto_handler_base_ini extends webphoto_lib_tree_handler
     //---------------------------------------------------------
     // debug
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function set_debug_sql_by_ini_name($name)
     {
         $val = $this->get_ini($name);
@@ -119,6 +176,9 @@ class webphoto_handler_base_ini extends webphoto_lib_tree_handler
         }
     }
 
+    /**
+     * @param $name
+     */
     public function set_debug_error_by_ini_name($name)
     {
         $val = $this->get_ini($name);

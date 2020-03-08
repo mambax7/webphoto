@@ -27,6 +27,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_photomanager
 //=========================================================
+
+/**
+ * Class webphoto_admin_photomanager
+ */
 class webphoto_admin_photomanager extends webphoto_edit_base
 {
     public $_search_class;
@@ -41,15 +45,21 @@ class webphoto_admin_photomanager extends webphoto_edit_base
     public $_ADMIN_PHOTO_PHP;
     public $_THIS_URL;
 
-    public $_MAX_COL         = 4;
+    public $_MAX_COL = 4;
     public $_PERPAGE_DEFAULT = 20;
 
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_photomanager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -58,12 +68,18 @@ class webphoto_admin_photomanager extends webphoto_edit_base
         $this->_delete_class = webphoto_edit_item_delete::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_photomanager|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_photomanager($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -73,10 +89,10 @@ class webphoto_admin_photomanager extends webphoto_edit_base
     public function main()
     {
         $this->_get_perpage = $this->_post_class->get_get_int('perpage', $this->_PERPAGE_DEFAULT);
-        $this->_get_catid   = $this->_post_class->get_get_int('cat_id');
-        $this->_get_pos     = $this->_post_class->get_get_int('pos');
-        $this->_get_txt     = $this->_post_class->get_get_text('txt');
-        $this->_get_mes     = $this->_post_class->get_get_text('mes');
+        $this->_get_catid = $this->_post_class->get_get_int('cat_id');
+        $this->_get_pos = $this->_post_class->get_get_int('pos');
+        $this->_get_txt = $this->_post_class->get_get_text('txt');
+        $this->_get_mes = $this->_post_class->get_get_text('mes');
 
         switch ($this->_get_action()) {
             case 'delete':
@@ -99,14 +115,18 @@ class webphoto_admin_photomanager extends webphoto_edit_base
         xoops_cp_footer();
     }
 
+    /**
+     * @return null|string
+     */
     public function _get_action()
     {
         $action = null;
-        if (!empty($_POST['action']) && $_POST['action'] == 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+        if (!empty($_POST['action']) && 'delete' == $_POST['action'] && isset($_POST['ids']) && is_array($_POST['ids'])) {
             $action = 'delete';
         } elseif (isset($_POST['update']) && isset($_POST['ids']) && is_array($_POST['ids'])) {
             $action = 'update';
         }
+
         return $action;
     }
 
@@ -139,32 +159,32 @@ class webphoto_admin_photomanager extends webphoto_edit_base
             exit();
         }
 
-        $post_cat_id      = $this->_post_class->get_post_int('new_cat_id');
-        $post_uid         = $this->_post_class->get_post_int('new_uid');
-        $post_title       = $this->_post_class->get_post_text('new_title');
-        $post_place       = $this->_post_class->get_post_text('new_place');
-        $post_equipment   = $this->_post_class->get_post_text('new_equipment');
+        $post_cat_id = $this->_post_class->get_post_int('new_cat_id');
+        $post_uid = $this->_post_class->get_post_int('new_uid');
+        $post_title = $this->_post_class->get_post_text('new_title');
+        $post_place = $this->_post_class->get_post_text('new_place');
+        $post_equipment = $this->_post_class->get_post_text('new_equipment');
         $post_description = $this->_post_class->get_post_text('new_description');
 
-        $post_text = array();
+        $post_text = [];
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_PHOTO_TEXT; ++$i) {
             $post_text[$i] = $this->_post_class->get_post_text('new_text' . $i);
         }
 
         $post_new_datetime_checkbox = $this->_post_class->get_post_int('new_datetime_checkbox');
-        $post_new_datetime          = $this->_item_create_class->build_datetime_by_post('new_datetime');
+        $post_new_datetime = $this->_item_create_class->build_datetime_by_post('new_datetime');
 
         $post_new_time_update_checkbox = $this->_post_class->get_post_int('new_time_update_checkbox');
-        $post_new_time_update          = $this->_post_class->get_post_text('new_time_update');
+        $post_new_time_update = $this->_post_class->get_post_text('new_time_update');
 
-        $flag_cat_id      = false;
-        $flag_uid         = false;
-        $flag_title       = false;
-        $flag_place       = false;
-        $flag_equipment   = false;
+        $flag_cat_id = false;
+        $flag_uid = false;
+        $flag_title = false;
+        $flag_place = false;
+        $flag_equipment = false;
         $flag_description = false;
-        $flag_datetime    = false;
-        $post_datetime    = '';
+        $flag_datetime = false;
+        $post_datetime = '';
         $flag_time_update = false;
         $post_time_update = '';
 
@@ -199,7 +219,7 @@ class webphoto_admin_photomanager extends webphoto_edit_base
 
         if ($post_new_time_update_checkbox && $post_new_time_update) {
             $new_update = strtotime($post_new_time_update);
-            if ($new_update != -1) {
+            if (-1 != $new_update) {
                 $flag_time_update = true;
                 $post_time_update = $new_update;
             }
@@ -269,21 +289,21 @@ class webphoto_admin_photomanager extends webphoto_edit_base
         $form_class = webphoto_admin_photo_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
         $keyword_array = $this->str_to_array($this->_get_txt, ' ');
-        $where         = $this->_item_create_class->build_where_by_keyword_array_catid($keyword_array, $this->_get_catid);
+        $where = $this->_item_create_class->build_where_by_keyword_array_catid($keyword_array, $this->_get_catid);
 
         $limit = $this->_get_perpage;
         $start = $this->_get_pos;
 
         if ($where) {
             $total = $this->_item_create_class->get_count_by_where($where);
-            $rows  = $this->_item_create_class->get_rows_by_where($where, $limit, $start);
+            $rows = $this->_item_create_class->get_rows_by_where($where, $limit, $start);
         } else {
             $total = $this->_item_create_class->get_count_all();
-            $rows  = $this->_item_create_class->get_rows_all_asc($limit, $start);
+            $rows = $this->_item_create_class->get_rows_all_asc($limit, $start);
         }
 
         // Information of page navigating
-        $end          = $form_class->_pagenavi_class->calc_end($start, $limit, $total);
+        $end = $form_class->_pagenavi_class->calc_end($start, $limit, $total);
         $photonavinfo = sprintf(_WEBPHOTO_S_NAVINFO, $start + 1, $end, $total);
 
         // --- print ---

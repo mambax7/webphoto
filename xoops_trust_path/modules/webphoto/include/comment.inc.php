@@ -48,12 +48,23 @@ function ' . $MY_DIRNAME . '_comments_approve( &$comment )
 
 // === com_update_base begin ===
 if (!function_exists('webphoto_comments_update_base')) {
+    /**
+     * @param $dirname
+     * @param $id
+     * @param $comments
+     * @return mixed
+     */
     function webphoto_comments_update_base($dirname, $id, $comments)
     {
         $inc_handler = webphoto_inc_comment::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_handler->update_photo_comments($id, $comments);
     }
 
+    /**
+     * @param $dirname
+     * @param $comment
+     */
     function webphoto_comments_approve_base($dirname, &$comment)
     {
         // notification mail here

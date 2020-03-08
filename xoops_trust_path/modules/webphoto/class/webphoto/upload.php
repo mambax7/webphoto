@@ -34,28 +34,38 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_upload
 //=========================================================
+
+/**
+ * Class webphoto_upload
+ */
 class webphoto_upload extends webphoto_base_this
 {
     public $_mime_class;
     public $_uploader_class;
 
     public $_max_filesize = 0;
-    public $_max_width    = 0;
-    public $_max_height   = 0;
+    public $_max_width = 0;
+    public $_max_height = 0;
 
     public $_ini_allowed_mimes = true;
 
     public $_uploader_media_name = null;
     public $_uploader_media_type = null;
-    public $_uploader_file_name  = null;
-    public $_tmp_name            = null;
+    public $_uploader_file_name = null;
+    public $_tmp_name = null;
 
-    public $_PHP_UPLOAD_ERRORS = array();
-    public $_UPLOADER_ERRORS   = array();
+    public $_PHP_UPLOAD_ERRORS = [];
+    public $_UPLOADER_ERRORS = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_upload constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -73,18 +83,30 @@ class webphoto_upload extends webphoto_base_this
         $this->_init_errors();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_upload
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_upload($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $field
+     * @param $flag_allow_all
+     * @return int
+     */
     public function fetch_media($field, $flag_allow_all)
     {
         $this->_tmp_name = null;
@@ -94,7 +116,7 @@ class webphoto_upload extends webphoto_base_this
             list($allowed_mimes, $allowed_exts) = $this->_mime_class->get_my_allowed_mimes();
         } else {
             $allowed_mimes = $this->_mime_class->get_image_mimes();
-            $allowed_exts  = $this->_mime_class->get_image_exts();
+            $allowed_exts = $this->_mime_class->get_image_exts();
         }
 
         $this->_uploader_class->setAllowedExtensions($allowed_exts);
@@ -114,16 +136,21 @@ class webphoto_upload extends webphoto_base_this
         }
 
         $this->_tmp_name = $this->_uploader_file_name;
+
         return 1;  // success
     }
 
+    /**
+     * @param $field
+     * @return int
+     */
     public function fetch_image($field)
     {
         $this->_tmp_name = null;
         $this->clear_errors();
 
         $allowed_mimes = $this->_mime_class->get_image_mimes();
-        $allowed_exts  = $this->_mime_class->get_image_exts();
+        $allowed_exts = $this->_mime_class->get_image_exts();
 
         $this->_uploader_class->setAllowedExtensions($allowed_exts);
         $this->_uploader_class->setMaxFileSize($this->_max_filesize);
@@ -142,6 +169,7 @@ class webphoto_upload extends webphoto_base_this
         }
 
         $this->_tmp_name = $this->_uploader_file_name;
+
         return 1;  // success
     }
 
@@ -153,6 +181,10 @@ class webphoto_upload extends webphoto_base_this
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_max_filesize($val)
     {
         $this->_max_filesize = (int)$val;
@@ -161,6 +193,12 @@ class webphoto_upload extends webphoto_base_this
     //---------------------------------------------------------
     // uploader class
     //---------------------------------------------------------
+
+    /**
+     * @param      $media_name
+     * @param null $index
+     * @return int
+     */
     public function uploader_fetch($media_name, $index = null)
     {
         // http://www.php.net/manual/en/features.file-upload.errors.php
@@ -168,22 +206,24 @@ class webphoto_upload extends webphoto_base_this
 
         $this->_uploader_media_name = null;
         $this->_uploader_media_type = null;
-        $this->_uploader_file_name  = null;
+        $this->_uploader_file_name = null;
 
         $ret1 = $this->_uploader_class->fetchMedia($media_name, $index);
         if (!$ret1) {
             $error_num = $this->_uploader_class->getMediaError();
-            if ($error_num == UPLOAD_ERR_NO_FILE) {
+            if (UPLOAD_ERR_NO_FILE == $error_num) {
                 return 0;   // no action
             }
 
             $this->build_uploader_errors();
+
             return _C_WEBPHOTO_ERR_UPLOAD;
         }
 
         $ret2 = $this->_uploader_class->upload();
         if (!$ret2) {
             $this->build_uploader_errors();
+
             return _C_WEBPHOTO_ERR_UPLOAD;
         }
 
@@ -191,7 +231,7 @@ class webphoto_upload extends webphoto_base_this
         // The original file name will be the title if title is empty
         $this->_uploader_media_name = $this->_uploader_class->getMediaName();
         $this->_uploader_media_type = $this->_uploader_class->getMediaType();
-        $this->_uploader_file_name  = $this->_uploader_class->getSavedFileName();
+        $this->_uploader_file_name = $this->_uploader_class->getSavedFileName();
 
         return 1;   // Succeed
     }
@@ -211,29 +251,44 @@ class webphoto_upload extends webphoto_base_this
         return $this->_uploader_media_type;
     }
 
+    /**
+     * @param $field
+     * @return bool
+     */
     public function is_readable_files_tmp_name($field)
     {
         // Notice [PHP]: Undefined index: file_photo
         if (isset($_FILES[$field]['tmp_name'])) {
             return is_readable($_FILES[$field]['tmp_name']);
         }
+
         return false;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function is_readable_in_tmp_dir($name)
     {
         $file = $this->_TMP_DIR . '/' . $name;
         if ($name && file_exists($file) && is_readable($file)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $field
+     * @return bool
+     */
     public function exist_file_param($field)
     {
         if (isset($_FILES[$field]) && $_FILES[$field]['name'] && $_FILES[$field]['tmp_name']) {
             return true;
         }
+
         return false;
     }
 
@@ -245,6 +300,9 @@ class webphoto_upload extends webphoto_base_this
         }
     }
 
+    /**
+     * @param $code
+     */
     public function build_uploader_error_single($code)
     {
         $err1 = $this->get_uploader_error_msg($code);
@@ -254,35 +312,28 @@ class webphoto_upload extends webphoto_base_this
             case 7:
                 $err2 = $this->get_php_upload_error_msg($this->_uploader_class->getMediaError());
                 break;
-
             case 8:
             case 9:
                 $err2 = $this->_uploader_class->getUploadDir();
                 break;
-
             case 10:
                 $err2 = $this->_uploader_class->getMediaType();
                 break;
-
             case 11:
                 $err1 .= ' : ' . $this->_uploader_class->getMediaSize();
                 $err1 .= ' > ' . $this->_max_filesize;
                 break;
-
             case 12:
                 $err1 .= ' : ' . $this->_uploader_class->getMediaWidth();
                 $err1 .= ' > ' . $this->_max_width;
                 break;
-
             case 13:
                 $err1 .= ' : ' . $this->_uploader_class->getMediaHeight();
                 $err1 .= ' > ' . $this->_max_height;
                 break;
-
             case 14:
                 $err2 = $this->_uploader_class->getMediaName();
                 break;
-
             case 1:
             case 2:
             case 3:
@@ -307,7 +358,7 @@ class webphoto_upload extends webphoto_base_this
         $err_2 = sprintf($this->get_constant('PHP_UPLOAD_ERR_FORM_SIZE'), $this->_utility_class->format_filesize($this->_max_filesize));
 
         // http://www.php.net/manual/en/features.file-upload.errors.php
-        $this->_PHP_UPLOAD_ERRORS = array(
+        $this->_PHP_UPLOAD_ERRORS = [
             //      0 => $this->get_constant('PHP_UPLOAD_ERR_OK') ,
             1 => $this->get_constant('PHP_UPLOAD_ERR_INI_SIZE'),
             2 => $err_2,
@@ -316,39 +367,49 @@ class webphoto_upload extends webphoto_base_this
             6 => $this->get_constant('PHP_UPLOAD_ERR_NO_TMP_DIR'),
             7 => $this->get_constant('PHP_UPLOAD_ERR_CANT_WRITE'),
             8 => $this->get_constant('PHP_UPLOAD_ERR_EXTENSION'),
-        );
+        ];
 
-        $this->_UPLOADER_ERRORS = array(
-            1  => $this->get_constant('UPLOADER_ERR_NOT_FOUND'),
-            2  => $this->get_constant('UPLOADER_ERR_INVALID_FILE_SIZE'),
-            3  => $this->get_constant('UPLOADER_ERR_EMPTY_FILE_NAME'),
-            4  => $this->get_constant('UPLOADER_ERR_NO_FILE'),
-            5  => $this->get_constant('UPLOADER_ERR_NOT_SET_DIR'),
-            6  => $this->get_constant('UPLOADER_ERR_NOT_ALLOWED_EXT'),
-            7  => $this->get_constant('UPLOADER_ERR_PHP_OCCURED'), // mediaError
-            8  => $this->get_constant('UPLOADER_ERR_NOT_OPEN_DIR'), // uploadDir
-            9  => $this->get_constant('UPLOADER_ERR_NO_PERM_DIR'), // uploadDir
+        $this->_UPLOADER_ERRORS = [
+            1 => $this->get_constant('UPLOADER_ERR_NOT_FOUND'),
+            2 => $this->get_constant('UPLOADER_ERR_INVALID_FILE_SIZE'),
+            3 => $this->get_constant('UPLOADER_ERR_EMPTY_FILE_NAME'),
+            4 => $this->get_constant('UPLOADER_ERR_NO_FILE'),
+            5 => $this->get_constant('UPLOADER_ERR_NOT_SET_DIR'),
+            6 => $this->get_constant('UPLOADER_ERR_NOT_ALLOWED_EXT'),
+            7 => $this->get_constant('UPLOADER_ERR_PHP_OCCURED'), // mediaError
+            8 => $this->get_constant('UPLOADER_ERR_NOT_OPEN_DIR'), // uploadDir
+            9 => $this->get_constant('UPLOADER_ERR_NO_PERM_DIR'), // uploadDir
             10 => $this->get_constant('UPLOADER_ERR_NOT_ALLOWED_MIME'), // mediaType
             11 => $this->get_constant('UPLOADER_ERR_LARGE_FILE_SIZE'), // mediaSize
             12 => $this->get_constant('UPLOADER_ERR_LARGE_WIDTH'), // maxWidth
             13 => $this->get_constant('UPLOADER_ERR_LARGE_HEIGHT'), // maxHeight
             14 => $this->get_constant('UPLOADER_ERR_UPLOAD'), // mediaName
-        );
+        ];
     }
 
+    /**
+     * @param $num
+     * @return mixed|string
+     */
     public function get_php_upload_error_msg($num)
     {
         if (isset($this->_PHP_UPLOAD_ERRORS[$num])) {
             return $this->_PHP_UPLOAD_ERRORS[$num];
         }
+
         return 'Other Error';
     }
 
+    /**
+     * @param $num
+     * @return mixed|string
+     */
     public function get_uploader_error_msg($num)
     {
         if (isset($this->_UPLOADER_ERRORS[$num])) {
             return $this->_UPLOADER_ERRORS[$num];
         }
+
         return 'Other Error';
     }
 

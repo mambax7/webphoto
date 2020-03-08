@@ -20,6 +20,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_editor
 //=========================================================
+
+/**
+ * Class webphoto_editor
+ */
 class webphoto_editor extends webphoto_plugin_ini
 {
     public $_has_html = false;
@@ -27,6 +31,12 @@ class webphoto_editor extends webphoto_plugin_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_editor constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,21 +44,32 @@ class webphoto_editor extends webphoto_plugin_ini
         $this->set_prefix('webphoto_editor_');
 
         $this->_perm_class = webphoto_permission::getInstance($dirname, $trust_dirname);
-        $this->_has_html   = $this->_perm_class->has_html();
+        $this->_has_html = $this->_perm_class->has_html();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_editor|\webphoto_lib_plugin
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_editor($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // editor
     //---------------------------------------------------------
+
+    /**
+     * @param $type
+     * @return bool
+     */
     public function display_options($type)
     {
         if (empty($type)) {
@@ -59,9 +80,19 @@ class webphoto_editor extends webphoto_plugin_ini
         if (!is_object($class)) {
             return false;
         }
+
         return $class->display_options();
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @param $name
+     * @param $value
+     * @param $rows
+     * @param $cols
+     * @return array|bool
+     */
     public function init_form($type, $id, $name, $value, $rows, $cols)
     {
         $class = $this->get_class_object($type);
@@ -69,18 +100,23 @@ class webphoto_editor extends webphoto_plugin_ini
             return false;
         }
 
-        $arr = array(
-            'js'   => $class->build_js(),
+        $arr = [
+            'js' => $class->build_js(),
             'show' => $class->show_display_options(),
             'desc' => $class->build_textarea($id, $name, $value, $rows, $cols),
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $flag
+     * @return array|bool
+     */
     public function build_list_options($flag)
     {
         $list = $this->build_list();
-        $arr  = array();
+        $arr = [];
         foreach ($list as $type) {
             if ($this->exists($type)) {
                 $arr[$type] = $type;
@@ -88,14 +124,18 @@ class webphoto_editor extends webphoto_plugin_ini
         }
         if ($flag
             && is_array($arr)
-            && (count($arr) == 1)
-            && isset($arr[_C_WEBPHOTO_EDITOR_DEFAULT])
-        ) {
+            && (1 == count($arr))
+            && isset($arr[_C_WEBPHOTO_EDITOR_DEFAULT])) {
             return false;
         }
+
         return $arr;
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     public function exists($type)
     {
         $class = $this->get_class_object($type);
@@ -104,10 +144,10 @@ class webphoto_editor extends webphoto_plugin_ini
         }
 
         if ($class->exists()
-            && ($this->_has_html || $class->allow_in_not_has_html())
-        ) {
+            && ($this->_has_html || $class->allow_in_not_has_html())) {
             return true;
         }
+
         return false;
     }
 

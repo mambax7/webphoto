@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_mail_send
 //=========================================================
+
+/**
+ * Class webphoto_mail_send
+ */
 class webphoto_mail_send extends webphoto_base_this
 {
     public $_mail_template_class;
@@ -21,6 +25,12 @@ class webphoto_mail_send extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_mail_send constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -31,38 +41,53 @@ class webphoto_mail_send extends webphoto_base_this
     }
 
     // for admin_photo_manage admin_catmanager
+
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_mail_send
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_mail_send($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // submit
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function send_waiting($row)
     {
         $from_email = $this->_xoops_adminmail;
-        $subject    = $this->build_subject($this->get_constant('MAIL_SUBMIT_WAITING'));
-        $body       = $this->build_waiting_common_body($row, 'global_waiting_notify.tpl');
+        $subject = $this->build_subject($this->get_constant('MAIL_SUBMIT_WAITING'));
+        $body = $this->build_waiting_common_body($row, 'global_waiting_notify.tpl');
 
         $users = $this->build_waiting_users($row);
         foreach ($users as $user) {
-            $param = array(
-                'to_emails'  => $user->getVar('email', 'n'),
+            $param = [
+                'to_emails' => $user->getVar('email', 'n'),
                 'from_email' => $from_email,
-                'subject'    => $subject,
-                'body'       => $this->build_waiting_body($user, $body),
-                'debug'      => true,
-            );
+                'subject' => $subject,
+                'body' => $this->build_waiting_body($user, $body),
+                'debug' => true,
+            ];
 
             $this->send_by_param($param);
         }
     }
 
+    /**
+     * @param $item_row
+     * @return mixed|null
+     */
     public function build_waiting_users($item_row)
     {
         $users = null;
@@ -81,27 +106,41 @@ class webphoto_mail_send extends webphoto_base_this
         return $users;
     }
 
+    /**
+     * @param $group_id
+     * @return mixed
+     */
     public function get_users_by_groupid($group_id)
     {
         return $this->_xoops_class->get_member_users_by_group($group_id, true);
     }
 
+    /**
+     * @param $row
+     * @param $template
+     * @return mixed
+     */
     public function build_waiting_common_body($row, $template)
     {
-        $url  = $this->_MODULE_URL . '/admin/index.php?fct=item_manager&op=modify_form&item_id=' . $row['item_id'];
-        $tags = array(
+        $url = $this->_MODULE_URL . '/admin/index.php?fct=item_manager&op=modify_form&item_id=' . $row['item_id'];
+        $tags = [
             'PHOTO_TITLE' => $row['item_title'],
             'WAITING_URL' => $url,
-        );
+        ];
 
         return $this->build_body_by_tags($tags, $template);
     }
 
+    /**
+     * @param $user
+     * @param $str
+     * @return mixed
+     */
     public function build_waiting_body($user, $str)
     {
-        $tags = array(
+        $tags = [
             'X_UNAME' => $user->getVar('uname'),
-        );
+        ];
 
         return $this->_mail_template_class->replace_str_by_tags($str, $tags);
     }
@@ -109,16 +148,31 @@ class webphoto_mail_send extends webphoto_base_this
     //---------------------------------------------------------
     // admin
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function send_approve($row)
     {
         return $this->send_approve_common($row, $this->get_constant('MAIL_SUBMIT_APPROVE'), 'submit_approve_notify.tpl');
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function send_refuse($row)
     {
         return $this->send_approve_common($row, $this->get_constant('MAIL_SUBMIT_REFUSE'), 'submit_refuse_notify.tpl');
     }
 
+    /**
+     * @param $row
+     * @param $subject
+     * @param $template
+     * @return bool
+     */
     public function send_approve_common($row, $subject, $template)
     {
         $email = $this->get_xoops_email_by_uid($row['item_uid']);
@@ -126,24 +180,29 @@ class webphoto_mail_send extends webphoto_base_this
             return true;    // no mail
         }
 
-        $param = array(
-            'to_emails'  => $email,
+        $param = [
+            'to_emails' => $email,
             'from_email' => $this->_xoops_adminmail,
-            'subject'    => $this->build_subject($subject),
-            'body'       => $this->build_approve_body($row, $template),
-            'debug'      => true,
-        );
+            'subject' => $this->build_subject($subject),
+            'body' => $this->build_approve_body($row, $template),
+            'debug' => true,
+        ];
 
         return $this->send_by_param($param);
     }
 
+    /**
+     * @param $row
+     * @param $template
+     * @return mixed
+     */
     public function build_approve_body($row, $template)
     {
-        $tags = array(
+        $tags = [
             'PHOTO_TITLE' => $row['item_title'],
-            'PHOTO_URL'   => $this->build_uri_photo($row['item_id']),
+            'PHOTO_URL' => $this->build_uri_photo($row['item_id']),
             'PHOTO_UNAME' => $this->get_xoops_uname_by_uid($row['item_uid']),
-        );
+        ];
 
         return $this->build_body_by_tags($tags, $template);
     }
@@ -151,28 +210,46 @@ class webphoto_mail_send extends webphoto_base_this
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool
+     */
     public function send_by_param($param)
     {
         $ret = $this->_mail_send_class->send($param);
         if (!$ret) {
             $this->set_error($this->_mail_send_class->get_errors());
+
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param $subject
+     * @return string
+     */
     public function build_subject($subject)
     {
         $str = $subject;
         $str .= ' [' . $this->_xoops_sitename . '] ';
         $str .= $this->_MODULE_NAME;
+
         return $str;
     }
 
+    /**
+     * @param $tags
+     * @param $template
+     * @return mixed
+     */
     public function build_body_by_tags($tags, $template)
     {
         $this->_mail_template_class->init_tag_array();
         $this->_mail_template_class->assign($tags);
+
         return $this->_mail_template_class->replace_tag_array_by_template($template);
     }
 

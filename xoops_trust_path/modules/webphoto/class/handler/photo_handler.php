@@ -22,6 +22,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_photo_handler
 //=========================================================
+
+/**
+ * Class webphoto_photo_handler
+ */
 class webphoto_photo_handler extends webphoto_lib_handler
 {
     public $_AREA_NS = 1.0;
@@ -30,93 +34,108 @@ class webphoto_photo_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_photo_handler constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         parent::__construct($dirname);
         $this->set_table_prefix_dirname('photo');
         $this->set_id_name('photo_id');
 
-        $constpref = strtoupper('_P_' . $dirname . '_');
+        $constpref = mb_strtoupper('_P_' . $dirname . '_');
         $this->set_debug_sql_by_const_name($constpref . 'DEBUG_SQL');
         $this->set_debug_error_by_const_name($constpref . 'DEBUG_ERROR');
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_lib_error|\webphoto_photo_handler
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_photo_handler($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'photo_id'             => 0,
-            'photo_time_create'    => $time_create,
-            'photo_time_update'    => $time_update,
-            'photo_cat_id'         => 0,
-            'photo_gicon_id'       => 0,
-            'photo_uid'            => 0,
-            'photo_datetime'       => '0000-00-00 00:00:00',
-            'photo_title'          => '',
-            'photo_place'          => '',
-            'photo_equipment'      => '',
-            'photo_file_url'       => '',
-            'photo_file_path'      => '',
-            'photo_file_name'      => '',
-            'photo_file_ext'       => '',
-            'photo_file_mime'      => '',
-            'photo_file_medium'    => '',
-            'photo_file_size'      => 0,
-            'photo_cont_url'       => '',
-            'photo_cont_path'      => '',
-            'photo_cont_name'      => '',
-            'photo_cont_ext'       => '',
-            'photo_cont_mime'      => '',
-            'photo_cont_medium'    => '',
-            'photo_cont_size'      => 0,
-            'photo_cont_width'     => 0,
-            'photo_cont_height'    => 0,
-            'photo_cont_duration'  => 0,
-            'photo_cont_exif'      => '',
-            'photo_middle_width'   => 0,
-            'photo_middle_height'  => 0,
-            'photo_thumb_url'      => '',
-            'photo_thumb_path'     => '',
-            'photo_thumb_name'     => '',
-            'photo_thumb_ext'      => '',
-            'photo_thumb_mime'     => '',
-            'photo_thumb_medium'   => '',
-            'photo_thumb_size'     => 0,
-            'photo_thumb_width'    => 0,
-            'photo_thumb_height'   => 0,
-            'photo_gmap_latitude'  => 0,
+        $arr = [
+            'photo_id' => 0,
+            'photo_time_create' => $time_create,
+            'photo_time_update' => $time_update,
+            'photo_cat_id' => 0,
+            'photo_gicon_id' => 0,
+            'photo_uid' => 0,
+            'photo_datetime' => '0000-00-00 00:00:00',
+            'photo_title' => '',
+            'photo_place' => '',
+            'photo_equipment' => '',
+            'photo_file_url' => '',
+            'photo_file_path' => '',
+            'photo_file_name' => '',
+            'photo_file_ext' => '',
+            'photo_file_mime' => '',
+            'photo_file_medium' => '',
+            'photo_file_size' => 0,
+            'photo_cont_url' => '',
+            'photo_cont_path' => '',
+            'photo_cont_name' => '',
+            'photo_cont_ext' => '',
+            'photo_cont_mime' => '',
+            'photo_cont_medium' => '',
+            'photo_cont_size' => 0,
+            'photo_cont_width' => 0,
+            'photo_cont_height' => 0,
+            'photo_cont_duration' => 0,
+            'photo_cont_exif' => '',
+            'photo_middle_width' => 0,
+            'photo_middle_height' => 0,
+            'photo_thumb_url' => '',
+            'photo_thumb_path' => '',
+            'photo_thumb_name' => '',
+            'photo_thumb_ext' => '',
+            'photo_thumb_mime' => '',
+            'photo_thumb_medium' => '',
+            'photo_thumb_size' => 0,
+            'photo_thumb_width' => 0,
+            'photo_thumb_height' => 0,
+            'photo_gmap_latitude' => 0,
             'photo_gmap_longitude' => 0,
-            'photo_gmap_zoom'      => 0,
-            'photo_gmap_type'      => 0,
-            'photo_perm_read'      => '*',
-            'photo_status'         => 0,
-            'photo_hits'           => 0,
-            'photo_rating'         => 0,
-            'photo_votes'          => 0,
-            'photo_comments'       => 0,
-            'photo_description'    => '',
-            'photo_search'         => '',
-        );
+            'photo_gmap_zoom' => 0,
+            'photo_gmap_type' => 0,
+            'photo_perm_read' => '*',
+            'photo_status' => 0,
+            'photo_hits' => 0,
+            'photo_rating' => 0,
+            'photo_votes' => 0,
+            'photo_comments' => 0,
+            'photo_description' => '',
+            'photo_search' => '',
+        ];
 
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_PHOTO_TEXT; ++$i) {
             $arr['photo_text' . $i] = '';
@@ -128,6 +147,12 @@ class webphoto_photo_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param bool $force
+     * @return bool|void
+     */
     public function insert($row, $force = false)
     {
         extract($row);
@@ -269,6 +294,12 @@ class webphoto_photo_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param bool $force
+     * @return mixed
+     */
     public function update($row, $force = false)
     {
         extract($row);
@@ -335,6 +366,10 @@ class webphoto_photo_handler extends webphoto_lib_handler
         return $this->query($sql, 0, 0, $force);
     }
 
+    /**
+     * @param $id_array
+     * @return mixed
+     */
     public function update_status_by_id_array($id_array)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -344,6 +379,12 @@ class webphoto_photo_handler extends webphoto_lib_handler
         return $this->query($sql);
     }
 
+    /**
+     * @param $photo_id
+     * @param $rating
+     * @param $votes
+     * @return mixed
+     */
     public function update_rating_by_id($photo_id, $rating, $votes)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -354,6 +395,10 @@ class webphoto_photo_handler extends webphoto_lib_handler
         return $this->query($sql);
     }
 
+    /**
+     * @param $gicon_id
+     * @return mixed
+     */
     public function clear_gicon_id($gicon_id)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -364,6 +409,11 @@ class webphoto_photo_handler extends webphoto_lib_handler
     }
 
     // when GET request
+
+    /**
+     * @param $photo_id
+     * @return mixed
+     */
     public function update_hits($photo_id)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -377,171 +427,322 @@ class webphoto_photo_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // get count
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function get_count_public()
     {
         $where = $this->build_where_public();
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @return int
+     */
     public function get_count_waiting()
     {
         return $this->get_count_by_where($this->build_where_waiting());
     }
 
+    /**
+     * @param $cat_id
+     * @return int
+     */
     public function get_count_by_catid($cat_id)
     {
         $where = 'photo_cat_id=' . (int)$cat_id;
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $cat_id
+     * @return int
+     */
     public function get_count_public_by_catid($cat_id)
     {
         $where = $this->build_where_public_by_catid($cat_id);
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $catid_array
+     * @return int
+     */
     public function get_count_public_by_catid_array($catid_array)
     {
         $where = $this->build_where_public_by_catid_array($catid_array);
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $uid
+     * @return int
+     */
     public function get_count_public_by_uid($uid)
     {
         $where = $this->build_where_public_by_uid($uid);
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $photo_id
+     * @param $uid
+     * @return int
+     */
     public function get_count_by_photoid_uid($photo_id, $uid)
     {
         $where = 'photo_id=' . (int)$photo_id;
         $where .= ' AND photo_uid=' . (int)$uid;
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $datetime
+     * @return int
+     */
     public function get_count_public_by_datetime($datetime)
     {
         $where = $this->build_where_public_by_datetime($datetime);
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @param $datetime
+     * @return int
+     */
     public function get_count_public_by_like_datetime($datetime)
     {
         $where = $this->build_where_public_by_like_datetime($datetime);
+
         return $this->get_count_by_where($where);
     }
 
+    /**
+     * @return int
+     */
     public function get_count_public_imode()
     {
         $where = $this->build_where_public_imode();
+
         return $this->get_count_by_where($where);
     }
 
     //---------------------------------------------------------
     // get row
     //---------------------------------------------------------
+
+    /**
+     * @param $photo_id
+     * @return bool
+     */
     public function get_row_public_by_id($photo_id)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE ' . $this->build_where_public();
         $sql .= ' AND photo_id=' . (int)$photo_id;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $photo_id
+     * @return bool|mixed
+     */
     public function get_title_by_id($photo_id)
     {
         $row = $this->get_row_by_id($photo_id);
         if (is_array($row)) {
             return $row['photo_title'];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public($limit = 0, $offset = 0)
     {
-        $where   = $this->build_where_public();
+        $where = $this->build_where_public();
         $orderby = 'photo_id ASC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
     public function get_rows_public_latest($limit = 0, $offset = 0)
     {
-        $where   = $this->build_where_public();
+        $where = $this->build_where_public();
         $orderby = 'photo_time_update DESC, photo_id DESC';
+
         return $this->get__rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_by_orderby($orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public();
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $cat_id
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_by_catid_orderby($cat_id, $orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_cat_id=' . (int)$cat_id;
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $uid
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_by_uid_orderby($uid, $orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public_by_uid($uid);
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $datetime
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_by_datetime_orderby($datetime, $orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public_by_datetime($datetime);
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_imode_by_orderby($orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public_imode();
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_waiting($limit = 0, $offset = 0)
     {
-        $where   = $this->build_where_waiting();
+        $where = $this->build_where_waiting();
         $orderby = 'photo_id ASC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $cat_id
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_catid($cat_id, $limit = 0, $offset = 0)
     {
-        $where   = 'photo_cat_id=' . (int)$cat_id;
+        $where = 'photo_cat_id=' . (int)$cat_id;
         $orderby = 'photo_id ASC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $id_array
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_id_array($id_array, $limit = 0, $offset = 0)
     {
-        $where   = $this->build_where_by_photoid_array($id_array);
+        $where = $this->build_where_by_photoid_array($id_array);
         $orderby = 'photo_id ASC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_gmap_latest($limit = 0, $offset = 0)
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_gmap();
         $orderby = 'photo_time_update DESC, photo_id DESC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $catid_array
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_gmap_latest_by_catid_array($catid_array, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public_by_catid_array($catid_array);
         $where .= ' AND ' . $this->build_where_gmap();
         $orderby = 'photo_time_update DESC, photo_id DESC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param     $photo_id
+     * @param     $lat
+     * @param     $lon
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_gmap_area($photo_id, $lat, $lon, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public();
@@ -549,9 +750,15 @@ class webphoto_photo_handler extends webphoto_lib_handler
         $where .= ' AND ' . $this->build_where_gmap_area($lat, $lon);
         $where .= ' AND photo_id <> ' . (int)$photo_id;
         $orderby = 'photo_id ASC';
+
         return $this->get_rows_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_public_catlist($limit = 0, $offset = 0)
     {
         $sql = 'SELECT *, COUNT(photo_id) AS cat_sum ';
@@ -559,31 +766,51 @@ class webphoto_photo_handler extends webphoto_lib_handler
         $sql .= ' WHERE ' . $this->build_where_public();
         $sql .= ' GROUP BY photo_cat_id';
         $sql .= ' ORDER BY photo_cat_id';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
+    /**
+     * @param $id_array
+     * @return array
+     */
     public function get_rows_from_id_array($id_array)
     {
-        $arr = array();
+        $arr = [];
         foreach ($id_array as $id) {
             $arr[] = $this->get_row_by_id($id);
         }
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // get id array
     //---------------------------------------------------------
+
+    /**
+     * @param     $cat_id
+     * @param     $orderby
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_id_array_public_by_catid_orderby($cat_id, $orderby, $limit = 0, $offset = 0)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_cat_id=' . (int)$cat_id;
+
         return $this->get_id_array_by_where_orderby($where, $orderby, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // build
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return string
+     */
     public function build_search($row)
     {
         $text = '';
@@ -605,89 +832,149 @@ class webphoto_photo_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // where
     //---------------------------------------------------------
+
+    /**
+     * @param $cat_id
+     * @return string
+     */
     public function build_where_public_by_catid($cat_id)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_cat_id=' . (int)$cat_id;
+
         return $where;
     }
 
+    /**
+     * @param $catid_array
+     * @return string
+     */
     public function build_where_public_by_catid_array($catid_array)
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_by_catid_array($catid_array);
+
         return $where;
     }
 
+    /**
+     * @param $uid
+     * @return string
+     */
     public function build_where_public_by_uid($uid)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_uid=' . (int)$uid;
+
         return $where;
     }
 
+    /**
+     * @param $datetime
+     * @return string
+     */
     public function build_where_public_by_datetime($datetime)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_datetime =' . $this->quote($datetime);
+
         return $where;
     }
 
+    /**
+     * @param $datetime
+     * @return string
+     */
     public function build_where_public_by_like_datetime($datetime)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_datetime LIKE ' . $this->quote($datetime . '%');
+
         return $where;
     }
 
+    /**
+     * @param $place
+     * @return string
+     */
     public function build_where_public_by_place($place)
     {
         $where = $this->build_where_public();
         $where .= ' AND photo_place =' . $this->quote($place);
+
         return $where;
     }
 
+    /**
+     * @param $place_array
+     * @return string
+     */
     public function build_where_public_by_place_array($place_array)
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_place_array($place_array);
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_public_photo()
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_photo();
+
         return $where;
     }
 
+    /**
+     * @param $cat_id
+     * @return string
+     */
     public function build_where_public_photo_by_catid($cat_id)
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_photo();
         $where .= ' AND photo_cat_id=' . (int)$cat_id;
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_public_imode()
     {
         $where = $this->build_where_public();
         $where .= ' AND ' . $this->build_where_imode();
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_public()
     {
         $where = ' photo_status > 0 ';
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_waiting()
     {
         $where = ' photo_status = 0 ';
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_imode()
     {
         $where = " ( photo_cont_ext='gif' ";
@@ -695,52 +982,76 @@ class webphoto_photo_handler extends webphoto_lib_handler
         $where .= "OR photo_cont_ext='jpeg' ";
         $where .= "OR photo_cont_ext='3gp' ";
         $where .= "OR photo_cont_ext='3g2' )";
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_photo()
     {
         $where = " ( photo_cont_ext='gif' ";
         $where .= "OR photo_cont_ext='png' ";
         $where .= "OR photo_cont_ext='jpg' ";
         $where .= "OR photo_cont_ext='jpeg' ) ";
+
         return $where;
     }
 
+    /**
+     * @return string
+     */
     public function build_where_gmap()
     {
         $where = ' ( photo_gmap_latitude <> 0 ';
         $where .= 'OR photo_gmap_longitude <> 0 ';
         $where .= 'OR photo_gmap_zoom <> 0 ) ';
+
         return $where;
     }
 
+    /**
+     * @param $place_array
+     * @return null|string
+     */
     public function build_where_place_array($place_array)
     {
         return $this->build_where_by_keyword_array($place_array, 'AND', 'photo_place');
     }
 
+    /**
+     * @param $keyword_array
+     * @return string
+     */
     public function build_where_waiting_by_keyword_array($keyword_array)
     {
-        $where     = $this->build_where_waiting();
+        $where = $this->build_where_waiting();
         $where_key = $this->build_where_by_keyword_array($keyword_array);
         if ($where_key) {
             $where .= ' AND ' . $where_key;
         }
+
         return $where;
     }
 
+    /**
+     * @param $keyword_array
+     * @param $cat_id
+     * @return null|string
+     */
     public function build_where_by_keyword_array_catid($keyword_array, $cat_id)
     {
         $where_key = $this->build_where_by_keyword_array($keyword_array);
 
         $where_cat = null;
-        if ($cat_id != 0) {
+        if (0 != $cat_id) {
             $where_cat = 'photo_cat_id=' . (int)$cat_id;
         }
 
         if ($where_key && $where_cat) {
             $where = $where_key . ' AND ' . $where_cat;
+
             return $where;
         } elseif ($where_key) {
             return $where_key;
@@ -751,28 +1062,33 @@ class webphoto_photo_handler extends webphoto_lib_handler
         return null;
     }
 
+    /**
+     * @param        $keyword_array
+     * @param string $andor
+     * @param string $name
+     * @return null|string
+     */
     public function build_where_by_keyword_array($keyword_array, $andor = 'AND', $name = 'photo_search')
     {
         if (!is_array($keyword_array) || !count($keyword_array)) {
             return null;
         }
 
-        switch (strtolower($andor)) {
+        switch (mb_strtolower($andor)) {
             case 'exact':
                 $where = $this->build_where_keyword_single($keyword_array[0], $name);
-                return $where;
 
+                return $where;
             case 'or':
                 $andor_glue = 'OR';
                 break;
-
             case 'and':
             default:
                 $andor_glue = 'AND';
                 break;
         }
 
-        $arr = array();
+        $arr = [];
 
         foreach ($keyword_array as $keyword) {
             $keyword = trim($keyword);
@@ -782,20 +1098,31 @@ class webphoto_photo_handler extends webphoto_lib_handler
         }
 
         if (is_array($arr) && count($arr)) {
-            $glue  = ' ' . $andor_glue . ' ';
+            $glue = ' ' . $andor_glue . ' ';
             $where = ' ( ' . implode($glue, $arr) . ' ) ';
+
             return $where;
         }
 
         return null;
     }
 
+    /**
+     * @param        $str
+     * @param string $name
+     * @return string
+     */
     public function build_where_keyword_single($str, $name = 'photo_search')
     {
         $text = $name . " LIKE '%" . addslashes($str) . "%'";
+
         return $text;
     }
 
+    /**
+     * @param $id_array
+     * @return string
+     */
     public function build_where_by_photoid_array($id_array)
     {
         $where = '';
@@ -805,9 +1132,14 @@ class webphoto_photo_handler extends webphoto_lib_handler
 
         // 0 means to belong no category
         $where .= '0';
+
         return $where;
     }
 
+    /**
+     * @param $catid_array
+     * @return string
+     */
     public function build_where_by_catid_array($catid_array)
     {
         $where = ' photo_cat_id IN ( ';
@@ -817,33 +1149,45 @@ class webphoto_photo_handler extends webphoto_lib_handler
 
         // 0 means to belong no category
         $where .= ' 0 )';
+
         return $where;
     }
 
     //---------------------------------------------------------
     // build gmap
     //---------------------------------------------------------
+
+    /**
+     * @param $lat
+     * @param $lon
+     * @return string
+     */
     public function build_where_gmap_area($lat, $lon)
     {
         $north = $this->adjust_latitude($lat + $this->_AREA_NS);
         $south = $this->adjust_latitude($lat - $this->_AREA_NS);
-        $east  = $this->adjust_longitude($lon + $this->_AREA_EW);
-        $west  = $this->adjust_longitude($lon - $this->_AREA_EW);
+        $east = $this->adjust_longitude($lon + $this->_AREA_EW);
+        $west = $this->adjust_longitude($lon - $this->_AREA_EW);
 
         $where = ' photo_gmap_latitude > ' . (float)$south;
         $where .= ' AND photo_gmap_latitude < ' . (float)$north;
         $where .= ' AND photo_gmap_longitude > ' . (float)$west;
         $where .= ' AND photo_gmap_longitude < ' . (float)$east;
+
         return $where;
     }
 
+    /**
+     * @param $lat
+     * @return int
+     */
     public function adjust_latitude($lat)
     {
         // north pole
         if ($lat > 90) {
             $lat = 90;
 
-            // south pole
+        // south pole
         } elseif ($lat < -90) {
             $lat = -90;
         }
@@ -851,6 +1195,10 @@ class webphoto_photo_handler extends webphoto_lib_handler
         return $lat;
     }
 
+    /**
+     * @param $lon
+     * @return int
+     */
     public function adjust_longitude($lon)
     {
         // international date line
@@ -859,42 +1207,70 @@ class webphoto_photo_handler extends webphoto_lib_handler
         } elseif ($lon < -180) {
             $lon = 360 + $lon;
         }
+
         return $lon;
     }
 
     //---------------------------------------------------------
     // build datetime
     //---------------------------------------------------------
+
+    /**
+     * @param      $key
+     * @param null $default
+     * @return mixed
+     */
     public function build_datetime_by_post($key, $default = null)
     {
         $val = isset($_POST[$key]) ? $_POST[$key] : $default;
+
         return $this->build_datetime($val);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function build_datetime($str)
     {
         $utility_class = webphoto_lib_utility::getInstance();
+
         return $utility_class->str_to_mysql_datetime($str);
     }
 
     //---------------------------------------------------------
     // for show
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_show_description_disp($row)
     {
         $myts = MyTextSanitizer::getInstance();
+
         return $myts->displayTarea($row['photo_description'], 0, 1, 1, 1, 1);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_show_cont_exif_disp($row)
     {
         $myts = MyTextSanitizer::getInstance();
+
         return $myts->displayTarea($row['photo_cont_exif'], 0, 0, 0, 0, 1);
     }
 
     //---------------------------------------------------------
     // for comment_new
     //---------------------------------------------------------
+
+    /**
+     * @return bool|mixed|null
+     */
     public function get_replytitle()
     {
         $com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
@@ -902,6 +1278,7 @@ class webphoto_photo_handler extends webphoto_lib_handler
         if ($com_itemid > 0) {
             return $this->get_title_by_id($com_itemid);
         }
+
         return null;
     }
 

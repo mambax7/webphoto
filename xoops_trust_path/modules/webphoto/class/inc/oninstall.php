@@ -61,6 +61,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_oninstall
 //=========================================================
+
+/**
+ * Class webphoto_inc_oninstall
+ */
 class webphoto_inc_oninstall extends webphoto_inc_base_ini
 {
     public $_group_class;
@@ -77,12 +81,12 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
 
     public $_IS_XOOPS_2018 = false;
 
-    public $_use_groupperm_webphoto_users        = false;
+    public $_use_groupperm_webphoto_users = false;
     public $_use_groupperm_module_read_anonymous = false;
-    public $_use_cfg_groupid_admin               = false;
-    public $_use_cfg_groupid_user                = false;
-    public $_use_group_create                    = false;
-    public $_use_group_delete                    = false;
+    public $_use_cfg_groupid_admin = false;
+    public $_use_cfg_groupid_user = false;
+    public $_use_group_create = false;
+    public $_use_group_delete = false;
 
     //  var $_msg_array = array();
 
@@ -95,32 +99,38 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_oninstall constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
-        $this->_group_class     = webphoto_inc_group::getSingleton($dirname);
+        $this->_group_class = webphoto_inc_group::getSingleton($dirname);
         $this->_gperm_def_class = webphoto_inc_gperm_def::getInstance();
-        $this->_log_class       = webphoto_lib_file_log::getInstance();
+        $this->_log_class = webphoto_lib_file_log::getInstance();
 
-        $this->_oninstall_item_class     = webphoto_inc_oninstall_item::getSingleton($dirname, $trust_dirname);
-        $this->_oninstall_cat_class      = webphoto_inc_oninstall_cat::getSingleton($dirname, $trust_dirname);
-        $this->_oninstall_mime_class     = webphoto_inc_oninstall_mime::getSingleton($dirname, $trust_dirname);
+        $this->_oninstall_item_class = webphoto_inc_oninstall_item::getSingleton($dirname, $trust_dirname);
+        $this->_oninstall_cat_class = webphoto_inc_oninstall_cat::getSingleton($dirname, $trust_dirname);
+        $this->_oninstall_mime_class = webphoto_inc_oninstall_mime::getSingleton($dirname, $trust_dirname);
         $this->_oninstall_flashvar_class = webphoto_inc_oninstall_flashvar::getSingleton($dirname, $trust_dirname);
 
-        $this->_table_cat    = $this->prefix_dirname('cat');
-        $this->_table_item   = $this->prefix_dirname('item');
-        $this->_table_mime   = $this->prefix_dirname('mime');
+        $this->_table_cat = $this->prefix_dirname('cat');
+        $this->_table_item = $this->prefix_dirname('item');
+        $this->_table_mime = $this->prefix_dirname('mime');
         $this->_table_player = $this->prefix_dirname('player');
 
-        $this->_use_groupperm_webphoto_users        = $this->get_ini('oninstall_groupperm_webphoto_users');
+        $this->_use_groupperm_webphoto_users = $this->get_ini('oninstall_groupperm_webphoto_users');
         $this->_use_groupperm_module_read_anonymous = $this->get_ini('oninstall_groupperm_module_read_anonymous');
-        $this->_use_cfg_groupid_admin               = $this->get_ini('xoops_version_cfg_groupid_admin');
-        $this->_use_cfg_groupid_user                = $this->get_ini('xoops_version_cfg_groupid_user');
-        $this->_use_group_create                    = $this->get_ini('oninstall_group_create');
-        $this->_use_group_delete                    = $this->get_ini('onuninstall_group_delete');
+        $this->_use_cfg_groupid_admin = $this->get_ini('xoops_version_cfg_groupid_admin');
+        $this->_use_cfg_groupid_user = $this->get_ini('xoops_version_cfg_groupid_user');
+        $this->_use_group_create = $this->get_ini('oninstall_group_create');
+        $this->_use_group_delete = $this->get_ini('onuninstall_group_delete');
 
         // preload
         if (defined('_C_WEBPHOTO_PRELOAD_XOOPS_2018')) {
@@ -128,24 +138,35 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         }
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_oninstall($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $module
+     * @return bool
+     */
     public function install(&$module)
     {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         $this->_init($module);
@@ -154,7 +175,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         $msg_arr = $this->get_msg_array();
         if (is_array($msg_arr) && count($msg_arr)) {
             foreach ($msg_arr as $msg) {
-                $ret[] = $msg . "<br />\n";
+                $ret[] = $msg . "<br>\n";
                 $this->_write_log($msg);
             }
         }
@@ -162,12 +183,16 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return $ret_code;
     }
 
+    /**
+     * @param $module
+     * @return bool
+     */
     public function update(&$module)
     {
         global $msgs; // TODO :-D
 
         if (!is_array($msgs)) {
-            $msgs = array();
+            $msgs = [];
         }
 
         $this->_init($module);
@@ -184,12 +209,16 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return $ret_code;
     }
 
+    /**
+     * @param $module
+     * @return bool
+     */
     public function uninstall(&$module)
     {
         global $ret; // TODO :-D
 
         if (!is_array($ret)) {
-            $ret = array();
+            $ret = [];
         }
 
         $this->_init($module);
@@ -198,7 +227,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         $msg_arr = $this->get_msg_array();
         if (is_array($msg_arr) && count($msg_arr)) {
             foreach ($msg_arr as $msg) {
-                $ret[] = $msg . '<br />';
+                $ret[] = $msg . '<br>';
                 $this->_write_log($msg);
             }
         }
@@ -209,11 +238,18 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
-    public function _init(&$module)
+
+    /**
+     * @param $module
+     */
+    public function _init($module)
     {
         $this->_MODULE_ID = $module->getVar('mid', 'n');
     }
 
+    /**
+     * @return bool
+     */
     public function _exec_install()
     {
         // for Cube 2.1
@@ -245,6 +281,9 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function _exec_update()
     {
         // for Cube 2.1
@@ -266,6 +305,9 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function _exec_uninstall()
     {
         // for Cube 2.1
@@ -290,6 +332,10 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // table handler
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _table_install()
     {
         $sql_file_path = $this->_get_table_sql();
@@ -332,10 +378,11 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             $ret = $this->query($sql);
             if (!$ret) {
                 $this->set_msg($this->get_db_error());
+
                 return false;
             }
 
-            $table        = $prefixed_query[4];
+            $table = $prefixed_query[4];
             $table_name_s = $this->sanitize($prefix_mod . '_' . $table);
 
             if ($this->_parse_create_table($sql)) {
@@ -348,6 +395,9 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function _table_update()
     {
         $sql_file_path = $this->_get_table_sql();
@@ -372,13 +422,14 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             return true;    // no action
         }
 
-        $sql_array = array();
+        $sql_array = [];
 
         // get added table
         foreach ($pieces as $piece) {
             $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
             if (!$prefixed_query) {
                 $this->set_msg('Invalid SQL <b>' . $this->sanitize($piece) . '</b>');
+
                 return false;
             }
 
@@ -410,6 +461,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             $ret = $this->query($sql);
             if (!$ret) {
                 $this->set_msg($this->get_db_error());
+
                 return false;
             }
 
@@ -420,6 +472,9 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function _table_uninstall()
     {
         $sql_file_path = $this->_get_table_sql();
@@ -445,7 +500,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             $table_name = $prefix_mod . '_' . $table;
 
             $table_name_s = $this->sanitize($table_name);
-            $sql          = 'DROP TABLE ' . $table_name;
+            $sql = 'DROP TABLE ' . $table_name;
 
             $ret = $this->query($sql);
             if ($ret) {
@@ -459,68 +514,88 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         return true;
     }
 
+    /**
+     * @return bool|string
+     */
     public function _get_table_sql()
     {
         $sql_trust_path = $this->_TRUST_DIR . '/sql/mysql.sql';
-        $sql_root_path  = $this->_MODULE_DIR . '/sql/mysql.sql';
+        $sql_root_path = $this->_MODULE_DIR . '/sql/mysql.sql';
 
         if (is_file($sql_root_path)) {
             return $sql_root_path;
         } elseif (is_file($sql_trust_path)) {
             return $sql_trust_path;
         }
+
         return false;
     }
 
+    /**
+     * @param $sql
+     * @return bool
+     */
     public function _parse_create_table($sql)
     {
         if (preg_match('/^CREATE TABLE \`?([a-zA-Z0-9_-]+)\`? /i', $sql, $match)) {
             return $match[1];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // template handler
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _template_install()
     {
         return $this->_template_common();
     }
 
+    /**
+     * @return bool
+     */
     public function _template_update()
     {
         return $this->_template_common();
     }
 
+    /**
+     * @return bool
+     */
     public function _template_common()
     {
         $this->set_msg('Updating tmplates ...');
 
         $TPL_TRUST_PATH = $this->_TRUST_DIR . '/templates';
-        $TPL_ROOT_PATH  = $this->_MODULE_DIR . '/templates';
+        $TPL_ROOT_PATH = $this->_MODULE_DIR . '/templates';
 
         // read webphoto_xxx.html in root_path
         if ($this->_IS_XOOPS_2018) {
             $tpl_path = $TPL_ROOT_PATH . '/';
-            $prefix   = '';
+            $prefix = '';
 
-            // read xxx.html in trust_path
+        // read xxx.html in trust_path
         } else {
             $tpl_path = $TPL_TRUST_PATH . '/';
-            $prefix   = $this->_DIRNAME . '_';
+            $prefix = $this->_DIRNAME . '_';
         }
 
         // TEMPLATES
-        $tplfile_handler = xoops_getHandler('tplfile');
+        $tplfileHandler = xoops_getHandler('tplfile');
 
         $handler = @opendir($tpl_path);
         if (!$handler) {
             xoops_template_clear_module_cache($this->_MODULE_ID);
+
             return true;
         }
 
-        while (($file = readdir($handler)) !== false) {
+        while (false !== ($file = readdir($handler))) {
             // check file
             if (!$this->_check_tpl_file($file)) {
                 continue;
@@ -528,7 +603,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
 
             // use optional file, if exists
             $file_trust_path = $TPL_TRUST_PATH . '/' . $file;
-            $file_root_path  = $TPL_ROOT_PATH . '/' . $file;
+            $file_root_path = $TPL_ROOT_PATH . '/' . $file;
             if (is_file($file_root_path)) {
                 $file_path = $file_root_path;
             } elseif (is_file($file_trust_path)) {
@@ -537,12 +612,12 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
                 continue;
             }
 
-            $dirname_file   = $prefix . $file;
+            $dirname_file = $prefix . $file;
             $dirname_file_s = $this->sanitize($dirname_file);
-            $mtime          = (int)(@filemtime($file_path));
+            $mtime = (int)(@filemtime($file_path));
 
             // set table
-            $tplfile = $tplfile_handler->create();
+            $tplfile = $tplfileHandler->create();
             $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
             $tplfile->setVar('tpl_refid', $this->_MODULE_ID);
             $tplfile->setVar('tpl_tplset', 'default');
@@ -553,7 +628,7 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             $tplfile->setVar('tpl_lastimported', 0);
             $tplfile->setVar('tpl_type', 'module');
 
-            $ret1 = $tplfile_handler->insert($tplfile);
+            $ret1 = $tplfileHandler->insert($tplfile);
             if ($ret1) {
                 $tplid = $tplfile->getVar('tpl_id');
                 $this->set_msg(' &nbsp; Template <b>' . $dirname_file_s . '</b> added to the database. (ID: <b>' . $tplid . '</b>)');
@@ -581,42 +656,59 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
     }
 
+    /**
+     * @param $file
+     * @return bool
+     */
     public function _check_tpl_file($file)
     {
         // ignore . and ..
-        if ($this->_parse_first_char($file) == '.') {
+        if ('.' == $this->_parse_first_char($file)) {
             return false;
         }
         // ignore 'index.htm'
-        if (($file == 'index.htm') || ($file == 'index.html')) {
+        if (('index.htm' == $file) || ('index.html' == $file)) {
             return false;
         }
         // ignore not html
-        if ($this->_parse_ext($file) != 'html') {
+        if ('html' != $this->_parse_ext($file)) {
             return false;
         }
+
         return true;
     }
 
+    /**
+     * @param $file
+     * @return bool|string
+     */
     public function _parse_first_char($file)
     {
-        return substr($file, 0, 1);
+        return mb_substr($file, 0, 1);
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function _parse_ext($file)
     {
-        return strtolower(substr(strrchr($file, '.'), 1));
+        return mb_strtolower(mb_substr(mb_strrchr($file, '.'), 1));
     }
 
     //---------------------------------------------------------
     // group class
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _group_create()
     {
         $this->set_msg('Ceate group <b>' . $this->_db->prefix('group') . '</b> ...');
 
-        $name    = $this->_DIRNAME;
-        $desc    = 'module id: ' . $this->_MODULE_ID . ' name: ' . $this->_DIRNAME;
+        $name = $this->_DIRNAME;
+        $desc = 'module id: ' . $this->_MODULE_ID . ' name: ' . $this->_DIRNAME;
         $groupid = $this->_group_class->create_member_group($name, $desc);
 
         if ($groupid) {
@@ -630,8 +722,10 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
             if ($this->_use_cfg_groupid_user) {
                 $this->save_xoops_config_mod($this->_MODULE_ID, 'groupid_user', $groupid);
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -720,6 +814,10 @@ class webphoto_inc_oninstall extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // debug
     //---------------------------------------------------------
+
+    /**
+     * @param $data
+     */
     public function _write_log($data)
     {
         if ($this->_flag_debug) {

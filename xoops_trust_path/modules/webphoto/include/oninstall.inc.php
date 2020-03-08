@@ -79,30 +79,53 @@ function xoops_module_uninstall_' . $MY_DIRNAME . '( &$module ) {
 
 // === function begin ===
 if (!function_exists('webphoto_oninstall_base')) {
+    /**
+     * @param $module
+     * @return mixed
+     */
     function webphoto_oninstall_base(&$module)
     {
         $inc_class = webphoto_inc_oninstall::getSingleton(webphoto_oninstall_dirname($module), WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->install($module);
     }
 
+    /**
+     * @param $module
+     * @return mixed
+     */
     function webphoto_onupdate_base(&$module)
     {
         $inc_class = webphoto_inc_oninstall::getSingleton(webphoto_oninstall_dirname($module), WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->update($module);
     }
 
+    /**
+     * @param $module
+     * @return mixed
+     */
     function webphoto_onuninstall_base(&$module)
     {
         $inc_class = webphoto_inc_oninstall::getSingleton(webphoto_oninstall_dirname($module), WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->uninstall($module);
     }
 
-    function webphoto_oninstall_dirname(&$module)
+    /**
+     * @param $module
+     * @return mixed
+     */
+    function webphoto_oninstall_dirname($module)
     {
         return $module->getVar('dirname', 'n');
     }
 
-    function webphoto_message_append_oninstall(&$module_obj, &$log)
+    /**
+     * @param $module_obj
+     * @param $log
+     */
+    function webphoto_message_append_oninstall(&$module_obj, $log)
     {
         if (is_array(@$GLOBALS['ret'])) {
             foreach ($GLOBALS['ret'] as $message) {
@@ -113,7 +136,11 @@ if (!function_exists('webphoto_oninstall_base')) {
         // use mLog->addWarning() or mLog->addError() if necessary
     }
 
-    function webphoto_message_append_onupdate(&$module_obj, &$log)
+    /**
+     * @param $module_obj
+     * @param $log
+     */
+    function webphoto_message_append_onupdate(&$module_obj, $log)
     {
         if (is_array(@$GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {
@@ -124,7 +151,11 @@ if (!function_exists('webphoto_oninstall_base')) {
         // use mLog->addWarning() or mLog->addError() if necessary
     }
 
-    function webphoto_message_append_onuninstall(&$module_obj, &$log)
+    /**
+     * @param $module_obj
+     * @param $log
+     */
+    function webphoto_message_append_onuninstall(&$module_obj, $log)
     {
         if (is_array(@$GLOBALS['ret'])) {
             foreach ($GLOBALS['ret'] as $message) {

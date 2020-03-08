@@ -30,6 +30,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_mail_photo
 //=========================================================
+
+/**
+ * Class webphoto_edit_mail_photo
+ */
 class webphoto_edit_mail_photo extends webphoto_edit_base
 {
     public $_user_handler;
@@ -42,29 +46,35 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
     public $_cfg_allownoimage = false;
 
     public $_flag_mail_chmod = true;
-    public $_msg_level       = 0;
-    public $_flag_force_db   = false;
+    public $_msg_level = 0;
+    public $_flag_force_db = false;
 
     public $_SUBJECT_DEFAULT = 'No Subject';
-    public $_TIME_FORMAT     = 'Y/m/d H:i';
-    public $_MAX_BODY        = 250;
+    public $_TIME_FORMAT = 'Y/m/d H:i';
+    public $_MAX_BODY = 250;
 
-    public $_FLAG_STRICT      = true;
+    public $_FLAG_STRICT = true;
     public $_FLAG_UNLINK_FILE = true;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_mail_photo constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_factory_create_class = webphoto_edit_factory_create::getInstance($dirname, $trust_dirname);
-        $this->_user_handler         = webphoto_user_handler::getInstance($dirname, $trust_dirname);
-        $this->_maillog_handler      = webphoto_maillog_handler::getInstance($dirname, $trust_dirname);
-        $this->_check_class          = webphoto_edit_mail_check::getInstance($dirname, $trust_dirname);
+        $this->_user_handler = webphoto_user_handler::getInstance($dirname, $trust_dirname);
+        $this->_maillog_handler = webphoto_maillog_handler::getInstance($dirname, $trust_dirname);
+        $this->_check_class = webphoto_edit_mail_check::getInstance($dirname, $trust_dirname);
 
-        $this->_parse_class  = webphoto_pear_mail_parse::getInstance();
+        $this->_parse_class = webphoto_pear_mail_parse::getInstance();
         $this->_unlink_class = webphoto_edit_mail_unlink::getInstance($dirname);
 
         $this->_parse_class->set_charset_local(_CHARSET);
@@ -73,40 +83,62 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         $this->_cfg_allownoimage = $this->get_config_by_name('allownoimage');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_mail_photo|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_mail_photo($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set & get param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_flag_print_first_msg($val)
     {
         $this->_factory_create_class->set_flag_print_first_msg($val);
     }
 
+    /**
+     * @param $val
+     */
     public function set_msg_level($val)
     {
         $this->_msg_level = (int)$val;
         $this->_factory_create_class->set_msg_level($val);
     }
 
+    /**
+     * @param $val
+     */
     public function set_flag_strict($val)
     {
         $this->_FLAG_STRICT = (bool)$val;
         $this->_check_class->set_flag_strict($val);
     }
 
+    /**
+     * @param $val
+     */
     public function set_mail_groups($val)
     {
         $this->_check_class->set_mail_groups($val);
     }
 
+    /**
+     * @param $val
+     */
     public function set_flag_force_db($val)
     {
         $this->_flag_force_db = (bool)$val;
@@ -116,22 +148,35 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
     //---------------------------------------------------------
     // parse mail
     //---------------------------------------------------------
+
+    /**
+     * @param $file_arr
+     * @return array
+     */
     public function parse_mails($file_arr)
     {
-        $param_arr = array();
+        $param_arr = [];
         foreach ($file_arr as $data) {
             $param = $this->parse_single_mail($data['maillog_id'], $data['file']);
             if (is_array($param)) {
                 $param_arr[] = $param;
             }
         }
+
         return $param_arr;
     }
 
+    /**
+     * @param      $maillog_id
+     * @param      $filename
+     * @param null $specified_array
+     * @return bool
+     */
     public function parse_single_mail($maillog_id, $filename, $specified_array = null)
     {
         if (empty($filename)) {
             $this->set_msg_level_admin('filename is empty', false, true);
+
             return false;
         }
 
@@ -140,6 +185,7 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         if (!file_exists($file_path)) {
             $msg = 'not exists : ' . $file_path;
             $this->set_msg_level_admin($msg, false, true);
+
             return false;
         }
 
@@ -148,32 +194,33 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         $this->_parse_class->parse_mail($mail);
         $result = $this->_parse_class->get_result();
 
-        $ret   = $this->_check_class->check_mail($result);
+        $ret = $this->_check_class->check_mail($result);
         $param = $this->_check_class->get_result();
 
         $param['maillog_id'] = $maillog_id;
-        $param['filename']   = $filename;
+        $param['filename'] = $filename;
 
         $param_maillog = $param;
 
         if (!$ret) {
             $reject_msgs = $this->_check_class->get_reject_msgs();
-            $msg         = $this->array_to_str($reject_msgs, "\n");
-            $msg         = nl2br($this->sanitize($msg));
+            $msg = $this->array_to_str($reject_msgs, "\n");
+            $msg = nl2br($this->sanitize($msg));
             $this->set_msg_level_admin('Reject mail', true, true);
             $this->set_msg_level_admin($msg, false, true);
 
             if ($this->_FLAG_STRICT) {
-                $param_maillog['status']  = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
+                $param_maillog['status'] = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
                 $param_maillog['comment'] = $msg;
                 $this->update_maillog($param_maillog);
+
                 return false;
             }
         }
 
         $mail_from = $param['mail_from'];
-        $subject   = $param['subject'];
-        $attaches  = $param['attaches'];
+        $subject = $param['subject'];
+        $attaches = $param['attaches'];
 
         $msg = " $subject < $mail_from > ";
         $this->set_msg_level_admin($msg, false, true);
@@ -187,9 +234,10 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             $this->set_msg_level_admin($msg, true, true);
 
             if (!$this->_cfg_allownoimage) {
-                $param_maillog['status']  = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
+                $param_maillog['status'] = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
                 $param_maillog['comment'] = $msg;
                 $this->update_maillog($param_maillog);
+
                 return false;
             }
         }
@@ -197,31 +245,36 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         return $param;
     }
 
+    /**
+     * @param      $mail_filename
+     * @param      $attaches_in
+     * @param null $specified_array
+     * @return array|null
+     */
     public function parse_attaches($mail_filename, $attaches_in, $specified_array = null)
     {
-        $attaches_new = array();
+        $attaches_new = [];
 
         if (!is_array($attaches_in)) {
             return null;
         }
 
         foreach ($attaches_in as $attach) {
-            $temp     = $attach;
+            $temp = $attach;
             $filename = $attach['filename'];
-            $content  = $attach['content'];
-            $charset  = $attach['charset'];
-            $type     = $attach['type'];
-            $reject   = $attach['reject'];
+            $content = $attach['content'];
+            $charset = $attach['charset'];
+            $type = $attach['type'];
+            $reject = $attach['reject'];
 
             $file_save = null;
-            $skip      = false;
+            $skip = false;
 
             $this->set_msg_level_admin($filename, false, true);
 
             // specified or no reject
             if ((is_array($specified_array) && in_array($filename, $specified_array))
-                || (empty($specified_array) && empty($reject))
-            ) {
+                || (empty($specified_array) && empty($reject))) {
                 $file_save = $this->build_save_name($mail_filename, $filename);
                 $file_path = $this->_MAIL_DIR . '/' . $file_save;
 
@@ -232,16 +285,16 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             } elseif ($reject) {
                 $this->set_msg_level_admin($reject, true, true);
 
-                // skip
+            // skip
             } else {
                 $skip = true;
                 $this->set_msg_level_admin('Skip', false, true);
             }
 
             $temp['file_save'] = $file_save;
-            $temp['reject']    = $reject;
-            $temp['skip']      = $skip;
-            $remp['content']   = null;  // crear content
+            $temp['reject'] = $reject;
+            $temp['skip'] = $skip;
+            $remp['content'] = null;  // crear content
 
             $attaches_new[] = $temp;
         }
@@ -249,17 +302,28 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         return $attaches_new;
     }
 
+    /**
+     * @param $mail
+     * @param $attach
+     * @return mixed|string
+     */
     public function build_save_name($mail, $attach)
     {
         $str = $this->_utility_class->strip_ext($mail) . '-' . $attach;
         $str = $this->_utility_class->substitute_filename_to_underbar($str);
         $str = rawurlencode($str);
+
         return $str;
     }
 
     //---------------------------------------------------------
     // add photos
     //---------------------------------------------------------
+
+    /**
+     * @param $param_arr
+     * @return int
+     */
     public function add_photos_from_mail($param_arr)
     {
         $count = 0;
@@ -267,44 +331,50 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             $num = $this->add_photos_from_single_mail($param);
             $count += $num;
         }
+
         return $count;
     }
 
+    /**
+     * @param $param_in
+     * @return int
+     */
     public function add_photos_from_single_mail($param_in)
     {
         if (!is_array($param_in) || !count($param_in)) {
             return 0;
         }
 
-        $status  = null;
+        $status = null;
         $comment = null;
-        $num     = 0;
+        $num = 0;
 
-        $mail_from     = $param_in['mail_from'];
-        $param_attach  = $param_in;
+        $mail_from = $param_in['mail_from'];
+        $param_attach = $param_in;
         $param_maillog = $param_in;
 
-        $uid    = isset($param_in['uid']) ? (int)$param_in['uid'] : -1;
+        $uid = isset($param_in['uid']) ? (int)$param_in['uid'] : -1;
         $cat_id = isset($param_in['cat_id']) ? (int)$param_in['cat_id'] : -1;
 
-        if ($uid == -1) {
+        if (-1 == $uid) {
             $uid = $this->get_uid_from_mail($mail_from);
             if (empty($uid)) {
                 $msg = 'reject from : ' . $from;
                 $this->set_msg_level_admin($msg, true, true);
 
-                $param_maillog['status']  = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
+                $param_maillog['status'] = _C_WEBPHOTO_MAILLOG_STATUS_REJECT;
                 $param_maillog['comment'] = $msg;
                 $this->update_maillog($param_maillog);
+
                 return 0;
             }
         }
 
-        if ($cat_id == -1) {
+        if (-1 == $cat_id) {
             $cat_id = $this->get_catid_from_mail($mail_from);
         }
 
-        $param_attach['uid']    = $uid;
+        $param_attach['uid'] = $uid;
         $param_attach['cat_id'] = $cat_id;
 
         list($id_array, $reject_files) = $this->add_photo_from_attaches($param_attach);
@@ -315,10 +385,10 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
 
             // partial files
             if (is_array($reject_files) && count($reject_files)) {
-                $status  = _C_WEBPHOTO_MAILLOG_STATUS_PARTIAL;
+                $status = _C_WEBPHOTO_MAILLOG_STATUS_PARTIAL;
                 $comment = $this->array_to_str($reject_files, "\n");
 
-                // all files
+            // all files
             } else {
                 $status = _C_WEBPHOTO_MAILLOG_STATUS_SUBMIT;
             }
@@ -337,59 +407,62 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             $num = 0;
         }
 
-        $param_maillog['status']   = $status;
-        $param_maillog['comment']  = $comment;
+        $param_maillog['status'] = $status;
+        $param_maillog['comment'] = $comment;
         $param_maillog['id_array'] = $id_array;
         $this->update_maillog($param_maillog);
 
         return $num;
     }
 
+    /**
+     * @param $param_in
+     * @return array
+     */
     public function add_photo_from_attaches($param_in)
     {
-        $i            = 0;
-        $id_array     = array();
-        $reject_files = array();
+        $i = 0;
+        $id_array = [];
+        $reject_files = [];
 
-        $gmap_latitude  = 0;
+        $gmap_latitude = 0;
         $gmap_longitude = 0;
-        $gmap_zoom      = 0;
+        $gmap_zoom = 0;
 
         $attaches = $param_in['attaches'];
-        $subject  = $param_in['subject'];
-        $body     = $param_in['body'];
+        $subject = $param_in['subject'];
+        $body = $param_in['body'];
         $datetime = $param_in['datetime'];
-        $gps      = $param_in['gps'];
+        $gps = $param_in['gps'];
 
         $time = time();
 
         if (isset($gps['flag']) && $gps['flag']) {
-            $gmap_latitude  = $gps['gmap_latitude'];
+            $gmap_latitude = $gps['gmap_latitude'];
             $gmap_longitude = $gps['gmap_longitude'];
-            $gmap_zoom      = $this->_GMAP_ZOOM;
+            $gmap_zoom = $this->_GMAP_ZOOM;
         }
 
-        $item_row                     = $this->_item_handler->create(true);
+        $item_row = $this->_item_handler->create(true);
         $item_row['item_time_create'] = $time;
         $item_row['item_time_update'] = $time;
-        $item_row['item_title']       = $this->substitute_subject_if_empty($subject);
-        $item_row['item_cat_id']      = $param_in['cat_id'];
-        $item_row['item_uid']         = $param_in['uid'];
+        $item_row['item_title'] = $this->substitute_subject_if_empty($subject);
+        $item_row['item_cat_id'] = $param_in['cat_id'];
+        $item_row['item_uid'] = $param_in['uid'];
         $item_row['item_description'] = $param_in['body'];
-        $item_row['item_latitude']    = $gmap_latitude;
-        $item_row['item_longitude']   = $gmap_longitude;
-        $item_row['item_zoom']        = $gmap_zoom;
-        $item_row['item_status']      = _C_WEBPHOTO_STATUS_APPROVED;
+        $item_row['item_latitude'] = $gmap_latitude;
+        $item_row['item_longitude'] = $gmap_longitude;
+        $item_row['item_zoom'] = $gmap_zoom;
+        $item_row['item_status'] = _C_WEBPHOTO_STATUS_APPROVED;
 
-        $param_photo = array(
-            'src_file'          => null,
-            'rotate'            => $param_in['rotate'],
+        $param_photo = [
+            'src_file' => null,
+            'rotate' => $param_in['rotate'],
             'flag_video_single' => true,
-        );
+        ];
 
         // without attach
         if (!is_array($attaches) || !count($attaches)) {
-
             // has body
             if ($this->_cfg_allownoimage && ($subject || $body)) {
                 $newid = $this->create_item_from_param($item_row, $param_photo);
@@ -399,15 +472,15 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
                 }
             }
 
-            return array($id_array, $reject_files);
+            return [$id_array, $reject_files];
         }
 
         // with atach
         foreach ($attaches as $attach) {
-            $filename  = $attach['filename'];
+            $filename = $attach['filename'];
             $file_save = $attach['file_save'];
-            $reject    = $attach['reject'];
-            $skip      = $attach['skip'];
+            $reject = $attach['reject'];
+            $skip = $attach['skip'];
 
             if ($skip) {
                 continue;
@@ -432,7 +505,7 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
                 $title = $subject;
             }
 
-            $item_row['item_title']  = $title;
+            $item_row['item_title'] = $title;
             $param_photo['src_file'] = $src_file;
 
             $newid = $this->create_item_from_param($item_row, $param_photo);
@@ -448,9 +521,14 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             ++$i;
         }
 
-        return array($id_array, $reject_files);
+        return [$id_array, $reject_files];
     }
 
+    /**
+     * @param $item_row
+     * @param $param
+     * @return int
+     */
     public function create_item_from_param($item_row, $param)
     {
         $this->_factory_create_class->create_item_from_param($item_row, $param);
@@ -459,20 +537,31 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         if (isset($item_row['item_id'])) {
             return $item_row['item_id'];
         }
+
         return 0;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function substitute_subject_if_empty($str)
     {
         if (empty($str)) {
             $str = $this->_SUBJECT_DEFAULT;
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // maillog handler
     //---------------------------------------------------------
+
+    /**
+     * @param $max
+     * @return int
+     */
     public function clear_maillog($max)
     {
         if ($max <= 0) {
@@ -500,60 +589,78 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         }
 
         $this->set_msg_level_admin('Clear maillog : ' . $num, false, true);
+
         return $num;
     }
 
+    /**
+     * @param $file
+     * @return bool|void
+     */
     public function add_maillog($file)
     {
         // insert
-        $row                 = $this->_maillog_handler->create(true);
+        $row = $this->_maillog_handler->create(true);
         $row['maillog_file'] = $file;
 
         $newid = $this->_maillog_handler->insert($row, $this->_flag_force_db);
         if (!$newid) {
             $this->set_msg_level_admin('DB error', true, true);
             $this->set_msg_level_admin($this->_maillog_handler->get_format_error());
+
             return false;
         }
 
         return $newid;
     }
 
+    /**
+     * @param $param
+     * @return bool
+     */
     public function update_maillog($param)
     {
-
         // update
         $row = $this->_maillog_handler->get_row_by_id($param['maillog_id']);
 
         $row['maillog_time_update'] = time();
-        $row['maillog_from']        = $param['mail_from'];
-        $row['maillog_status']      = $param['status'];
-        $row['maillog_subject']     = $param['subject'];
-        $row['maillog_photo_ids']   = $this->build_maillog_photo_ids($row, $param);
-        $row['maillog_body']        = $this->build_maillog_body($param);
-        $row['maillog_attach']      = $this->build_maillog_attach($param);
-        $row['maillog_comment']     = $this->build_maillog_comment($row, $param);
+        $row['maillog_from'] = $param['mail_from'];
+        $row['maillog_status'] = $param['status'];
+        $row['maillog_subject'] = $param['subject'];
+        $row['maillog_photo_ids'] = $this->build_maillog_photo_ids($row, $param);
+        $row['maillog_body'] = $this->build_maillog_body($param);
+        $row['maillog_attach'] = $this->build_maillog_attach($param);
+        $row['maillog_comment'] = $this->build_maillog_comment($row, $param);
 
         $ret = $this->_maillog_handler->update($row, $this->_flag_force_db);
         if (!$ret) {
             $this->set_msg_level_admin('DB error', true, true);
             $this->set_msg_level_admin($this->_maillog_handler->get_format_error());
+
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @param $param
+     */
     public function build_maillog_body($param)
     {
         $body = isset($param['body']) ? $param['body'] : null;
 
-        if (strlen($body) > $this->_MAX_BODY) {
+        if (mb_strlen($body) > $this->_MAX_BODY) {
             return $substr($body, 0, $this->_MAX_BODY);
         }
+
         return $body;
     }
 
+    /**
+     * @param $param
+     * @return bool|null|string
+     */
     public function build_maillog_attach($param)
     {
         $attaches = isset($param['attaches']) ? $param['attaches'] : null;
@@ -562,16 +669,22 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($attaches as $attach) {
             if ($attach['filename']) {
                 $arr[] = $attach['filename'];
             }
         }
         $str = $this->_maillog_handler->build_attach_array_to_str($arr);
+
         return $str;
     }
 
+    /**
+     * @param $row
+     * @param $param
+     * @return null|string
+     */
     public function build_maillog_photo_ids($row, $param)
     {
         $id_array = isset($param['id_array']) ? $param['id_array'] : null;
@@ -580,8 +693,7 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
 
         if (is_array($current_id_array) && count($current_id_array)
             && is_array($id_array)
-            && count($id_array)
-        ) {
+            && count($id_array)) {
             $update_id_array = array_unique(array_merge($current_id_array, $id_array));
         } elseif (is_array($current_id_array) && count($current_id_array)) {
             $update_id_array = $current_id_array;
@@ -594,6 +706,11 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
         return $this->_maillog_handler->build_photo_ids_array_to_str($update_id_array);
     }
 
+    /**
+     * @param $row
+     * @param $param
+     * @return string
+     */
     public function build_maillog_comment($row, $param)
     {
         $comment = isset($param['comment']) ? $param['comment'] : null;
@@ -603,21 +720,32 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             $update .= date($this->_TIME_FORMAT) . "\n";
             $update .= $comment . "\n";
         }
+
         return $update;
     }
 
     //---------------------------------------------------------
     // user handler
     //---------------------------------------------------------
+
+    /**
+     * @param $from
+     * @return bool|mixed
+     */
     public function get_uid_from_mail($from)
     {
         $row = $this->_user_handler->get_cached_row_by_email($from);
         if (is_array($row)) {
             return $row['user_uid'];
         }
+
         return false;
     }
 
+    /**
+     * @param $from
+     * @return bool|int|mixed
+     */
     public function get_catid_from_mail($from)
     {
         $cat_id = 0;
@@ -627,12 +755,12 @@ class webphoto_edit_mail_photo extends webphoto_edit_base
             $cat_id = $user_row['user_cat_id'];
         }
 
-        $cat_row = $this->_cat_handler->get_cached_row_by_id($cat_id);
+        $cat_row = $this->_catHandler->get_cached_row_by_id($cat_id);
         if (is_array($cat_row)) {
             return $cat_id;
         }
 
-        $cat_rows = $this->_cat_handler->get_rows_all_asc(1);
+        $cat_rows = $this->_catHandler->get_rows_all_asc(1);
         if (is_array($cat_rows)) {
             return $cat_rows[0]['cat_id'];
         }

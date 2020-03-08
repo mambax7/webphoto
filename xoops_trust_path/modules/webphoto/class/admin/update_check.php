@@ -24,10 +24,14 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_update_check
 //=========================================================
+
+/**
+ * Class webphoto_admin_update_check
+ */
 class webphoto_admin_update_check extends webphoto_base_ini
 {
     public $_item_handler;
-    public $_file_handler;
+    public $_fileHandler;
     public $_player_handler;
     public $_photo_handler;
 
@@ -36,30 +40,49 @@ class webphoto_admin_update_check extends webphoto_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_update_check constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_item_handler   = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_file_handler   = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
         $this->_player_handler = webphoto_player_handler::getInstance($dirname, $trust_dirname);
-        $this->_photo_handler  = webphoto_photo_handler::getInstance($dirname);
+        $this->_photo_handler = webphoto_photo_handler::getInstance($dirname);
 
         $this->_item_count_all = $this->_item_handler->get_count_all();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_update_check|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_update_check($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // check
     //---------------------------------------------------------
+
+    /**
+     * @param      $msg
+     * @param bool $flag_highlight
+     * @param bool $flag_br
+     * @return null|string
+     */
     public function build_msg($msg, $flag_highlight = false, $flag_br = false)
     {
         $str = null;
@@ -89,6 +112,9 @@ class webphoto_admin_update_check extends webphoto_base_ini
         return $str;
     }
 
+    /**
+     * @return bool
+     */
     public function check_040()
     {
         if ($this->_item_count_all > 0) {
@@ -97,45 +123,63 @@ class webphoto_admin_update_check extends webphoto_base_ini
         if ($this->_photo_handler->get_count_all() > 0) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function check_050()
     {
-        if ($this->_player_handler->get_count_all() == 0) {
+        if (0 == $this->_player_handler->get_count_all()) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function check_130()
     {
-        if ($this->_item_count_all == 0) {
+        if (0 == $this->_item_count_all) {
             return false;
         }
-        if ($this->_file_handler->get_count_by_kind(_C_WEBPHOTO_FILE_KIND_SMALL) == 0) {
+        if (0 == $this->_fileHandler->get_count_by_kind(_C_WEBPHOTO_FILE_KIND_SMALL)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function check_210()
     {
-        if ($this->_item_count_all == 0) {
+        if (0 == $this->_item_count_all) {
             return false;
         }
-        if ($this->_item_handler->get_count_photo() == 0) {
+        if (0 == $this->_item_handler->get_count_photo()) {
             return false;
         }
-        if ($this->_item_handler->get_count_photo_detail_onclick() == 0) {
+        if (0 == $this->_item_handler->get_count_photo_detail_onclick()) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $ver
+     * @return string
+     */
     public function get_url($ver)
     {
         $url = $this->_MODULE_URL . '/admin/index.php?fct=update_' . $ver;
+
         return $url;
     }
 

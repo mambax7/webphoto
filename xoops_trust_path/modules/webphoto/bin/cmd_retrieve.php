@@ -25,24 +25,24 @@ $FLAG_XOOPS_CHECK_PATH = false;
 //=========================================================
 // start here
 //=========================================================
-$path    = null;
+$path = null;
 $dirname = null;
 
 // parse arg
 if ($_SERVER['argc'] > 1) {
     for ($i = 1; $i < $_SERVER['argc']; ++$i) {
         if (preg_match('/\-(.*)=(.*)/', $_SERVER['argv'][$i], $matches)) {
-            if ($matches[1] == 'path') {
+            if ('path' == $matches[1]) {
                 $path = $matches[2];
-            } elseif ($matches[1] == 'dirname') {
+            } elseif ('dirname' == $matches[1]) {
                 $dirname = $matches[2];
             }
         }
     }
 }
 
-$XOOPS_ROOT_PATH  = $path;
-$MY_DIRNAME       = $dirname;
+$XOOPS_ROOT_PATH = $path;
+$MY_DIRNAME = $dirname;
 $MY_TRUST_DIRNAME = basename(dirname(__DIR__));
 
 if ($FLAG_XOOPS_CHECK_PATH) {

@@ -32,5 +32,4 @@ webphoto_include_once('class/admin/maillog_table_manage.php');
 $manage = webphoto_admin_maillog_table_manage::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manage->main();
 
-exit();// --- main end ---
-;
+exit(); // --- main end ---

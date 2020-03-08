@@ -13,11 +13,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_browser
 //=========================================================
+
+/**
+ * Class webphoto_lib_browser
+ */
 class webphoto_lib_browser
 {
     public $_http_user_agent = null;
-    public $_os              = null;
-    public $_browser         = null;
+    public $_os = null;
+    public $_browser = null;
 
     //---------------------------------------------------------
     // constructor
@@ -27,12 +31,16 @@ class webphoto_lib_browser
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_browser
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_browser();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -84,13 +92,14 @@ class webphoto_lib_browser
         }
 
         $this->_http_user_agent = $agent;
-        $this->_os              = $os;
-        $this->_browser         = $browser;
+        $this->_os = $os;
+        $this->_browser = $browser;
     }
 
     //---------------------------------------------------------
     // get param
     //---------------------------------------------------------
+
     public function get_os()
     {
         return $this->_os;

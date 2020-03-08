@@ -65,6 +65,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_action
 //=========================================================
+
+/**
+ * Class webphoto_edit_action
+ */
 class webphoto_edit_action extends webphoto_edit_submit
 {
     public $_delete_class;
@@ -75,27 +79,45 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_action constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_delete_class      = webphoto_edit_item_delete::getInstance($dirname, $trust_dirname);
+        $this->_delete_class = webphoto_edit_item_delete::getInstance($dirname, $trust_dirname);
         $this->_file_action_class = webphoto_edit_file_action::getInstance($dirname, $trust_dirname);
     }
 
     // for admin_photo_manage admin_catmanager
+
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_action|\webphoto_edit_imagemanager_submit|\webphoto_edit_submit|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_edit_action($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // modify check
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function check_edit_perm($item_row)
     {
         if ($this->_is_module_admin) {
@@ -106,16 +128,21 @@ class webphoto_edit_action extends webphoto_edit_submit
         if (($item_row['item_uid'] == $this->_xoops_uid) && ($item_row['item_status'] > 0)) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // modify form
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     */
     public function set_param_modify_default($item_row)
     {
         $publish_checkbox = _C_WEBPHOTO_NO;
-        $expire_checkbox  = _C_WEBPHOTO_NO;
+        $expire_checkbox = _C_WEBPHOTO_NO;
         if ($item_row['item_time_publish'] > 0) {
             $publish_checkbox = _C_WEBPHOTO_YES;
         }
@@ -126,50 +153,65 @@ class webphoto_edit_action extends webphoto_edit_submit
         $this->set_checkbox_by_name('item_time_update_checkbox', _C_WEBPHOTO_YES);
         $this->set_checkbox_by_name('item_time_publish_checkbox', $publish_checkbox);
         $this->set_checkbox_by_name('item_time_expire_checkbox', $expire_checkbox);
-        $this->set_tag_name_array($this->tag_handler_tag_name_array($item_row['item_id']));
+        $this->set_tag_name_array($this->tagHandler_tag_name_array($item_row['item_id']));
     }
 
+    /**
+     * @param $item_row
+     * @return mixed
+     */
     public function build_item_row_modify_post($item_row)
     {
         $checkbox = $this->get_checkbox_by_name('item_datetime_checkbox');
         $item_row = $this->_factory_create_class->build_item_row_modify_post($item_row, $checkbox);
+
         return $item_row;
     }
 
     //---------------------------------------------------------
     // build form delete confirm
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return mixed|string|void
+     */
     public function build_form_delete_confirm_with_template($item_row)
     {
-        $template = 'db:' . $this->_DIRNAME . '_form_confirm.html';
+        $template = 'db:' . $this->_DIRNAME . '_form_confirm.tpl';
 
         $arr = array_merge($this->_admin_item_form_class->build_form_base_param(), $this->build_form_delete_confirm($item_row));
 
         $tpl = new XoopsTpl();
         $tpl->assign($arr);
+
         return $tpl->fetch($template);
     }
 
+    /**
+     * @param $item_row
+     * @return array
+     */
     public function build_form_delete_confirm($item_row)
     {
-        $src    = null;
-        $width  = 0;
+        $src = null;
+        $width = 0;
         $height = 0;
 
         $image = $this->_show_image_class->build_image_by_item_row($item_row, true);
         if (is_array($image)) {
-            $src    = $image['img_thumb_src'];
-            $width  = $image['img_thumb_width'];
+            $src = $image['img_thumb_src'];
+            $width = $image['img_thumb_width'];
             $height = $image['img_thumb_height'];
         }
 
-        $param = array(
-            'thumb_src_s'  => $this->sanitize($src),
-            'thumb_width'  => $width,
+        $param = [
+            'thumb_src_s' => $this->sanitize($src),
+            'thumb_width' => $width,
             'thumb_height' => $height,
-            'item_id'      => $item_row['item_id'],
-            'item_title_s' => $this->sanitize($item_row['item_title'])
-        );
+            'item_id' => $item_row['item_id'],
+            'item_title_s' => $this->sanitize($item_row['item_title']),
+        ];
 
         return $param;
     }
@@ -177,6 +219,11 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // modify
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function modify($item_row)
     {
         $this->get_post_param();
@@ -199,31 +246,34 @@ class webphoto_edit_action extends webphoto_edit_submit
         return $this->_row_update;
     }
 
+    /**
+     * @param $item_row
+     * @return bool|int
+     */
     public function modify_exec($item_row)
     {
         // save
         $this->_row_update = $item_row;
 
         $photo_tmp_name = null;
-        $jpeg_tmp_name  = null;
-        $image_info     = null;
-        $file_id_array  = null;
-        $cont_id        = 0;
+        $jpeg_tmp_name = null;
+        $image_info = null;
+        $file_id_array = null;
+        $cont_id = 0;
 
         $this->clear_msg_array();
 
-        $item_row  = $this->build_item_row_modify_post($item_row);
-        $item_id   = $item_row['item_id'];
+        $item_row = $this->build_item_row_modify_post($item_row);
+        $item_id = $item_row['item_id'];
         $item_kind = $item_row['item_kind'];
 
         switch ($item_kind) {
             // embed
             // playlist
-            case _C_WEBPHOTO_ITEM_KIND_EMBED :
-            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_FEED :
-            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_DIR  :
+            case _C_WEBPHOTO_ITEM_KIND_EMBED:
+            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_FEED:
+            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_DIR:
                 break;
-
             // fetch photo
             default:
                 $ret = $this->modify_fetch_photo();
@@ -240,8 +290,8 @@ class webphoto_edit_action extends webphoto_edit_submit
 
         $this->upload_fetch_files();
 
-        $photo_name      = $this->_photo_tmp_name;
-        $jpeg_name       = $this->_jpeg_tmp_name;
+        $photo_name = $this->_photo_tmp_name;
+        $jpeg_name = $this->_jpeg_tmp_name;
         $file_name_array = $this->_file_tmp_name_array;
 
         // no upload
@@ -284,7 +334,7 @@ class webphoto_edit_action extends webphoto_edit_submit
         }
 
         $this->update_all_file_duration_if_not_cont($item_row, $file_id_array);
-        $this->tag_handler_update_tags($item_id, $this->get_tag_name_array());
+        $this->tagHandler_update_tags($item_id, $this->get_tag_name_array());
         $this->notify_new_photo_if_appove($item_row);
 
         // save
@@ -293,6 +343,9 @@ class webphoto_edit_action extends webphoto_edit_submit
         return 0;
     }
 
+    /**
+     * @return int
+     */
     public function modify_fetch_photo()
     {
         if (!$this->check_edit('file_photo')) {
@@ -305,17 +358,27 @@ class webphoto_edit_action extends webphoto_edit_submit
         if ($ret < 0) {
             return $ret;    // failed
         }
+
         return 0;   // ok
     }
 
+    /**
+     * @param $item_row
+     * @param $file_id_array
+     */
     public function update_all_file_duration_if_not_cont($item_row, $file_id_array)
     {
         $cont_id = $this->get_array_value_by_key($file_id_array, 'cont_id');
-        if ($cont_id == 0) {
+        if (0 == $cont_id) {
             $this->update_all_file_duration($item_row);
         }
     }
 
+    /**
+     * @param $array
+     * @param $key
+     * @return int
+     */
     public function get_array_value_by_key($array, $key)
     {
         return (int)$this->_utility_class->get_array_value_by_key($array, $key, 0);
@@ -324,6 +387,11 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // update_photo_no_image
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function update_photo_no_image($item_row)
     {
         $this->update_all_file_duration($item_row);
@@ -331,12 +399,12 @@ class webphoto_edit_action extends webphoto_edit_submit
         // --- update item
         // search
         $item_row = $this->_factory_create_class->build_item_row_modify_update($item_row, null, $this->_tag_name_array);
-        $ret      = $this->format_and_update_item($item_row);
+        $ret = $this->format_and_update_item($item_row);
         if (!$ret) {
             return _C_WEBPHOTO_ERR_DB;
         }
 
-        $this->tag_handler_update_tags($item_row['item_id'], $this->_tag_name_array);
+        $this->tagHandler_update_tags($item_row['item_id'], $this->_tag_name_array);
         $this->notify_new_photo_if_appove($item_row);
 
         // save
@@ -345,12 +413,15 @@ class webphoto_edit_action extends webphoto_edit_submit
         return 0;
     }
 
+    /**
+     * @param $item_row
+     */
     public function update_all_file_duration($item_row)
     {
         $duration = $item_row['item_duration'];
 
         $cont_duration = 0;
-        $cont_row      = $this->_file_action_class->get_file_row_by_item_name($item_row, _C_WEBPHOTO_ITEM_FILE_CONT);
+        $cont_row = $this->_file_action_class->get_file_row_by_item_name($item_row, _C_WEBPHOTO_ITEM_FILE_CONT);
         if (is_array($cont_row)) {
             $cont_duration = $cont_row['file_duration'];
         }
@@ -362,6 +433,12 @@ class webphoto_edit_action extends webphoto_edit_submit
         }
     }
 
+    /**
+     * @param $item_row
+     * @param $duration
+     * @param $item_name
+     * @return bool
+     */
     public function update_file_duration($item_row, $duration, $item_name)
     {
         return $this->_file_action_class->update_duration($item_row, $duration, $item_name);
@@ -370,9 +447,14 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // delete
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function delete($item_row)
     {
-        $err  = null;
+        $err = null;
         $ret1 = $this->delete_exec($item_row);
 
         $ret2 = $this->build_failed_msg($ret1);
@@ -383,6 +465,10 @@ class webphoto_edit_action extends webphoto_edit_submit
         return true;
     }
 
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function delete_exec($item_row)
     {
         if (!$this->_has_deletable) {
@@ -396,6 +482,7 @@ class webphoto_edit_action extends webphoto_edit_submit
         $ret = $this->_delete_class->delete_photo_by_item_row($item_row);
         if (!$ret) {
             $this->set_error($delete_class->get_errors());
+
             return _C_WEBPHOTO_ERR_DB;
         }
 
@@ -409,6 +496,11 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // video redo
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function video_redo($item_row)
     {
         $flag_thumb = $this->_post_class->get_post_int('redo_thumb');
@@ -428,33 +520,39 @@ class webphoto_edit_action extends webphoto_edit_submit
         return _C_WEBPHOTO_RET_SUCCESS;
     }
 
+    /**
+     * @param $item_row
+     * @param $flag_thumb
+     * @param $flag_flash
+     * @return int
+     */
     public function video_redo_exec($item_row, $flag_thumb, $flag_flash)
     {
         $this->clear_msg_array();
 
         $this->_is_video_thumb_form = false;
-        $flash_param                = null;
+        $flash_param = null;
 
-        $item_id   = $item_row['item_id'];
-        $item_ext  = $item_row['item_ext'];
+        $item_id = $item_row['item_id'];
+        $item_ext = $item_row['item_ext'];
         $item_kind = $item_row['item_kind'];
 
-        $cont_full  = null;
+        $cont_full = null;
         $flash_full = null;
-        $param      = null;
+        $param = null;
 
         $cont_row = $this->get_file_extend_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_CONT);
         if (is_array($cont_row)) {
-            $cont_path     = $cont_row['file_path'];
-            $cont_width    = $cont_row['file_width'];
-            $cont_height   = $cont_row['file_height'];
+            $cont_path = $cont_row['file_path'];
+            $cont_width = $cont_row['file_width'];
+            $cont_height = $cont_row['file_height'];
             $cont_duration = $cont_row['file_duration'];
-            $cont_full     = $cont_row['full_path'];
+            $cont_full = $cont_row['full_path'];
 
-            $param             = $item_row;
+            $param = $item_row;
             $param['src_file'] = $cont_full;
             $param['src_kind'] = $item_kind;
-            $param['src_ext']  = $item_ext;
+            $param['src_ext'] = $item_ext;
         }
 
         $flash_row = $this->get_file_extend_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_VIDEO_FLASH);
@@ -494,7 +592,7 @@ class webphoto_edit_action extends webphoto_edit_submit
             // success
             if ($flash_id > 0) {
                 $row_update[_C_WEBPHOTO_ITEM_FILE_VIDEO_FLASH] = $flash_id;
-                $row_update['item_displaytype']                = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
+                $row_update['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
 
                 $ret = $this->format_and_update_item($row_update);
                 if (!$ret) {
@@ -513,15 +611,24 @@ class webphoto_edit_action extends webphoto_edit_submit
         return 0;
     }
 
+    /**
+     * @param $photo_param
+     * @return array|null
+     */
     public function create_flash_param($photo_param)
     {
         $flash_param = $this->_factory_create_class->create_flash_param($photo_param);
         if ($this->_factory_create_class->get_flag_flash_failed()) {
             $this->set_msg_array($this->get_constant('ERR_VIDEO_FLASH'));
         }
+
         return $flash_param;
     }
 
+    /**
+     * @param $param
+     * @return int
+     */
     public function create_video_images($param)
     {
         $ret = $this->_factory_create_class->create_video_images($param);
@@ -531,55 +638,74 @@ class webphoto_edit_action extends webphoto_edit_submit
         if ($this->_factory_create_class->get_flag_video_image_failed()) {
             $this->set_msg_array($this->get_constant('ERR_VIDEO_THUMB'));
         }
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // file delete
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return mixed
+     */
     public function delete_file_jpeg_if_upload_jpeg($item_row)
     {
         if ($this->is_jpeg_ext($item_row['item_ext'])) {
             $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_JPEG);
             $item_row[_C_WEBPHOTO_ITEM_FILE_JPEG] = 0;
         }
+
         return $item_row;
     }
 
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function video_flash_delete($item_row)
     {
         $ret = $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_VIDEO_FLASH);
-        if ($ret == -1) {
+        if (-1 == $ret) {
             $this->_delete_error = 'No file record';
+
             return false;
         }
-        if ($ret == -2) {
+        if (-2 == $ret) {
             return false;
         }
 
         $item_row[_C_WEBPHOTO_ITEM_FILE_VIDEO_FLASH] = 0;
-        $item_row['item_displaytype']                = _C_WEBPHOTO_DISPLAYTYPE_GENERAL;
+        $item_row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_GENERAL;
 
         $ret = $this->format_and_update_item($item_row);
         if (!$ret) {
             $this->_delete_error = 'DB Error';
             if ($this->_FLAG_ADMIN) {
-                $this->_delete_error .= "<br />\n" . $this->get_format_error();
+                $this->_delete_error .= "<br>\n" . $this->get_format_error();
             }
+
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @param      $item_row
+     * @param bool $flag_thmub
+     * @return bool
+     */
     public function jpeg_thumb_delete($item_row, $flag_thmub = true)
     {
         $ret = $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_JPEG);
-        if ($ret == -1) {
+        if (-1 == $ret) {
             $this->_delete_error = 'No file record';
+
             return false;
         }
-        if ($ret == -2) {
+        if (-2 == $ret) {
             return false;
         }
 
@@ -590,83 +716,110 @@ class webphoto_edit_action extends webphoto_edit_submit
             $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_LARGE);
             $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_MIDDLE);
             $this->delete_file($item_row, _C_WEBPHOTO_ITEM_FILE_SMALL);
-            $item_row[_C_WEBPHOTO_ITEM_FILE_THUMB]  = 0;
-            $item_row[_C_WEBPHOTO_ITEM_FILE_LARGE]  = 0;
+            $item_row[_C_WEBPHOTO_ITEM_FILE_THUMB] = 0;
+            $item_row[_C_WEBPHOTO_ITEM_FILE_LARGE] = 0;
             $item_row[_C_WEBPHOTO_ITEM_FILE_MIDDLE] = 0;
-            $item_row[_C_WEBPHOTO_ITEM_FILE_SMALL]  = 0;
+            $item_row[_C_WEBPHOTO_ITEM_FILE_SMALL] = 0;
         }
 
         $item_row = $this->_factory_create_class->build_row_icon_if_empty($item_row);
-        $ret      = $this->format_and_update_item($item_row);
+        $ret = $this->format_and_update_item($item_row);
         if (!$ret) {
             $this->_delete_error = 'DB Error';
             if ($this->_FLAG_ADMIN) {
-                $this->_delete_error .= "<br />\n" . $this->get_format_error();
+                $this->_delete_error .= "<br>\n" . $this->get_format_error();
             }
+
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function cont_delete($item_row)
     {
         return $this->file_delete_common($item_row, _C_WEBPHOTO_ITEM_FILE_CONT);
     }
 
+    /**
+     * @param $item_row
+     * @param $item_name
+     * @return bool
+     */
     public function file_delete_common($item_row, $item_name)
     {
         $ret = $this->delete_file($item_row, $item_name);
-        if ($ret == -1) {
+        if (-1 == $ret) {
             $this->_delete_error = 'No file record';
+
             return false;
         }
-        if ($ret == -2) {
+        if (-2 == $ret) {
             return false;
         }
 
         // BUG: not clear file id when delete file
         $item_row[$item_name] = 0;
-        $ret                  = $this->format_and_update_item($item_row);
+        $ret = $this->format_and_update_item($item_row);
         if (!$ret) {
             $this->_delete_error = 'DB Error';
             if ($this->_FLAG_ADMIN) {
-                $this->_delete_error .= "<br />\n" . $this->get_format_error();
+                $this->_delete_error .= "<br>\n" . $this->get_format_error();
             }
+
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @param $item_row
+     * @param $item_name
+     * @return int
+     */
     public function delete_file($item_row, $item_name)
     {
         $ret = $this->_file_action_class->delete_file($item_row, $item_name);
-        if ($ret == -2) {
+        if (-2 == $ret) {
             $this->_delete_error = 'DB Error';
             if ($this->_FLAG_ADMIN) {
-                $this->_delete_error .= "<br />\n" . $this->_file_action_class->get_format_error();
+                $this->_delete_error .= "<br>\n" . $this->_file_action_class->get_format_error();
             }
         }
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // tag class
     //---------------------------------------------------------
-    public function tag_handler_update_tags($item_id, $tag_name_array)
+
+    /**
+     * @param $item_id
+     * @param $tag_name_array
+     * @return bool
+     */
+    public function tagHandler_update_tags($item_id, $tag_name_array)
     {
         if ($this->_FLAG_ADMIN) {
             return $this->_tag_build_class->update_tags_admin($item_id, $this->_xoops_uid, $tag_name_array);
-        } else {
-            return $this->_tag_build_class->update_tags($item_id, $this->_xoops_uid, $tag_name_array);
         }
 
+        return $this->_tag_build_class->update_tags($item_id, $this->_xoops_uid, $tag_name_array);
         // dummy
         return false;
     }
 
-    public function tag_handler_tag_name_array($item_id)
+    /**
+     * @param $item_id
+     * @return array|null
+     */
+    public function tagHandler_tag_name_array($item_id)
     {
         return $this->_tag_build_class->get_tag_name_array_by_photoid_uid($item_id, $this->_xoops_uid);
     }
@@ -674,6 +827,10 @@ class webphoto_edit_action extends webphoto_edit_submit
     //---------------------------------------------------------
     // notify
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     */
     public function notify_new_photo_if_appove($item_row)
     {
         if ($this->is_apporved_status($item_row['item_status'])) {
@@ -682,19 +839,29 @@ class webphoto_edit_action extends webphoto_edit_submit
         }
     }
 
+    /**
+     * @param $status
+     * @return bool
+     */
     public function is_apporved_status($status)
     {
-        if ($status == _C_WEBPHOTO_STATUS_APPROVED) {
+        if (_C_WEBPHOTO_STATUS_APPROVED == $status) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $status
+     * @return bool
+     */
     public function is_waiting_status($status)
     {
-        if ($status == _C_WEBPHOTO_STATUS_WAITING) {
+        if (_C_WEBPHOTO_STATUS_WAITING == $status) {
             return true;
         }
+
         return false;
     }
 

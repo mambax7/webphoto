@@ -23,6 +23,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_search
 //=========================================================
+
+/**
+ * Class webphoto_search
+ */
 class webphoto_search extends webphoto_base_this
 {
     public $_public_class;
@@ -33,6 +37,12 @@ class webphoto_search extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_search constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -49,18 +59,29 @@ class webphoto_search extends webphoto_base_this
         $this->_search_class->set_is_japanese($this->_is_japanese);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_search
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_search($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // detail
     //---------------------------------------------------------
+
+    /**
+     * @param $query
+     * @return array
+     */
     public function build_total_for_detail($query)
     {
         $title = _SR_SEARCH;
@@ -68,7 +89,7 @@ class webphoto_search extends webphoto_base_this
 
         $sql_query = $this->build_sql_query($query);
         if (!$sql_query) {
-            return array($sql_query, $title, $total);
+            return [$sql_query, $title, $total];
         }
 
         $total = $this->_public_class->get_count_by_search($sql_query);
@@ -76,9 +97,13 @@ class webphoto_search extends webphoto_base_this
             $title = _SR_SEARCH . ' : ' . $this->_search_class->get_query_raw('s');
         }
 
-        return array($sql_query, $title, $total);
+        return [$sql_query, $title, $total];
     }
 
+    /**
+     * @param $query
+     * @return null|string
+     */
     public function build_sql_query($query)
     {
         $this->_search_class->get_post_get_param();
@@ -90,40 +115,71 @@ class webphoto_search extends webphoto_base_this
         }
 
         $sql_query = $this->_search_class->build_sql_query('item_search');
+
         return $sql_query;
     }
 
+    /**
+     * @param     $sql_query
+     * @param     $orderby
+     * @param int $limit
+     * @param int $start
+     * @return array|bool
+     */
     public function build_rows_for_detail($sql_query, $orderby, $limit = 0, $start = 0)
     {
         return $this->_public_class->get_rows_by_search_orderby($sql_query, $orderby, $limit, $start);
     }
 
+    /**
+     * @param $total
+     * @return array
+     */
     public function build_query_param($total)
     {
-        $param                          = $this->_search_class->get_query_param();
-        $param['show_search']           = true;
-        $param['lang_keytooshort']      = $this->build_lang_keytooshort();
+        $param = $this->_search_class->get_query_param();
+        $param['show_search'] = true;
+        $param['lang_keytooshort'] = $this->build_lang_keytooshort();
         $param['show_lang_keytooshort'] = $this->build_show_lang_keytooshort($total, $param);
+
         return $param;
     }
 
+    /**
+     * @return string
+     */
     public function build_lang_keytooshort()
     {
         $str = sprintf($this->get_constant('SEARCH_KEYTOOSHORT'), $this->_min_keyword);
+
         return $str;
     }
 
+    /**
+     * @param $total
+     * @param $param
+     * @return bool
+     */
     public function build_show_lang_keytooshort($total, $param)
     {
-        if ($param['search_query'] && ($total == 0)) {
+        if ($param['search_query'] && (0 == $total)) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // rss
     //---------------------------------------------------------
+
+    /**
+     * @param     $query
+     * @param     $orderby
+     * @param int $limit
+     * @param int $start
+     * @return array|bool|null
+     */
     public function build_rows_for_rss($query, $orderby, $limit = 0, $start = 0)
     {
         $sql_query = $this->build_sql_query($query);

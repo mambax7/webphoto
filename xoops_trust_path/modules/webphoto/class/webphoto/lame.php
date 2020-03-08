@@ -20,6 +20,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_lame
 // wrapper for webphoto_lib_lame
 //=========================================================
+
+/**
+ * Class webphoto_lame
+ */
 class webphoto_lame extends webphoto_cmd_base
 {
     public $_lame_class;
@@ -28,6 +32,12 @@ class webphoto_lame extends webphoto_cmd_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_lame constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -41,18 +51,31 @@ class webphoto_lame extends webphoto_cmd_base
         $this->set_debug_by_ini_name($this->_lame_class);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lame|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lame($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create mp3
     //---------------------------------------------------------
+
+    /**
+     * @param        $src_file
+     * @param        $dst_file
+     * @param string $option
+     * @return int
+     */
     public function create_mp3($src_file, $dst_file, $option = '')
     {
         if (empty($src_file)) {
@@ -69,10 +92,12 @@ class webphoto_lame extends webphoto_cmd_base
 
         if (is_file($dst_file)) {
             $this->chmod_file($dst_file);
+
             return 1;  // suceess
         }
 
         $this->set_error($this->_lame_class->get_msg_array());
+
         return -1; // fail
     }
 

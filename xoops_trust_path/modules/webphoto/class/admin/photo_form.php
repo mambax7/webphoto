@@ -32,14 +32,18 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_photo_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_photo_form
+ */
 class webphoto_admin_photo_form extends webphoto_edit_form
 {
     public $_show_class;
     public $_cat_selbox_class;
     public $_multibyte_class;
 
-    public $_MAX_COL      = 4;
-    public $_PERPAGE      = 20;
+    public $_MAX_COL = 4;
+    public $_PERPAGE = 20;
     public $_TITLE_LENGTH = 20;
 
     public $_get_catid;
@@ -51,11 +55,17 @@ class webphoto_admin_photo_form extends webphoto_edit_form
     public $_perpage;
 
     public $_COLOR_WHITE = '#FFFFFF';
-    public $_COLOR_PINK  = '#FFE4E1';  /* mistrose */
+    public $_COLOR_PINK = '#FFE4E1';  /* mistrose */
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_photo_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -72,28 +82,41 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         $this->preload_init();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_photo_form|\webphoto_edit_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_photo_form($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // print_form
     //---------------------------------------------------------
+
+    /**
+     * @param $photo_count
+     * @param $photo_rows
+     * @param $perpage
+     * @param $photonavinfo
+     */
     public function print_form($photo_count, $photo_rows, $perpage, $photonavinfo)
     {
-        $this->_get_catid     = $this->_post_class->get_get_int('cat_id');
-        $this->_get_pos       = $this->_post_class->get_get_int('pos');
-        $this->_get_txt       = $this->_post_class->get_get_text('txt');
-        $this->_get_mes       = $this->_post_class->get_get_text('mes');
+        $this->_get_catid = $this->_post_class->get_get_int('cat_id');
+        $this->_get_pos = $this->_post_class->get_get_int('pos');
+        $this->_get_txt = $this->_post_class->get_get_text('txt');
+        $this->_get_mes = $this->_post_class->get_get_text('mes');
         $this->_get_userstart = $this->_post_class->get_get_int('userstart');
 
-        $onclick_off    = ' onclick="with(document.MainForm){ for(i=0;i<length;i++){ if(elements[i].type==\'checkbox\'){ elements[i].checked=false; }}}" ';
-        $onclick_on     = ' onclick="with(document.MainForm){ for(i=0;i<length;i++){ if(elements[i].type==\'checkbox\'){ elements[i].checked=true; }}}" ';
+        $onclick_off = ' onclick="with(document.MainForm){ for(i=0;i<length;i++){ if(elements[i].type==\'checkbox\'){ elements[i].checked=false; }}}" ';
+        $onclick_on = ' onclick="with(document.MainForm){ for(i=0;i<length;i++){ if(elements[i].type==\'checkbox\'){ elements[i].checked=true; }}}" ';
         $onclick_delete = ' onclick="if(confirm(\'' . _AM_WEBPHOTO_JS_REMOVECONFIRM . '\')){ document.MainForm.action.value=\'delete\'; submit(); }" ';
 
         $url_pictadd = $this->_MODULE_URL . '/admin/index.php?fct=item_manager&amp;op=submit_form&amp;cat_id=' . $this->_get_catid;
@@ -130,7 +153,7 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         $col = 0;
 
         foreach ($photo_rows as $row) {
-            if ($col == 0) {
+            if (0 == $col) {
                 echo "\t<tr>\n";
             }
 
@@ -157,7 +180,7 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo ' ';
         echo $this->build_input_button('delete', _DELETE, $onclick_delete);
         echo '</td></tr></table>';
-        echo "<br />\n";
+        echo "<br>\n";
         // --- table 1 end ---
 
         $this->_print_form_edit_table($perpage);
@@ -171,6 +194,11 @@ class webphoto_admin_photo_form extends webphoto_edit_form
     //---------------------------------------------------------
     // print_num_form
     //---------------------------------------------------------
+
+    /**
+     * @param $photo_count
+     * @param $perpage
+     */
     public function _print_form_search_table($photo_count, $perpage)
     {
         // Page Navigation
@@ -191,6 +219,9 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo '</td></tr></table>' . "\n";
     }
 
+    /**
+     * @param $perpage
+     */
     public function _print_form_search($perpage)
     {
         echo '<form action="' . $this->_THIS_URL . '" method="GET">';
@@ -202,11 +233,18 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo $this->build_form_end();
     }
 
+    /**
+     * @return null|string
+     */
     public function _build_num_ele_cat_select()
     {
         return $this->_cat_selbox_class->build_selbox('cat_title', $this->_get_catid, '---', 'cat_id', 'submit();');
     }
 
+    /**
+     * @param $perpage
+     * @return string
+     */
     public function _build_num_ele_perpage_select($perpage)
     {
         // Options for the number of photos in a display
@@ -228,37 +266,42 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         $text = '<select name="perpage" onchange="submit();" >';
         $text .= $options;
         $text .= "</select>\n";
+
         return $text;
     }
 
     //---------------------------------------------------------
     // print_photo
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function _print_photo($row)
     {
-        $cfg_thumb_width  = $this->_config_class->get_by_name('thumb_width');
+        $cfg_thumb_width = $this->_config_class->get_by_name('thumb_width');
         $cfg_thumb_height = $this->_config_class->get_by_name('thumb_height');
 
         $show = $this->_show_class->build_photo_show_light($row);
 
-        $photo_id     = $show['photo_id'];
-        $photo_title  = $show['title'];
+        $photo_id = $show['photo_id'];
+        $photo_title = $show['title'];
         $photo_status = $show['status'];
-        $media_url_s  = $show['media_url_s'];
-        $thumb_src_s  = $show['img_thumb_src_s'];
-        $thumb_width  = $show['img_thumb_width'];
+        $media_url_s = $show['media_url_s'];
+        $thumb_src_s = $show['img_thumb_src_s'];
+        $thumb_width = $show['img_thumb_width'];
         $thumb_height = $show['img_thumb_height'];
 
-        if (strlen($photo_title) > $this->_TITLE_LENGTH) {
+        if (mb_strlen($photo_title) > $this->_TITLE_LENGTH) {
             $photo_title = $this->_multibyte_class->sub_str($photo_title, 0, $this->_TITLE_LENGTH) . '...';
         }
 
         $photo_title_s = $this->sanitize($photo_title);
 
         if ($thumb_width && $thumb_height) {
-            $img = '<img src="' . $thumb_src_s . '" border="0" alt="' . $photo_title_s . '" title="' . $photo_title_s . '" width="' . $thumb_width . '" height="' . $thumb_height . '" />' . "\n";
+            $img = '<img src="' . $thumb_src_s . '" border="0" alt="' . $photo_title_s . '" title="' . $photo_title_s . '" width="' . $thumb_width . '" height="' . $thumb_height . '" >' . "\n";
         } else {
-            $img = '<img src="' . $thumb_src_s . '" border="0" alt="' . $photo_title_s . '" title="' . $photo_title_s . '" width="' . $cfg_thumb_width . '" />' . "\n";
+            $img = '<img src="' . $thumb_src_s . '" border="0" alt="' . $photo_title_s . '" title="' . $photo_title_s . '" width="' . $cfg_thumb_width . '" >' . "\n";
         }
 
         if ($media_url_s) {
@@ -271,7 +314,7 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         // pink for wating addmission
         $bgcolor = $photo_status ? $this->_COLOR_WHITE : $this->_COLOR_PINK;
 
-        $editbutton     = $this->_build_edit_button($photo_id);
+        $editbutton = $this->_build_edit_button($photo_id);
         $deadlinkbutton = $this->_build_deadlink_button($row);
 
         $pixel_gif_w = $this->build_img_pixel($cfg_thumb_width, 1);
@@ -314,6 +357,10 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo '</td>';
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function _build_edit_button($id)
     {
         $url_edit = $this->_MODULE_URL . '/admin/index.php?fct=item_manager&amp;op=modify_form&amp;item_id=' . $id;
@@ -321,17 +368,27 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         $button = '<a href="' . $url_edit . '" target="_blank">';
         $button .= $this->build_img_edit();
         $button .= "</a> \n";
+
         return $button;
     }
 
+    /**
+     * @param $row
+     * @return null|string
+     */
     public function _build_deadlink_button($row)
     {
         if ($this->_check_deadlink($row)) {
             return $this->build_img_deadlink();
         }
+
         return null;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function _check_deadlink($row)
     {
         // exist main photo
@@ -348,15 +405,20 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         if ($row['item_playlist_type']) {
             return false;
         }
+
         return true;
     }
 
     //---------------------------------------------------------
     // print_edit_table
     //---------------------------------------------------------
+
+    /**
+     * @param $perpage
+     */
     public function _print_form_edit_table($perpage)
     {
-        $template = 'db:' . $this->_DIRNAME . '_form_admin_photo.html';
+        $template = 'db:' . $this->_DIRNAME . '_form_admin_photo.tpl';
 
         $arr = array_merge($this->build_form_base_param(), $this->build_form_admin_edit(), $this->build_admin_param($perpage), $this->build_admin_language());
 
@@ -365,38 +427,54 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo $tpl->fetch($template);
     }
 
+    /**
+     * @return array
+     */
     public function build_form_admin_edit()
     {
         list($show_user_list, $user_list, $new_uid_options) = $this->get_user_param(0, $this->_get_userstart);
 
-        $arr = array(
+        $arr = [
             'new_cat_id_options' => $this->new_cat_id_options(),
-            'new_datetime'       => $this->new_datetime(),
-            'new_time_update'    => $this->new_time_update(),
-            'new_text_array'     => $this->new_text_array(),
+            'new_datetime' => $this->new_datetime(),
+            'new_time_update' => $this->new_time_update(),
+            'new_text_array' => $this->new_text_array(),
 
             'new_uid_options' => $new_uid_options,
-            'show_user_list'  => $show_user_list,
-            'user_list'       => $user_list,
-        );
+            'show_user_list' => $show_user_list,
+            'user_list' => $user_list,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return null|string
+     */
     public function new_cat_id_options()
     {
         return $this->_cat_selbox_class->build_selbox_options('cat_title', 0, _AM_WEBPHOTO_OPT_NOCHANGE);
     }
 
+    /**
+     * @return false|string
+     */
     public function new_datetime()
     {
         return $this->get_mysql_date_today();
     }
 
+    /**
+     * @return string
+     */
     public function new_time_update()
     {
         return formatTimestamp(time(), _WEBPHOTO_DTFMT_YMDHI);
     }
 
+    /**
+     * @return array|null
+     */
     public function new_text_array()
     {
         // preload
@@ -406,55 +484,64 @@ class webphoto_admin_photo_form extends webphoto_edit_form
             return null;
         }
 
-        $arr = array();
+        $arr = [];
 
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_PHOTO_TEXT; ++$i) {
-            $show  = false;
+            $show = false;
             $title = '';
-            $name  = '';
+            $name = '';
 
             $text_name = 'photo_text' . $i;
 
             if (in_array($text_name, $item_text_array)) {
-                $show  = true;
+                $show = true;
                 $title = $this->get_constant($text_name);
-                $name  = 'new_text_' . $i;
+                $name = 'new_text_' . $i;
             }
 
-            $arr[] = array(
-                'num'     => $i,
-                'show'    => $show,
-                'title'   => $title,
+            $arr[] = [
+                'num' => $i,
+                'show' => $show,
+                'title' => $title,
                 'title_s' => $this->sanitize($title),
-                'name'    => $name,
-            );
+                'name' => $name,
+            ];
         }
 
         return $arr;
     }
 
+    /**
+     * @param $perpage
+     * @return array
+     */
     public function build_admin_param($perpage)
     {
-        $arr = array(
-            'perpage'    => $perpage,
-            'catid'      => $this->_get_catid,
-            'pos'        => $this->_get_pos,
-            'userstart'  => $this->_get_userstart,
-            'txt'        => $this->_get_txt,
-            'mes'        => $this->_get_mes,
+        $arr = [
+            'perpage' => $perpage,
+            'catid' => $this->_get_catid,
+            'pos' => $this->_get_pos,
+            'userstart' => $this->_get_userstart,
+            'txt' => $this->_get_txt,
+            'mes' => $this->_get_mes,
             'txt_encode' => urlencode($this->_get_txt),
             'mes_encode' => urlencode($this->_get_mes),
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function build_admin_language()
     {
-        $arr = array(
-            'lang_th_batchupdate'   => _AM_WEBPHOTO_TH_BATCHUPDATE,
+        $arr = [
+            'lang_th_batchupdate' => _AM_WEBPHOTO_TH_BATCHUPDATE,
             'lang_js_updateconfirm' => _AM_WEBPHOTO_JS_UPDATECONFIRM,
-            'lang_button_update'    => _AM_WEBPHOTO_BUTTON_UPDATE,
-        );
+            'lang_button_update' => _AM_WEBPHOTO_BUTTON_UPDATE,
+        ];
+
         return $arr;
     }
 
@@ -489,46 +576,63 @@ class webphoto_admin_photo_form extends webphoto_edit_form
         echo $this->build_table_end();
     }
 
+    /**
+     * @return null|string
+     */
     public function _build_ed_ele_category()
     {
         return $this->_cat_selbox_class->build_selbox('cat_title', 0, _AM_WEBPHOTO_OPT_NOCHANGE, 'new_cat_id');
     }
 
+    /**
+     * @return string
+     */
     public function _build_ed_ele_submitter()
     {
         $list = $this->get_xoops_user_list($this->_USER_LIMIT, $this->_get_userstart);
+
         return $this->build_form_user_select($list, 'new_uid', 0, true);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ed_ele_datetime()
     {
-        $name          = 'new_datetime';
+        $name = 'new_datetime';
         $name_checkbox = $name . '_checkbox';
-        $date          = $this->get_mysql_date_today();
+        $date = $this->get_mysql_date_today();
 
         $text = $this->build_input_checkbox_yes($name_checkbox, $this->_C_NO);
-        $text .= _WEBPHOTO_DSC_SET_DATETIME . "<br />\n";
+        $text .= _WEBPHOTO_DSC_SET_DATETIME . "<br>\n";
         $text .= $this->build_input_text($name, $date);
 
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function _build_ed_ele_time_update()
     {
-        $name          = 'new_time_update';
+        $name = 'new_time_update';
         $name_checkbox = $name . '_checkbox';
-        $date          = formatTimestamp(time(), _WEBPHOTO_DTFMT_YMDHI);
+        $date = formatTimestamp(time(), _WEBPHOTO_DTFMT_YMDHI);
 
         $text = $this->build_input_checkbox_yes($name_checkbox, $this->_C_NO);
-        $text .= _WEBPHOTO_DSC_SET_ITEM_TIME_UPDATE . "<br />\n";
+        $text .= _WEBPHOTO_DSC_SET_ITEM_TIME_UPDATE . "<br>\n";
         $text .= $this->build_input_text($name, $date);
 
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function _build_ed_ele_submit()
     {
         $extra = ' onclick="return confirm(' . _AM_WEBPHOTO_JS_UPDATECONFIRM . ')" tabindex="1" ';
+
         return $this->build_input_submit('update', _AM_WEBPHOTO_BUTTON_UPDATE, $extra);
     }
 

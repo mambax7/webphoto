@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_check_file
 //=========================================================
+
+/**
+ * Class webphoto_admin_check_file
+ */
 class webphoto_admin_check_file extends webphoto_base_this
 {
     public $_file_check_class;
@@ -29,6 +33,12 @@ class webphoto_admin_check_file extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_check_file constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -36,12 +46,18 @@ class webphoto_admin_check_file extends webphoto_base_this
         $this->_file_check_class = webphoto_lib_file_check::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_check_file|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_check_file($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -55,7 +71,7 @@ class webphoto_admin_check_file extends webphoto_base_this
         echo $this->build_admin_menu();
         echo '<h3>' . _AM_WEBPHOTO_FILE_CHECK . "</h3>\n";
 
-        echo _AM_WEBPHOTO_FILE_CHECK_DSC . "<br /><br />\n";
+        echo _AM_WEBPHOTO_FILE_CHECK_DSC . "<br><br>\n";
         $this->_print_file_check();
 
         xoops_cp_footer();
@@ -83,14 +99,19 @@ class webphoto_admin_check_file extends webphoto_base_this
         if (!$flag_error) {
             echo $this->green('OK');
         }
-        echo "<br/>\n";
+        echo "<br>\n";
     }
 
+    /**
+     * @param $msg
+     * @return string
+     */
     public function green($msg)
     {
         $str = '<span style="' . $this->_SPAN_STYLE_GREEN . '">';
         $str .= $msg;
         $str .= "</span>\n";
+
         return $str;
     }
 

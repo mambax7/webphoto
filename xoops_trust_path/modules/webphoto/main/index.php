@@ -29,9 +29,9 @@ webphoto_include_once('class/main/index.php');
 $manage = webphoto_main_index::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNAME);
 $manage->init();
 
-$xoopsOption['template_main'] = $manage->get_template_main();
+$GLOBALS['xoopsOption']['template_main'] = $manage->get_template_main();
 include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign($manage->main());
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';

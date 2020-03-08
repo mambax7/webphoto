@@ -27,9 +27,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_file_read
 //=========================================================
+
+/**
+ * Class webphoto_file_read
+ */
 class webphoto_file_read extends webphoto_item_public
 {
-    public $_file_handler;
+    public $_fileHandler;
     public $_multibyte_class;
     public $_post_class;
     public $_utility_class;
@@ -37,40 +41,60 @@ class webphoto_file_read extends webphoto_item_public
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_file_read constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_file_handler    = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
         $this->_multibyte_class = webphoto_multibyte::getInstance();
-        $this->_post_class      = webphoto_lib_post::getInstance();
-        $this->_utility_class   = webphoto_lib_utility::getInstance();
+        $this->_post_class = webphoto_lib_post::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_file_read|\webphoto_item_public|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_file_read($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return array|bool|null
+     */
     public function get_file_row($item_row, $kind)
     {
         $file_id = $this->_item_handler->build_value_fileid_by_kind($item_row, $kind);
 
-        if ($file_id == 0) {
+        if (0 == $file_id) {
             $this->_error = $this->get_constant('NO_FILE');
+
             return false;
         }
 
-        $file_row = $this->_file_handler->get_extend_row_by_id($file_id);
+        $file_row = $this->_fileHandler->get_extend_row_by_id($file_id);
         if (!is_array($file_row)) {
             $this->_error = $this->get_constant('NO_FILE');
+
             return false;
         }
 
@@ -78,6 +102,7 @@ class webphoto_file_read extends webphoto_item_public
 
         if (!$exists) {
             $this->_error = $this->get_constant('NO_FILE');
+
             return false;
         }
 

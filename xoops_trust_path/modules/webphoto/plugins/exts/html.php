@@ -19,13 +19,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_pdf
 //=========================================================
+
+/**
+ * Class webphoto_ext_html
+ */
 class webphoto_ext_html extends webphoto_ext_base
 {
-    public $_HTML_EXTS = array('html', 'htm');
+    public $_HTML_EXTS = ['html', 'htm'];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_html constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,11 +44,20 @@ class webphoto_ext_html extends webphoto_ext_base
     //---------------------------------------------------------
     // check ext
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->is_html_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_html_ext($ext)
     {
         return $this->is_ext_in_array($ext, $this->_HTML_EXTS);
@@ -51,6 +70,11 @@ class webphoto_ext_html extends webphoto_ext_base
     //---------------------------------------------------------
     // text content
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool|false|mixed|null|string|string[]
+     */
     public function get_text_content($param)
     {
         $file_cont = isset($param['file_cont']) ? $param['file_cont'] : null;
@@ -67,6 +91,7 @@ class webphoto_ext_html extends webphoto_ext_base
         }
 
         $text = $this->_multibyte_class->build_plane_text($text);
+
         return $text;
     }
 
@@ -74,6 +99,12 @@ class webphoto_ext_html extends webphoto_ext_base
     // find HTML encoding
     // < meta http-equiv="Content-Type" content="text/html;charset=UTF-8" >
     //---------------------------------------------------------
+
+    /**
+     * @param      $text
+     * @param bool $flag_auto
+     * @return bool|false|mixed|null|string
+     */
     public function find_html_encoding($text, $flag_auto = false)
     {
         $encoding = null;
@@ -85,6 +116,7 @@ class webphoto_ext_html extends webphoto_ext_base
         if (empty($encoding) && $flag_auto) {
             $encoding = $this->_multibyte_class->m_mb_detect_encoding($text);
         }
+
         return $encoding;
     }
 

@@ -25,6 +25,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_permission
 //=========================================================
+
+/**
+ * Class webphoto_permission
+ */
 class webphoto_permission extends webphoto_inc_group_permission
 {
     public $_has_insertable;
@@ -46,109 +50,167 @@ class webphoto_permission extends webphoto_inc_group_permission
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_permission constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_has_insertable       = $this->has_perm('insertable');
-        $this->_has_superinsert      = $this->has_perm('superinsert');
-        $this->_has_editable         = $this->has_perm('editable');
-        $this->_has_superedit        = $this->has_perm('superedit');
-        $this->_has_deletable        = $this->has_perm('deletable');
-        $this->_has_superdelete      = $this->has_perm('superdelete');
-        $this->_has_touchothers      = $this->has_perm('touchothers');
+        $this->_has_insertable = $this->has_perm('insertable');
+        $this->_has_superinsert = $this->has_perm('superinsert');
+        $this->_has_editable = $this->has_perm('editable');
+        $this->_has_superedit = $this->has_perm('superedit');
+        $this->_has_deletable = $this->has_perm('deletable');
+        $this->_has_superdelete = $this->has_perm('superdelete');
+        $this->_has_touchothers = $this->has_perm('touchothers');
         $this->_has_supertouchothers = $this->has_perm('supertouchothers');
-        $this->_has_rateview         = $this->has_perm('rateview');
-        $this->_has_ratevote         = $this->has_perm('ratevote');
-        $this->_has_tellafriend      = $this->has_perm('tellafriend');
-        $this->_has_tagedit          = $this->has_perm('tagedit');
-        $this->_has_mail             = $this->has_perm('mail');
-        $this->_has_file             = $this->has_perm('file');
-        $this->_has_html             = $this->has_perm('html');
+        $this->_has_rateview = $this->has_perm('rateview');
+        $this->_has_ratevote = $this->has_perm('ratevote');
+        $this->_has_tellafriend = $this->has_perm('tellafriend');
+        $this->_has_tagedit = $this->has_perm('tagedit');
+        $this->_has_mail = $this->has_perm('mail');
+        $this->_has_file = $this->has_perm('file');
+        $this->_has_html = $this->has_perm('html');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_permission
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_permission($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // has permit
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function has_insertable()
     {
         return $this->_has_insertable;
     }
 
+    /**
+     * @return bool
+     */
     public function has_superinsert()
     {
         return $this->_has_superinsert;
     }
 
+    /**
+     * @return bool
+     */
     public function has_editable()
     {
         return $this->_has_editable;
     }
 
+    /**
+     * @return bool
+     */
     public function has_superedit()
     {
         return $this->_has_superedit;
     }
 
+    /**
+     * @return bool
+     */
     public function has_deletable()
     {
         return $this->_has_deletable;
     }
 
+    /**
+     * @return bool
+     */
     public function has_superdelete()
     {
         return $this->_has_superdelete;
     }
 
+    /**
+     * @return bool
+     */
     public function has_touchothers()
     {
         return $this->_has_touchothers;
     }
 
+    /**
+     * @return bool
+     */
     public function has_supertouchothers()
     {
         return $this->_has_supertouchothers;
     }
 
+    /**
+     * @return bool
+     */
     public function has_rateview()
     {
         return $this->_has_rateview;
     }
 
+    /**
+     * @return bool
+     */
     public function has_ratevote()
     {
         return $this->_has_ratevote;
     }
 
+    /**
+     * @return bool
+     */
     public function has_tellafriend()
     {
         return $this->_has_tellafriend;
     }
 
+    /**
+     * @return bool
+     */
     public function has_tagedit()
     {
         return $this->_has_tagedit;
     }
 
+    /**
+     * @return bool
+     */
     public function has_mail()
     {
         return $this->_has_mail;
     }
 
+    /**
+     * @return bool
+     */
     public function has_file()
     {
         return $this->_has_file;
     }
 
+    /**
+     * @return bool
+     */
     public function has_html()
     {
         return $this->_has_html;

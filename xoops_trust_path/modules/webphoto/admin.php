@@ -27,14 +27,14 @@ global $xoopsUser;
 
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-$module_handler    = xoops_getHandler('module');
-$xoopsModule       = $module_handler->getByDirname($MY_DIRNAME);
-$config_handler    = xoops_getHandler('config');
-$xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+$moduleHandler = xoops_getHandler('module');
+$xoopsModule = $moduleHandler->getByDirname($MY_DIRNAME);
+$configHandler = xoops_getHandler('config');
+$xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
-$moduleperm_handler = xoops_getHandler('groupperm');
-if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+$modulepermHandler = xoops_getHandler('groupperm');
+if (!is_object(@$xoopsUser) || !$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');
 }
 
@@ -46,26 +46,25 @@ require_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 //---------------------------------------------------------
 $mytrustdirname = basename(__DIR__);
 $mytrustdirpath = XOOPS_TRUST_PATH . '/modules/' . $mytrustdirname;
-$mydirname      = $MY_DIRNAME;
-$mydirpath      = XOOPS_ROOT_PATH . '/modules/' . $MY_DIRNAME;
+$mydirname = $MY_DIRNAME;
+$mydirpath = XOOPS_ROOT_PATH . '/modules/' . $MY_DIRNAME;
 
 if (!empty($_GET['lib'])) {
-
     // initialize language manager
     $langmanpath = XOOPS_TRUST_PATH . '/libs/altsys/class/D3LanguageManager.class.php';
     if (!file_exists($langmanpath)) {
         die('install the latest altsys');
     }
 
-    require_once($langmanpath);
+    require_once $langmanpath;
     $langman = D3LanguageManager::getInstance();
 
     // common libs (eg. altsys)
-    $lib  = preg_replace('/[^a-zA-Z0-9_-]/', '', $_GET['lib']);
+    $lib = preg_replace('/[^a-zA-Z0-9_-]/', '', $_GET['lib']);
     $page = preg_replace('/[^a-zA-Z0-9_-]/', '', @$_GET['page']);
 
     // check the page can be accessed (make controllers.php just under the lib)
-    $controllers = array();
+    $controllers = [];
     if (file_exists(XOOPS_TRUST_PATH . '/libs/' . $lib . '/controllers.php')) {
         require XOOPS_TRUST_PATH . '/libs/' . $lib . '/controllers.php';
         if (!in_array($page, $controllers)) {
@@ -103,15 +102,15 @@ include_once WEBPHOTO_TRUST_PATH . '/include/optional.php';
 webphoto_include_once('preload/debug.php');
 
 // fork each pages
-$get_fct  = isset($_GET['fct']) ? $_GET['fct'] : null;
+$get_fct = isset($_GET['fct']) ? $_GET['fct'] : null;
 $post_fct = isset($_POST['fct']) ? $_POST['fct'] : $get_fct;
-$fct      = preg_replace('/[^a-zA-Z0-9_-]/', '', $post_fct);
+$fct = preg_replace('/[^a-zA-Z0-9_-]/', '', $post_fct);
 
-$file_trust_fct   = WEBPHOTO_TRUST_PATH . '/admin/' . $fct . '.php';
-$file_root_fct    = WEBPHOTO_ROOT_PATH . '/admin/' . $fct . '.php';
+$file_trust_fct = WEBPHOTO_TRUST_PATH . '/admin/' . $fct . '.php';
+$file_root_fct = WEBPHOTO_ROOT_PATH . '/admin/' . $fct . '.php';
 $file_trust_index = WEBPHOTO_TRUST_PATH . '/admin/index.php';
-$file_root_index  = WEBPHOTO_ROOT_PATH . '/admin/index.php';
-$file_root_main   = WEBPHOTO_ROOT_PATH . '/admin/main.php';
+$file_root_index = WEBPHOTO_ROOT_PATH . '/admin/index.php';
+$file_root_main = WEBPHOTO_ROOT_PATH . '/admin/main.php';
 
 if (file_exists($file_root_fct)) {
     webphoto_debug_msg($file_root_fct);
@@ -120,7 +119,7 @@ if (file_exists($file_root_fct)) {
     webphoto_debug_msg($file_trust_fct);
     include_once $file_trust_fct;
 
-    //} elseif ( file_exists( $file_root_index ) ) {
+//} elseif ( file_exists( $file_root_index ) ) {
     //  webphoto_debug_msg( $file_root_index );
     //  include_once $file_root_index;
 } elseif (file_exists($file_root_main)) {

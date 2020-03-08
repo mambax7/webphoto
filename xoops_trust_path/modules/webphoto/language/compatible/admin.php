@@ -22,7 +22,7 @@ if (!defined('_AM_WEBPHOTO_INVITE_EMAIL')) {
     define('_AM_WEBPHOTO_INVITE_NAME', 'Your Name');
     define('_AM_WEBPHOTO_INVITE_MESSAGE', 'Message');
     define('_AM_WEBPHOTO_INVITE_SUBMIT', 'Invite');
-    define('_AM_WEBPHOTO_INVITE_EXAMPLE', 'Exsample: Hello, I am John. I send an invitation at the site which was talked about. <br />Jane, too, attempt to register by all means. ');
+    define('_AM_WEBPHOTO_INVITE_EXAMPLE', 'Exsample: Hello, I am John. I send an invitation at the site which was talked about. <br>Jane, too, attempt to register by all means. ');
     define('_AM_WEBPHOTO_INVITE_SUBJECT', 'You get the invitation email. from %s to %s ');
     define('_AM_WEBPHOTO_INVITE_ERR_NO_NAME', 'No Name');
 
@@ -96,7 +96,6 @@ if (!defined('_AM_WEBPHOTO_RSS_DEBUG')) {
 //---------------------------------------------------------
 // === define begin ===
 if (!defined('_AM_WEBPHOTO_DIRECTORYFOR_UPLOADS')) {
-
     //---------------------------------------------------------
     // v0.50
     //---------------------------------------------------------
@@ -146,7 +145,7 @@ if (!defined('_AM_WEBPHOTO_DIRECTORYFOR_UPLOADS')) {
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_DSC', 'Save your changes first!');
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_LINK', 'Preview Source');
     define('_AM_WEBPHOTO_PLAYER_NO_ITEM', 'Thers are no item to play');
-    define('_AM_WEBPHOTO_PLAYER_WARNING', 'WARNING: Are you sure you want to delete this Player? <br />Manually edit all entries using this player before deleting it.');
+    define('_AM_WEBPHOTO_PLAYER_WARNING', 'WARNING: Are you sure you want to delete this Player? <br>Manually edit all entries using this player before deleting it.');
     define('_AM_WEBPHOTO_PLAYER_ERR_EXIST', 'ERROR: The same title player you provided is already in the database!');
     define('_AM_WEBPHOTO_BUTTON_CLONE', 'Clone');
 
@@ -155,7 +154,7 @@ if (!defined('_AM_WEBPHOTO_DIRECTORYFOR_UPLOADS')) {
     //---------------------------------------------------------
     // cat form
     define('_AM_WEBPHOTO_CAP_CAT_SELECT', 'Select the category image');
-    define('_AM_WEBPHOTO_DSC_CAT_PATH', "Set Path from the directory installed XOOPS.<br />(The first character must be '/'.)");
+    define('_AM_WEBPHOTO_DSC_CAT_PATH', "Set Path from the directory installed XOOPS.<br>(The first character must be '/'.)");
     define('_AM_WEBPHOTO_DSC_CAT_FOLDER', 'Show folder icon if not set');
 
     //---------------------------------------------------------

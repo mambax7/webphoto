@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class uploader_photo_handler
 //=========================================================
-class webphoto_xoops_comments_handler extends webphoto_lib_handler
-{
 
+/**
+ * Class webphoto_xoops_commentsHandler
+ */
+class webphoto_xoops_commentsHandler extends webphoto_lib_handler
+{
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -29,18 +32,27 @@ class webphoto_xoops_comments_handler extends webphoto_lib_handler
         //  $this->set_debug_error_by_const_name( $constpref.'DEBUG_ERROR' );
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_xoops_commentsHandler
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_xoops_comments_handler();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return
+     */
     public function insert($row)
     {
         extract($row);
@@ -56,12 +68,20 @@ class webphoto_xoops_comments_handler extends webphoto_lib_handler
         $sql .= ')';
 
         $this->query($sql);
+
         return $this->_db->getInsertId();
     }
 
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $com_id
+     * @param $com_rootid
+     * @param $com_pid
+     * @return mixed
+     */
     public function update_rootid_pid($com_id, $com_rootid, $com_pid)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -72,6 +92,13 @@ class webphoto_xoops_comments_handler extends webphoto_lib_handler
         return $this->query($sql);
     }
 
+    /**
+     * @param $src_mid
+     * @param $src_id
+     * @param $dst_mid
+     * @param $dst_lid
+     * @return mixed
+     */
     public function move($src_mid, $src_id, $dst_mid, $dst_lid)
     {
         $sql = 'UPDATE ' . $this->_table . ' SET ';
@@ -86,6 +113,10 @@ class webphoto_xoops_comments_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // delete
     //---------------------------------------------------------
+
+    /**
+     * @param $modid
+     */
     public function delete_all_by_modid($modid)
     {
         $sql = 'DELETE FROM ' . $this->_table;
@@ -96,27 +127,44 @@ class webphoto_xoops_comments_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // get
     //---------------------------------------------------------
+
+    /**
+     * @param $modid
+     * @return int
+     */
     public function get_count_by_modid($modid)
     {
         $sql = 'SELECT COUNT(com_id) FROM ' . $this->_table;
         $sql .= ' WHERE com_modid=' . (int)$modid;
+
         return $this->get_count_by_sql($sql);
     }
 
+    /**
+     * @param $modid
+     * @return array|bool
+     */
     public function get_rows_by_modid($modid)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE com_modid=' . (int)$modid;
         $sql .= ' ORDER BY com_id';
+
         return $this->get_rows_by_sql($sql);
     }
 
+    /**
+     * @param $modid
+     * @param $itemid
+     * @return array|bool
+     */
     public function get_rows_by_modid_itemid($modid, $itemid)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE com_modid=' . (int)$modid;
         $sql .= ' AND com_itemid=' . (int)$itemid;
         $sql .= ' ORDER BY com_id';
+
         return $this->get_rows_by_sql($sql);
     }
 

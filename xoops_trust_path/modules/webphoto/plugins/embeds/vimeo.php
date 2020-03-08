@@ -16,15 +16,18 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // http://www.vimeo.com/192696
 //
 // <object width="400" height="300">
-// <param name="allowfullscreen" value="true" />
-// <param name="allowscriptaccess" value="always" />
-// <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=192696&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" />
+// <param name="allowfullscreen" value="true" >
+// <param name="allowscriptaccess" value="always" >
+// <param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=192696&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" >
 // <embed src="http://vimeo.com/moogaloop.swf?clip_id=192696&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="300"></embed>
 // </object>
 //=========================================================
+
+/**
+ * Class webphoto_embed_vimeo
+ */
 class webphoto_embed_vimeo extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('vimeo');
@@ -32,6 +35,12 @@ class webphoto_embed_vimeo extends webphoto_embed_base
         $this->set_sample('192696');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $movie = 'http://www.vimeo.com/moogaloop.swf?clip_id=' . $src . '&amp;server=www.vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1';
@@ -43,14 +52,22 @@ class webphoto_embed_vimeo extends webphoto_embed_base
         $str .= $this->build_param('movie', $movie);
         $str .= $this->build_embed_flash($movie, $width, $height, $extra);
         $str .= $this->build_object_end();
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();

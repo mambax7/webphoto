@@ -23,6 +23,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_mail_unlink
 //=========================================================
+
+/**
+ * Class webphoto_edit_mail_unlink
+ */
 class webphoto_edit_mail_unlink
 {
     public $_config_class;
@@ -35,38 +39,58 @@ class webphoto_edit_mail_unlink
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_mail_unlink constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
-        $this->_config_class  = webphoto_config::getInstance($dirname);
+        $this->_config_class = webphoto_config::getInstance($dirname);
         $this->_utility_class = webphoto_lib_utility::getInstance();
 
         $this->_WORK_DIR = $this->_config_class->get_by_name('workdir');
         $this->_MAIL_DIR = $this->_WORK_DIR . '/mail';
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_edit_mail_unlink
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_mail_unlink($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // unlink
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function unlink_by_maillog_row($row)
     {
         $this->unlink_file($row);
         $this->unlink_attaches($row);
     }
 
+    /**
+     * @param $row
+     */
     public function unlink_file($row)
     {
         $this->unlink_by_filename($row['maillog_file']);
     }
 
+    /**
+     * @param $row
+     */
     public function unlink_attaches($row)
     {
         $attach_array = $this->_utility_class->str_to_array($row['maillog_attach'], $this->_SEPARATOR);
@@ -78,6 +102,9 @@ class webphoto_edit_mail_unlink
         }
     }
 
+    /**
+     * @param $file
+     */
     public function unlink_by_filename($file)
     {
         if ($file) {

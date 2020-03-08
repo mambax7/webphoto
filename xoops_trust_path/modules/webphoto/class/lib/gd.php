@@ -21,9 +21,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_gd
 //=========================================================
+
+/**
+ * Class webphoto_lib_gd
+ */
 class webphoto_lib_gd
 {
-    public $_is_gd2    = false;
+    public $_is_gd2 = false;
     public $_force_gd2 = false;
 
     public $_JPEG_QUALITY = 75;
@@ -36,18 +40,31 @@ class webphoto_lib_gd
         $this->_is_gd2 = $this->is_gd2();
     }
 
+    /**
+     * @return \webphoto_lib_gd
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_gd();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param     $src_file
+     * @param     $dst_file
+     * @param int $max_width
+     * @param int $max_height
+     * @param int $rotate
+     * @return bool
+     */
     public function resize_rotate($src_file, $dst_file, $max_width = 0, $max_height = 0, $rotate = 0)
     {
         $image_size = getimagesize($src_file);
@@ -55,9 +72,9 @@ class webphoto_lib_gd
             return false;
         }
 
-        $src_width  = $image_size[0];
+        $src_width = $image_size[0];
         $src_height = $image_size[1];
-        $src_type   = $image_size[2];
+        $src_type = $image_size[2];
 
         $dst_type = $this->file_to_type($dst_file, $src_type);
 
@@ -105,6 +122,11 @@ class webphoto_lib_gd
         return $ret;
     }
 
+    /**
+     * @param $file
+     * @param $type
+     * @return null|resource
+     */
     public function image_create($file, $type)
     {
         $img = null;
@@ -112,22 +134,20 @@ class webphoto_lib_gd
         switch ($type) {
             // GIF
             // GD 2.0.28 or later
-            case 1 :
+            case 1:
                 if (function_exists('imagecreatefromgif')) {
                     $img = imagecreatefromgif($file);
                 }
                 break;
-
             // JPEG
             // GD 1.8 or later
-            case 2 :
+            case 2:
                 if (function_exists('imagecreatefromjpeg')) {
                     $img = imagecreatefromjpeg($file);
                 }
                 break;
-
             // PNG
-            case 3 :
+            case 3:
                 $img = imagecreatefrompng($file);
                 break;
         }
@@ -135,41 +155,58 @@ class webphoto_lib_gd
         return $img;
     }
 
+    /**
+     * @param $img
+     * @param $file
+     * @param $type
+     */
     public function image_output($img, $file, $type)
     {
         switch ($type) {
             // GIF
             // GD 2.0.28 or later
-            case 1 :
+            case 1:
                 if (function_exists('imagegif')) {
                     imagegif($img, $file);
                 }
                 break;
-
             // JPEG
             // GD 1.8 or later
-            case 2 :
+            case 2:
                 if (function_exists('imagejpeg')) {
                     imagejpeg($img, $file, $this->_JPEG_QUALITY);
                 }
                 break;
-
             // PNG
-            case 3 :
+            case 3:
                 imagepng($img, $file);
                 break;
         }
     }
 
+    /**
+     * @param $src_img
+     * @param $angle
+     * @return null|resource
+     */
     public function image_rotate($src_img, $angle)
     {
         // PHP 4.3.0
         if ($this->can_rotate()) {
             return imagerotate($src_img, $angle, 0);
         }
+
         return null;
     }
 
+    /**
+     * @param $src_img
+     * @param $src_width
+     * @param $src_height
+     * @param $new_width
+     * @param $new_height
+     * @return resource
+     */
     public function image_resize($src_img, $src_width, $src_height, $new_width, $new_height)
     {
         if ($this->can_truecolor()) {
@@ -188,53 +225,66 @@ class webphoto_lib_gd
         return $img;
     }
 
+    /**
+     * @return bool
+     */
     public function is_gd2()
     {
         // PHP 4.3.0
         if (function_exists('gd_info')) {
             $gd_info = gd_info();
-            if (substr($gd_info['GD Version'], 0, 10) == 'bundled (2') {
+            if ('bundled (2' == mb_substr($gd_info['GD Version'], 0, 10)) {
                 return true;
             }
         }
+
         return false;
     }
 
+    /**
+     * @param $width
+     * @param $height
+     * @param $max_width
+     * @param $max_height
+     * @return array
+     */
     public function image_adjust($width, $height, $max_width, $max_height)
     {
         if ($width > $max_width) {
-            $mag    = $max_width / $width;
-            $width  = $max_width;
-            $height = $height * $mag;
+            $mag = $max_width / $width;
+            $width = $max_width;
+            $height *= $mag;
         }
 
         if ($height > $max_height) {
-            $mag    = $max_height / $height;
+            $mag = $max_height / $height;
             $height = $max_height;
-            $width  = $width * $mag;
+            $width *= $mag;
         }
 
-        return array((int)$width, (int)$height);
+        return [(int)$width, (int)$height];
     }
 
+    /**
+     * @param $file
+     * @param $type_default
+     * @return int
+     */
     public function file_to_type($file, $type_default)
     {
         $ext = $this->parse_ext($file);
 
         switch ($ext) {
-            case 'gif' :
+            case 'gif':
                 $type = 1;
                 break;
-
-            case 'jpg' :
+            case 'jpg':
                 $type = 2;
                 break;
-
-            case 'png' :
+            case 'png':
                 $type = 3;
                 break;
-
-            default :
+            default:
                 $type = $type_default;
                 break;
         }
@@ -242,34 +292,52 @@ class webphoto_lib_gd
         return $type;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
-        return strtolower(substr(strrchr($file, '.'), 1));
+        return mb_strtolower(mb_substr(mb_strrchr($file, '.'), 1));
     }
 
     //---------------------------------------------------------
     // set & get param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_force_gd2($val)
     {
         // force to use imagecreatetruecolor
         $this->_force_gd2 = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_jpeg_quality($val)
     {
         $this->_JPEG_QUALITY = (int)$val;
     }
 
+    /**
+     * @return bool
+     */
     public function can_rotate()
     {
         // PHP 4.3.0
         if (function_exists('imagerotate')) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function can_truecolor()
     {
         // PHP 4.0.6 and GD 2.0.1
@@ -279,23 +347,29 @@ class webphoto_lib_gd
         if (($this->_is_gd2 || $this->_force_gd2) && function_exists('imagecreatetruecolor')) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // version
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function version()
     {
         if (function_exists('gd_info')) {
-            $ret     = true;
+            $ret = true;
             $gd_info = gd_info();
-            $str     = 'GD Version: ' . $gd_info['GD Version'];
+            $str = 'GD Version: ' . $gd_info['GD Version'];
         } else {
             $ret = false;
             $str = 'not loaded';
         }
-        return array($ret, $str);
+
+        return [$ret, $str];
     }
 
     // --- class end ---

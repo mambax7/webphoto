@@ -27,9 +27,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // http://it.jeita.or.jp/document/publica/standard/exif/japanese/jeida49ja.htm
 // http://park2.wakwak.com/~tsuruzoh/Computer/Digicams/exif.html
 //=========================================================
+
+/**
+ * Class webphoto_lib_exif
+ */
 class webphoto_lib_exif
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -38,28 +41,36 @@ class webphoto_lib_exif
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_exif
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_exif();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // encoding
     //---------------------------------------------------------
+
+    /**
+     * @param $filename
+     * @return array|bool
+     */
     public function read_file($filename)
     {
         if (!function_exists('exif_imagetype')
-            || !function_exists('exif_read_data')
-        ) {
+            || !function_exists('exif_read_data')) {
             return false;
         }
 
         // only JPEG
-        if (exif_imagetype($filename) != IMAGETYPE_JPEG) {
+        if (IMAGETYPE_JPEG != exif_imagetype($filename)) {
             return false;
         }
 
@@ -73,23 +84,28 @@ class webphoto_lib_exif
         list($gps_docomo, $lat, $lon) = $this->parse_gps_docomo($exif);
         $all_data = $this->parse_all_data($exif);
 
-        $arr = array(
-            'datetime'     => $datetime,
-            'maker'        => $maker,
-            'model'        => $model,
+        $arr = [
+            'datetime' => $datetime,
+            'maker' => $maker,
+            'model' => $model,
             'datetime_gnu' => $datetime_gnu,
-            'equipment'    => $equipment,
-            'latitude'     => $lat,
-            'longitude'    => $lon,
-            'gps_docomo'   => $gps_docomo,
-            'all_data'     => $all_data,
-        );
+            'equipment' => $equipment,
+            'latitude' => $lat,
+            'longitude' => $lon,
+            'gps_docomo' => $gps_docomo,
+            'all_data' => $all_data,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $exif
+     * @return array
+     */
     public function parse_datetime($exif)
     {
-        $datetime     = '';
+        $datetime = '';
         $datetime_gnu = '';
 
         if (isset($exif['EXIF']['DateTimeOriginal']) && $exif['EXIF']['DateTimeOriginal']) {
@@ -104,13 +120,17 @@ class webphoto_lib_exif
             $datetime_gnu = preg_replace('/(\d{4}):(\d{2}):(\d{2})(.*)/', '$1-$2-$3$4', $datetime);
         }
 
-        return array($datetime, $datetime_gnu);
+        return [$datetime, $datetime_gnu];
     }
 
+    /**
+     * @param $exif
+     * @return array
+     */
     public function parse_model($exif)
     {
-        $maker     = '';
-        $model     = '';
+        $maker = '';
+        $model = '';
         $equipment = '';
 
         if (isset($exif['IFD0']['Make'])) {
@@ -122,7 +142,7 @@ class webphoto_lib_exif
         }
 
         if ($maker && $model) {
-            if (strpos($model, $maker) === false) {
+            if (false === mb_strpos($model, $maker)) {
                 $equipment = $maker . ' ' . $model;
             } else {
                 $equipment = $model;
@@ -133,18 +153,29 @@ class webphoto_lib_exif
             $equipment = $model;
         }
 
-        return array($maker, $model, $equipment);
+        return [$maker, $model, $equipment];
     }
 
+    /**
+     * @param $exif
+     * @return null|string
+     */
     public function parse_all_data($exif)
     {
         // set all data when has IFD0
         if (isset($exif['IFD0'])) {
             return $this->parse_array($exif);
         }
+
         return '';
     }
 
+    /**
+     * @param      $arr
+     * @param null $parent
+     * @param null $ret
+     * @return null|string
+     */
     public function parse_array($arr, $parent = null, $ret = null)
     {
         $str = $ret;
@@ -164,9 +195,14 @@ class webphoto_lib_exif
                 $str .= $this->str_replace_control_code($v) . "\n";
             }
         }
+
         return $str;
     }
 
+    /**
+     * @param $filename
+     * @return bool
+     */
     public function print_info($filename)
     {
         if (!function_exists('exif_read_data')) {
@@ -188,23 +224,28 @@ class webphoto_lib_exif
     // GPSLongitude.1: 41/1
     // GPSLongitude.2: 35600/1000
     //---------------------------------------------------------
+
+    /**
+     * @param $exif
+     * @return array
+     */
     public function parse_gps_docomo($exif)
     {
-        $gps      = null;
-        $lat      = null;
-        $lon      = null;
+        $gps = null;
+        $lat = null;
+        $lon = null;
         $lat_sign = +1;
         $lon_sign = +1;
 
         if (isset($exif['GPS'])) {
             $gps = $exif['GPS'];
             if (isset($gps['GPSLatitudeRef'])) {
-                if ($gps['GPSLatitudeRef'] == 'S') {
+                if ('S' == $gps['GPSLatitudeRef']) {
                     $lat_sign = -1;
                 }
             }
             if (isset($gps['GPSLongitudeRef'])) {
-                if ($gps['GPSLongitudeRef'] == 'W') {
+                if ('W' == $gps['GPSLongitudeRef']) {
                     $lon_sign = -1;
                 }
             }
@@ -216,9 +257,14 @@ class webphoto_lib_exif
             }
         }
 
-        return array($gps, $lat, $lon);
+        return [$gps, $lat, $lon];
     }
 
+    /**
+     * @param $sign
+     * @param $arr
+     * @return float|int
+     */
     public function parse_gps_docomo_array($sign, $arr)
     {
         $fig = 0;
@@ -232,9 +278,14 @@ class webphoto_lib_exif
             $fig += $this->calc_fraction($arr[2]) / 3600;
         }
         $fig = $sign * $fig;
+
         return $fig;
     }
 
+    /**
+     * @param $val
+     * @return float|int
+     */
     public function calc_fraction($val)
     {
         $arr = explode('/', $val);
@@ -252,6 +303,7 @@ class webphoto_lib_exif
                 $fig = $numerator;
             }
         }
+
         return $fig;
     }
 
@@ -260,12 +312,19 @@ class webphoto_lib_exif
     // LF  \xOA \n
     // CR  \xOD \r
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function str_replace_control_code($str, $replace = ' ')
     {
         $str = preg_replace('/[\x00-\x08]/', $replace, $str);
         $str = preg_replace('/[\x0B-\x0C]/', $replace, $str);
         $str = preg_replace('/[\x0E-\x1F]/', $replace, $str);
         $str = preg_replace('/[\x7F]/', $replace, $str);
+
         return $str;
     }
 

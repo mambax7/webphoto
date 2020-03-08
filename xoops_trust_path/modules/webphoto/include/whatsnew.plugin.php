@@ -54,9 +54,16 @@ function ' . $MY_DIRNAME . '_new( $limit=0 , $offset=0 )
 
 // === function begin ===
 if (!function_exists('webphoto_whatsnew_new_base')) {
+    /**
+     * @param     $dirname
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
     function webphoto_whatsnew_new_base($dirname, $limit = 0, $offset = 0)
     {
         $inc_class = webphoto_inc_whatsnew::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->whatsnew($limit, $offset);
     }
 

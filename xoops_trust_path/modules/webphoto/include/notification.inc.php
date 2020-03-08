@@ -46,13 +46,19 @@ function ' . $MY_DIRNAME . '_notify_iteminfo( $category, $item_id )
 
 // === notify_iteminfo_base begin ===
 if (!function_exists('webphoto_notify_iteminfo_base')) {
-
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+    /**
+     * @param $dirname
+     * @param $category
+     * @param $item_id
+     * @return mixed
+     */
     function webphoto_notify_iteminfo_base($dirname, $category, $item_id)
     {
         $inc_class = webphoto_inc_notification::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->notify($category, $item_id);
     }
 

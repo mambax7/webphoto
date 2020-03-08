@@ -41,5 +41,5 @@ include XOOPS_ROOT_PATH . '/header.php';
 
 echo $manage->main();
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();

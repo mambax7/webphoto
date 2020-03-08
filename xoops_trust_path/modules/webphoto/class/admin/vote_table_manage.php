@@ -19,27 +19,42 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_vote_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_vote_table_manage
+ */
 class webphoto_admin_vote_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_vote_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_vote_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('VOTE_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('vote_photo_id', 'vote_uid'));
+        $this->set_manage_list_column_array(['vote_photo_id', 'vote_uid']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_vote_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_vote_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -54,24 +69,32 @@ class webphoto_admin_vote_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'vote_id'          => $this->_post_class->get_post_get_int('vote_id'),
+        $row = [
+            'vote_id' => $this->_post_class->get_post_get_int('vote_id'),
             'vote_time_create' => $this->_post_class->get_post_int('vote_time_create'),
             'vote_time_update' => $this->_post_class->get_post_int('vote_time_update'),
-            'vote_photo_id'    => $this->_post_class->get_post_int('vote_photo_id'),
-            'vote_uid'         => $this->_post_class->get_post_int('vote_uid'),
-            'vote_rating'      => $this->_post_class->get_post_int('vote_rating'),
-            'vote_hostname'    => $this->_post_class->get_post_text('vote_hostname'),
+            'vote_photo_id' => $this->_post_class->get_post_int('vote_photo_id'),
+            'vote_uid' => $this->_post_class->get_post_int('vote_uid'),
+            'vote_rating' => $this->_post_class->get_post_int('vote_rating'),
+            'vote_hostname' => $this->_post_class->get_post_text('vote_hostname'),
+        ];
 
-        );
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

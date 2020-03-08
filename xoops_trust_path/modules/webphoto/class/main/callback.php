@@ -23,23 +23,38 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_callback
 //=========================================================
+
+/**
+ * Class webphoto_main_callback
+ */
 class webphoto_main_callback extends webphoto_flash_log
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_callback constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_flash_log|\webphoto_main_callback
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_callback($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 

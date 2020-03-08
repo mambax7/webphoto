@@ -24,12 +24,21 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_player_handler
 //=========================================================
+
+/**
+ * Class webphoto_player_handler
+ */
 class webphoto_player_handler extends webphoto_handler_base_ini
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_player_handler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -38,51 +47,68 @@ class webphoto_player_handler extends webphoto_handler_base_ini
         $this->set_title_name($this->get_ini('player_title_name'));
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_player_handler
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_player_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'player_id'            => 0,
-            'player_time_create'   => $time_create,
-            'player_time_update'   => $time_update,
-            'player_pid'           => 0,
-            'player_style'         => 0,
-            'player_title'         => $this->get_ini('player_title_default'),
-            'player_width'         => $this->get_ini('player_width_default'),
-            'player_height'        => $this->get_ini('player_height_default'),
-            'player_displaywidth'  => 0,
+        $arr = [
+            'player_id' => 0,
+            'player_time_create' => $time_create,
+            'player_time_update' => $time_update,
+            'player_pid' => 0,
+            'player_style' => 0,
+            'player_title' => $this->get_ini('player_title_default'),
+            'player_width' => $this->get_ini('player_width_default'),
+            'player_height' => $this->get_ini('player_height_default'),
+            'player_displaywidth' => 0,
             'player_displayheight' => 0,
-            'player_screencolor'   => '',
-            'player_backcolor'     => '',
-            'player_frontcolor'    => '',
-            'player_lightcolor'    => '',
-        );
+            'player_screencolor' => '',
+            'player_backcolor' => '',
+            'player_frontcolor' => '',
+            'player_lightcolor' => '',
+        ];
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -134,6 +160,11 @@ class webphoto_player_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -159,33 +190,52 @@ class webphoto_player_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_list($limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE player_id > 0 ';
         $sql .= ' ORDER BY player_title';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
+    /**
+     * @param     $title
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_title($title, $limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE player_title = ' . $this->quote($title);
         $sql .= ' ORDER BY player_id';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // option
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_style_options()
     {
-        $arr = array(
+        $arr = [
             '0' => _WEBPHOTO_PLAYER_STYLE_MONO,
             //      '1' => _WEBPHOTO_PLAYER_STYLE_THEME ,
             '2' => _WEBPHOTO_PLAYER_STYLE_PLAYER,
             //      '3' => _WEBPHOTO_PLAYER_STYLE_PAGE ,
-        );
+        ];
+
         return $arr;
     }
 
@@ -193,6 +243,12 @@ class webphoto_player_handler extends webphoto_handler_base_ini
     // selbox
     //---------------------------------------------------------
     // BUG: player id is not correctly selected
+
+    /**
+     * @param      $preset_id
+     * @param bool $flag_undefined
+     * @return null|string
+     */
     public function build_row_options($preset_id, $flag_undefined = false)
     {
         $player_title_name = $this->get_ini('player_title_name');

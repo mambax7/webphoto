@@ -19,13 +19,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_txt
 //=========================================================
+
+/**
+ * Class webphoto_ext_txt
+ */
 class webphoto_ext_txt extends webphoto_ext_base
 {
-    public $_TXT_EXTS = array('txt');
+    public $_TXT_EXTS = ['txt'];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_txt constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,11 +44,20 @@ class webphoto_ext_txt extends webphoto_ext_base
     //---------------------------------------------------------
     // check ext
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->is_txt_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_txt_ext($ext)
     {
         return $this->is_ext_in_array($ext, $this->_TXT_EXTS);
@@ -51,6 +70,11 @@ class webphoto_ext_txt extends webphoto_ext_base
     //---------------------------------------------------------
     // text content
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return bool|null|string|string[]
+     */
     public function get_text_content($param)
     {
         $file_cont = isset($param['file_cont']) ? $param['file_cont'] : null;

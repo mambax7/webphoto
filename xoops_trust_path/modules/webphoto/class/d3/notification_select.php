@@ -26,41 +26,52 @@ include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
 // class webphoto_d3_notification_select
 // subsitute for core's notification_select.php
 //=========================================================
+
+/**
+ * Class webphoto_d3_notification_select
+ */
 class webphoto_d3_notification_select
 {
-    public $_notification_handler;
+    public $_notificationHandler;
 
     public $_DIRNAME;
     public $_MODULE_DIR;
     public $_MODULE_URL;
 
-    public $_MODULE_ID           = 0;
-    public $_xoops_uid           = 0;
+    public $_MODULE_ID = 0;
+    public $_xoops_uid = 0;
     public $_xoops_notify_method = 0;
-    public $_is_module_admin     = false;
+    public $_is_module_admin = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
     public function __construct()
     {
-        $this->_notification_handler = xoops_getHandler('notification');
+        $this->_notificationHandler = xoops_getHandler('notification');
 
         $this->_init_xoops_param();
     }
 
+    /**
+     * @return \webphoto_d3_notification_select
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_d3_notification_select();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
+    /**
+     * @param $dirname
+     */
     public function init($dirname)
     {
-        $this->_DIRNAME    = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
         $this->_MODULE_URL = XOOPS_URL . '/modules/' . $dirname;
     }
@@ -68,18 +79,26 @@ class webphoto_d3_notification_select
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @return bool|string
+     */
     public function get_new_php_self()
     {
         $phpself = $_SERVER['PHP_SELF'];
-        $pos     = strpos($phpself, 'index.php');
-        $new     = substr($phpself, 0, $pos + 9);
+        $pos = mb_strpos($phpself, 'index.php');
+        $new = mb_substr($phpself, 0, $pos + 9);
+
         return $new;
     }
 
+    /**
+     * @return array|bool
+     */
     public function build()
     {
-        $event_count  = 0;
-        $notification = array();
+        $event_count = 0;
+        $notification = [];
 
         if (empty($this->_xoops_uid) || !$this->_notificationEnabled('inline')) {
             return false;
@@ -91,12 +110,12 @@ class webphoto_d3_notification_select
         }
 
         foreach ($categories as $category) {
-            $section['name']        = $category['name'];
-            $section['title']       = $category['title'];
+            $section['name'] = $category['name'];
+            $section['title'] = $category['title'];
             $section['description'] = $category['description'];
-            $section['itemid']      = $category['item_id'];
-            $section['events']      = array();
-            $subscribed_events      = $this->_getSubscribedEvents($category['name'], $category['item_id'], $this->_MODULE_ID, $this->_xoops_uid);
+            $section['itemid'] = $category['item_id'];
+            $section['events'] = [];
+            $subscribed_events = $this->_getSubscribedEvents($category['name'], $category['item_id'], $this->_MODULE_ID, $this->_xoops_uid);
 
             $events = $this->_notificationEvents($category['name'], true);
             foreach ($events as $event) {
@@ -106,21 +125,21 @@ class webphoto_d3_notification_select
                 if (!empty($event['invisible'])) {
                     continue;
                 }
-                $subscribed                        = in_array($event['name'], $subscribed_events) ? 1 : 0;
-                $section['events'][$event['name']] = array(
-                    'name'        => $event['name'],
-                    'title'       => $event['title'],
-                    'caption'     => $event['caption'],
+                $subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;
+                $section['events'][$event['name']] = [
+                    'name' => $event['name'],
+                    'title' => $event['title'],
+                    'caption' => $event['caption'],
                     'description' => $event['description'],
-                    'subscribed'  => $subscribed
-                );
+                    'subscribed' => $subscribed,
+                ];
                 ++$event_count;
             }
 
             $notification['categories'][$category['name']] = $section;
         }
 
-        if ($event_count == 0) {
+        if (0 == $event_count) {
             return false;
         }
 
@@ -141,68 +160,94 @@ class webphoto_d3_notification_select
             case XOOPS_NOTIFICATION_METHOD_DISABLE:
                 $user_method = _NOT_DISABLE;
                 break;
-
             case XOOPS_NOTIFICATION_METHOD_PM:
                 $user_method = _NOT_PM;
                 break;
-
             case XOOPS_NOTIFICATION_METHOD_EMAIL:
                 $user_method = _NOT_EMAIL;
                 break;
         }
 
         $notification['user_method'] = $user_method;
-        $notification['token']       = $this->_create_token();
+        $notification['token'] = $this->_create_token();
 
         return $notification;
     }
 
+    /**
+     * @param $category
+     * @param $item_id
+     * @param $module_id
+     * @param $user_id
+     * @return mixed
+     */
     public function _getSubscribedEvents($category, $item_id, $module_id, $user_id)
     {
-        return $this->_notification_handler->getSubscribedEvents($category, $item_id, $module_id, $user_id);
+        return $this->_notificationHandler->getSubscribedEvents($category, $item_id, $module_id, $user_id);
     }
 
+    /**
+     * @param      $style
+     * @param null $module_id
+     * @return bool
+     */
     public function _notificationEnabled($style, $module_id = null)
     {
         return notificationEnabled($style, $module_id);
     }
 
+    /**
+     * @param null $module_id
+     * @return mixed
+     */
     public function _notificationSubscribableCategoryInfo($module_id = null)
     {
         return notificationSubscribableCategoryInfo($module_id);
     }
 
+    /**
+     * @param      $category_name
+     * @param      $enabled_only
+     * @param null $module_id
+     * @return mixed
+     */
     public function _notificationEvents($category_name, $enabled_only, $module_id = null)
     {
         return notificationEvents($category_name, $enabled_only, $module_id);
     }
 
+    /**
+     * @return string
+     */
     public function _get_script()
     {
-        $path  = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null;
+        $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null;
         $query = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : null;
 
         // if path_info
         if ($path) {
             $ret = $this->_MODULE_URL . '/index.php';
 
-            // if query
+        // if query
         } elseif ($query) {
             $ret = $this->_MODULE_URL . '/index.php';
 
-            // else
+        // else
         } else {
             $ret = xoops_getenv('PHP_SELF');
         }
+
         return $ret;
     }
 
     // for XOOPS 2.0.18
+
     public function _create_token()
     {
         if (is_object($GLOBALS['xoopsSecurity'])) {
             return $GLOBALS['xoopsSecurity']->createToken();
         }
+
         return null;
     }
 
@@ -218,7 +263,7 @@ class webphoto_d3_notification_select
         }
 
         if (is_object($xoopsUser)) {
-            $this->_xoops_uid           = $xoopsUser->getVar('uid');
+            $this->_xoops_uid = $xoopsUser->getVar('uid');
             $this->_xoops_notify_method = $xoopsUser->getVar('notify_method');
 
             if ($xoopsUser->isAdmin($this->_MODULE_ID)) {

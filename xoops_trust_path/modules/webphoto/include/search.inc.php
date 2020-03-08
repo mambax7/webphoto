@@ -54,9 +54,19 @@ function ' . $MY_DIRNAME . '_search( $query_array , $andor , $limit , $offset , 
 
 // === function begin ===
 if (!function_exists('webphoto_search_base')) {
+    /**
+     * @param $dirname
+     * @param $query_array
+     * @param $andor
+     * @param $limit
+     * @param $offset
+     * @param $uid
+     * @return mixed
+     */
     function webphoto_search_base($dirname, $query_array, $andor, $limit, $offset, $uid)
     {
         $inc_class = webphoto_inc_search::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->search($query_array, $andor, $limit, $offset, $uid);
     }
 

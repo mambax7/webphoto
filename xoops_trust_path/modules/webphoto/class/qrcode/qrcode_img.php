@@ -7,11 +7,13 @@
 #
 */
 
-require 'qrcode.php';
+require __DIR__ . '/qrcode.php';
 
+/**
+ * Class Qrcode_image
+ */
 class Qrcode_image extends Qrcode
 {
-
     public $module_size;
     public $quiet_zone;
 
@@ -19,9 +21,12 @@ class Qrcode_image extends Qrcode
     {
         parent::__construct();
         $this->module_size = 4;
-        $this->quiet_zone  = 4;
+        $this->quiet_zone = 4;
     }
 
+    /**
+     * @param $z
+     */
     public function set_module_size($z)
     {
         if ($z > 0 && $z < 9) {
@@ -29,6 +34,9 @@ class Qrcode_image extends Qrcode
         }
     }
 
+    /**
+     * @param $z
+     */
     public function set_quietzone($z)
     {
         if ($z > 0 && $z < 9) {
@@ -36,22 +44,32 @@ class Qrcode_image extends Qrcode
         }
     }
 
+    /**
+     * @param        $org_data
+     * @param string $image_type
+     * @param string $filename
+     */
     public function qrcode_image_out($org_data, $image_type = 'png', $filename = '')
     {
         $this->image_out($this->cal_qrcode($org_data), $image_type, $filename);
     }
 
+    /**
+     * @param        $data
+     * @param string $image_type
+     * @param string $filename
+     */
     public function image_out($data, $image_type = 'png', $filename = '')
     {
         $im = $this->mkimage($data);
-        if ($image_type == 'jpeg') {
-            if (strlen($filename) > 0) {
+        if ('jpeg' == $image_type) {
+            if (mb_strlen($filename) > 0) {
                 imagejpeg($im, $filename);
             } else {
                 imagejpeg($im);
             }
         } else {
-            if (strlen($filename) > 0) {
+            if (mb_strlen($filename) > 0) {
                 imagepng($im, $filename);
             } else {
                 imagepng($im);
@@ -59,14 +77,18 @@ class Qrcode_image extends Qrcode
         }
     }
 
+    /**
+     * @param $data
+     * @return resource
+     */
     public function mkimage($data)
     {
-        $data_array  = explode("\n", $data);
-        $c           = count($data_array) - 1;
-        $image_size  = $c;
+        $data_array = explode("\n", $data);
+        $c = count($data_array) - 1;
+        $image_size = $c;
         $output_size = ($c + $this->quiet_zone * 2) * $this->module_size;
 
-        $img   = imagecreate($image_size, $image_size);
+        $img = imagecreate($image_size, $image_size);
         $white = imagecolorallocate($img, 255, 255, 255);
         $black = imagecolorallocate($img, 0, 0, 0);
 
@@ -79,7 +101,7 @@ class Qrcode_image extends Qrcode
         foreach ($data_array as $row) {
             $x = 0;
             while ($x < $image_size) {
-                if (substr($row, $x, 1) == '1') {
+                if ('1' == mb_substr($row, $x, 1)) {
                     imagesetpixel($img, $x, $y, $black);
                 }
                 ++$x;
@@ -87,7 +109,7 @@ class Qrcode_image extends Qrcode
             ++$y;
         }
         $quiet_zone_offset = $this->quiet_zone * $this->module_size;
-        $image_width       = $image_size * $this->module_size;
+        $image_width = $image_size * $this->module_size;
 
         imagecopyresized($im, $img, $quiet_zone_offset, $quiet_zone_offset, 0, 0, $image_width, $image_width, $image_size, $image_size);
 

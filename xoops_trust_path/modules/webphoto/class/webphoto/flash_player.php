@@ -50,11 +50,14 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // http://developer.longtailvideo.com/trac/wiki/ImageRotatorVars
 //---------------------------------------------------------
 
+/**
+ * Class webphoto_flash_player
+ */
 class webphoto_flash_player extends webphoto_base_ini
 {
     public $_config_class;
     public $_item_handler;
-    public $_file_handler;
+    public $_fileHandler;
     public $_player_handler;
     public $_flashvar_handler;
 
@@ -64,15 +67,15 @@ class webphoto_flash_player extends webphoto_base_ini
     public $_report = null;
 
     // local
-    public $_item_row     = null;
+    public $_item_row = null;
     public $_flashvar_row = null;
-    public $_item_id      = 0;
-    public $_kind         = null;
+    public $_item_id = 0;
+    public $_kind = null;
 
     public $_flashplayer = null;
     public $_screencolor = null;
-    public $_width       = 0;
-    public $_height      = 0;
+    public $_width = 0;
+    public $_height = 0;
 
     public $_PLAYLISTS_DIR;
     public $_PLAYLISTS_URL;
@@ -82,7 +85,7 @@ class webphoto_flash_player extends webphoto_base_ini
     public $_CALLBACK_URL = null;
 
     public $_CODEBASE = 'http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0';
-    public $_CLASSID  = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000';
+    public $_CLASSID = 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000';
 
     // show black if change the font size in web brawser
     public $_SCREENCOLOR_DEFAULT = '#ffffff'; // white
@@ -90,143 +93,185 @@ class webphoto_flash_player extends webphoto_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_flash_player constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_xoops_class   = webphoto_xoops_base::getInstance();
+        $this->_xoops_class = webphoto_xoops_base::getInstance();
         $this->_utility_class = webphoto_lib_utility::getInstance();
-        $this->_config_class  = webphoto_config::getInstance($dirname);
+        $this->_config_class = webphoto_config::getInstance($dirname);
 
-        $this->_item_handler     = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_file_handler     = webphoto_file_handler::getInstance($dirname, $trust_dirname);
-        $this->_player_handler   = webphoto_player_handler::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_player_handler = webphoto_player_handler::getInstance($dirname, $trust_dirname);
         $this->_flashvar_handler = webphoto_flashvar_handler::getInstance($dirname, $trust_dirname);
 
-        $uploads_path            = $this->_config_class->get_uploads_path();
+        $uploads_path = $this->_config_class->get_uploads_path();
         $this->_cfg_use_callback = $this->_config_class->get_by_name('use_callback');
 
         $playlists_path = $uploads_path . '/playlists';
-        $logos_path     = $uploads_path . '/logos';
+        $logos_path = $uploads_path . '/logos';
 
         $this->_PLAYLISTS_DIR = XOOPS_ROOT_PATH . $playlists_path;
-        $this->_LOGOS_DIR     = XOOPS_ROOT_PATH . $logos_path;
+        $this->_LOGOS_DIR = XOOPS_ROOT_PATH . $logos_path;
         $this->_PLAYLISTS_URL = XOOPS_URL . $playlists_path;
-        $this->_LOGOS_URL     = XOOPS_URL . $logos_path;
+        $this->_LOGOS_URL = XOOPS_URL . $logos_path;
 
         $this->_CALLBACK_URL = $this->_MODULE_URL . '/callback.php';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_flash_player|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_flash_player($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param      $item_row
+     * @param null $player_row
+     * @return bool|string
+     */
     public function build_movie_by_item_row($item_row, $player_row = null)
     {
         $param = $this->build_movie_param_by_item_row($item_row, $player_row);
+
         return $this->build_movie($param);
     }
 
+    /**
+     * @param $item_row
+     * @return array|bool
+     */
     public function build_code_embed_by_item_row($item_row)
     {
         $param = $this->build_movie_param_by_item_row($item_row);
+
         return $this->build_code_embed($param);
     }
 
+    /**
+     * @param $param
+     * @return bool|string
+     */
     public function build_movie($param)
     {
         if (!is_array($param)) {
             return false;
         }
 
-        $item_row   = $param['item_row'];
+        $item_row = $param['item_row'];
         $player_row = $param['player_row'];
 
         if (!is_array($item_row)) {
             return false;
         }
 
-        $param_movie                 = $param;
+        $param_movie = $param;
         $param_movie['player_style'] = $player_row['player_style'];
 
         return $this->build_movie_js($param_movie);
     }
 
+    /**
+     * @param $param
+     * @return bool|null|string
+     */
     public function build_mplay($param)
     {
         if (!is_array($param)) {
             return false;
         }
 
-        $item_row     = $param['item_row'];
+        $item_row = $param['item_row'];
         $flashvar_row = $param['flashvar_row'];
 
         if (!is_array($item_row)) {
             return false;
         }
 
-        $item_id  = $item_row['item_id'];
+        $item_id = $item_row['item_id'];
         $enablejs = $flashvar_row['flashvar_enablejs'];
 
-        if ($enablejs != 0) {
+        if (0 != $enablejs) {
             return $this->build_mplay_js($item_id);
         }
 
         return null;
     }
 
+    /**
+     * @param $param
+     * @return array|bool
+     */
     public function build_code_embed($param)
     {
-        $embed   = null;
+        $embed = null;
         $embedjs = null;
 
         if (!is_array($param)) {
-            return array($embed, $embedjs);
+            return [$embed, $embedjs];
         }
 
-        $item_row     = $param['item_row'];
-        $cont_row     = $param['cont_row'];
-        $flash_row    = $param['flash_row'];
-        $swf_row      = $param['swf_row'];
-        $mp3_row      = $param['mp3_row'];
-        $player_row   = $param['player_row'];
+        $item_row = $param['item_row'];
+        $cont_row = $param['cont_row'];
+        $flash_row = $param['flash_row'];
+        $swf_row = $param['swf_row'];
+        $mp3_row = $param['mp3_row'];
+        $player_row = $param['player_row'];
         $flashvar_row = $param['flashvar_row'];
 
         if (!is_array($item_row)) {
-            return array($embed, $embedjs);
+            return [$embed, $embedjs];
         }
 
-        $item_id     = $item_row['item_id'];
-        $player_id   = $item_row['item_player_id'];
+        $item_id = $item_row['item_id'];
+        $player_id = $item_row['item_player_id'];
         $flashvar_id = $item_row['item_flashvar_id'];
 
         $config_url = $this->_MODULE_URL . '/index.php?fct=flash_config&item_id=' . $item_id;
 
         list($player_sel, $flashplayer) = $this->get_player($param);
 
-        if ($player_sel == 0) {
+        if (0 == $player_sel) {
             return false;
         }
 
         list($width, $height) = $this->get_width_height($item_row, $flashvar_row, $flash_row, $player_row);
 
-        $embed   = $this->build_embed($item_id, $flashplayer, $width, $height, $config_url);
+        $embed = $this->build_embed($item_id, $flashplayer, $width, $height, $config_url);
         $embedjs = $this->build_embedjs($item_id, $flashplayer, $width, $height, $config_url);
 
-        return array($embed, $embedjs);
+        return [$embed, $embedjs];
     }
 
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
+
+    /**
+     * @param      $item_row
+     * @param null $player_row
+     * @return array|bool
+     */
     public function build_movie_param_by_item_row($item_row, $player_row = null)
     {
         if (!is_array($item_row)) {
@@ -235,16 +280,16 @@ class webphoto_flash_player extends webphoto_base_ini
 
         $flashvar_row = null;
 
-        $flashvar_id    = $item_row['item_flashvar_id'];
-        $player_id      = $item_row['item_player_id'];
+        $flashvar_id = $item_row['item_flashvar_id'];
+        $player_id = $item_row['item_player_id'];
         $playlist_cache = $item_row['item_playlist_cache'];
 
-        $cont_row   = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_CONT);
-        $thumb_row  = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_THUMB);
+        $cont_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_CONT);
+        $thumb_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_THUMB);
         $middle_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_MIDDLE);
-        $flash_row  = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_VIDEO_FLASH);
-        $swf_row    = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_SWF);
-        $mp3_row    = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_MP3);
+        $flash_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_VIDEO_FLASH);
+        $swf_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_SWF);
+        $mp3_row = $this->get_cached_file_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_MP3);
 
         if ($flashvar_id > 0) {
             $flashvar_row = $this->_flashvar_handler->get_cached_row_by_id($flashvar_id);
@@ -265,22 +310,26 @@ class webphoto_flash_player extends webphoto_base_ini
             }
         }
 
-        $param = array(
-            'item_row'       => $item_row,
-            'cont_row'       => $cont_row,
-            'thumb_row'      => $thumb_row,
-            'middle_row'     => $middle_row,
-            'flash_row'      => $flash_row,
-            'swf_row'        => $swf_row,
-            'mp3_row'        => $mp3_row,
-            'flashvar_row'   => $flashvar_row,
-            'player_row'     => $player_row,
+        $param = [
+            'item_row' => $item_row,
+            'cont_row' => $cont_row,
+            'thumb_row' => $thumb_row,
+            'middle_row' => $middle_row,
+            'flash_row' => $flash_row,
+            'swf_row' => $swf_row,
+            'mp3_row' => $mp3_row,
+            'flashvar_row' => $flashvar_row,
+            'player_row' => $player_row,
             'playlist_cache' => $playlist_cache,
-        );
+        ];
 
         return $param;
     }
 
+    /**
+     * @param $param
+     * @return bool|string
+     */
     public function build_movie_js($param)
     {
         $ret = $this->set_variables_in_buffer($param);
@@ -289,9 +338,9 @@ class webphoto_flash_player extends webphoto_base_ini
         }
 
         $item_row = $param['item_row'];
-        $item_id  = $item_row['item_id'];
-        $div_id   = 'webphoto_play' . $item_id;
-        $swf_id   = 'webphoto_swf' . $item_id;
+        $item_id = $item_row['item_id'];
+        $div_id = 'webphoto_play' . $item_id;
+        $swf_id = 'webphoto_swf' . $item_id;
 
         $movie = $this->build_script_swfobject($div_id);
         $movie .= $this->build_script_begin();
@@ -310,20 +359,24 @@ class webphoto_flash_player extends webphoto_base_ini
         return $movie;
     }
 
+    /**
+     * @param $param
+     * @return bool
+     */
     public function set_variables_in_buffer($param)
     {
-        $item_row     = $param['item_row'];
-        $cont_row     = $param['cont_row'];
-        $thumb_row    = $param['thumb_row'];
-        $middle_row   = $param['middle_row'];
-        $flash_row    = $param['flash_row'];
-        $swf_row      = $param['swf_row'];
-        $mp3_row      = $param['mp3_row'];
-        $player_row   = $param['player_row'];
+        $item_row = $param['item_row'];
+        $cont_row = $param['cont_row'];
+        $thumb_row = $param['thumb_row'];
+        $middle_row = $param['middle_row'];
+        $flash_row = $param['flash_row'];
+        $swf_row = $param['swf_row'];
+        $mp3_row = $param['mp3_row'];
+        $player_row = $param['player_row'];
         $flashvar_row = $param['flashvar_row'];
 
         $item_id = $item_row['item_id'];
-        $kind    = $item_row['item_kind'];
+        $kind = $item_row['item_kind'];
 
         // overwrite by flashvar
         list($width, $height) = $this->get_width_height($item_row, $flashvar_row, $flash_row, $player_row);
@@ -333,43 +386,41 @@ class webphoto_flash_player extends webphoto_base_ini
         //      $displayheight  = $flashvar_displayheight;
         //  }
 
-        $is_swfobject    = false;
-        $is_mediaplayer  = false;
+        $is_swfobject = false;
+        $is_mediaplayer = false;
         $is_imagerotator = false;
-        $flag_file       = false;
+        $flag_file = false;
 
-        $this->_item_row     = $item_row;
+        $this->_item_row = $item_row;
         $this->_flashvar_row = $flashvar_row;
-        $this->_item_id      = $item_id;
-        $this->_kind         = $kind;
+        $this->_item_id = $item_id;
+        $this->_kind = $kind;
 
         list($player_sel, $flashplayer) = $this->get_player($param);
 
         switch ($player_sel) {
-            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT :
+            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT:
                 $is_swfobject = true;
                 break;
-
-            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER :
+            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER:
                 $is_mediaplayer = true;
-                $flag_file      = true;
+                $flag_file = true;
                 break;
-
-            case _C_WEBPHOTO_DISPLAYTYPE_IMAGEROTATOR :
+            case _C_WEBPHOTO_DISPLAYTYPE_IMAGEROTATOR:
                 $is_imagerotator = true;
-                $flag_file       = true;
+                $flag_file = true;
                 break;
-
-            default;
+            default:
                 if ($this->_is_module_admin) {
-                    echo "NOT flash player type <br />\n";
+                    echo "NOT flash player type <br>\n";
                 }
+
                 return false;
         }
 
         $this->_flashplayer = $flashplayer;
-        $this->_width       = $width;
-        $this->_height      = $height;
+        $this->_width = $width;
+        $this->_height = $height;
 
         // file
         list($movie_file, $flag_playlist) = $this->get_movie_file($param);
@@ -472,33 +523,38 @@ class webphoto_flash_player extends webphoto_base_ini
         return true;
     }
 
+    /**
+     * @param $player_row
+     * @param $flashvar_row
+     * @return bool
+     */
     public function set_variables_colors($player_row, $flashvar_row)
     {
-        $player_style       = $player_row['player_style'];
+        $player_style = $player_row['player_style'];
         $player_screencolor = $player_row['player_screencolor'];
-        $player_backcolor   = $player_row['player_backcolor'];
-        $player_frontcolor  = $player_row['player_frontcolor'];
-        $player_lightcolor  = $player_row['player_lightcolor'];
+        $player_backcolor = $player_row['player_backcolor'];
+        $player_frontcolor = $player_row['player_frontcolor'];
+        $player_lightcolor = $player_row['player_lightcolor'];
 
         $flashvar_screencolor = $flashvar_row['flashvar_screencolor'];
-        $flashvar_backcolor   = $flashvar_row['flashvar_backcolor'];
-        $flashvar_frontcolor  = $flashvar_row['flashvar_frontcolor'];
-        $flashvar_lightcolor  = $flashvar_row['flashvar_lightcolor'];
+        $flashvar_backcolor = $flashvar_row['flashvar_backcolor'];
+        $flashvar_frontcolor = $flashvar_row['flashvar_frontcolor'];
+        $flashvar_lightcolor = $flashvar_row['flashvar_lightcolor'];
 
         $shuffle = $flashvar_row['flashvar_shuffle'];
-        $volume  = $flashvar_row['flashvar_volume'];
+        $volume = $flashvar_row['flashvar_volume'];
 
         // color
         $screencolor = $this->_SCREENCOLOR_DEFAULT;
-        $backcolor   = null;
-        $frontcolor  = null;
-        $lightcolor  = null;
+        $backcolor = null;
+        $frontcolor = null;
+        $lightcolor = null;
 
         if ($this->is_color_style($player_style)) {
             $screencolor = $player_screencolor;
-            $backcolor   = $player_backcolor;
-            $frontcolor  = $player_frontcolor;
-            $lightcolor  = $player_lightcolor;
+            $backcolor = $player_backcolor;
+            $frontcolor = $player_frontcolor;
+            $lightcolor = $player_lightcolor;
         }
 
         if ($flashvar_screencolor) {
@@ -533,57 +589,67 @@ class webphoto_flash_player extends webphoto_base_ini
         return true;
     }
 
+    /**
+     * @param $flashvar_row
+     * @return bool
+     */
     public function set_variables_common($flashvar_row)
     {
         $shuffle = $flashvar_row['flashvar_shuffle'];
-        $volume  = $flashvar_row['flashvar_volume'];
+        $volume = $flashvar_row['flashvar_volume'];
 
         return true;
     }
 
+    /**
+     * @param $param
+     * @param $flag_playlist
+     * @param $logo_file
+     * @return bool
+     */
     public function set_variables_jwplayer($param, $flag_playlist, $logo_file)
     {
         // JW Player 5.6
 
-        $item_row     = $param['item_row'];
-        $thumb_row    = $param['thumb_row'];
-        $middle_row   = $param['middle_row'];
+        $item_row = $param['item_row'];
+        $thumb_row = $param['thumb_row'];
+        $middle_row = $param['middle_row'];
         $flashvar_row = $param['flashvar_row'];
 
         $item_id = $item_row['item_id'];
 
-        $autostart           = $flashvar_row['flashvar_autostart'];
-        $bufferlength        = $flashvar_row['flashvar_bufferlength'];
-        $smoothing           = $flashvar_row['flashvar_smoothing'];
-        $mute                = $flashvar_row['flashvar_mute'];
-        $duration            = $flashvar_row['flashvar_duration'];
-        $start               = $flashvar_row['flashvar_start'];
-        $item                = $flashvar_row['flashvar_item'];
-        $mediaid             = $flashvar_row['flashvar_mediaid'];
-        $provider            = $flashvar_row['flashvar_provider'];
-        $skin                = $flashvar_row['flashvar_skin'];
-        $plugins             = $flashvar_row['flashvar_plugins'];
-        $dock                = $flashvar_row['flashvar_dock'];
-        $icons               = $flashvar_row['flashvar_icons'];
-        $stretching          = $flashvar_row['flashvar_stretching'];
-        $playerready         = $flashvar_row['flashvar_playerready'];
-        $playlistfile        = $flashvar_row['flashvar_playlistfile'];
-        $streamer            = $flashvar_row['flashvar_streamer'];
-        $netstreambasepath   = $flashvar_row['flashvar_netstreambasepath'];
-        $player_repeat       = $flashvar_row['flashvar_player_repeat'];
-        $playlist_size       = $flashvar_row['flashvar_playlist_size'];
-        $playlist_position   = $flashvar_row['flashvar_playlist_position'];
+        $autostart = $flashvar_row['flashvar_autostart'];
+        $bufferlength = $flashvar_row['flashvar_bufferlength'];
+        $smoothing = $flashvar_row['flashvar_smoothing'];
+        $mute = $flashvar_row['flashvar_mute'];
+        $duration = $flashvar_row['flashvar_duration'];
+        $start = $flashvar_row['flashvar_start'];
+        $item = $flashvar_row['flashvar_item'];
+        $mediaid = $flashvar_row['flashvar_mediaid'];
+        $provider = $flashvar_row['flashvar_provider'];
+        $skin = $flashvar_row['flashvar_skin'];
+        $plugins = $flashvar_row['flashvar_plugins'];
+        $dock = $flashvar_row['flashvar_dock'];
+        $icons = $flashvar_row['flashvar_icons'];
+        $stretching = $flashvar_row['flashvar_stretching'];
+        $playerready = $flashvar_row['flashvar_playerready'];
+        $playlistfile = $flashvar_row['flashvar_playlistfile'];
+        $streamer = $flashvar_row['flashvar_streamer'];
+        $netstreambasepath = $flashvar_row['flashvar_netstreambasepath'];
+        $player_repeat = $flashvar_row['flashvar_player_repeat'];
+        $playlist_size = $flashvar_row['flashvar_playlist_size'];
+        $playlist_position = $flashvar_row['flashvar_playlist_position'];
         $controlbar_idlehide = $flashvar_row['flashvar_controlbar_idlehide'];
         $controlbar_position = $flashvar_row['flashvar_controlbar_position'];
-        $display_showmute    = $flashvar_row['flashvar_display_showmute'];
-        $logo_hide           = $flashvar_row['flashvar_logo_hide'];
-        $logo_link           = $flashvar_row['flashvar_logo_link'];
-        $logo_margin         = $flashvar_row['flashvar_logo_margin'];
-        $logo_timeout        = $flashvar_row['flashvar_logo_timeout'];
-        $logo_over           = $flashvar_row['flashvar_logo_over'];
-        $logo_out            = $flashvar_row['flashvar_logo_out'];
-        $logo_linktarget     = $flashvar_row['flashvar_logo_linktarget'];
-        $logo_position       = $flashvar_row['flashvar_logo_position'];
+        $display_showmute = $flashvar_row['flashvar_display_showmute'];
+        $logo_hide = $flashvar_row['flashvar_logo_hide'];
+        $logo_link = $flashvar_row['flashvar_logo_link'];
+        $logo_margin = $flashvar_row['flashvar_logo_margin'];
+        $logo_timeout = $flashvar_row['flashvar_logo_timeout'];
+        $logo_over = $flashvar_row['flashvar_logo_over'];
+        $logo_out = $flashvar_row['flashvar_logo_out'];
+        $logo_linktarget = $flashvar_row['flashvar_logo_linktarget'];
+        $logo_position = $flashvar_row['flashvar_logo_position'];
 
         $repeat = '';
 
@@ -591,7 +657,7 @@ class webphoto_flash_player extends webphoto_base_ini
         if ($flag_playlist && empty($player_repeat)) {
             $repeat = _C_WEBPHOTO_FLASHVAR_PLAYER_REPEAT_ALWAYS;
 
-            // set in mediaplayer
+        // set in mediaplayer
         } else {
             $repeat = $player_repeat;
         }
@@ -664,21 +730,28 @@ class webphoto_flash_player extends webphoto_base_ini
         return true;
     }
 
+    /**
+     * @param $flashvar_row
+     * @param $width
+     * @param $height
+     * @param $logo_file
+     * @return bool
+     */
     public function set_variables_imagerotator($flashvar_row, $width, $height, $logo_file)
     {
         // ImageRotator 3.18
 
-        $logo            = $flashvar_row['flashvar_logo'];
-        $overstretch     = $flashvar_row['flashvar_overstretch'];
-        $showicons       = $flashvar_row['flashvar_showicons'];
-        $shownavigation  = $flashvar_row['flashvar_shownavigation'];
-        $transition      = $flashvar_row['flashvar_transition'];
-        $usefullscreen   = $flashvar_row['flashvar_usefullscreen'];
-        $repeat          = $flashvar_row['flashvar_repeat'];
-        $audio           = $flashvar_row['flashvar_audio'];
+        $logo = $flashvar_row['flashvar_logo'];
+        $overstretch = $flashvar_row['flashvar_overstretch'];
+        $showicons = $flashvar_row['flashvar_showicons'];
+        $shownavigation = $flashvar_row['flashvar_shownavigation'];
+        $transition = $flashvar_row['flashvar_transition'];
+        $usefullscreen = $flashvar_row['flashvar_usefullscreen'];
+        $repeat = $flashvar_row['flashvar_repeat'];
+        $audio = $flashvar_row['flashvar_audio'];
         $linkfromdisplay = $flashvar_row['flashvar_linkfromdisplay'];
-        $linktarget      = $flashvar_row['flashvar_linktarget'];
-        $rotatetime      = $flashvar_row['flashvar_rotatetime'];
+        $linktarget = $flashvar_row['flashvar_linktarget'];
+        $rotatetime = $flashvar_row['flashvar_rotatetime'];
 
         // Basics
         $this->set_variable_buffer('width', $width);
@@ -688,61 +761,78 @@ class webphoto_flash_player extends webphoto_base_ini
         if ($logo_file) {
             $this->set_variable_buffer('logo', $logo_file, true);
         }
-        if ($overstretch && ($overstretch != _C_WEBPHOTO_FLASHVAR_OVERSTRETCH_DEFAULT)) {
+        if ($overstretch && (_C_WEBPHOTO_FLASHVAR_OVERSTRETCH_DEFAULT != $overstretch)) {
             $this->set_variable_buffer('overstretch', $overstretch);
         }
-        if ($showicons == 0) {
+        if (0 == $showicons) {
             $this->set_variable_buffer('showicons', 'false');
         }
-        if ($shownavigation == 0) {
+        if (0 == $shownavigation) {
             $this->set_variable_buffer('shownavigation', 'false');
         }
-        if ($transition && ($transition != _C_WEBPHOTO_FLASHVAR_TRANSITION_DEFAULT)) {
+        if ($transition && (_C_WEBPHOTO_FLASHVAR_TRANSITION_DEFAULT != $transition)) {
             $this->set_variable_buffer('transition', $transition);
         }
-        if ($usefullscreen == 0) {
+        if (0 == $usefullscreen) {
             $this->set_variable_buffer('usefullscreen', 'false');
         }
-        if ($repeat == 1) {
+        if (1 == $repeat) {
             $this->set_variable_buffer('repeat', 'true');
         }
 
         // Behaviour
-        if ($audio != '') {
+        if ('' != $audio) {
             $this->set_variable_buffer('audio', $audio);
         }
-        if ($linkfromdisplay == 1) {
+        if (1 == $linkfromdisplay) {
             $this->set_variable_buffer('linkfromdisplay', 'true');
         }
-        if ($linktarget && ($linktarget != _C_WEBPHOTO_FLASHVAR_LINKTARGET_DEFAULT)) {
+        if ($linktarget && (_C_WEBPHOTO_FLASHVAR_LINKTARGET_DEFAULT != $linktarget)) {
             $this->set_variable_buffer('linktarget', $linktarget);
         }
-        if ($rotatetime && ($rotatetime != _C_WEBPHOTO_FLASHVAR_ROTATETIME_DEFAULT)) {
+        if ($rotatetime && (_C_WEBPHOTO_FLASHVAR_ROTATETIME_DEFAULT != $rotatetime)) {
             $this->set_variable_buffer('rotatetime', $rotatetime);
         }
 
         return true;
     }
 
+    /**
+     * @param      $name
+     * @param      $value
+     * @param bool $flag_urlencode
+     */
     public function set_variable_buffer($name, $value, $flag_urlencode = false)
     {
-        $this->_variable_buffers[$name] = array($value, $flag_urlencode);
+        $this->_variable_buffers[$name] = [$value, $flag_urlencode];
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function set_variable_buffer_color($name, $value)
     {
-        $this->_variable_buffers[$name] = array($this->convert_color($value), false);
+        $this->_variable_buffers[$name] = [$this->convert_color($value), false];
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function set_variable_buffer_boolean($name, $value)
     {
-        if ($value == 1) {
+        if (1 == $value) {
             $this->set_variable_buffer($name, 'true');
-        } elseif ($value == 0) {
+        } elseif (0 == $value) {
             $this->set_variable_buffer($name, 'false');
         }
     }
 
+    /**
+     * @param $name
+     * @param $value
+     */
     public function set_variable_buffer_int($name, $value)
     {
         if ($value > 0) {
@@ -750,18 +840,29 @@ class webphoto_flash_player extends webphoto_base_ini
         }
     }
 
+    /**
+     * @param      $name
+     * @param      $value
+     * @param bool $flag_urlencode
+     */
     public function set_variable_buffer_str($name, $value, $flag_urlencode = false)
     {
-        if ($value != '') {
+        if ('' != $value) {
             $this->set_variable_buffer($name, $value, $flag_urlencode);
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function get_variable_buffers()
     {
         return $this->_variable_buffers;
     }
 
+    /**
+     * @return string
+     */
     public function render_variable_buffers()
     {
         $str = '';
@@ -773,6 +874,7 @@ class webphoto_flash_player extends webphoto_base_ini
             }
             $str .= $this->build_add_variable($k, $val);
         }
+
         return $str;
     }
 
@@ -781,19 +883,34 @@ class webphoto_flash_player extends webphoto_base_ini
     //  = -> %3D
     //  & -> %26
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return mixed|string
+     */
     public function encoding($str)
     {
-        $search  = array('?', '=', '&');
-        $replace = array('%3F', '%3D', '%26');
+        $search = ['?', '=', '&'];
+        $replace = ['%3F', '%3D', '%26'];
 
         $str = str_replace($search, $replace, $str);
         $str = urlencode($str);
+
         return $str;
     }
 
     //---------------------------------------------------------
     // embed
     //---------------------------------------------------------
+
+    /**
+     * @param $item_id
+     * @param $flashplayer
+     * @param $width
+     * @param $height
+     * @param $config
+     * @return string
+     */
     public function build_embed($item_id, $flashplayer, $width, $height, $config)
     {
         $flashvars = 'config=' . urlencode($config);
@@ -803,9 +920,18 @@ class webphoto_flash_player extends webphoto_base_ini
         $str .= '<param name="flashvars" value="' . $flashvars . '" ></param>';
         $str .= '<embed src="' . $flashplayer . '" width="' . $width . '" height="' . $height . '" flashvars="' . $flashvars . '" type="application/x-shockwave-flash" ></embed>';
         $str .= '</object>';
+
         return $str;
     }
 
+    /**
+     * @param $item_id
+     * @param $flashplayer
+     * @param $width
+     * @param $height
+     * @param $config
+     * @return mixed
+     */
     public function build_embedjs($item_id, $flashplayer, $width, $height, $config)
     {
         $this->_item_id = $item_id;
@@ -823,12 +949,18 @@ class webphoto_flash_player extends webphoto_base_ini
 
         // remove newline code
         $ret = str_replace("\n", '', $str);
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array
+     */
     public function get_movie_file($param)
     {
         $playlist_cache = $param['playlist_cache'];
@@ -841,17 +973,21 @@ class webphoto_flash_player extends webphoto_base_ini
 
         // playlist
         if ($playlist_url) {
-            $movie_file    = $playlist_url;
+            $movie_file = $playlist_url;
             $flag_playlist = true;
 
-            // others
+        // others
         } else {
             $movie_file = $src_url;
         }
 
-        return array($movie_file, $flag_playlist);
+        return [$movie_file, $flag_playlist];
     }
 
+    /**
+     * @param $playlist_cache
+     * @return bool|string
+     */
     public function get_playlist_url($playlist_cache)
     {
         if (!$this->is_playlist_kind()) {
@@ -862,47 +998,58 @@ class webphoto_flash_player extends webphoto_base_ini
             return false;
         }
 
-        $playlist_url  = $this->_PLAYLISTS_URL . '/' . $playlist_cache;
+        $playlist_url = $this->_PLAYLISTS_URL . '/' . $playlist_cache;
         $playlist_path = $this->_PLAYLISTS_DIR . '/' . $playlist_cache;
 
         if (file_exists($playlist_path)) {
             return $playlist_url;
         }
+
         return false;
     }
 
+    /**
+     * @param $file_row
+     * @return mixed|null|string
+     */
     public function get_file_url($file_row)
     {
         $url = null;
         if (is_array($file_row)) {
-            $url  = $file_row['file_url'];
+            $url = $file_row['file_url'];
             $path = $file_row['file_path'];
             if ($path) {
                 $url = XOOPS_URL . '/' . $path;
             }
         }
+
         return $url;
     }
 
     // BUG: not show external swf
+
+    /**
+     * @param $param
+     * @return array
+     */
     public function get_player($param)
     {
-        $item_row  = $param['item_row'];
-        $cont_row  = $param['cont_row'];
+        $item_row = $param['item_row'];
+        $cont_row = $param['cont_row'];
         $flash_row = $param['flash_row'];
-        $swf_row   = $param['swf_row'];
-        $mp3_row   = $param['mp3_row'];
+        $swf_row = $param['swf_row'];
+        $mp3_row = $param['mp3_row'];
 
-        $sel    = 0;
+        $sel = 0;
         $player = null;
-        $file   = null;
+        $file = null;
 
-        $displaytype  = $item_row['item_displaytype'];
+        $displaytype = $item_row['item_displaytype'];
         $external_url = $item_row['item_external_url'];
 
         $cont_url = $this->get_file_url($cont_row);
-        $swf_url  = $this->get_file_url($swf_row);
-        $mp3_url  = $this->get_file_url($mp3_row);
+        $swf_url = $this->get_file_url($swf_row);
+        $mp3_url = $this->get_file_url($mp3_row);
 
         if ($external_url) {
             $file = $external_url;
@@ -915,101 +1062,113 @@ class webphoto_flash_player extends webphoto_base_ini
         }
 
         switch ($displaytype) {
-            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT :
-                $sel    = $displaytype;
+            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT:
+                $sel = $displaytype;
                 $player = $file;
                 break;
-
-            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER :
-                $sel    = $displaytype;
+            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER:
+                $sel = $displaytype;
                 $player = $this->_MODULE_URL . '/libs/jw/player.swf';
                 break;
-
-            case _C_WEBPHOTO_DISPLAYTYPE_IMAGEROTATOR :
-                $sel    = $displaytype;
+            case _C_WEBPHOTO_DISPLAYTYPE_IMAGEROTATOR:
+                $sel = $displaytype;
                 $player = $this->_MODULE_URL . '/libs/jw/imagerotator.swf';
                 break;
         }
 
-        return array($sel, $player);
+        return [$sel, $player];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function get_src_url($param)
     {
-        $item_row  = $param['item_row'];
-        $cont_row  = $param['cont_row'];
+        $item_row = $param['item_row'];
+        $cont_row = $param['cont_row'];
         $flash_row = $param['flash_row'];
-        $swf_row   = $param['swf_row'];
-        $mp3_row   = $param['mp3_row'];
+        $swf_row = $param['swf_row'];
+        $mp3_row = $param['mp3_row'];
 
-        $displaytype  = $item_row['item_displaytype'];
-        $displayfile  = $item_row['item_displayfile'];
+        $displaytype = $item_row['item_displaytype'];
+        $displayfile = $item_row['item_displayfile'];
         $external_url = $item_row['item_external_url'];
 
-        $src_url   = null;
+        $src_url = null;
         $flag_type = false;
 
         switch ($displaytype) {
-            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT :
-            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER :
+            case _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT:
+            case _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER:
                 $flag_type = true;
                 break;
         }
 
-        $cont_url  = $this->get_file_url($cont_row);
+        $cont_url = $this->get_file_url($cont_row);
         $flash_url = $this->get_file_url($flash_row);
-        $swf_url   = $this->get_file_url($swf_row);
-        $mp3_url   = $this->get_file_url($mp3_row);
+        $swf_url = $this->get_file_url($swf_row);
+        $mp3_url = $this->get_file_url($mp3_row);
 
         // displayfile
-        if (($displayfile == _C_WEBPHOTO_FILE_KIND_CONT) && $cont_url) {
+        if ((_C_WEBPHOTO_FILE_KIND_CONT == $displayfile) && $cont_url) {
             $src_url = $cont_url;
-        } elseif (($displayfile == _C_WEBPHOTO_FILE_KIND_FLASH) && $flash_url) {
-            $src_url   = $flash_url;
+        } elseif ((_C_WEBPHOTO_FILE_KIND_FLASH == $displayfile) && $flash_url) {
+            $src_url = $flash_url;
             $flag_type = false;
-        } elseif (($displayfile == _C_WEBPHOTO_FILE_KIND_SWF) && $swf_url) {
-            $src_url   = $swf_url;
+        } elseif ((_C_WEBPHOTO_FILE_KIND_SWF == $displayfile) && $swf_url) {
+            $src_url = $swf_url;
             $flag_type = false;
-        } elseif (($displayfile == _C_WEBPHOTO_FILE_KIND_MP3) && $mp3_url) {
-            $src_url   = $mp3_url;
+        } elseif ((_C_WEBPHOTO_FILE_KIND_MP3 == $displayfile) && $mp3_url) {
+            $src_url = $mp3_url;
             $flag_type = false;
 
-            // flash video
+        // flash video
         } elseif ($flash_url) {
-            $src_url   = $flash_url;
+            $src_url = $flash_url;
             $flag_type = false;
 
-            // flash swf
+        // flash swf
         } elseif ($swf_url) {
-            $src_url   = $swf_url;
+            $src_url = $swf_url;
             $flag_type = false;
 
-            // mp3
+        // mp3
         } elseif ($mp3_url) {
-            $src_url   = $mp3_url;
+            $src_url = $mp3_url;
             $flag_type = false;
 
-            // external
+        // external
         } elseif ($external_url) {
             $src_url = $external_url;
 
-            // others
+        // others
         } elseif ($cont_url) {
             $src_url = $cont_url;
         }
 
-        return array($src_url, $flag_type);
+        return [$src_url, $flag_type];
     }
 
+    /**
+     * @param $thumb_row
+     * @param $middle_row
+     * @return mixed|null|string
+     */
     public function get_movie_image($thumb_row, $middle_row)
     {
         $url = $this->get_file_url($middle_row);
         if ($url) {
             return $url;
         }
+
         return $this->get_file_url($thumb_row);
     }
 
+    /**
+     * @param $div_id
+     * @return string
+     */
     public function build_script_swfobject($div_id)
     {
         $str = '<script type="text/javascript" src="' . $this->_MODULE_URL . '/libs/jw/swfobject.js">';
@@ -1018,89 +1177,146 @@ class webphoto_flash_player extends webphoto_base_ini
         $str .= '<a href="http://www.macromedia.com/go/getflashplayer">';
         $str .= 'Get the Flash Player</a> to see this player.';
         $str .= '</div>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_script_begin()
     {
         $str = '<script type="text/javascript"> ' . "\n";
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function build_script_end()
     {
         $str = '</script>' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $flashplayer
+     * @param $swf_id
+     * @param $width
+     * @param $height
+     * @return string
+     */
     public function build_var_swfobject($flashplayer, $swf_id, $width, $height)
     {
         $str = 'var s' . $this->_item_id . ' = new SWFObject("' . $flashplayer . '","' . $swf_id . '","' . $width . '","' . $height . '","' . _C_WEBPHOTO_FLASH_VERSION . '"); ' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
     public function build_add_parame($name, $value)
     {
         $str = 's' . $this->_item_id . '.addParam("' . $name . '","' . $value . '"); ' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $div_id
+     * @return string
+     */
     public function build_write($div_id)
     {
         $str = 's' . $this->_item_id . '.write("' . $div_id . '"); ' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
     public function build_add_variable($name, $value)
     {
         $str = 's' . $this->_item_id . '.addVariable("' . $name . '","' . $value . '"); ' . "\n";
+
         return $str;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return string
+     */
     public function build_add_variable_color($name, $value)
     {
         if ($value) {
             return $this->build_add_variable($name, $this->convert_color($value));
         }
+
         return '';
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function convert_color($str)
     {
         $ret = '0x' . str_replace('#', '', $str);
+
         return $ret;
     }
 
+    /**
+     * @param $style
+     * @return bool
+     */
     public function is_color_style($style)
     {
-        if ($style == _C_WEBPHOTO_PLAYER_STYLE_PLAYER) {
+        if (_C_WEBPHOTO_PLAYER_STYLE_PLAYER == $style) {
             return true;
         }
-        if ($style == _C_WEBPHOTO_PLAYER_STYLE_PAGE) {
+        if (_C_WEBPHOTO_PLAYER_STYLE_PAGE == $style) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $item_row
+     * @param $flashvar_row
+     * @param $flash_row
+     * @param $player_row
+     * @return array
+     */
     public function get_width_height($item_row, $flashvar_row, $flash_row, $player_row)
     {
-        $item_width      = $item_row['item_page_width'];
-        $item_height     = $item_row['item_page_height'];
-        $flashvar_width  = $flashvar_row['flashvar_width'];
+        $item_width = $item_row['item_page_width'];
+        $item_height = $item_row['item_page_height'];
+        $flashvar_width = $flashvar_row['flashvar_width'];
         $flashvar_height = $flashvar_row['flashvar_height'];
-        $flash_width     = $flash_row['file_width'];
-        $flash_height    = $flash_row['file_height'];
-        $player_width    = $player_row['player_width'];
-        $player_height   = $player_row['player_height'];
+        $flash_width = $flash_row['file_width'];
+        $flash_height = $flash_row['file_height'];
+        $player_width = $player_row['player_width'];
+        $player_height = $player_row['player_height'];
 
         // item
         if (($item_width > 0) && ($item_height > 0)) {
-            return array($item_width, $item_height);
+            return [$item_width, $item_height];
         }
 
         // flashvar
         if (($flashvar_width > 0) && ($flashvar_height > 0)) {
-            return array($flashvar_width, $flashvar_height);
+            return [$flashvar_width, $flashvar_height];
         }
 
         // auto adjust
@@ -1108,14 +1324,18 @@ class webphoto_flash_player extends webphoto_base_ini
             return $this->_utility_class->adjust_image_size($flash_width, $flash_height, $player_width, $player_height);
         }
 
-        return array($player_width, $player_height);
+        return [$player_width, $player_height];
     }
 
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function check_perm_down($item_row)
     {
-        $showinfo      = $item_row['item_showinfo'];
-        $perm_down     = $item_row['item_perm_down'];
-        $showinfo_arr  = explode('|', $showinfo);
+        $showinfo = $item_row['item_showinfo'];
+        $perm_down = $item_row['item_perm_down'];
+        $showinfo_arr = explode('|', $showinfo);
         $perm_down_arr = explode('|', $perm_down);
 
         if (!is_array($showinfo_arr)) {
@@ -1127,54 +1347,65 @@ class webphoto_flash_player extends webphoto_base_ini
         }
 
         // all perm
-        if ($perm_down == '*') {
+        if ('*' == $perm_down) {
             return true;
-
-            // in xoops_group
+        // in xoops_group
         } elseif (is_array($perm_down_arr)
-                  && (count(array_intersect($this->_xoops_groups, $perm_down_arr)) > 0)
-        ) {
+                  && (count(array_intersect($this->_xoops_groups, $perm_down_arr)) > 0)) {
             return true;
         }
 
         return false;
     }
 
+    /**
+     * @param $src_url
+     * @return null|string
+     */
     public function get_movie_link($src_url)
     {
-        $item_id   = $this->_item_row['item_id'];
-        $siteurl   = $this->_item_row['item_siteurl'];
+        $item_id = $this->_item_row['item_id'];
+        $siteurl = $this->_item_row['item_siteurl'];
         $link_type = $this->_flashvar_row['flashvar_link_type'];
 
         $link = null;
         switch ($link_type) {
-            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_SITE :
+            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_SITE:
                 $link = $siteurl;
                 break;
-
-            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_PAGE :
+            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_PAGE:
                 $link = $this->_MODULE_URL . '/index.php?fct=photo&photo_id=' . $item_id;
                 break;
-
-            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_FILE :
+            case _C_WEBPHOTO_FLASHVAR_LINK_TYPE_FILE:
                 $link = $src_url;
                 break;
         }
+
         return $link;
     }
 
+    /**
+     * @param $flashvar_row
+     * @return bool|string
+     */
     public function get_logo_file($flashvar_row)
     {
-        $logo      = $flashvar_row['flashvar_logo'];
+        $logo = $flashvar_row['flashvar_logo'];
         $logo_file = $this->_LOGOS_DIR . '/' . $logo;
-        $logo_url  = $this->_LOGOS_URL . '/' . $logo;
+        $logo_url = $this->_LOGOS_URL . '/' . $logo;
 
         if ($logo && file_exists($logo_file)) {
             return $logo_url;
         }
+
         return false;
     }
 
+    /**
+     * @param $file
+     * @param $ext
+     * @return bool
+     */
     public function check_type($file, $ext)
     {
         if ($this->is_type_kind()) {
@@ -1183,35 +1414,44 @@ class webphoto_flash_player extends webphoto_base_ini
                 return true;
             }
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function is_playlist_kind()
     {
         switch ($this->_kind) {
-            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_FEED :
-            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_DIR :
+            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_FEED:
+            case _C_WEBPHOTO_ITEM_KIND_PLAYLIST_DIR:
                 return true;
                 break;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function is_type_kind()
     {
         switch ($this->_kind) {
-            case _C_WEBPHOTO_ITEM_KIND_GENERAL :
-            case _C_WEBPHOTO_ITEM_KIND_IMAGE :
-            case _C_WEBPHOTO_ITEM_KIND_IMAGE_OTHER :
-            case _C_WEBPHOTO_ITEM_KIND_VIDEO :
-            case _C_WEBPHOTO_ITEM_KIND_VIDEO_H264 :
-            case _C_WEBPHOTO_ITEM_KIND_AUDIO :
-            case _C_WEBPHOTO_ITEM_KIND_OFFICE :
-            case _C_WEBPHOTO_ITEM_KIND_EXTERNAL_GENERAL :
-            case _C_WEBPHOTO_ITEM_KIND_EXTERNAL_IMAGE :
+            case _C_WEBPHOTO_ITEM_KIND_GENERAL:
+            case _C_WEBPHOTO_ITEM_KIND_IMAGE:
+            case _C_WEBPHOTO_ITEM_KIND_IMAGE_OTHER:
+            case _C_WEBPHOTO_ITEM_KIND_VIDEO:
+            case _C_WEBPHOTO_ITEM_KIND_VIDEO_H264:
+            case _C_WEBPHOTO_ITEM_KIND_AUDIO:
+            case _C_WEBPHOTO_ITEM_KIND_OFFICE:
+            case _C_WEBPHOTO_ITEM_KIND_EXTERNAL_GENERAL:
+            case _C_WEBPHOTO_ITEM_KIND_EXTERNAL_IMAGE:
                 return true;
                 break;
         }
+
         return false;
     }
 
@@ -1220,6 +1460,10 @@ class webphoto_flash_player extends webphoto_base_ini
         return $this->_report;
     }
 
+    /**
+     * @param $item_id
+     * @return string
+     */
     public function build_mplay_js($item_id)
     {
         $str = '
@@ -1272,18 +1516,30 @@ class webphoto_flash_player extends webphoto_base_ini
     //---------------------------------------------------------
     // file handler
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $kind
+     * @return bool|mixed|null
+     */
     public function get_cached_file_row_by_kind($row, $kind)
     {
         $file_id = $this->_item_handler->build_value_fileid_by_kind($row, $kind);
         if ($file_id > 0) {
-            return $this->_file_handler->get_cached_row_by_id($file_id);
+            return $this->_fileHandler->get_cached_row_by_id($file_id);
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
         return $this->_utility_class->parse_ext($file);

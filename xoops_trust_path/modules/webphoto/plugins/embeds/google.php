@@ -17,9 +17,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //
 // <embed style="width:400px; height:326px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=-8290192083117426204&hl=en" flashvars=""> </embed>
 //=========================================================
+
+/**
+ * Class webphoto_embed_google
+ */
 class webphoto_embed_google extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('google');
@@ -27,19 +30,33 @@ class webphoto_embed_google extends webphoto_embed_base
         $this->set_sample('-8290192083117426204');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $movie = 'http://video.google.com/googleplayer.swf?docId=' . $src;
         $style = 'width:' . $width . 'px; height:' . $height . 'px;';
-        $embed = '<embed style="' . $style . '" id="VideoPlayback" type="application/x-shockwave-flash" src="' . $movie . '" flashvars="" />';
+        $embed = '<embed style="' . $style . '" id="VideoPlayback" type="application/x-shockwave-flash" src="' . $movie . '" flashvars="" >';
+
         return $embed;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();

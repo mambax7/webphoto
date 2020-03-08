@@ -32,6 +32,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_photo
 //=========================================================
+
+/**
+ * Class webphoto_photo
+ */
 class webphoto_photo extends webphoto_show_photo
 {
     public $_flash_class;
@@ -48,7 +52,7 @@ class webphoto_photo extends webphoto_show_photo
     public $_cfg_embed_width;
     public $_cfg_embed_height;
 
-    public $_param     = null;
+    public $_param = null;
     public $_param_out = null;
     public $_list_mode = null;
     public $_navi_mode = null;
@@ -59,10 +63,10 @@ class webphoto_photo extends webphoto_show_photo
     public $_get_kind;
     public $_orderby;
 
-    public $_photo_row      = null;
-    public $_has_tagedit    = false;
-    public $_show_codebox   = false;
-    public $_perm_download  = false;
+    public $_photo_row = null;
+    public $_has_tagedit = false;
+    public $_show_codebox = false;
+    public $_perm_download = false;
     public $_codeinfo_array = null;
 
     public $_CODEINFO_LIST;
@@ -70,7 +74,7 @@ class webphoto_photo extends webphoto_show_photo
 
     public $_TIME_SUCCESS = 1;
     public $_TIME_PENDING = 3;
-    public $_TIME_FAILED  = 5;
+    public $_TIME_FAILED = 5;
 
     // for future
     public $_get_viewtype = null;
@@ -78,18 +82,24 @@ class webphoto_photo extends webphoto_show_photo
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_photo constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_flash_class       = webphoto_flash_player::getInstance($dirname, $trust_dirname);
-        $this->_embed_class       = webphoto_embed::getInstance($dirname, $trust_dirname);
+        $this->_flash_class = webphoto_flash_player::getInstance($dirname, $trust_dirname);
+        $this->_embed_class = webphoto_embed::getInstance($dirname, $trust_dirname);
         $this->_item_public_class = webphoto_item_public::getInstance($dirname, $trust_dirname);
-        $this->_photo_navi_class  = webphoto_photo_navi::getInstance($dirname, $trust_dirname);
-        $this->_catlist_class     = webphoto_inc_catlist::getSingleton($dirname, $trust_dirname);
-        $this->_rate_check_class  = webphoto_rate_check::getInstance($dirname, $trust_dirname);
-        $this->_public_class      = webphoto_photo_public::getInstance($dirname, $trust_dirname);
-        $this->_uri_parse_class   = webphoto_uri_parse::getInstance($dirname, $trust_dirname);
+        $this->_photo_navi_class = webphoto_photo_navi::getInstance($dirname, $trust_dirname);
+        $this->_catlist_class = webphoto_inc_catlist::getSingleton($dirname, $trust_dirname);
+        $this->_rate_check_class = webphoto_rate_check::getInstance($dirname, $trust_dirname);
+        $this->_public_class = webphoto_photo_public::getInstance($dirname, $trust_dirname);
+        $this->_uri_parse_class = webphoto_uri_parse::getInstance($dirname, $trust_dirname);
 
         $this->_photo_navi_class->set_mark_id_prev('<b>' . $this->get_constant('NAVI_PREVIOUS') . '</b>');
         $this->_photo_navi_class->set_mark_id_next('<b>' . $this->get_constant('NAVI_NEXT') . '</b>');
@@ -97,8 +107,8 @@ class webphoto_photo extends webphoto_show_photo
         $this->_comment_view_class = webphoto_d3_comment_view::getInstance();
         $this->_comment_view_class->init($dirname);
 
-        $this->_cfg_cat_child    = $this->get_config_by_name('cat_child');
-        $this->_cfg_embed_width  = $this->get_config_by_name('embed_width');
+        $this->_cfg_cat_child = $this->get_config_by_name('cat_child');
+        $this->_cfg_embed_width = $this->get_config_by_name('embed_width');
         $this->_cfg_embed_height = $this->get_config_by_name('embed_height');
 
         $this->_has_tagedit = $this->_perm_class->has_tagedit();
@@ -108,12 +118,18 @@ class webphoto_photo extends webphoto_show_photo
         $this->_CODEINFO_LIST = $this->explode_ini('view_codeinfo_list');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_photo|\webphoto_show_photo
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_photo($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -136,8 +152,8 @@ class webphoto_photo extends webphoto_show_photo
     public function check_photo_init()
     {
         $this->_get_photo_id = $this->_uri_parse_class->get_id_by_key('photo_id');
-        $this->_get_cat_id   = $this->_uri_parse_class->get_int_by_key('cat_id');
-        $this->_orderby      = $this->_uri_parse_class->get_photo_orderby();
+        $this->_get_cat_id = $this->_uri_parse_class->get_int_by_key('cat_id');
+        $this->_orderby = $this->_uri_parse_class->get_photo_orderby();
 
         $row = $this->_item_public_class->get_item_row($this->_get_photo_id);
         if (!is_array($row)) {
@@ -152,11 +168,16 @@ class webphoto_photo extends webphoto_show_photo
     //---------------------------------------------------------
     // edittag
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function is_photo_edittag()
     {
-        if ($this->_post_class->get_post('op') == 'tagedit') {
+        if ('tagedit' == $this->_post_class->get_post('op')) {
             return true;
         }
+
         return false;
     }
 
@@ -173,7 +194,7 @@ class webphoto_photo extends webphoto_show_photo
             case _C_WEBPHOTO_ERR_TOKEN:
                 $msg = 'Token Error';
                 if ($this->_is_module_admin) {
-                    $msg .= '<br />' . $this->get_token_errors();
+                    $msg .= '<br>' . $this->get_token_errors();
                 }
                 redirect_header($redirect_this_url, $this->_TIME_FAILED, $msg);
                 exit();
@@ -181,7 +202,7 @@ class webphoto_photo extends webphoto_show_photo
             case _C_WEBPHOTO_ERR_DB:
                 $msg = 'DB Error';
                 if ($this->_is_module_admin) {
-                    $msg .= '<br />' . $this->get_format_error();
+                    $msg .= '<br>' . $this->get_format_error();
                 }
                 redirect_header($redirect_this_url, $this->_TIME_FAILED, $msg);
                 exit();
@@ -195,6 +216,9 @@ class webphoto_photo extends webphoto_show_photo
         exit();
     }
 
+    /**
+     * @return int
+     */
     public function excute_photo_edittag()
     {
         if (!$this->_has_tagedit) {
@@ -210,7 +234,7 @@ class webphoto_photo extends webphoto_show_photo
 
         $photo_id = $row['item_id'];
 
-        $post_tags  = $this->_post_class->get_post_text('tags');
+        $post_tags = $this->_post_class->get_post_text('tags');
         $post_array = $this->_tag_build_class->str_to_tag_name_array($post_tags);
 
         $ret = $this->_tag_build_class->update_tags($photo_id, $this->_xoops_uid, $post_array);
@@ -229,9 +253,14 @@ class webphoto_photo extends webphoto_show_photo
     //---------------------------------------------------------
     // show main
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_photo_for_photo($row)
     {
-        $arr1                 = $this->build_photo_by_row($row);
+        $arr1 = $this->build_photo_by_row($row);
         $this->_perm_download = $arr1['perm_download'];
 
         $arr2 = $this->build_photo_flash_player($row, $arr1);
@@ -239,31 +268,42 @@ class webphoto_photo extends webphoto_show_photo
         $arr4 = $this->build_photo_code($row, $arr1, $arr2, $arr3);
 
         $arr = array_merge($arr1, $arr2, $arr3, $arr4);
+
         return $arr;
     }
 
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_photo_by_row($row)
     {
-        $arr             = $this->build_photo_show($row);
+        $arr = $this->build_photo_show($row);
         $arr['can_rate'] = $this->_rate_check_class->can_rate($row['item_id']);
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // flash player
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $show_arr
+     * @return array
+     */
     public function build_photo_flash_player($item_row, $show_arr)
     {
-        $item_id     = $item_row['item_id'];
+        $item_id = $item_row['item_id'];
         $displaytype = $item_row['item_displaytype'];
-        $uid         = $item_row['item_uid'];
+        $uid = $item_row['item_uid'];
 
         $flash = null;
         $embed = null;
-        $js    = null;
+        $js = null;
 
         if ($displaytype >= _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT) {
-
             // countup views if not submitter or admin.
             if ($this->check_not_owner($uid)) {
                 $this->_item_handler->countup_views($item_id, true);
@@ -273,26 +313,32 @@ class webphoto_photo extends webphoto_show_photo
             list($embed, $js) = $this->_flash_class->build_code_embed_by_item_row($item_row);
         }
 
-        $arr = array(
+        $arr = [
             'flash_player' => $flash,
-            'code_embed'   => $embed,
-            'code_js'      => $js,
-        );
+            'code_embed' => $embed,
+            'code_js' => $js,
+        ];
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // embed
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return array
+     */
     public function build_photo_embed_link($item_row)
     {
-        $kind    = $item_row['item_kind'];
+        $kind = $item_row['item_kind'];
         $siteurl = $item_row['item_siteurl'];
-        $type    = $item_row['item_embed_type'];
-        $src     = $item_row['item_embed_src'];
-        $text    = $item_row['item_embed_text'];
-        $width   = $item_row['item_page_width'];
-        $height  = $item_row['item_page_height'];
+        $type = $item_row['item_embed_type'];
+        $src = $item_row['item_embed_src'];
+        $text = $item_row['item_embed_text'];
+        $width = $item_row['item_page_width'];
+        $height = $item_row['item_page_height'];
 
         $can = false;
 
@@ -307,14 +353,14 @@ class webphoto_photo extends webphoto_show_photo
         // when already set text & suteurl
         if ($text && $siteurl) {
             $embed = $this->build_photo_embed_text($text, $width, $height);
-            $link  = $siteurl;
+            $link = $siteurl;
 
-            // when already set text, not set link
+        // when already set text, not set link
         } elseif ($text) {
             $embed = $this->build_photo_embed_text($text, $width, $height);
             list($dummy, $link) = $this->_embed_class->build_embed_link($type, $src, $width, $height);
 
-            // when not set embed & link
+        // when not set embed & link
         } else {
             list($embed, $link) = $this->_embed_class->build_embed_link($type, $src, $width, $height, true, true);
         }
@@ -323,50 +369,66 @@ class webphoto_photo extends webphoto_show_photo
             $can = true;
         }
 
-        $arr = array(
-            'embed_can'   => $can,
+        $arr = [
+            'embed_can' => $can,
             'embed_embed' => $embed,
-            'embed_link'  => $link,
-        );
+            'embed_link' => $link,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $text
+     * @param $width
+     * @param $height
+     * @return mixed
+     */
     public function build_photo_embed_text($text, $width, $height)
     {
         $text = str_replace(_C_WEBPHOTO_EMBED_REPLACE_WIDTH, $width, $text);
         $text = str_replace(_C_WEBPHOTO_EMBED_REPLACE_HEIGHT, $height, $text);
+
         return $text;
     }
 
     //---------------------------------------------------------
     // code
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $show_arr
+     * @param $flash_arr
+     * @param $embed_arr
+     * @return array
+     */
     public function build_photo_code($item_row, $show_arr, $flash_arr, $embed_arr)
     {
         $item_id = $item_row['item_id'];
-        $title   = $item_row['item_title'];
+        $title = $item_row['item_title'];
         $siteurl = $item_row['item_siteurl'];
-        $kind    = $item_row['item_kind'];
-        $feed    = $item_row['item_playlist_feed'];
-        $cache   = $item_row['item_playlist_cache'];
+        $kind = $item_row['item_kind'];
+        $feed = $item_row['item_playlist_feed'];
+        $cache = $item_row['item_playlist_cache'];
 
         $this->_codeinfo_array = $this->_item_handler->get_codeinfo_array($item_row);
 
-        $param         = array();
+        $param = [];
         $param['page'] = $this->build_photo_page_link($item_id);
         $param['site'] = $this->build_photo_site_link($item_id, $siteurl, $embed_arr);
         $param['play'] = $this->build_photo_play_link($item_id, $kind, $title, $feed, $cache);
 
-        $temp           = $this->build_photo_code_embed_link($item_row, $flash_arr, $embed_arr);
+        $temp = $this->build_photo_code_embed_link($item_row, $flash_arr, $embed_arr);
         $param['embed'] = $temp['embed'];
-        $param['js']    = $temp['js'];
+        $param['js'] = $temp['js'];
 
         foreach ($this->_FILE_LIST as $name) {
             $param[$name] = $this->build_photo_file_link($item_row, $show_arr, $name);
         }
 
         // list up cont url
-        $cont_values = array();
+        $cont_values = [];
         if (isset($param['cont']['dual'])) {
             $cont_values[] = $param['cont']['download']['value'];
             if (isset($param['cont']['image'])) {
@@ -377,7 +439,7 @@ class webphoto_photo extends webphoto_show_photo
         }
 
         // file codeinfo
-        $codes1 = array();
+        $codes1 = [];
         foreach ($this->_CODEINFO_LIST as $name) {
             if (isset($param[$name]['dual'])) {
                 if (isset($param[$name]['image'])) {
@@ -391,12 +453,11 @@ class webphoto_photo extends webphoto_show_photo
 
         // set no show if same as cont url
         if (is_array($cont_values) && is_array($cont_values)) {
-            $codes2 = array();
+            $codes2 = [];
             foreach ($codes1 as $code) {
                 if (isset($code['name']) && isset($code['value'])
-                    && ($code['name'] != 'cont')
-                    && in_array($code['value'], $cont_values)
-                ) {
+                    && ('cont' != $code['name'])
+                    && in_array($code['value'], $cont_values)) {
                     $code['show'] = false;
                 }
                 $codes2[] = $code;
@@ -405,7 +466,7 @@ class webphoto_photo extends webphoto_show_photo
             $codes2 = $codes1;
         }
 
-        $arr          = array();
+        $arr = [];
         $arr['codes'] = $codes2;
 
         // always last
@@ -414,95 +475,105 @@ class webphoto_photo extends webphoto_show_photo
         return $arr;
     }
 
+    /**
+     * @param $item_row
+     * @param $show_arr
+     * @param $name
+     * @return array
+     */
     public function build_photo_file_link($item_row, $show_arr, $name)
     {
-        $item_id             = $item_row['item_id'];
+        $item_id = $item_row['item_id'];
         $item_detail_onclick = $item_row['item_detail_onclick'];
 
-        $show     = false;
+        $show = false;
         $show_img = false;
-        $url      = null;
-        $title    = null;
-        $target   = null;
+        $url = null;
+        $title = null;
+        $target = null;
         $filesize = null;
 
         $onclick_download = false;
-        $cont_download    = false;
+        $cont_download = false;
 
-        $arr = array(
+        $arr = [
             'show' => $show,
-            'url'  => $url,
-        );
+            'url' => $url,
+        ];
 
         if (!$this->_perm_download) {
             return $arr;
         }
 
-        $img       = null;
+        $img = null;
         $item_name = null;
-        $file_kind = constant(strtoupper('_C_WEBPHOTO_FILE_KIND_' . $name));
+        $file_kind = constant(mb_strtoupper('_C_WEBPHOTO_FILE_KIND_' . $name));
 
         switch ($name) {
-            case 'cont' :
+            case 'cont':
                 $item_name = 'item_external_url';
                 break;
-
-            case 'thumb' :
+            case 'thumb':
                 $item_name = 'item_external_thumb';
                 break;
-
-            case 'middle' :
+            case 'middle':
                 $item_name = 'item_external_middle';
                 break;
         }
 
-        $caption   = $this->build_photo_code_caption($name);
+        $caption = $this->build_photo_code_caption($name);
         $lang_down = $this->get_constant('DOWNLOAD');
-        $file_row  = $this->get_show_file_row($show_arr, $file_kind);
+        $file_row = $this->get_show_file_row($show_arr, $file_kind);
 
         // if file exists
         if (is_array($file_row)) {
             return $this->build_photo_file_link_dual($name, $item_id, $file_row);
-
-            // if external
+        // if external
         } elseif ($item_name) {
             $item_url = $item_row[$item_name];
             if ($item_url) {
-                $url    = $item_url;
-                $title  = $caption;
+                $url = $item_url;
+                $title = $caption;
                 $target = '_blank';
             }
         }
 
-        $arr             = $this->build_photo_code_result_link($name, $url, $title, $target);
+        $arr = $this->build_photo_code_result_link($name, $url, $title, $target);
         $arr['filesize'] = $filesize;
+
         return $arr;
     }
 
+    /**
+     * @param $name
+     * @param $item_id
+     * @param $file_row
+     * @return array
+     */
     public function build_photo_file_link_dual($name, $item_id, $file_row)
     {
         $filesize = null;
 
-        $file_kind = constant(strtoupper('_C_WEBPHOTO_FILE_KIND_' . $name));
-        $caption   = $this->build_photo_code_caption($name);
+        $file_kind = constant(mb_strtoupper('_C_WEBPHOTO_FILE_KIND_' . $name));
+        $caption = $this->build_photo_code_caption($name);
         $lang_down = $this->get_constant('DOWNLOAD');
 
-        $url    = $file_row['file_url'];
-        $ext    = $file_row['file_ext'];
-        $size   = $file_row['file_size'];
-        $path   = $file_row['file_path'];
-        $file   = $file_row['full_path'];
+        $url = $file_row['file_url'];
+        $ext = $file_row['file_ext'];
+        $size = $file_row['file_size'];
+        $path = $file_row['file_path'];
+        $file = $file_row['full_path'];
         $exists = $file_row['full_path_exists'];
 
         $base_url1 = $this->_MODULE_URL . '/index.php?fct=download';
-        $title1    = $lang_down . ' ' . $caption;
-        $target1   = '_self';
-        $url1      = $url;
+        $title1 = $lang_down . ' ' . $caption;
+        $target1 = '_self';
+        $url1 = $url;
 
         $base_url2 = $this->_MODULE_URL . '/index.php?fct=image';
-        $title2    = $caption;
-        $target2   = '_blank';
-        $url2      = $url;
+        $title2 = $caption;
+        $target2 = '_blank';
+        $url2 = $url;
 
         if ($exists && $file) {
             $url1 = $base_url1 . '&item_id=' . $item_id . '&file_kind=' . $file_kind;
@@ -513,19 +584,19 @@ class webphoto_photo extends webphoto_show_photo
             }
         }
 
-        $arr1                      = $this->build_photo_code_result_link($name, $url1, $title1, $target1);
-        $arr1['filesize']          = $filesize;
+        $arr1 = $this->build_photo_code_result_link($name, $url1, $title1, $target1);
+        $arr1['filesize'] = $filesize;
         $arr1['show_img_download'] = true;
-        $arr1['show_img_view']     = false;
+        $arr1['show_img_view'] = false;
 
-        $arr2                      = $this->build_photo_code_result_link($name, $url2, $title2, $target2);
-        $arr2['filesize']          = $filesize;
+        $arr2 = $this->build_photo_code_result_link($name, $url2, $title2, $target2);
+        $arr2['filesize'] = $filesize;
         $arr2['show_img_download'] = false;
-        $arr2['show_img_view']     = true;
+        $arr2['show_img_view'] = true;
 
-        $arr             = array();
-        $arr['dual']     = true;
-        $arr['show']     = true;
+        $arr = [];
+        $arr['dual'] = true;
+        $arr['show'] = true;
         $arr['download'] = $arr1;
 
         if ($this->is_image_ext($ext)) {
@@ -535,68 +606,87 @@ class webphoto_photo extends webphoto_show_photo
         return $arr;
     }
 
+    /**
+     * @param $item_id
+     * @return array
+     */
     public function build_photo_page_link($item_id)
     {
-        $name  = 'page';
-        $url   = $this->build_uri_photo($item_id);
+        $name = 'page';
+        $url = $this->build_uri_photo($item_id);
         $title = $this->get_constant('page_view');
 
         return $this->build_photo_code_result_link($name, $url, $title, '_self');
     }
 
+    /**
+     * @param $item_id
+     * @param $item_siteurl
+     * @param $embed_arr
+     * @return array
+     */
     public function build_photo_site_link($item_id, $item_siteurl, $embed_arr)
     {
         $show = false;
-        $url  = null;
+        $url = null;
         $href = null;
 
-        $name    = 'site';
+        $name = 'site';
         $caption = $this->build_photo_code_caption($name);
-        $title   = $caption . ' : ' . $item_siteurl;
+        $title = $caption . ' : ' . $item_siteurl;
 
         // external site
         if ($item_siteurl) {
-            $url  = $item_siteurl;
+            $url = $item_siteurl;
             $href = $this->_MODULE_URL . '/index.php?fct=visit&item_id=' . $item_id;
 
-            // embed link
+        // embed link
         } elseif (isset($embed_arr['embed_link']) && $embed_arr['embed_link']) {
-            $url  = $embed_arr['embed_link'];
+            $url = $embed_arr['embed_link'];
             $href = $url;
         }
 
-        $arr            = $this->build_photo_code_result_value($name, $url);
-        $arr['href']    = $href;
-        $arr['href_s']  = $this->sanitize($href);
-        $arr['title']   = $title;
+        $arr = $this->build_photo_code_result_value($name, $url);
+        $arr['href'] = $href;
+        $arr['href_s'] = $this->sanitize($href);
+        $arr['title'] = $title;
         $arr['title_s'] = $this->sanitize($title);
-        $arr['target']  = '_blank';
+        $arr['target'] = '_blank';
+
         return $arr;
     }
 
+    /**
+     * @param $item_id
+     * @param $kind
+     * @param $item_title
+     * @param $feed
+     * @param $cache
+     * @return array
+     */
     public function build_photo_play_link($item_id, $kind, $item_title, $feed, $cache)
     {
         $show = false;
-        $url  = null;
+        $url = null;
 
-        $arr = array(
+        $arr = [
             'show' => $show,
-        );
+        ];
 
         if (!$this->_perm_download) {
             return $arr;
         }
 
-        $name    = 'play';
+        $name = 'play';
         $caption = $this->build_photo_code_caption($name);
-        $title   = $item_title . ' ' . $caption;
-        $icon    = $this->_MODULE_URL . '/images/icons/webfeed.png';
+        $title = $item_title . ' ' . $caption;
+        $icon = $this->_MODULE_URL . '/images/icons/webfeed.png';
 
         // external playlist
         if ($this->is_playlist_feed_kind($kind)) {
             $url = $feed;
 
-            // playlist cache
+        // playlist cache
         } elseif ($this->_perm_download && $this->is_playlist_dir_kind($kind)) {
             $file = $this->_PLAYLISTS_DIR . '/' . $cache;
             if (empty($cache) || !file_exists($file)) {
@@ -605,7 +695,7 @@ class webphoto_photo extends webphoto_show_photo
 
             $url = $this->_MODULE_URL . '/index.php?fct=view_playlist&item_id=' . $item_id;
 
-            // other
+        // other
         } else {
             return $arr;
         }
@@ -613,130 +703,193 @@ class webphoto_photo extends webphoto_show_photo
         return $this->build_photo_code_result_link($name, $url, $title);
     }
 
+    /**
+     * @param $item_row
+     * @param $flash_arr
+     * @param $embed_arr
+     * @return array
+     */
     public function build_photo_code_embed_link($item_row, $flash_arr, $embed_arr)
     {
         $embed = null;
-        $js    = null;
+        $js = null;
 
         // embed
         if (isset($flash_arr['code_embed']) && $flash_arr['code_embed']) {
             $embed = $flash_arr['code_embed'];
-            $js    = $flash_arr['code_js'];
+            $js = $flash_arr['code_js'];
 
-            // flash player
+        // flash player
         } elseif (isset($embed_arr['embed_embed']) && $embed_arr['embed_embed']) {
             $embed = $embed_arr['embed_embed'];
         }
 
-        $arr = array(
+        $arr = [
             'embed' => $this->build_photo_code_result_value('embed', $embed),
-            'js'    => $this->build_photo_code_result_value('js', $js),
-        );
+            'js' => $this->build_photo_code_result_value('js', $js),
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param        $name
+     * @param        $url
+     * @param        $title
+     * @param string $target
+     * @return array
+     */
     public function build_photo_code_result_link($name, $url, $title, $target = '_blank')
     {
-        $arr            = $this->build_photo_code_result_value($name, $url);
-        $arr['href']    = $url;
-        $arr['href_s']  = $this->sanitize($url);
-        $arr['title']   = $title;
+        $arr = $this->build_photo_code_result_value($name, $url);
+        $arr['href'] = $url;
+        $arr['href_s'] = $this->sanitize($url);
+        $arr['title'] = $title;
         $arr['title_s'] = $this->sanitize($title);
-        $arr['target']  = $target;
+        $arr['target'] = $target;
+
         return $arr;
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return array
+     */
     public function build_photo_code_result_value($name, $value)
     {
         $caption = $this->build_photo_code_caption($name);
 
-        $arr = array(
-            'show'      => $this->is_photo_code_show_by_name($name, $value),
-            'name'      => $name,
-            'caption'   => $caption,
+        $arr = [
+            'show' => $this->is_photo_code_show_by_name($name, $value),
+            'name' => $name,
+            'caption' => $caption,
             'caption_s' => $this->sanitize($caption),
-            'value'     => $value,
-            'value_s'   => $this->sanitize($value),
-        );
+            'value' => $value,
+            'value_s' => $this->sanitize($value),
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function build_photo_code_caption($name)
     {
-        return $this->get_constant(strtoupper('ITEM_CODEINFO_' . $name));
+        return $this->get_constant(mb_strtoupper('ITEM_CODEINFO_' . $name));
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return bool
+     */
     public function is_photo_code_show_by_name($name, $value)
     {
-        $const = constant(strtoupper('_C_WEBPHOTO_CODEINFO_' . $name));
+        $const = constant(mb_strtoupper('_C_WEBPHOTO_CODEINFO_' . $name));
+
         return $this->is_photo_code_show_by_const($const, $value);
     }
 
+    /**
+     * @param $const
+     * @param $value
+     * @return bool
+     */
     public function is_photo_code_show_by_const($const, $value)
     {
         if (in_array($const, $this->_codeinfo_array) && $value) {
             $this->_show_codebox = true;
+
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function get_photo_catid_row_or_post($row)
     {
         $cat_id = ($row['item_cat_id'] > 0) ? $row['item_cat_id'] : $this->_get_cat_id;
+
         return $cat_id;
     }
 
+    /**
+     * @param $row
+     * @return array
+     */
     public function build_photo_gmap_param($row)
     {
-        $show  = false;
+        $show = false;
         $icons = null;
 
         $photo = $this->_gmap_class->build_show($row);
         if (is_array($photo)) {
-            $show  = true;
+            $show = true;
             $icons = $this->_gmap_class->build_icon_list();
         }
 
-        $arr = array(
-            'show_gmap'                => $show,
-            'gmap_photo'               => $photo,
-            'gmap_icons'               => $icons,
-            'gmap_latitude'            => $row['item_gmap_latitude'],
-            'gmap_longitude'           => $row['item_gmap_longitude'],
-            'gmap_zoom'                => $row['item_gmap_zoom'],
+        $arr = [
+            'show_gmap' => $show,
+            'gmap_photo' => $photo,
+            'gmap_icons' => $icons,
+            'gmap_latitude' => $row['item_gmap_latitude'],
+            'gmap_longitude' => $row['item_gmap_longitude'],
+            'gmap_zoom' => $row['item_gmap_zoom'],
             'gmap_lang_not_compatible' => $this->get_constant('GMAP_NOT_COMPATIBLE'),
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $photo_id
+     * @param $cat_id
+     * @return string
+     */
     public function build_photo_navi($photo_id, $cat_id)
     {
-        $script   = $this->_uri_class->build_photo_pagenavi();
+        $script = $this->_uri_class->build_photo_pagenavi();
         $id_array = $this->_public_class->get_id_array_by_catid_orderby($cat_id, $this->_orderby);
 
         return $this->_photo_navi_class->build_navi($script, $id_array, $photo_id);
     }
 
+    /**
+     * @param $photo_id
+     * @return array
+     */
     public function build_photo_tags_param($photo_id)
     {
         if (!$this->_has_tagedit) {
-            $arr = array(
-                'show_tagedit' => false
-            );
+            $arr = [
+                'show_tagedit' => false,
+            ];
+
             return $arr;
         }
 
-        $arr = array(
+        $arr = [
             'show_tagedit' => true,
-            'token_name'   => $this->get_token_name(),
-            'token_value'  => $this->get_token(),
-            'photo_id'     => $photo_id,
-            'tags'         => $this->build_photo_tags($photo_id),
-        );
+            'token_name' => $this->get_token_name(),
+            'token_value' => $this->get_token(),
+            'photo_id' => $photo_id,
+            'tags' => $this->build_photo_tags($photo_id),
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $photo_id
+     * @return bool|null|string
+     */
     public function build_photo_tags($photo_id)
     {
         return $this->_tag_build_class->build_tags_for_photo($photo_id, $this->_xoops_uid);

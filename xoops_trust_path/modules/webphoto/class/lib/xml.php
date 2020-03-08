@@ -19,9 +19,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_xml
 //=========================================================
+
+/**
+ * Class webphoto_lib_xml
+ */
 class webphoto_lib_xml
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -30,12 +33,16 @@ class webphoto_lib_xml
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_xml
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_xml();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -49,41 +56,71 @@ class webphoto_lib_xml
     //   "  -> &quot;
     //   '  -> &apos;
     // --------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return mixed|null|string|string[]
+     */
     public function xml_text($str)
     {
         return $this->xml_htmlspecialchars_strict($str);
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_url($str)
     {
         return $this->xml_htmlspecialchars_url($str);
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_htmlspecialchars($str)
     {
         $str = $this->replace_control_code($str, '');
         $str = $this->replace_return_code($str);
-        $str = htmlspecialchars($str);
+        $str = htmlspecialchars($str, ENT_QUOTES | ENT_HTML5);
         $str = preg_replace("/'/", '&apos;', $str);
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return mixed|null|string|string[]
+     */
     public function xml_htmlspecialchars_strict($str)
     {
         $str = $this->xml_strip_html_entity_char($str);
         $str = $this->xml_htmlspecialchars($str);
         $str = str_replace('?', '&#063;', $str);
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_htmlspecialchars_url($str)
     {
         $str = preg_replace('/&amp;/sU', '&', $str);
         $str = $this->xml_strip_html_entity_char($str);
         $str = $this->xml_htmlspecialchars($str);
+
         return $str;
     }
 
+    /**
+     * @param      $str
+     * @param bool $flag_control
+     * @param bool $flag_undo
+     * @return null|string|string[]
+     */
     public function xml_cdata($str, $flag_control = true, $flag_undo = true)
     {
         $str = $this->replace_control_code($str, '');
@@ -95,6 +132,10 @@ class webphoto_lib_xml
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_convert_cdata($str)
     {
         return preg_replace('/]]>/', ']]&gt;', $str);
@@ -104,6 +145,11 @@ class webphoto_lib_xml
     // strip html entities
     //   &abc; -> ' '
     // --------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_strip_html_entity_char($str)
     {
         return preg_replace('/&[0-9a-zA-z]+;/sU', ' ', $str);
@@ -118,6 +164,11 @@ class webphoto_lib_xml
     //   &amp;  -> &
     //   &amp;nbsp; -> &nbsp;
     // --------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return null|string|string[]
+     */
     public function xml_undo_html_special_chars($str)
     {
         $str = preg_replace('/&gt;/i', '>', $str);
@@ -125,6 +176,7 @@ class webphoto_lib_xml
         $str = preg_replace('/&quot;/i', '"', $str);
         $str = preg_replace('/&#039;/i', "'", $str);
         $str = preg_replace('/&amp;nbsp;/i', '&nbsp;', $str);
+
         return $str;
     }
 
@@ -133,25 +185,43 @@ class webphoto_lib_xml
     // LF  \xOA \n
     // CR  \xOD \r
     //---------------------------------------------------------
+
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function replace_control_code($str, $replace = ' ')
     {
         $str = preg_replace('/[\x00-\x08]/', $replace, $str);
         $str = preg_replace('/[\x0B-\x0C]/', $replace, $str);
         $str = preg_replace('/[\x0E-\x1F]/', $replace, $str);
         $str = preg_replace('/[\x7F]/', $replace, $str);
+
         return $str;
     }
 
+    /**
+     * @param        $str
+     * @param string $replace
+     * @return null|string|string[]
+     */
     public function replace_return_code($str, $replace = ' ')
     {
         $str = preg_replace("/\n/", $replace, $str);
         $str = preg_replace("/\r/", $replace, $str);
+
         return $str;
     }
 
     //---------------------------------------------------------
     // sanitize
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);

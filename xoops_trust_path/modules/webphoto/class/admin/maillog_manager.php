@@ -25,34 +25,44 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_maillog_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_maillog_manager
+ */
 class webphoto_admin_maillog_manager extends webphoto_lib_manage
 {
     public $_config_class;
-    public $_cat_handler;
+    public $_catHandler;
     public $_item_handler;
     public $_photo_class;
     public $_form_class;
     public $_unlink_class;
     public $_maillog_form_class;
 
-    public $_SUB_TITLE_ARRAY = array(
+    public $_SUB_TITLE_ARRAY = [
         _AM_WEBPHOTO_MAILLOG_STATUS_REJECT,
         _AM_WEBPHOTO_MAILLOG_STATUS_PARTIAL,
         _AM_WEBPHOTO_MAILLOG_STATUS_SUBMIT,
-    );
+    ];
 
     public $_ADMIN_UID = 1;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_maillog_manager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_maillog_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('MAILLOG_MANAGER');
 
-        $this->set_manage_list_column_array(array('maillog_from', 'maillog_subject'));
+        $this->set_manage_list_column_array(['maillog_from', 'maillog_subject']);
 
         $this->set_manage_sub_title_array($this->_SUB_TITLE_ARRAY);
         $this->set_manage_desc(null);
@@ -62,8 +72,8 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         $this->_unlink_class = webphoto_edit_mail_unlink::getInstance($dirname);
 
         $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_cat_handler  = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
-        $this->_form_class   = webphoto_edit_form::getInstance($dirname, $trust_dirname);
+        $this->_catHandler = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
+        $this->_form_class = webphoto_edit_form::getInstance($dirname, $trust_dirname);
 
         $this->_maillog_form_class = webphoto_admin_maillog_form::getInstance($dirname, $trust_dirname);
 
@@ -75,12 +85,18 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         $this->_photo_class->set_flag_strict(false);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_maillog_manager|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_maillog_manager($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -104,12 +120,10 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
                 }
                 $this->_execute();
                 break;
-
             case 'form':
                 xoops_cp_header();
                 $this->manage_form();
                 break;
-
             case 'list':
             default:
                 xoops_cp_header();
@@ -128,25 +142,24 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
             case 'add':
                 $this->manage_add();
                 break;
-
             case 'edit':
                 $this->manage_edit();
                 break;
-
             case 'delete':
                 $this->manage_delete();
                 break;
-
             case 'delete_all':
                 $this->manage_delete_all();
                 break;
-
             case 'submit':
                 $this->_submit();
                 break;
         }
     }
 
+    /**
+     * @return null|string
+     */
     public function _get_op()
     {
         if ($this->_post_class->get_post('add')) {
@@ -169,8 +182,8 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
     //---------------------------------------------------------
     public function _submit()
     {
-        $id     = $this->_post_class->get_post_get_int('maillog_id');
-        $uid    = $this->_post_class->get_post_int('uid');
+        $id = $this->_post_class->get_post_get_int('maillog_id');
+        $uid = $this->_post_class->get_post_int('uid');
         $cat_id = $this->_post_class->get_post_int('cat_id');
         $attach = $this->_post_class->get_post('attach');
 
@@ -189,14 +202,14 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
             $param = $this->_photo_class->parse_single_mail($id, $row['maillog_file'], array_keys($attach));
 
             if (is_array($param)) {
-                $param['uid']    = $uid;
+                $param['uid'] = $uid;
                 $param['cat_id'] = $cat_id;
                 $this->_photo_class->add_photos_from_single_mail($param);
             }
 
             // not select
         } else {
-            echo $this->highlight(_AM_WEBPHOTO_ERR_MAILLOG_NO_ATTACH) . "<br  />\n";
+            echo $this->highlight(_AM_WEBPHOTO_ERR_MAILLOG_NO_ATTACH) . "<br  >\n";
         }
 
         echo $this->build_admin_footer();
@@ -207,11 +220,18 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
     //---------------------------------------------------------
     // delete
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function _manage_delete_option($row)
     {
         $this->_unlink_class->unlink_by_maillog_row($row);
     }
 
+    /**
+     * @param $row
+     */
     public function _manage_delete_all_each_option($row)
     {
         $this->_unlink_class->unlink_by_maillog_row($row);
@@ -220,17 +240,20 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
     //---------------------------------------------------------
     // list
     //---------------------------------------------------------
+
+    /**
+     * @param $sortid
+     * @return mixed
+     */
     public function _get_count_by_sortid($sortid)
     {
         switch ($sortid) {
             case 1:
                 $count = $this->_manage_handler->get_count_by_status(_C_WEBPHOTO_MAILLOG_STATUS_PARTIAL);
                 break;
-
             case 2:
                 $count = $this->_manage_handler->get_count_by_status(_C_WEBPHOTO_MAILLOG_STATUS_SUBMIT);
                 break;
-
             case 0:
             default:
                 $count = $this->_manage_handler->get_count_by_status(_C_WEBPHOTO_MAILLOG_STATUS_REJECT);
@@ -240,17 +263,20 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         return $count;
     }
 
+    /**
+     * @param $limit
+     * @param $start
+     * @return mixed
+     */
     public function _get_list_rows($limit, $start)
     {
         switch ($this->pagenavi_get_sortid()) {
             case 1:
                 $rows = $this->_manage_handler->get_rows_desc_by_status(_C_WEBPHOTO_MAILLOG_STATUS_PARTIAL, $limit, $start);
                 break;
-
             case 2:
                 $rows = $this->_manage_handler->get_rows_desc_by_status(_C_WEBPHOTO_MAILLOG_STATUS_SUBMIT, $limit, $start);
                 break;
-
             case 0:
             default:
                 $rows = $this->_manage_handler->get_rows_desc_by_status(_C_WEBPHOTO_MAILLOG_STATUS_REJECT, $limit, $start);
@@ -260,6 +286,9 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         return $rows;
     }
 
+    /**
+     * @return null|string
+     */
     public function build_show_add_record()
     {
         return null;
@@ -268,11 +297,18 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->_maillog_form_class->build_form($row);
     }
 
+    /**
+     * @param $row
+     */
     public function XXX_print_form($row)
     {
         $status = (int)$row['maillog_status'];
@@ -284,7 +320,7 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
 
         echo $this->build_manage_id();
 
-        if ($status != _C_WEBPHOTO_MAILLOG_STATUS_SUBMIT) {
+        if (_C_WEBPHOTO_MAILLOG_STATUS_SUBMIT != $status) {
             echo $this->build_line_ele($this->get_constant('SUBMITTER'), $this->_build_ele_submitter());
 
             echo $this->build_line_ele($this->get_constant('CATEGORY'), $this->_build_ele_category());
@@ -312,29 +348,44 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         echo "</table></form>\n";
     }
 
+    /**
+     * @param $status
+     * @return string
+     */
     public function _build_line_submit($status)
     {
         $text = '';
-        if ($status != _C_WEBPHOTO_MAILLOG_STATUS_SUBMIT) {
+        if (_C_WEBPHOTO_MAILLOG_STATUS_SUBMIT != $status) {
             $text .= $this->build_input_submit('submit', _AM_WEBPHOTO_BUTTON_SUBMIT_MAIL);
         }
         $text .= $this->build_input_submit('delete', _DELETE);
+
         return $this->build_line_buttom($text);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_submitter()
     {
         $USER_LIMIT = 0;
         $USER_START = 0;
-        $list       = $this->_form_class->get_xoops_user_list($USER_LIMIT, $USER_START);
+        $list = $this->_form_class->get_xoops_user_list($USER_LIMIT, $USER_START);
+
         return $this->_form_class->build_form_user_select($list, 'uid', $this->_ADMIN_UID);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_category()
     {
-        return $this->_cat_handler->build_selbox_catid($this->get_row_by_key('cat_id'), 'cat_id');
+        return $this->_catHandler->build_selbox_catid($this->get_row_by_key('cat_id'), 'cat_id');
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_photo_ids()
     {
         $photo_id_arr = $this->_manage_handler->build_photo_ids_row_to_array($this->get_row());
@@ -345,24 +396,32 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         $text = '';
         foreach ($photo_id_arr as $photo_id) {
             $photo_id = (int)$photo_id;
-            $url      = $this->_MODULE_URL . '/index.php?fct=photo&amp;p=' . $photo_id;
-            $title_s  = $this->_item_handler->get_cached_value_by_id_name($photo_id, 'photo_title', true);
+            $url = $this->_MODULE_URL . '/index.php?fct=photo&amp;p=' . $photo_id;
+            $title_s = $this->_item_handler->get_cached_value_by_id_name($photo_id, 'photo_title', true);
 
             $text .= '<a href="' . $url . '" target="_blank">';
             $text .= sprintf('%03d', $photo_id);
             $text .= ' : ';
             $text .= $title_s;
-            $text .= "</a><br />\n";
+            $text .= "</a><br>\n";
         }
+
         return $text;
     }
 
+    /**
+     * @return bool
+     */
     public function _build_ele_status()
     {
         $status = $this->get_row_by_key('maillog_status');
+
         return $this->get_sub_title_by_num($status);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_file()
     {
         $file = $this->get_row_by_key('maillog_file');
@@ -372,14 +431,19 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
 
         $file_s = $this->sanitize($file);
         $file_r = rawurlencode($file);
-        $url    = $this->_MODULE_URL . '/admin/index.php?fct=text&amp;name=' . $file_r;
+        $url = $this->_MODULE_URL . '/admin/index.php?fct=text&amp;name=' . $file_r;
 
         $text = '<a href="' . $url . '" target="_blank">';
         $text .= $file_s;
         $text .= '</a> ';
+
         return $text;
     }
 
+    /**
+     * @param $status
+     * @return string
+     */
     public function _build_ele_attach($status)
     {
         $attach_arr = $this->_manage_handler->build_attach_row_to_array($this->get_row());
@@ -390,20 +454,25 @@ class webphoto_admin_maillog_manager extends webphoto_lib_manage
         $text = '';
         foreach ($attach_arr as $file) {
             $file_s = $this->sanitize($file);
-            if ($status != _C_WEBPHOTO_MAILLOG_STATUS_SUBMIT) {
+            if (_C_WEBPHOTO_MAILLOG_STATUS_SUBMIT != $status) {
                 $name = 'attach[' . $file_s . ']';
                 $text .= $this->build_input_checkbox_yes($name, _C_WEBPHOTO_YES);
             }
             $text .= $file_s;
-            $text .= "<br />\n";
+            $text .= "<br>\n";
         }
+
         return $text;
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_comment()
     {
         $str = $this->_manage_handler->build_show_comment($this->get_row());
         $str = $this->substitute_empty($str);
+
         return $str;
     }
 

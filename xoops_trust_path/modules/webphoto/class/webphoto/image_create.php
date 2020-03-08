@@ -36,6 +36,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_edit_image_create
 // wrapper for webphoto_lib_image_cmd
 //=========================================================
+
+/**
+ * Class webphoto_image_create
+ */
 class webphoto_image_create
 {
     public $_image_cmd_class;
@@ -49,20 +53,30 @@ class webphoto_image_create
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_image_create constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
-        $this->_kind_class   = webphoto_kind::getInstance();
+        $this->_kind_class = webphoto_kind::getInstance();
         $this->_config_class = webphoto_config::getInstance($dirname);
 
         $this->_init_image_cmd();
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_image_create
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_image_create($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
@@ -86,11 +100,17 @@ class webphoto_image_create
         $this->_has_rotate = $this->_image_cmd_class->has_rotate();
     }
 
+    /**
+     * @return bool
+     */
     public function has_resize()
     {
         return $this->_has_resize;
     }
 
+    /**
+     * @return bool
+     */
     public function has_rotate()
     {
         return $this->_has_rotate;
@@ -99,6 +119,10 @@ class webphoto_image_create
     //---------------------------------------------------------
     // config class
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function get_config_by_name($name)
     {
         return $this->_config_class->get_by_name($name);
@@ -107,6 +131,10 @@ class webphoto_image_create
     //---------------------------------------------------------
     // kind class
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_image_exts()
     {
         return $this->_kind_class->get_image_exts();
@@ -115,30 +143,65 @@ class webphoto_image_create
     //---------------------------------------------------------
     // image cmd class
     //---------------------------------------------------------
+
+    /**
+     * @param     $src_file
+     * @param     $dst_file
+     * @param     $max_width
+     * @param     $max_height
+     * @param int $rotate
+     * @return mixed
+     */
     public function cmd_resize_rotate($src_file, $dst_file, $max_width, $max_height, $rotate = 0)
     {
         return $this->_image_cmd_class->resize_rotate($src_file, $dst_file, $max_width, $max_height, $rotate);
     }
 
+    /**
+     * @param     $src_file
+     * @param     $dst_file
+     * @param int $rotate
+     * @return int
+     */
     public function cmd_rotate($src_file, $dst_file, $rotate = 0)
     {
         $ret = $this->_image_cmd_class->resize_rotate($src_file, $dst_file, 0, 0, $rotate);
         if ($ret < 0) {
             return -1;
         }
+
         return 1;
     }
 
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @param $max_width
+     * @param $max_height
+     * @return mixed
+     */
     public function cmd_resize($src_file, $dst_file, $max_width, $max_height)
     {
         return $this->_image_cmd_class->resize_rotate($src_file, $dst_file, $max_width, $max_height, 0);
     }
 
+    /**
+     * @param $src_file
+     * @param $dst_file
+     * @param $icon_file
+     * @return mixed
+     */
     public function cmd_add_icon($src_file, $dst_file, $icon_file)
     {
         return $this->_image_cmd_class->add_icon($src_file, $dst_file, $icon_file);
     }
 
+    /**
+     * @param      $src_file
+     * @param      $dst_file
+     * @param null $option
+     * @return mixed
+     */
     public function cmd_convert($src_file, $dst_file, $option = null)
     {
         return $this->_image_cmd_class->convert($src_file, $dst_file, $option);

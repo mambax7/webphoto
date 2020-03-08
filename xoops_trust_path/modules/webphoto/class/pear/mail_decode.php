@@ -15,6 +15,10 @@
 //=========================================================
 // class pear_mail_decode
 //=========================================================
+
+/**
+ * Class webphoto_pear_mail_decode
+ */
 class webphoto_pear_mail_decode
 {
     public $_mail_class;
@@ -29,41 +33,54 @@ class webphoto_pear_mail_decode
         $this->_mail_class = webphoto_lib_mail::getInstance();
     }
 
+    /**
+     * @return \webphoto_pear_mail_decode
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_pear_mail_decode();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_charset_local($val)
     {
-        $this->_CHARSET_LOCAL = strtolower($val);
+        $this->_CHARSET_LOCAL = mb_strtolower($val);
     }
 
     //---------------------------------------------------------
     // decode
     //---------------------------------------------------------
+
+    /**
+     * @param $input
+     * @return array
+     */
     public function decode($input)
     {
-        $ctype_primary   = '';
+        $ctype_primary = '';
         $ctype_secondary = '';
-        $charset         = '';
-        $headers         = null;
-        $parts           = null;
-        $body            = null;
-        $attaches        = null;
+        $charset = '';
+        $headers = null;
+        $parts = null;
+        $body = null;
+        $attaches = null;
 
         $params['include_bodies'] = true;
-        $params['decode_bodies']  = true;
+        $params['decode_bodies'] = true;
         $params['decode_headers'] = true;
 
-        $decoder   = new Mail_mimeDecode($input);
+        $decoder = new Mail_mimeDecode($input);
         $structure = $decoder->decode($params);
 
         if (isset($structure->ctype_parameters['charset'])) {
@@ -90,30 +107,33 @@ class webphoto_pear_mail_decode
             case 'text':
                 $body = $this->decode_single($structure, $charset);
                 break;
-
             case 'multipart':
                 list($body, $attaches) = $this->decode_multipart($parts);
                 if (empty($charset) && isset($body['charset'])) {
                     $charset = $body['charset'];
                 }
                 break;
-
             default:
         }
 
         // header encoding
         $headers = $this->decode_headers($headers, $charset);
 
-        $param = array(
-            'charset'  => $charset,
-            'headers'  => $headers,
-            'body'     => $body,
+        $param = [
+            'charset' => $charset,
+            'headers' => $headers,
+            'body' => $body,
             'attaches' => $attaches,
-        );
+        ];
 
         return $param;
     }
 
+    /**
+     * @param $headers
+     * @param $charset
+     * @return array|bool
+     */
     public function decode_headers($headers, $charset)
     {
         if (!is_array($headers) || !is_array($headers)) {
@@ -122,10 +142,10 @@ class webphoto_pear_mail_decode
 
         $from_name = '';
         $from_addr = '';
-        $to_name   = '';
-        $to_addr   = '';
+        $to_name = '';
+        $to_addr = '';
 
-        $param = array();
+        $param = [];
 
         foreach ($headers as $k => $v) {
             // Received, etc
@@ -133,7 +153,7 @@ class webphoto_pear_mail_decode
                 continue;
             }
 
-            $name         = str_replace('-', '_', $k);
+            $name = str_replace('-', '_', $k);
             $param[$name] = $this->convert_encoding($v, $charset);
         }
 
@@ -156,17 +176,26 @@ class webphoto_pear_mail_decode
         return $param;
     }
 
+    /**
+     * @param $str
+     * @return array
+     */
     public function parse_name_addr($str)
     {
         return $this->_mail_class->parse_name_addr($str);
     }
 
+    /**
+     * @param $structure
+     * @param $charset
+     * @return array
+     */
     public function decode_single($structure, $charset)
     {
         $ctype_secondary = '';
-        $body_source     = '';
-        $body_converted  = '';
-        $html_charset    = '';
+        $body_source = '';
+        $body_converted = '';
+        $html_charset = '';
 
         if (isset($structure->ctype_secondary)) {
             $ctype_secondary = $structure->ctype_secondary;
@@ -180,33 +209,36 @@ class webphoto_pear_mail_decode
             case 'plain':
                 $body_converted = $this->convert_encoding($body_source, $charset);
                 break;
-
             case 'html':
                 list($body_converted, $html_charset) = $this->convert_encoding_html($body_source, $charset);
                 break;
-
             default:
         }
 
-        $param = array(
-            'ctype_primary'   => 'text',
+        $param = [
+            'ctype_primary' => 'text',
             'ctype_secondary' => $ctype_secondary,
-            'charset'         => $charset,
-            'html_charset'    => $html_charset,
-            'body'            => $body_source,
-            'body_converted'  => $body_converted,
-        );
+            'charset' => $charset,
+            'html_charset' => $html_charset,
+            'body' => $body_source,
+            'body_converted' => $body_converted,
+        ];
+
         return $param;
     }
 
+    /**
+     * @param $parts
+     * @return array
+     */
     public function decode_multipart($parts)
     {
-        $first    = false;
-        $body     = null;
-        $attaches = array();
+        $first = false;
+        $body = null;
+        $attaches = [];
 
         if (!is_array($parts) || !is_array($parts)) {
-            return array($body, $texts, $attaches);
+            return [$body, $texts, $attaches];
         }
 
         foreach ($parts as $part) {
@@ -217,7 +249,7 @@ class webphoto_pear_mail_decode
             }
 
             if (isset($part->ctype_primary)) {
-                $ctype_primary = strtolower($part->ctype_primary);
+                $ctype_primary = mb_strtolower($part->ctype_primary);
             } else {
                 continue;
             }
@@ -230,31 +262,33 @@ class webphoto_pear_mail_decode
                         if ($first) {
                             $attaches[] = $text;
                         } else {
-                            $body  = $text;
+                            $body = $text;
                             $first = true;
                         }
                     }
                     break;
-
                 // multipart/alternative
                 // android gmail
                 case 'multipart':
                     continue 2;
                     break;
-
                 default:
                     $attaches[] = $this->decode_part_attach($part);
                     break;
             }
         }
 
-        return array($body, $attaches);
+        return [$body, $attaches];
     }
 
+    /**
+     * @param $part
+     * @return array|bool
+     */
     public function decode_part_text($part)
     {
-        $param   = $this->decode_part_common($part);
-        $body    = $param['body'];
+        $param = $this->decode_part_common($part);
+        $body = $param['body'];
         $charset = $param['charset'];
 
         // for iPhone : no context text/plane
@@ -266,7 +300,6 @@ class webphoto_pear_mail_decode
             case 'plain':
                 $param['body_converted'] = $this->convert_encoding($body, $charset);
                 break;
-
             case 'html':
                 list($param['body_converted'], $param['html_charset']) = $this->convert_encoding_html($body, $charset);
                 break;
@@ -275,18 +308,26 @@ class webphoto_pear_mail_decode
         return $param;
     }
 
+    /**
+     * @param $part
+     * @return array
+     */
     public function decode_part_attach($part)
     {
         return $this->decode_part_common($part);
     }
 
+    /**
+     * @param $part
+     * @return array
+     */
     public function decode_part_common($part)
     {
-        $ctype_primary   = '';
+        $ctype_primary = '';
         $ctype_secondary = '';
-        $name            = '';
-        $charset         = '';
-        $body            = '';
+        $name = '';
+        $charset = '';
+        $body = '';
 
         if (isset($part->ctype_primary)) {
             $ctype_primary = $part->ctype_primary;
@@ -308,42 +349,53 @@ class webphoto_pear_mail_decode
             $body = $part->body;
         }
 
-        $param = array(
-            'ctype_primary'   => $ctype_primary,
+        $param = [
+            'ctype_primary' => $ctype_primary,
             'ctype_secondary' => $ctype_secondary,
-            'name'            => $name,
-            'charset'         => $charset,
-            'body'            => $body,
-        );
+            'name' => $name,
+            'charset' => $charset,
+            'body' => $body,
+        ];
+
         return $param;
     }
 
+    /**
+     * @param $text
+     * @return bool
+     */
     public function check_text($text)
     {
         $text = str_replace("\n", '', $text);
         $text = str_replace("\r", '', $text);
-        if (strlen($text) > 0) {
+        if (mb_strlen($text) > 0) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $source
+     * @param $charset
+     * @return array
+     */
     public function convert_encoding_html($source, $charset)
     {
         $charset_html = '';
-        $converted    = '';
+        $converted = '';
 
         // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         $pattern = "/<meta.*Content-Type.*charset=(.*)['|\"]>/i";
 
         if (preg_match($pattern, $source, $matches)) {
-            $charset_html = strtolower($matches[1]);
-            $converted    = $this->convert_encoding($source, $charset_html);
+            $charset_html = mb_strtolower($matches[1]);
+            $converted = $this->convert_encoding($source, $charset_html);
         } else {
             $converted = $this->convert_encoding($source, $charset);
         }
 
-        return array($converted, $charset_html);
+        return [$converted, $charset_html];
     }
 
     //---------------------------------------------------------
@@ -353,16 +405,21 @@ class webphoto_pear_mail_decode
     {
         if (function_exists('mb_internal_encoding')) {
             $current = mb_internal_encoding();
-            $ret     = mb_internal_encoding($this->_CHARSET_LOCAL);
-            if ($ret === false) {
+            $ret = mb_internal_encoding($this->_CHARSET_LOCAL);
+            if (false === $ret) {
                 mb_internal_encoding($current);
             }
         }
     }
 
+    /**
+     * @param $str
+     * @param $charset
+     * @return null|string|string[]
+     */
     public function convert_encoding($str, $charset)
     {
-        $charset = strtolower($charset);
+        $charset = mb_strtolower($charset);
 
         // no action when same charset
         if ($charset == $this->_CHARSET_LOCAL) {
@@ -375,17 +432,14 @@ class webphoto_pear_mail_decode
             case 'iso-2022-jp':
                 $charset = 'iso-2022-jp-ms';
                 break;
-
             case 'shift_jis':
                 $charset = 'sjis-win';
                 break;
-
             case 'euc-jp':
                 $charset = 'eucjp-win';
                 break;
-
             case '':
-                $charset    = 'auto';
+                $charset = 'auto';
                 $flag_iconv = false;
                 break;
         }

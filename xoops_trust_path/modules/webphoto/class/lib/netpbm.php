@@ -22,12 +22,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_lib_netpbm
 //=========================================================
 
+/**
+ * Class webphoto_lib_netpbm
+ */
 class webphoto_lib_netpbm
 {
     public $_cmd_path = null;
-    public $_DEBUG    = false;
+    public $_DEBUG = false;
 
-    public $_NETPBM_PIPES = array(
+    public $_NETPBM_PIPES = [
         'jpegtopnm',
         'giftopnm',
         'pngtopnm',
@@ -36,8 +39,8 @@ class webphoto_lib_netpbm
         'ppmquant',
         'ppmtogif',
         'pnmscale',
-        'pnmflip'
-    );
+        'pnmflip',
+    ];
 
     //---------------------------------------------------------
     // constructor
@@ -47,23 +50,39 @@ class webphoto_lib_netpbm
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_netpbm
+     */
     public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_lib_netpbm();
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_cmd_path($val)
     {
         $this->_cmd_path = $val;
     }
 
+    /**
+     * @param     $src
+     * @param     $dst
+     * @param int $max_width
+     * @param int $max_height
+     * @param int $rotate
+     * @return bool
+     */
     public function resize_rotate($src, $dst, $max_width = 0, $max_height = 0, $rotate = 0)
     {
         $image_size = getimagesize($src);
@@ -74,7 +93,7 @@ class webphoto_lib_netpbm
         $src_type = $image_size[2];
         $dst_type = $this->file_to_type($dst, $src_type);
 
-        $cmd_in  = $this->build_cmd_in($src_type);
+        $cmd_in = $this->build_cmd_in($src_type);
         $cmd_out = $this->build_cmd_out($dst_type);
 
         if (empty($cmd_in) || empty($cmd_out)) {
@@ -106,97 +125,112 @@ class webphoto_lib_netpbm
         $cmd = $cmd_in . ' < ' . $src . ' | ' . $cmd_resize_rotate . ' | ' . $cmd_out . ' > ' . $dst;
         exec($cmd);
         if ($this->_DEBUG) {
-            echo $cmd . "<br />\n";
+            echo $cmd . "<br>\n";
         }
 
         return true;
     }
 
+    /**
+     * @param $type
+     * @return null|string
+     */
     public function build_cmd_in($type)
     {
         $cmd_in = null;
 
         switch ($type) {
             // GIF
-            case 1 :
+            case 1:
                 $cmd_in = $this->_cmd_path . 'giftopnm';
                 break;
-
             // JPEG
-            case 2 :
+            case 2:
                 $cmd_in = $this->_cmd_path . 'jpegtopnm';
                 break;
-
             // PNG
-            case 3 :
+            case 3:
                 $cmd_in = $this->_cmd_path . 'pngtopnm';
                 break;
-
-            default :
+            default:
                 break;
         }
 
         return $cmd_in;
     }
 
+    /**
+     * @param $type
+     * @return null|string
+     */
     public function build_cmd_out($type)
     {
         $cmd_out = null;
 
         switch ($type) {
             // GIF
-            case 1 :
+            case 1:
                 $cmd_out = $this->_cmd_path . 'ppmquant 256 | ';
                 $cmd_out .= $this->_cmd_path . 'ppmtogif';
                 break;
-
             // JPEG
-            case 2 :
+            case 2:
                 $cmd_out = $this->_cmd_path . 'pnmtojpeg';
                 break;
-
             // PNG
-            case 3 :
+            case 3:
                 $cmd_out = $this->_cmd_path . 'pnmtopng';
                 break;
-
-            default :
+            default:
                 break;
         }
 
         return $cmd_out;
     }
 
+    /**
+     * @param $max_width
+     * @param $max_height
+     * @return string
+     */
     public function build_cmd_resize($max_width, $max_height)
     {
         $cmd = $this->_cmd_path . 'pnmscale -xysize ' . $max_width . ' ' . $max_height;
+
         return $cmd;
     }
 
+    /**
+     * @param $angle
+     * @return string
+     */
     public function build_cmd_rotate($angle)
     {
         $cmd = $this->_cmd_path . 'pnmflip -r' . $angle . ' ';
+
         return $cmd;
     }
 
+    /**
+     * @param $file
+     * @param $type_default
+     * @return int
+     */
     public function file_to_type($file, $type_default)
     {
         $ext = $this->parse_ext($file);
 
         switch ($ext) {
-            case 'gif' :
+            case 'gif':
                 $type = 1;
                 break;
-
-            case 'jpg' :
+            case 'jpg':
                 $type = 2;
                 break;
-
-            case 'png' :
+            case 'png':
                 $type = 3;
                 break;
-
-            default :
+            default:
                 $type = $type_default;
                 break;
         }
@@ -204,19 +238,28 @@ class webphoto_lib_netpbm
         return $type;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
-        return strtolower(substr(strrchr($file, '.'), 1));
+        return mb_strtolower(mb_substr(mb_strrchr($file, '.'), 1));
     }
 
     //---------------------------------------------------------
     // version
     //---------------------------------------------------------
+
+    /**
+     * @param $path
+     * @return array
+     */
     public function version($path)
     {
-        $arr = array();
+        $arr = [];
         foreach ($this->_NETPBM_PIPES as $pipe) {
-            $ret_array = array();
+            $ret_array = [];
             exec("{$path}$pipe --version 2>&1", $ret_array);
             if (count($ret_array) > 0) {
                 $ret = true;
@@ -225,7 +268,7 @@ class webphoto_lib_netpbm
                 $ret = false;
                 $str = "Error: {$path}$pipe can't be executed";
             }
-            $arr[] = array($ret, $str);
+            $arr[] = [$ret, $str];
         }
 
         return $arr;

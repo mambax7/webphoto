@@ -21,21 +21,31 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_mp3_create
 //=========================================================
+
+/**
+ * Class webphoto_edit_mp3_create
+ */
 class webphoto_edit_mp3_create extends webphoto_edit_base_create
 {
     public $_lame_class;
 
-    public $_param_ext    = 'mp3';
-    public $_param_dir    = 'mp3s';
-    public $_param_mime   = 'audio/mpeg';
+    public $_param_ext = 'mp3';
+    public $_param_dir = 'mp3s';
+    public $_param_mime = 'audio/mpeg';
     public $_param_medium = 'audio';
-    public $_param_kind   = _C_WEBPHOTO_FILE_KIND_MP3;
-    public $_msg_created  = 'create mp3';
-    public $_msg_failed   = 'fail to create mp3';
+    public $_param_kind = _C_WEBPHOTO_FILE_KIND_MP3;
+    public $_msg_created = 'create mp3';
+    public $_msg_failed = 'fail to create mp3';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_mp3_create constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -43,25 +53,36 @@ class webphoto_edit_mp3_create extends webphoto_edit_base_create
         $this->_lame_class = webphoto_lame::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_mp3_create|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_mp3_create($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create mp3
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|null
+     */
     public function create_param($param)
     {
         $this->clear_msg_array();
 
-        $item_id  = $param['item_id'];
+        $item_id = $param['item_id'];
         $src_file = $param['src_file'];
-        $src_ext  = $param['src_ext'];
+        $src_ext = $param['src_ext'];
         $src_kind = $param['src_kind'];
 
         // return input file is not wav
@@ -77,10 +98,16 @@ class webphoto_edit_mp3_create extends webphoto_edit_base_create
         return $mp3_param;
     }
 
+    /**
+     * @param $item_id
+     * @param $src_file
+     * @param $src_ext
+     * @return array|null
+     */
     public function create_mp3($item_id, $src_file, $src_ext)
     {
         $name_param = $this->build_name_param($item_id);
-        $file       = $name_param['file'];
+        $file = $name_param['file'];
 
         $ret = $this->_lame_class->create_mp3($src_file, $file);
 

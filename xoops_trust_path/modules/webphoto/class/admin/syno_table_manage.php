@@ -9,7 +9,7 @@
 //---------------------------------------------------------
 // change log
 // 2009-11-11 K.OHWADA
-// $trust_dirname in webphoto_syno_handler
+// $trust_dirname in webphoto_synoHandler
 //---------------------------------------------------------
 
 if (!defined('XOOPS_TRUST_PATH')) {
@@ -19,29 +19,44 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_syno_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_syno_table_manage
+ */
 class webphoto_admin_syno_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_syno_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
-        $this->set_manage_handler(webphoto_syno_handler::getInstance($dirname, $trust_dirname));
+        $this->set_manage_handler(webphoto_synoHandler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('SYNO_TABLE_MANAGE');
 
-        $this->set_manage_sub_title_array(array('ID ascent', 'ID descent', 'Weight ascent', 'Weight descent'));
+        $this->set_manage_sub_title_array(['ID ascent', 'ID descent', 'Weight ascent', 'Weight descent']);
 
-        $this->set_manage_list_column_array(array('syno_weight', 'syno_key', 'syno_value'));
+        $this->set_manage_list_column_array(['syno_weight', 'syno_key', 'syno_value']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_syno_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_syno_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -56,22 +71,31 @@ class webphoto_admin_syno_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'syno_id'          => $this->_post_class->get_post_get_int('syno_id'),
+        $row = [
+            'syno_id' => $this->_post_class->get_post_get_int('syno_id'),
             'syno_time_create' => $this->_post_class->get_post_int('syno_time_create'),
             'syno_time_update' => $this->_post_class->get_post_int('syno_time_update'),
-            'syno_weight'      => $this->_post_class->get_post_int('syno_weight'),
-            'syno_key'         => $this->_post_class->get_post_text('syno_key'),
-            'syno_value'       => $this->_post_class->get_post_text('syno_value'),
-        );
+            'syno_weight' => $this->_post_class->get_post_int('syno_weight'),
+            'syno_key' => $this->_post_class->get_post_text('syno_key'),
+            'syno_value' => $this->_post_class->get_post_text('syno_value'),
+        ];
+
         return $row;
     }
 
     //---------------------------------------------------------
     // list
     //---------------------------------------------------------
+
+    /**
+     * @return mixed
+     */
     public function _get_list_total()
     {
         switch ($this->pagenavi_get_sortid()) {
@@ -85,24 +109,27 @@ class webphoto_admin_syno_table_manage extends webphoto_lib_manage
         }
 
         $this->_manage_total = $total;
+
         return $total;
     }
 
+    /**
+     * @param $limit
+     * @param $start
+     * @return mixed
+     */
     public function _get_list_rows($limit, $start)
     {
         switch ($this->pagenavi_get_sortid()) {
             case 1:
                 $rows = $this->_manage_handler->get_rows_all_desc($limit, $start);
                 break;
-
             case 2:
                 $rows = $this->_manage_handler->get_rows_orderby_weight_asc($limit, $start);
                 break;
-
             case 3:
                 $rows = $this->_manage_handler->get_rows_orderby_weight_desc($limit, $start);
                 break;
-
             case 0:
             default:
                 $rows = $this->_manage_handler->get_rows_all_asc($limit, $start);
@@ -115,6 +142,10 @@ class webphoto_admin_syno_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

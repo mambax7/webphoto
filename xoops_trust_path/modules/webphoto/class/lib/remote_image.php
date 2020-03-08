@@ -18,6 +18,10 @@ define('_C_WEBPHOTO_REMOTE_IMAGE_ERR_WRITE', -11);
 //=========================================================
 // class webphoto_lib_remote_image
 //=========================================================
+
+/**
+ * Class webphoto_lib_remote_image
+ */
 class webphoto_lib_remote_image extends webphoto_lib_remote_file
 {
     public $_dir_work = null;
@@ -32,12 +36,16 @@ class webphoto_lib_remote_image extends webphoto_lib_remote_file
         $this->_dir_work = XOOPS_TRUST_PATH . '/tmp';
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_lib_remote_file|\webphoto_lib_remote_image
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_remote_image();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -49,12 +57,17 @@ class webphoto_lib_remote_image extends webphoto_lib_remote_file
     // return is same as getimagesize()
     // array of width, height, type, attr
     //---------------------------------------------------------
+
+    /**
+     * @param $url
+     * @return array|bool
+     */
     public function get_image_size($url)
     {
         $this->clear_error_code();
         $this->clear_errors();
 
-        if (empty($url) || ($url == 'http://') || ($url == 'https://')) {
+        if (empty($url) || ('http://' == $url) || ('https://' == $url)) {
             return false;
         }
 
@@ -72,6 +85,7 @@ class webphoto_lib_remote_image extends webphoto_lib_remote_file
         if (!$this->write_file($file, $data)) {
             $this->set_error_code(_C_WEBPHOTO_REMOTE_IMAGE_ERR_WRITE);
             $this->set_error('remote_image: cannot write : ' . $file);
+
             return false;
         }
 
@@ -85,11 +99,18 @@ class webphoto_lib_remote_image extends webphoto_lib_remote_file
     //---------------------------------------------------------
     // set and get property
     //---------------------------------------------------------
+
+    /**
+     * @param $value
+     */
     public function set_dir_work($value)
     {
         $this->_dir_work = $value;
     }
 
+    /**
+     * @return null|string
+     */
     public function get_dir_work()
     {
         return $this->_dir_work;
@@ -98,6 +119,14 @@ class webphoto_lib_remote_image extends webphoto_lib_remote_file
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param        $file
+     * @param        $data
+     * @param string $mode
+     * @param bool   $flag_chmod
+     * @return bool|int
+     */
     public function write_file($file, $data, $mode = 'w', $flag_chmod = true)
     {
         $fp = fopen($file, $mode);

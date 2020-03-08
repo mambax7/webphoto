@@ -17,37 +17,58 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //
 // <embed src="http://www.metacafe.com/fplayer/877529/incredible_paper.swf" width="400" height="345" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"> </embed>
 //=========================================================
+
+/**
+ * Class webphoto_embed_metacafe
+ */
 class webphoto_embed_metacafe extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('metacafe');
         $this->set_url('http://www.metacafe.com/watch/');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $movie = 'http://www.metacafe.com/fplayer/' . $src . '.swf';
-        $embed = '<embed src="' . $movie . '" width="' . $width . '" height="' . $height
-                 . '" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" />';
+        $embed = '<embed src="' . $movie . '" width="' . $width . '" height="' . $height . '" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" >';
+
         return $embed;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function thumb($src)
     {
         // '714487/amazing_crash_and_crazy_tractor/' -> '714487'
-        $thumb = substr($src, 0, strpos($src, '/'));
+        $thumb = mb_substr($src, 0, mb_strpos($src, '/'));
 
         $str = 'http://www.metacafe.com/thumb/' . $thumb . '.jpg';
+
         return $str;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc_span($this->_url_head, '714487' . '/amazing_crash_and_crazy_tractor/');

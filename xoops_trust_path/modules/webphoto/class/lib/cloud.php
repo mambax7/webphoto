@@ -69,12 +69,12 @@ class webphoto_lib_cloud
      * @var array
      * @access protected
      */
-    public $_elements = array();
+    public $_elements = [];
     /**
      * @var array
      * @access protected
      */
-    public $_elementLinks = array();
+    public $_elementLinks = [];
     /**
      * @var int
      * @access protected
@@ -111,7 +111,7 @@ class webphoto_lib_cloud
     //  function Sabai_Cloud($sizeMin = 10, $sizeRange = 12)
     public function __construct($sizeMin = 10, $sizeRange = 12)
     {
-        $this->_sizeMin   = (int)$sizeMin;
+        $this->_sizeMin = (int)$sizeMin;
         $this->_sizeRange = (int)$sizeRange;
     }
 
@@ -152,7 +152,7 @@ class webphoto_lib_cloud
      */
     public function addElement($name, $link = '', $count = 0)
     {
-        $this->_elements[$name]     = (int)$count;
+        $this->_elements[$name] = (int)$count;
         $this->_elementLinks[$name] = $link;
     }
 
@@ -164,19 +164,17 @@ class webphoto_lib_cloud
     public function build()
     {
         if (empty($this->_elements)) {
-            return array();
+            return [];
         }
         $this->_init();
         switch ($this->_sort) {
             case WEBPHOTO_CLOUD_SORT_NAME_ASC:
-
                 // changed for PHP 4.3 or previous
                 //              ksort($this->_elements, SORT_LOCALE_STRING);
                 $this->_ksort_locate_string($this->_elements);
 
                 break;
             case WEBPHOTO_CLOUD_SORT_NAME_DESC:
-
                 // changed for PHP 4.3 or previous
                 //              krsort($this->_elements, SORT_LOCALE_STRING);
                 $this->_ksort_locate_string($this->_elements);
@@ -189,15 +187,16 @@ class webphoto_lib_cloud
                 arsort($this->_elements, SORT_NUMERIC);
                 break;
         }
-        $elements = array();
+        $elements = [];
         foreach ($this->_elements as $name => $count) {
-            $elements[] = array(
-                'name'  => $name,
+            $elements[] = [
+                'name' => $name,
                 'count' => $count,
-                'link'  => $this->_elementLinks[$name],
-                'size'  => $this->_getSize($count)
-            );
+                'link' => $this->_elementLinks[$name],
+                'size' => $this->_getSize($count),
+            ];
         }
+
         return $elements;
     }
 
@@ -234,11 +233,16 @@ class webphoto_lib_cloud
     public function _getSize($count)
     {
         $count = (int)$count <= 0 ? 1 : $count;
-        $size  = $this->_sizeMin + $this->_sizeRange * (log($count) - $this->_logMin) / $this->_logRange;
+        $size = $this->_sizeMin + $this->_sizeRange * (log($count) - $this->_logMin) / $this->_logRange;
+
         return (int)$size;
     }
 
     // added for PHP 4.3 or previous
+
+    /**
+     * @param $arr
+     */
     public function _ksort_locate_string(&$arr)
     {
         if (defined('SORT_LOCALE_STRING')) {

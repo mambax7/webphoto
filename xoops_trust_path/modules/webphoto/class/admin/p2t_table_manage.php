@@ -9,7 +9,7 @@
 //---------------------------------------------------------
 // change log
 // 2009-11-11 K.OHWADA
-// $trust_dirname in webphoto_p2t_handler
+// $trust_dirname in webphoto_p2tHandler
 //---------------------------------------------------------
 
 if (!defined('XOOPS_TRUST_PATH')) {
@@ -19,27 +19,42 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_p2t_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_p2t_table_manage
+ */
 class webphoto_admin_p2t_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_p2t_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
-        $this->set_manage_handler(webphoto_p2t_handler::getInstance($dirname, $trust_dirname));
+        $this->set_manage_handler(webphoto_p2tHandler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('P2T_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('p2t_photo_id', 'p2t_tag_id'));
+        $this->set_manage_list_column_array(['p2t_photo_id', 'p2t_tag_id']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_p2t_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_p2t_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -54,22 +69,31 @@ class webphoto_admin_p2t_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'p2t_id'          => $this->_post_class->get_post_get_int('p2t_id'),
+        $row = [
+            'p2t_id' => $this->_post_class->get_post_get_int('p2t_id'),
             'p2t_time_create' => $this->_post_class->get_post_int('p2t_time_create'),
             'p2t_time_update' => $this->_post_class->get_post_int('p2t_time_update'),
-            'p2t_photo_id'    => $this->_post_class->get_post_int('p2t_photo_id'),
-            'p2t_tag_id'      => $this->_post_class->get_post_int('p2t_tag_id'),
-            'p2t_uid'         => $this->_post_class->get_post_int('p2t_uid'),
-        );
+            'p2t_photo_id' => $this->_post_class->get_post_int('p2t_photo_id'),
+            'p2t_tag_id' => $this->_post_class->get_post_int('p2t_tag_id'),
+            'p2t_uid' => $this->_post_class->get_post_int('p2t_uid'),
+        ];
+
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

@@ -114,8 +114,8 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_RATE_S_THANKURATE', '当サイト %s へのご投票、ありがとうございました');
 
     define('_WEBPHOTO_ERR_NORATING', '評価が選択されてません。');
-    define('_WEBPHOTO_ERR_CANTVOTEOWN', '自分が投稿した写真・動画・メディアには投票できません。<br />投票には全て目を通します');
-    define('_WEBPHOTO_ERR_VOTEONCE', '選択した写真・動画・メディアへの投票は一度だけにお願いします。<br />投票にはすべて目を通します。');
+    define('_WEBPHOTO_ERR_CANTVOTEOWN', '自分が投稿した写真・動画・メディアには投票できません。<br>投票には全て目を通します');
+    define('_WEBPHOTO_ERR_VOTEONCE', '選択した写真・動画・メディアへの投票は一度だけにお願いします。<br>投票にはすべて目を通します。');
 
     //---------------------------------------------------------
     // move from myalbum_constants.php
@@ -425,40 +425,40 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
 
     define('_WEBPHOTO_HELP_PICLENS_TITLE', 'PicLens');
     define('_WEBPHOTO_HELP_PICLENS_DSC', '
-Piclens は Cooliris 社が提供する FireFox のアドオンです<br />
-WEBサイトの画像を閲覧するビューワーです<br /><br />
-<b>参考記事</b><br />
+Piclens は Cooliris 社が提供する FireFox のアドオンです<br>
+WEBサイトの画像を閲覧するビューワーです<br><br>
+<b>参考記事</b><br>
 <a href="http://www.forest.impress.co.jp/article/2007/09/13/piclens.html" target="_blank">
 画像共有・画像検索サイト専用のビューワーを追加するFirefox拡張「PicLens」
-</a><br /><br />
-<b>設定方法</b><br />
-(1) FireFox をダウンロードする<br />
+</a><br><br>
+<b>設定方法</b><br>
+(1) FireFox をダウンロードする<br>
 <a href="http://www.mozilla-japan.org/products/firefox/" target="_blank">
 http://www.mozilla-japan.org/products/firefox/
-</a><br /><br />
-(2) Piclens アドオン をダウンロードする<br />
+</a><br><br>
+(2) Piclens アドオン をダウンロードする<br>
 <a href="http://www.piclens.com/" target="_blank">
 http://www.piclens.com/
-</a><br /><br />
-(3) FireFox で webphoto を見る<br />
-http://このサイト/modules/webphoto/ <br /><br />
-(4) Firefox の右上の青いマークがクリックする<br />
-マークが黒いときは、piclens は使用できない<br />');
+</a><br><br>
+(3) FireFox で webphoto を見る<br>
+http://このサイト/modules/webphoto/ <br><br>
+(4) Firefox の右上の青いマークがクリックする<br>
+マークが黒いときは、piclens は使用できない<br>');
 
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_TITLE', 'Media RSS スライドショー');
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_DSC', '
-Media RSS スライドショー は Google ガジェットです<br />
-インターネットからの画像をスライドショーで表示します<br /><br />
-<b>設定方法</b><br />
-(1) Google デスクトップ をダウンロードする<br />
+Media RSS スライドショー は Google ガジェットです<br>
+インターネットからの画像をスライドショーで表示します<br><br>
+<b>設定方法</b><br>
+(1) Google デスクトップ をダウンロードする<br>
 <a href="http://desktop.google.co.jp/" target="_blank">
 http://desktop.google.co.jp/
-</a><br /><br />
-(2) 「Media RSS スライドショー」のガジェットをダウンロードする<br />
+</a><br><br>
+(2) 「Media RSS スライドショー」のガジェットをダウンロードする<br>
 <a href="http://desktop.google.com/plugins/i/mediarssslideshow.html" target="_blank">
 http://desktop.google.com/plugins/i/mediarssslideshow.html
-</a><br /><br />
-(3) ガジェットのオプションにて、「MediaRSS の URL」を下記に変更する<br />');
+</a><br><br>
+(3) ガジェットのオプションにて、「MediaRSS の URL」を下記に変更する<br>');
 
     //---------------------------------------------------------
     // others
@@ -548,7 +548,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_SUBTITLE_MAIL_PHOTO', 'メールに添付された画像を登録します');
     define('_WEBPHOTO_TEXT_MAIL_ACCESS_TIME', 'アクセス制限中です');
     define('_WEBPHOTO_TEXT_MAIL_RETRY', '１分後にアクセスしてください');
-    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE', 'メールを受信できなかった。<br />一時的な通信障害と思われます。<br />しばらく時間をあけてから、試みてください。');
+    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE', 'メールを受信できなかった。<br>一時的な通信障害と思われます。<br>しばらく時間をあけてから、試みてください。');
     define('_WEBPHOTO_TEXT_MAIL_NO_NEW', '新着メールはありません');
     define('_WEBPHOTO_TEXT_MAIL_RETRIEVED_FMT', '%s 件のメールを受信しました');
     define('_WEBPHOTO_TEXT_MAIL_NO_VALID', '有効なメールはありません');
@@ -572,9 +572,9 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_HELP_NOT_PERM', '貴方には許可されていません。管理者までお問い合わせください。');
 
     define('_WEBPHOTO_HELP_MOBILE_TITLE', '携帯電話');
-    define('_WEBPHOTO_HELP_MOBILE_DSC', '携帯電話にて、画像や動画を表示することができます<br/>240×320 程度の画面サイズです');
+    define('_WEBPHOTO_HELP_MOBILE_DSC', '携帯電話にて、画像や動画を表示することができます<br>240×320 程度の画面サイズです');
     define('_WEBPHOTO_HELP_MOBILE_TEXT_FMT', '
-<b>アクセスURL</b><br />
+<b>アクセスURL</b><br>
 <a href="{MODULE_URL}/i.php" target="_blank">{MODULE_URL}/i.php</a>');
 
     define('_WEBPHOTO_HELP_MAIL_TITLE', '携帯メール');
@@ -584,9 +584,9 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_HELP_FILE_TITLE', 'FTP による投稿');
     define('_WEBPHOTO_HELP_FILE_DSC', 'FTP によりファイルをアップロードすることで、ファイル容量の大きな写真・動画・メディアを投稿することができます');
     define('_WEBPHOTO_HELP_FILE_TEXT_FMT', '
-<b>投稿方法</b><br />
-(1) 指定された FTP サーバーにファイルをアップロードする<br />
-(2) <a href="{MODULE_URL}/index.php?fct=submit_file" target="_blank">「ファイルからの写真・動画・メディアの追加」</a> をクリックする<br />
+<b>投稿方法</b><br>
+(1) 指定された FTP サーバーにファイルをアップロードする<br>
+(2) <a href="{MODULE_URL}/index.php?fct=submit_file" target="_blank">「ファイルからの写真・動画・メディアの追加」</a> をクリックする<br>
 (3) アップロードしたファイルを指定して投稿する');
 
     // mail check
@@ -688,23 +688,23 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
 
     // help
     define('_WEBPHOTO_HELP_MAIL_POST_FMT', '
-<b>準備</b><br />
-携帯電話のメールアドレスを登録してください<br />
-<a href="{MODULE_URL}/index.php?fct=mail_register" target="_blank">「メールアドレス登録」</a><br /><br />
-<b>投稿方法</b><br />
-下記のメールアドレスにメールを送信する<br />
-<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br /><br />
-<b>画像の回転</b><br />
-題名 (Subject) の末尾に下記のように記入することで、画像が回転します。<br />
- R@ : 右回転 <br />
- L@ : 左回転 <br /><br />');
-    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>メールの受信と、画像の登録</b><br />');
+<b>準備</b><br>
+携帯電話のメールアドレスを登録してください<br>
+<a href="{MODULE_URL}/index.php?fct=mail_register" target="_blank">「メールアドレス登録」</a><br><br>
+<b>投稿方法</b><br>
+下記のメールアドレスにメールを送信する<br>
+<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br><br>
+<b>画像の回転</b><br>
+題名 (Subject) の末尾に下記のように記入することで、画像が回転します。<br>
+ R@ : 右回転 <br>
+ L@ : 左回転 <br><br>');
+    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>メールの受信と、画像の登録</b><br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_FMT', '
-メールを送信してから、数秒後に <a href="{MODULE_URL}/i.php?op=post" target="_blank">「メールから投稿する」</a> をクリックしてください。<br />');
-    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'あなたが送信したメールを取り込んで、画像や動画を掲載します。<br />');
+メールを送信してから、数秒後に <a href="{MODULE_URL}/i.php?op=post" target="_blank">「メールから投稿する」</a> をクリックしてください。<br>');
+    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'あなたが送信したメールを取り込んで、画像や動画を掲載します。<br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_AUTO_FMT', '
-メールを送信すると、 %s 秒後に自動的に登録されます。<br />
-登録されない場合は、<a href="{MODULE_URL}/i.php?op=post" target="_blank">「メールから投稿する」</a> をクリックしてください。<br />');
+メールを送信すると、 %s 秒後に自動的に登録されます。<br>
+登録されない場合は、<a href="{MODULE_URL}/i.php?op=post" target="_blank">「メールから投稿する」</a> をクリックしてください。<br>');
 
     //---------------------------------------------------------
     // v0.50
@@ -869,56 +869,54 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_PLAYER_STYLE_PAGE', 'カスタム・プレイヤー/ページ');
 
     // flashvar desc
-    define('_WEBPHOTO_FLASHVAR_ID_DSC', '[Basics] <br />mediaplayer のとき、RTMP ストリーム ID を設定する<br />ID は 統計コールバックに送信される<br />プレイリストのときは、エントリ毎に設定できる');
+    define('_WEBPHOTO_FLASHVAR_ID_DSC', '[Basics] <br>mediaplayer のとき、RTMP ストリーム ID を設定する<br>ID は 統計コールバックに送信される<br>プレイリストのときは、エントリ毎に設定できる');
     //define("_WEBPHOTO_FLASHVAR_HEIGHT_DSC","[Basics] ");
     //define("_WEBPHOTO_FLASHVAR_WIDTH_DSC","[Basics] ");
     define('_WEBPHOTO_FLASHVAR_DISPLAYHEIGHT_DSC', '[Playlist] [mediaplayer] ');
-    define('_WEBPHOTO_FLASHVAR_DISPLAYWIDTH_DSC', '[Playlist] [mediaplayer] <br />プレイリストを下に表示:<br /> スクリーン幅 = プレイヤー幅<br />プレイリストを横に表示<br />スクリーン幅 &gt; プレイヤー幅 ');
+    define('_WEBPHOTO_FLASHVAR_DISPLAYWIDTH_DSC', '[Playlist] [mediaplayer] <br>プレイリストを下に表示:<br> スクリーン幅 = プレイヤー幅<br>プレイリストを横に表示<br>スクリーン幅 &gt; プレイヤー幅 ');
     define('_WEBPHOTO_FLASHVAR_DISPLAY_DEFAULT', '0 のときは、プレイヤーの設定が使用される');
-    //define("_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC","[Colors] <br />imagerotator のときは <br />異なる大きさの画像が混在しても、あなたのHTMLページに合うように変更する");
-    //define("_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC","[Colors] <br />コントロールの背景色");
-    //define("_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC","[Colors] <br />コントロールのテキストとボタンの色");
-    //define("_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC","[Colors] <br />コントロールのマウスオーバしたときの色");
+    //define("_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC","[Colors] <br>imagerotator のときは <br>異なる大きさの画像が混在しても、あなたのHTMLページに合うように変更する");
+    //define("_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC","[Colors] <br>コントロールの背景色");
+    //define("_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC","[Colors] <br>コントロールのテキストとボタンの色");
+    //define("_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC","[Colors] <br>コントロールのマウスオーバしたときの色");
     define('_WEBPHOTO_FLASHVAR_COLOR_DEFAULT', '空のときは、プレイヤーの設定が使用される');
-    define('_WEBPHOTO_FLASHVAR_IMAGE_SHOW_DSC', '[Basics] <br />プレビュー画像を表示する');
-    //define("_WEBPHOTO_FLASHVAR_IMAGE_DSC","[Basics] <br />もし音楽や動画を再生するならば、プレビュー画像の URL を設定する <br />プレイリストのときは、エントリ毎に設定できる");
-    define('_WEBPHOTO_FLASHVAR_FILE_DSC', '[Basics] <br />ファイルかプレイリストの URL を設定する<br />imagerorate のときは、プレイリストのみ設定できる');
-    define('_WEBPHOTO_FLASHVAR_SEARCHBAR_DSC', '[Basics] <br />スクリーンの下に検索バーを表示する <br />「検索リンク」により検索先を設定できる');
-    //define("_WEBPHOTO_FLASHVAR_LOGO_DSC","[Display] <br />スクリーンの右上に表示するロゴ画像を設定する<br />透過 PNG が最適");
-    //define("_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC","[Display] <br />画像/動画をスクリーンの大きさに拡張する方法を設定する<br />false (デフォルト) = スクリーンに一致する<br />true = 均一に拡張する<br />fit = 不均一に拡張する<br />none = 元の大きさを保持する");
-    define('_WEBPHOTO_FLASHVAR_SHOWEQ_DSC', '[Display] <br />スクリーンの下に擬似的なイコライザーを表示する <br />MP3 に最適 ');
-    //define("_WEBPHOTO_FLASHVAR_SHOWICONS_DSC","[Display] <br />スクリーンの中央にプレイボタンを表示する");
-    //define("_WEBPHOTO_FLASHVAR_TRANSITION_DSC","[Display] [imagerotator] <br />画像の切替え効果を設定する ");
-    //define("_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC","[Controlbar] <br />コントロール・バーを表示する");
-    define('_WEBPHOTO_FLASHVAR_SHOWSTOP_DSC', '[Controlbar] [mediaplayer] <br />コントロール・バーにストップ・ボタンを表示する');
-    define('_WEBPHOTO_FLASHVAR_SHOWDIGITS_DSC', '[Controlbar] [mediaplayer] <br />コントロール・バーに経過時間/残り時間を表示する ');
-    define('_WEBPHOTO_FLASHVAR_SHOWDOWNLOAD_DSC', '[Controlbar] [mediaplayer] <br />コントロール・バーにリンク・ボタンを表示する<br />「リンク」によりリンク先を設定する');
-    //define("_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC","[Controlbar] <br />フルスクリーン・ボタンを表示する");
-    define('_WEBPHOTO_FLASHVAR_AUTOSCROLL_DSC', '[Playlist] [mediaplayer] <br />プレイリストのスクロール・バーを表示する代わりに、マウスオーバーしたときに自動的にスクロールする');
-    define('_WEBPHOTO_FLASHVAR_THUMBSINPLAYLIST_DSC', '[Playlist] [mediaplayer] <br />スクリーンにサムネイル画像を表示する');
-    //define("_WEBPHOTO_FLASHVAR_AUDIO_DSC","[Playback] <br />同期した MP3 を割り当てる<br />mediaplayer の音声説明またはディレクターのコメント、あるいは imagerotator の背景音楽として、使用する<br />mediaplayer とプレイリストのときは、エントリ毎にオーディオを設定できる ");
-    //define("_WEBPHOTO_FLASHVAR_AUTOSTART_DSC","[Playback] <br />mediaplayer にて true のときは、ページをロードしたときに自動的にスタートする<br />imagerotator にて false のときは 自動的な画像切り替えを行わない");
-    //define("_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC","[Playback]  [mediaplayer] <br />再生する前に、動画をバッファする秒数を設定する<br />高速な通信環境や短い動画のときは小さい値を設定する<br />低速な通信環境のときは大きい値を設定する ");
-    define('_WEBPHOTO_FLASHVAR_CAPTIONS_DSC', '[Playback] [mediaplayer] <br />「見出し」は TimedText 形式であること <br />プレイリストのときは、エントリ毎に見出しを設定できる ');
-    define('_WEBPHOTO_FLASHVAR_FALLBACK_DSC', '[Playback] [mediaplayer] <br />もし MP4 を再生するならば、フォールバックする FLV の URL を設定すること <br />古いバージョンのフラッシュ・プレイヤーでは自動的に選択される ');
-    //define("_WEBPHOTO_FLASHVAR_REPEAT_DSC","[Playback] <br />true のとき、全てのファイルを繰返し再生する <br />プレイリストのときは 一度だけ再生する ");
-    //define("_WEBPHOTO_FLASHVAR_ROTATETIME_DSC","[Playback] <br />画像を切替るときの秒数を設定する ");
-    //define("_WEBPHOTO_FLASHVAR_SHUFFLE_DSC","[Playback] <br />「はい」のとき、プレイリストをランダムに再生する ");
-    //define("_WEBPHOTO_FLASHVAR_SMOOTHING_DSC","[Playback] [mediaplayer] <br />「いいえ」のとき、画像のスムージングを行わない <br />画質は落ちるが、性能は向上する <br />HD ファイルや遅い PC に最適 ");
-    //define("_WEBPHOTO_FLASHVAR_VOLUME_DSC","[Playback] <br />音楽や動画の音量を設定する");
-    define('_WEBPHOTO_FLASHVAR_ENABLEJS_DSC', '[External] <br />「はい」のとき、JavaScript による対話制御を有効にする <br />オンラインのとき動作する<br />JavaScript による対話制御には、コントロールバーや、メディアファイルのローデングの同期や、トラック情報の返信などを含む ');
-    define('_WEBPHOTO_FLASHVAR_JAVASCRIPTID_DSC', '[External] <br />もしも、複数の mediaplayers/imagerotators と JavaScript による対話制御を行うときは、この項目にそれぞれに対するユニークな ID を設定する ');
-    define('_WEBPHOTO_FLASHVAR_LINK_TYPE_DSC', '[External] <br />スクリーンやロゴやリンク・ボタンに割当されるリンクの種別を設定する<br /> 「なし」のときは、何もしない <br />それ以外は、そのリンクを割当てる');
-    //define("_WEBPHOTO_FLASHVAR_LINK_DSC","[External] <br />外部 URL やダウンロード可能なファイルを設定する<br />このリンクはスクリーンやロゴやリンク・ボタンに割当される<br />プレイリストのときは、XML 形式にてエントリ毎に設定できる");
-    //define("_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC","[External] <br />「はい」のときは、スクリーンをクリックすると、「リンク」に設定された WEB ページのジャンプする ");
-    //define("_WEBPHOTO_FLASHVAR_LINKTARGET_DSC","[External] <br />リンクしたウィンドウ画面の種類");
-    define('_WEBPHOTO_FLASHVAR_CALLBACK_DSC',
-           '[External] <br />Set this to a serverside script that can process statistics. <br />The player will send it a POST every time an item starts/stops. <br />To send callbacks automatically to Google Analytics, set this to urchin or analytics. ');
-    define('_WEBPHOTO_FLASHVAR_RECOMMENDATIONS_DSC', '[External] [mediaplayer] <br />推奨する項目を XML 形式で設定する <br />動画が停止しているときは、Youtube と同じようにサムネイルが表示される ');
-    define('_WEBPHOTO_FLASHVAR_SEARCHLINK_DSC', '[External] [mediaplayer] <br />検索バーの検索先を設定する <br />デフォルトは「search.longtail.tv」である <br />検索バーを隠すには「検索バー」を使用する ');
-    define('_WEBPHOTO_FLASHVAR_STREAMSCRIPT_DSC', "[External] [mediaplayer] <br />ストリーミング配信に使用するスクリプトの URL を設定する <br />パラメータ・ファイルはスクリプトへ送信される <br />もし LigHTTPD ストリーミング を使用するならば、'lighttpd' と設定する . ");
-    define('_WEBPHOTO_FLASHVAR_TYPE_DSC',
-           '[External] [mediaplayer] <br />mediaplayer は「file」の最後の３文字を拡張子を見なしている <br />データベースの ID や mod_rewrite などでうまく動作しない場合には、正しい拡張子を設定すること <br />もしも、確かでないときは、プレイリストがロードされたと見なす。');
+    define('_WEBPHOTO_FLASHVAR_IMAGE_SHOW_DSC', '[Basics] <br>プレビュー画像を表示する');
+    //define("_WEBPHOTO_FLASHVAR_IMAGE_DSC","[Basics] <br>もし音楽や動画を再生するならば、プレビュー画像の URL を設定する <br>プレイリストのときは、エントリ毎に設定できる");
+    define('_WEBPHOTO_FLASHVAR_FILE_DSC', '[Basics] <br>ファイルかプレイリストの URL を設定する<br>imagerorate のときは、プレイリストのみ設定できる');
+    define('_WEBPHOTO_FLASHVAR_SEARCHBAR_DSC', '[Basics] <br>スクリーンの下に検索バーを表示する <br>「検索リンク」により検索先を設定できる');
+    //define("_WEBPHOTO_FLASHVAR_LOGO_DSC","[Display] <br>スクリーンの右上に表示するロゴ画像を設定する<br>透過 PNG が最適");
+    //define("_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC","[Display] <br>画像/動画をスクリーンの大きさに拡張する方法を設定する<br>false (デフォルト) = スクリーンに一致する<br>true = 均一に拡張する<br>fit = 不均一に拡張する<br>none = 元の大きさを保持する");
+    define('_WEBPHOTO_FLASHVAR_SHOWEQ_DSC', '[Display] <br>スクリーンの下に擬似的なイコライザーを表示する <br>MP3 に最適 ');
+    //define("_WEBPHOTO_FLASHVAR_SHOWICONS_DSC","[Display] <br>スクリーンの中央にプレイボタンを表示する");
+    //define("_WEBPHOTO_FLASHVAR_TRANSITION_DSC","[Display] [imagerotator] <br>画像の切替え効果を設定する ");
+    //define("_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC","[Controlbar] <br>コントロール・バーを表示する");
+    define('_WEBPHOTO_FLASHVAR_SHOWSTOP_DSC', '[Controlbar] [mediaplayer] <br>コントロール・バーにストップ・ボタンを表示する');
+    define('_WEBPHOTO_FLASHVAR_SHOWDIGITS_DSC', '[Controlbar] [mediaplayer] <br>コントロール・バーに経過時間/残り時間を表示する ');
+    define('_WEBPHOTO_FLASHVAR_SHOWDOWNLOAD_DSC', '[Controlbar] [mediaplayer] <br>コントロール・バーにリンク・ボタンを表示する<br>「リンク」によりリンク先を設定する');
+    //define("_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC","[Controlbar] <br>フルスクリーン・ボタンを表示する");
+    define('_WEBPHOTO_FLASHVAR_AUTOSCROLL_DSC', '[Playlist] [mediaplayer] <br>プレイリストのスクロール・バーを表示する代わりに、マウスオーバーしたときに自動的にスクロールする');
+    define('_WEBPHOTO_FLASHVAR_THUMBSINPLAYLIST_DSC', '[Playlist] [mediaplayer] <br>スクリーンにサムネイル画像を表示する');
+    //define("_WEBPHOTO_FLASHVAR_AUDIO_DSC","[Playback] <br>同期した MP3 を割り当てる<br>mediaplayer の音声説明またはディレクターのコメント、あるいは imagerotator の背景音楽として、使用する<br>mediaplayer とプレイリストのときは、エントリ毎にオーディオを設定できる ");
+    //define("_WEBPHOTO_FLASHVAR_AUTOSTART_DSC","[Playback] <br>mediaplayer にて true のときは、ページをロードしたときに自動的にスタートする<br>imagerotator にて false のときは 自動的な画像切り替えを行わない");
+    //define("_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC","[Playback]  [mediaplayer] <br>再生する前に、動画をバッファする秒数を設定する<br>高速な通信環境や短い動画のときは小さい値を設定する<br>低速な通信環境のときは大きい値を設定する ");
+    define('_WEBPHOTO_FLASHVAR_CAPTIONS_DSC', '[Playback] [mediaplayer] <br>「見出し」は TimedText 形式であること <br>プレイリストのときは、エントリ毎に見出しを設定できる ');
+    define('_WEBPHOTO_FLASHVAR_FALLBACK_DSC', '[Playback] [mediaplayer] <br>もし MP4 を再生するならば、フォールバックする FLV の URL を設定すること <br>古いバージョンのフラッシュ・プレイヤーでは自動的に選択される ');
+    //define("_WEBPHOTO_FLASHVAR_REPEAT_DSC","[Playback] <br>true のとき、全てのファイルを繰返し再生する <br>プレイリストのときは 一度だけ再生する ");
+    //define("_WEBPHOTO_FLASHVAR_ROTATETIME_DSC","[Playback] <br>画像を切替るときの秒数を設定する ");
+    //define("_WEBPHOTO_FLASHVAR_SHUFFLE_DSC","[Playback] <br>「はい」のとき、プレイリストをランダムに再生する ");
+    //define("_WEBPHOTO_FLASHVAR_SMOOTHING_DSC","[Playback] [mediaplayer] <br>「いいえ」のとき、画像のスムージングを行わない <br>画質は落ちるが、性能は向上する <br>HD ファイルや遅い PC に最適 ");
+    //define("_WEBPHOTO_FLASHVAR_VOLUME_DSC","[Playback] <br>音楽や動画の音量を設定する");
+    define('_WEBPHOTO_FLASHVAR_ENABLEJS_DSC', '[External] <br>「はい」のとき、JavaScript による対話制御を有効にする <br>オンラインのとき動作する<br>JavaScript による対話制御には、コントロールバーや、メディアファイルのローデングの同期や、トラック情報の返信などを含む ');
+    define('_WEBPHOTO_FLASHVAR_JAVASCRIPTID_DSC', '[External] <br>もしも、複数の mediaplayers/imagerotators と JavaScript による対話制御を行うときは、この項目にそれぞれに対するユニークな ID を設定する ');
+    define('_WEBPHOTO_FLASHVAR_LINK_TYPE_DSC', '[External] <br>スクリーンやロゴやリンク・ボタンに割当されるリンクの種別を設定する<br> 「なし」のときは、何もしない <br>それ以外は、そのリンクを割当てる');
+    //define("_WEBPHOTO_FLASHVAR_LINK_DSC","[External] <br>外部 URL やダウンロード可能なファイルを設定する<br>このリンクはスクリーンやロゴやリンク・ボタンに割当される<br>プレイリストのときは、XML 形式にてエントリ毎に設定できる");
+    //define("_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC","[External] <br>「はい」のときは、スクリーンをクリックすると、「リンク」に設定された WEB ページのジャンプする ");
+    //define("_WEBPHOTO_FLASHVAR_LINKTARGET_DSC","[External] <br>リンクしたウィンドウ画面の種類");
+    define('_WEBPHOTO_FLASHVAR_CALLBACK_DSC', '[External] <br>Set this to a serverside script that can process statistics. <br>The player will send it a POST every time an item starts/stops. <br>To send callbacks automatically to Google Analytics, set this to urchin or analytics. ');
+    define('_WEBPHOTO_FLASHVAR_RECOMMENDATIONS_DSC', '[External] [mediaplayer] <br>推奨する項目を XML 形式で設定する <br>動画が停止しているときは、Youtube と同じようにサムネイルが表示される ');
+    define('_WEBPHOTO_FLASHVAR_SEARCHLINK_DSC', '[External] [mediaplayer] <br>検索バーの検索先を設定する <br>デフォルトは「search.longtail.tv」である <br>検索バーを隠すには「検索バー」を使用する ');
+    define('_WEBPHOTO_FLASHVAR_STREAMSCRIPT_DSC', "[External] [mediaplayer] <br>ストリーミング配信に使用するスクリプトの URL を設定する <br>パラメータ・ファイルはスクリプトへ送信される <br>もし LigHTTPD ストリーミング を使用するならば、'lighttpd' と設定する . ");
+    define('_WEBPHOTO_FLASHVAR_TYPE_DSC', '[External] [mediaplayer] <br>mediaplayer は「file」の最後の３文字を拡張子を見なしている <br>データベースの ID や mod_rewrite などでうまく動作しない場合には、正しい拡張子を設定すること <br>もしも、確かでないときは、プレイリストがロードされたと見なす。');
 
     // flashvar option
     define('_WEBPHOTO_FLASHVAR_LINK_TYPE_NONE', 'なし');
@@ -963,7 +961,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_FLASHVARS_LIST', 'Flash変数の一覧(英語)');
     define('_WEBPHOTO_FLASHVARS_LOGO_SELECT', 'ロゴ画像の選択');
     define('_WEBPHOTO_FLASHVARS_LOGO_UPLOAD', 'ロゴ画像のアップロード');
-    define('_WEBPHOTO_FLASHVARS_LOGO_DSC', '[Display] <br />ロゴ画像のディレクトリ ');
+    define('_WEBPHOTO_FLASHVARS_LOGO_DSC', '[Display] <br>ロゴ画像のディレクトリ ');
     define('_WEBPHOTO_BUTTON_COLOR_PICKUP', '色選択');
     define('_WEBPHOTO_BUTTON_RESTORE', 'デフォルト値に戻す');
 
@@ -972,7 +970,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_PLAYLIST_STATUS_FETCHED', 'WEB Feed は取得された');
     define('_WEBPHOTO_PLAYLIST_STATUS_CREATED', 'プレイリストを生成した');
     define('_WEBPHOTO_PLAYLIST_ERR_CACHE', '[ERROR] キャッシュ・ファイルの生成に失敗した');
-    define('_WEBPHOTO_PLAYLIST_ERR_FETCH', 'WEB Feed の取得に失敗した<br />WEB Feed を確認して、キャッシュの再生成をしてください');
+    define('_WEBPHOTO_PLAYLIST_ERR_FETCH', 'WEB Feed の取得に失敗した<br>WEB Feed を確認して、キャッシュの再生成をしてください');
     define('_WEBPHOTO_PLAYLIST_ERR_NODIR', 'メディア・ディレクトリは存在しない');
     define('_WEBPHOTO_PLAYLIST_ERR_EMPTYDIR', 'メディア・ディレクトリは空です');
     define('_WEBPHOTO_PLAYLIST_ERR_WRITE', 'キャッシュ・ファイルに書込みできない');
@@ -1220,7 +1218,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     //---------------------------------------------------------
     // item
     define('_WEBPHOTO_ITEM_DESCRIPTION_SCROLL', '写真・動画・メディアの説明文のスクロール表示');
-    define('_WEBPHOTO_ITEM_DESCRIPTION_SCROLL_DSC', 'スクロールの高さを px単位で指定する <br />0 のときはスクロールなしの通常の表示');
+    define('_WEBPHOTO_ITEM_DESCRIPTION_SCROLL_DSC', 'スクロールの高さを px単位で指定する <br>0 のときはスクロールなしの通常の表示');
 
     // item option
     define('_WEBPHOTO_ITEM_DETAIL_ONCLICK_IMAGE', '写真・動画・メディアを別画面に表示する');
@@ -1328,36 +1326,34 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_FLASHVAR_HEIGHT_DSC', '[Basics] height ');
     define('_WEBPHOTO_FLASHVAR_WIDTH_DSC', '[Basics] width ');
 
-    define('_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC', '[Colors] screencolor <br />imagerotator のときは <br />異なる大きさの画像が混在しても、あなたのHTMLページに合うように変更する');
-    define('_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC', '[Colors] backcolor <br />コントロールの背景色');
-    define('_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC', '[Colors] frontcolor <br />コントロールのテキストとボタンの色');
-    define('_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC', '[Colors] lightcolor <br />コントロールのマウスオーバしたときの色');
+    define('_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC', '[Colors] screencolor <br>imagerotator のときは <br>異なる大きさの画像が混在しても、あなたのHTMLページに合うように変更する');
+    define('_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC', '[Colors] backcolor <br>コントロールの背景色');
+    define('_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC', '[Colors] frontcolor <br>コントロールのテキストとボタンの色');
+    define('_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC', '[Colors] lightcolor <br>コントロールのマウスオーバしたときの色');
 
-    define('_WEBPHOTO_FLASHVAR_SHUFFLE_DSC', '[Behaviour] shuffle <br />「はい」のとき、プレイリストをランダムに再生する ');
-    define('_WEBPHOTO_FLASHVAR_VOLUME_DSC', '[Behaviour] volume <br />音楽や動画の音量を設定する');
+    define('_WEBPHOTO_FLASHVAR_SHUFFLE_DSC', '[Behaviour] shuffle <br>「はい」のとき、プレイリストをランダムに再生する ');
+    define('_WEBPHOTO_FLASHVAR_VOLUME_DSC', '[Behaviour] volume <br>音楽や動画の音量を設定する');
 
     // player
-    define('_WEBPHOTO_FLASHVAR_IMAGE_DSC', '[Playlist] image <br />もし音楽や動画を再生するならば、プレビュー画像の URL を設定する <br />プレイリストのときは、エントリ毎に設定できる');
+    define('_WEBPHOTO_FLASHVAR_IMAGE_DSC', '[Playlist] image <br>もし音楽や動画を再生するならば、プレビュー画像の URL を設定する <br>プレイリストのときは、エントリ毎に設定できる');
 
-    define('_WEBPHOTO_FLASHVAR_AUTOSTART_DSC', '[Behaviour] autostart <br />true のときは、ページをロードしたときに自動的にスタートする');
-    define('_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC', '[Behaviour] bufferlength <br />再生する前に、動画をバッファする秒数を設定する<br />高速な通信環境や短い動画のときは小さい値を設定する<br />低速な通信環境のときは大きい値を設定する ');
-    define('_WEBPHOTO_FLASHVAR_SMOOTHING_DSC', '[Behaviour] smoothing <br />「いいえ」のとき、画像のスムージングを行わない <br />画質は落ちるが、性能は向上する <br />HD ファイルや遅い PC に最適 ');
+    define('_WEBPHOTO_FLASHVAR_AUTOSTART_DSC', '[Behaviour] autostart <br>true のときは、ページをロードしたときに自動的にスタートする');
+    define('_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC', '[Behaviour] bufferlength <br>再生する前に、動画をバッファする秒数を設定する<br>高速な通信環境や短い動画のときは小さい値を設定する<br>低速な通信環境のときは大きい値を設定する ');
+    define('_WEBPHOTO_FLASHVAR_SMOOTHING_DSC', '[Behaviour] smoothing <br>「いいえ」のとき、画像のスムージングを行わない <br>画質は落ちるが、性能は向上する <br>HD ファイルや遅い PC に最適 ');
 
     // imagetotator
-    define('_WEBPHOTO_FLASHVAR_LOGO_DSC', '[Appearance] logo <br />スクリーンの右上に表示するロゴ画像を設定する<br />透過 PNG が最適');
-    define('_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC',
-           '[Appearance] overstretch <br />画像/動画をスクリーンの大きさに拡張する方法を設定する<br />false (デフォルト) = スクリーンに一致する<br />true = 均一に拡張する<br />fit = 不均一に拡張する<br />none = 元の大きさを保持する');
-    define('_WEBPHOTO_FLASHVAR_SHOWICONS_DSC', '[Appearance] showicons <br />スクリーンの中央にプレイボタンを表示する');
-    define('_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC', '[Appearance] shownavigation <br />コントロール・バーを表示する');
-    define('_WEBPHOTO_FLASHVAR_TRANSITION_DSC', '[Appearance] transition <br />画像の切替え効果を設定する ');
-    define('_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC', '[Appearance] usefullscreen <br />フルスクリーン・ボタンを表示する');
+    define('_WEBPHOTO_FLASHVAR_LOGO_DSC', '[Appearance] logo <br>スクリーンの右上に表示するロゴ画像を設定する<br>透過 PNG が最適');
+    define('_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC', '[Appearance] overstretch <br>画像/動画をスクリーンの大きさに拡張する方法を設定する<br>false (デフォルト) = スクリーンに一致する<br>true = 均一に拡張する<br>fit = 不均一に拡張する<br>none = 元の大きさを保持する');
+    define('_WEBPHOTO_FLASHVAR_SHOWICONS_DSC', '[Appearance] showicons <br>スクリーンの中央にプレイボタンを表示する');
+    define('_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC', '[Appearance] shownavigation <br>コントロール・バーを表示する');
+    define('_WEBPHOTO_FLASHVAR_TRANSITION_DSC', '[Appearance] transition <br>画像の切替え効果を設定する ');
+    define('_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC', '[Appearance] usefullscreen <br>フルスクリーン・ボタンを表示する');
 
-    define('_WEBPHOTO_FLASHVAR_AUDIO_DSC',
-           '[Behaviour] audio <br />同期した MP3 を割り当てる<br />mediaplayer の音声説明またはディレクターのコメント、あるいは imagerotator の背景音楽として、使用する<br />mediaplayer とプレイリストのときは、エントリ毎にオーディオを設定できる ');
-    define('_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC', '[Behaviour] linkfromdisplay <br />「はい」のときは、スクリーンをクリックすると、プレイリストに設定された WEB ページのジャンプする ');
-    define('_WEBPHOTO_FLASHVAR_LINKTARGET_DSC', '[Behaviour] linktarget <br />リンクしたウィンドウ画面の種類');
-    define('_WEBPHOTO_FLASHVAR_REPEAT_DSC', '[Behaviour] repeat <br />true のとき、全てのファイルを繰返し再生する <br />プレイリストのときは 一度だけ再生する ');
-    define('_WEBPHOTO_FLASHVAR_ROTATETIME_DSC', '[Behaviour] rotatetime <br />画像を切替るときの秒数を設定する ');
+    define('_WEBPHOTO_FLASHVAR_AUDIO_DSC', '[Behaviour] audio <br>同期した MP3 を割り当てる<br>mediaplayer の音声説明またはディレクターのコメント、あるいは imagerotator の背景音楽として、使用する<br>mediaplayer とプレイリストのときは、エントリ毎にオーディオを設定できる ');
+    define('_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC', '[Behaviour] linkfromdisplay <br>「はい」のときは、スクリーンをクリックすると、プレイリストに設定された WEB ページのジャンプする ');
+    define('_WEBPHOTO_FLASHVAR_LINKTARGET_DSC', '[Behaviour] linktarget <br>リンクしたウィンドウ画面の種類');
+    define('_WEBPHOTO_FLASHVAR_REPEAT_DSC', '[Behaviour] repeat <br>true のとき、全てのファイルを繰返し再生する <br>プレイリストのときは 一度だけ再生する ');
+    define('_WEBPHOTO_FLASHVAR_ROTATETIME_DSC', '[Behaviour] rotatetime <br>画像を切替るときの秒数を設定する ');
 
     // === 新規追加 ===
     define('_WEBPHOTO_FLASHVARS_ADD', 'Flash Player のオプションを追加する');
@@ -1402,42 +1398,39 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_FLASHVAR_LOGO_OUT', 'ロゴの通常の透過量');
 
     // --- description ---
-    define('_WEBPHOTO_FLASHVAR_START_DSC', '[Playlist] start <br />再生を開始する時間(秒)');
-    define('_WEBPHOTO_FLASHVAR_DURATION_DSC', '[Playlist] duration <br />再生する時間(秒)');
-    define('_WEBPHOTO_FLASHVAR_PLAYLISTFILE_DSC', '[Playlist] playlistfile <br />プレイリストのXMLファイルのURL');
-    define('_WEBPHOTO_FLASHVAR_MEDIAID_DSC', '[Playlist] mediaid <br />メディアファイルを識別するユニークな文字列。<br />外部のプラグインで使用されます。<br />プレーヤー自身は使用しません。');
-    define('_WEBPHOTO_FLASHVAR_PROVIDER_DSC', '[Playlist] provider <br />メディアの形式を設定する。<br />デフォルトでは、ファイル拡張子に基づき自動的に検出されます。<br />拡張子が全くなければ、手動でそれを設定します。');
+    define('_WEBPHOTO_FLASHVAR_START_DSC', '[Playlist] start <br>再生を開始する時間(秒)');
+    define('_WEBPHOTO_FLASHVAR_DURATION_DSC', '[Playlist] duration <br>再生する時間(秒)');
+    define('_WEBPHOTO_FLASHVAR_PLAYLISTFILE_DSC', '[Playlist] playlistfile <br>プレイリストのXMLファイルのURL');
+    define('_WEBPHOTO_FLASHVAR_MEDIAID_DSC', '[Playlist] mediaid <br>メディアファイルを識別するユニークな文字列。<br>外部のプラグインで使用されます。<br>プレーヤー自身は使用しません。');
+    define('_WEBPHOTO_FLASHVAR_PROVIDER_DSC', '[Playlist] provider <br>メディアの形式を設定する。<br>デフォルトでは、ファイル拡張子に基づき自動的に検出されます。<br>拡張子が全くなければ、手動でそれを設定します。');
     define('_WEBPHOTO_FLASHVAR_STREAMER_DSC', '[Playlist] streamer ');
     define('_WEBPHOTO_FLASHVAR_NETSTREAMBASEPATH_DSC', '[Playlist] netstreambasepath ');
 
-    define('_WEBPHOTO_FLASHVAR_DOCK_DSC', '[Layout] dock <br />デフォルトでは、「はい」で、プラグインボタンはディプレイに表示される。<br />「いいえ」のときは、コントロールバーに表示される。');
-    define('_WEBPHOTO_FLASHVAR_ICONS_DSC', '[Layout] icons <br />「いいえ」のとき、ディスプレイのプレイボタンは表示されない。');
-    define('_WEBPHOTO_FLASHVAR_SKIN_DSC', '[Layout] skin <br />プレーヤーの外観を変えるスキン・ファイルのURL。');
-    define('_WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_DSC', '[Layout] controlbar.position <br />bottom, top, あるいは none');
-    define('_WEBPHOTO_FLASHVAR_CONTROLBAR_IDLEHIDE_DSC', '[Layout] controlbar.idlehide <br />「はい」のときは、プレーヤーがポーズされるか、または止められるとき、コントロールバーは表示されない。');
-    define('_WEBPHOTO_FLASHVAR_DISPLAY_SHOWMUTE_DSC', '[Layout] display.showmute <br />「はい」のとき、ディスプレイ・ウィンドウにミュート・アイコンを表示します。<br />デフォルトは「いいえ」です。');
-    define('_WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_DSC', '[Layout] playlist.position <br />プレイリストを表示する位置を指定します。<br />bottom, top, right, left, over or none.<br />デフォルトは 表示しない none です。');
-    define('_WEBPHOTO_FLASHVAR_PLAYLIST_SIZE_DSC',
-           '[Layout]  playlist.size <br />プレイリストをディスプレイの下に指定したときは、高さを変えるのにこのオプションを使用できます。 <br />プレイリストがディスプレイの左また右に指定したときは、このオプションは、幅を表します。<br />その他のときは、このオプションは必要ではありません。');
+    define('_WEBPHOTO_FLASHVAR_DOCK_DSC', '[Layout] dock <br>デフォルトでは、「はい」で、プラグインボタンはディプレイに表示される。<br>「いいえ」のときは、コントロールバーに表示される。');
+    define('_WEBPHOTO_FLASHVAR_ICONS_DSC', '[Layout] icons <br>「いいえ」のとき、ディスプレイのプレイボタンは表示されない。');
+    define('_WEBPHOTO_FLASHVAR_SKIN_DSC', '[Layout] skin <br>プレーヤーの外観を変えるスキン・ファイルのURL。');
+    define('_WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_DSC', '[Layout] controlbar.position <br>bottom, top, あるいは none');
+    define('_WEBPHOTO_FLASHVAR_CONTROLBAR_IDLEHIDE_DSC', '[Layout] controlbar.idlehide <br>「はい」のときは、プレーヤーがポーズされるか、または止められるとき、コントロールバーは表示されない。');
+    define('_WEBPHOTO_FLASHVAR_DISPLAY_SHOWMUTE_DSC', '[Layout] display.showmute <br>「はい」のとき、ディスプレイ・ウィンドウにミュート・アイコンを表示します。<br>デフォルトは「いいえ」です。');
+    define('_WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_DSC', '[Layout] playlist.position <br>プレイリストを表示する位置を指定します。<br>bottom, top, right, left, over or none.<br>デフォルトは 表示しない none です。');
+    define('_WEBPHOTO_FLASHVAR_PLAYLIST_SIZE_DSC', '[Layout]  playlist.size <br>プレイリストをディスプレイの下に指定したときは、高さを変えるのにこのオプションを使用できます。 <br>プレイリストがディスプレイの左また右に指定したときは、このオプションは、幅を表します。<br>その他のときは、このオプションは必要ではありません。');
 
-    define('_WEBPHOTO_FLASHVAR_PLAYER_REPEAT_DSC', '[Behaviour] repeat <br />none プレイリストの最初のファイル<br />list プレイリストを最初から最後まで<br />always プレイリストの繰り返し<br />single プレイリストの同じファイルの繰り返し');
-    define('_WEBPHOTO_FLASHVAR_ITEM_DSC', '[Behaviour] item <br />開始するプレイリストの項目番号。<br />これを使用すると、最初の項目の代わりに特定の項目から開始できます。');
-    define('_WEBPHOTO_FLASHVAR_MUTE_DSC', '[Behaviour] mute <br />開始するときに音を消す。<br />クッキーの中に保存されます。');
-    define('_WEBPHOTO_FLASHVAR_PLAYERREADY_DSC',
-           '[Behaviour] playerready <br />それが初期化されるとき、デフォルトでは、プレーヤーは初期化されるときに、JavaScript の playerReady() を呼びます。<br />初期化された後に、プレーヤーに異なった機能を呼ばせるのに、このオプションは使用されます。');
-    define('_WEBPHOTO_FLASHVAR_PLUGINS_DSC', '[Behaviour] plugins <br />これはロードするプラグインのコンマで切り離されたリストです。<br />プレーヤーの機能性を広げる別々の JavaScript か SWF ファイルです。<br />addons レポジトリを訪問して、利用可能なプラグインを見てください。');
-    define('_WEBPHOTO_FLASHVAR_STRETCHING_DSC',
-           '[Behaviour] stretching <br />画像/動画をスクリーンの大きさに拡張する方法を設定する<br />none: 原寸を保ちます。<br />exactfit: 不比例にビデオ/イメージを伸ばして、ディスプレイにぴったり合わせる。<br />uniform: アスペクトレシオを維持して、イメージ/ビデオを拡大します。黒い境界が表示されます。<br />fill: アスペクトレシオを維持して、イメージ/ビデオを拡大します。ディスプレイいっぱいに拡大します。 ');
+    define('_WEBPHOTO_FLASHVAR_PLAYER_REPEAT_DSC', '[Behaviour] repeat <br>none プレイリストの最初のファイル<br>list プレイリストを最初から最後まで<br>always プレイリストの繰り返し<br>single プレイリストの同じファイルの繰り返し');
+    define('_WEBPHOTO_FLASHVAR_ITEM_DSC', '[Behaviour] item <br>開始するプレイリストの項目番号。<br>これを使用すると、最初の項目の代わりに特定の項目から開始できます。');
+    define('_WEBPHOTO_FLASHVAR_MUTE_DSC', '[Behaviour] mute <br>開始するときに音を消す。<br>クッキーの中に保存されます。');
+    define('_WEBPHOTO_FLASHVAR_PLAYERREADY_DSC', '[Behaviour] playerready <br>それが初期化されるとき、デフォルトでは、プレーヤーは初期化されるときに、JavaScript の playerReady() を呼びます。<br>初期化された後に、プレーヤーに異なった機能を呼ばせるのに、このオプションは使用されます。');
+    define('_WEBPHOTO_FLASHVAR_PLUGINS_DSC', '[Behaviour] plugins <br>これはロードするプラグインのコンマで切り離されたリストです。<br>プレーヤーの機能性を広げる別々の JavaScript か SWF ファイルです。<br>addons レポジトリを訪問して、利用可能なプラグインを見てください。');
+    define('_WEBPHOTO_FLASHVAR_STRETCHING_DSC', '[Behaviour] stretching <br>画像/動画をスクリーンの大きさに拡張する方法を設定する<br>none: 原寸を保ちます。<br>exactfit: 不比例にビデオ/イメージを伸ばして、ディスプレイにぴったり合わせる。<br>uniform: アスペクトレシオを維持して、イメージ/ビデオを拡大します。黒い境界が表示されます。<br>fill: アスペクトレシオを維持して、イメージ/ビデオを拡大します。ディスプレイいっぱいに拡大します。 ');
 
-    define('_WEBPHOTO_FLASHVAR_LOGO_FILE_DSC', '[Logo] logo.file <br />');
-    define('_WEBPHOTO_FLASHVAR_LOGO_LINK_DSC', '[Logo] logo.link <br />ロゴをクリックしたときのリンク先を設定する。<br />設定されていないときは、何もしない。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_LINKTARGET_DSC', '[Logo] logo.linktarget <br />ロゴをクリックしたときの画面を設定する。<br />_self, _blank, _parent, _top あるいは フレーム名');
-    define('_WEBPHOTO_FLASHVAR_LOGO_HIDE_DSC', '[Logo] logo.hide <br />デフォルトは「はい」で、ロゴは自動的に表示され、3秒後に消えます。<br />「いいえ」のときは、消えません。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_MARGIN_DSC', '[Logo] logo.margin <br />プレーヤーの外枠から距離。<br />pixel 単位。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_POSITION_DSC', '[Logo] logo.position <br />ロゴを表示する四隅を指定します。<br />bottom-left, bottom-right, top-left, top-right.<br />デフォルトは左下 bottom-left です。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_TIMEOUT_DSC', '[Logo] logo.timeout <br />logo.hide が「はい」のときに、ロゴが消えるまでの時間 (秒)。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_OVER_DSC', '[Logo] logo.over <br />マウスオーバー時の透過量。<br >０から１までの数値。');
-    define('_WEBPHOTO_FLASHVAR_LOGO_OUT_DSC', '[Logo] logo.out <br />マウスが外れたときの透過量。<br >０から１までの数値。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_FILE_DSC', '[Logo] logo.file <br>');
+    define('_WEBPHOTO_FLASHVAR_LOGO_LINK_DSC', '[Logo] logo.link <br>ロゴをクリックしたときのリンク先を設定する。<br>設定されていないときは、何もしない。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_LINKTARGET_DSC', '[Logo] logo.linktarget <br>ロゴをクリックしたときの画面を設定する。<br>_self, _blank, _parent, _top あるいは フレーム名');
+    define('_WEBPHOTO_FLASHVAR_LOGO_HIDE_DSC', '[Logo] logo.hide <br>デフォルトは「はい」で、ロゴは自動的に表示され、3秒後に消えます。<br>「いいえ」のときは、消えません。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_MARGIN_DSC', '[Logo] logo.margin <br>プレーヤーの外枠から距離。<br>pixel 単位。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_POSITION_DSC', '[Logo] logo.position <br>ロゴを表示する四隅を指定します。<br>bottom-left, bottom-right, top-left, top-right.<br>デフォルトは左下 bottom-left です。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_TIMEOUT_DSC', '[Logo] logo.timeout <br>logo.hide が「はい」のときに、ロゴが消えるまでの時間 (秒)。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_OVER_DSC', '[Logo] logo.over <br>マウスオーバー時の透過量。<br>０から１までの数値。');
+    define('_WEBPHOTO_FLASHVAR_LOGO_OUT_DSC', '[Logo] logo.out <br>マウスが外れたときの透過量。<br>０から１までの数値。');
 
     // --- options ---
     define('_WEBPHOTO_FLASHVAR_PLAYER_REPEAT_NONE', 'none プレイリストの最初のファイル');

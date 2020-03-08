@@ -39,7 +39,7 @@ $manage->init();
 // exit if execute edittag
 $manage->check_edittag();
 
-$xoopsOption['template_main'] = $manage->get_template_main();
+$GLOBALS['xoopsOption']['template_main'] = $manage->get_template_main();
 include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign($manage->main());

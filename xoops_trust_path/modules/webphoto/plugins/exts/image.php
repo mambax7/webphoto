@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_image
 //=========================================================
+
+/**
+ * Class webphoto_ext_image
+ */
 class webphoto_ext_image extends webphoto_ext_base
 {
     public $_image_create_class;
@@ -20,6 +24,12 @@ class webphoto_ext_image extends webphoto_ext_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_image constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -31,6 +41,11 @@ class webphoto_ext_image extends webphoto_ext_base
     //---------------------------------------------------------
     // check ext
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->match_ext_kind($ext, _C_WEBPHOTO_MIME_KIND_IMAGE);
@@ -39,11 +54,16 @@ class webphoto_ext_image extends webphoto_ext_base
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return int|null
+     */
     public function create_jpeg($param)
     {
-        $src_file  = $param['src_file'];
+        $src_file = $param['src_file'];
         $jpeg_file = $param['jpeg_file'];
-        $rotate    = $param['rotate'];
+        $rotate = $param['rotate'];
 
         return $this->_image_create_class->cmd_rotate($src_file, $jpeg_file, $rotate);
     }

@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_rss_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_rss_form
+ */
 class webphoto_admin_rss_form extends webphoto_lib_form
 {
     public $_THIS_FCT = 'rss_manager';
@@ -22,20 +26,32 @@ class webphoto_admin_rss_form extends webphoto_lib_form
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_rss_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_THIS_URL        = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
+        $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
         $this->_URL_ADMIN_INDEX = $this->_MODULE_URL . '/admin/index.php';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_rss_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_rss_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 

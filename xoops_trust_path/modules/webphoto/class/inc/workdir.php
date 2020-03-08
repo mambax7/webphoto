@@ -23,6 +23,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_workdir
 //=========================================================
+
+/**
+ * Class webphoto_inc_workdir
+ */
 class webphoto_inc_workdir
 {
     public $_ini_safe_mode;
@@ -37,9 +41,15 @@ class webphoto_inc_workdir
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_workdir constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
-        $this->_DIRNAME       = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_TRUST_DIRNAME = $trust_dirname;
 
         $this->_DIR_TRUST_UPLOADS = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname . '/uploads';
@@ -49,37 +59,51 @@ class webphoto_inc_workdir
         $this->_ini_safe_mode = ini_get('safe_mode');
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_workdir($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function get_config_workdir()
     {
         $name = $this->_DIRNAME;
 
         for ($i = 0; $i < 10; ++$i) {
             $workdir = $this->_DIR_TRUST_UPLOADS . '/' . $name;
-            $match   = $this->read_workdir($workdir);
-            if ($match == 0) {
+            $match = $this->read_workdir($workdir);
+            if (0 == $match) {
                 break;
             }
-            if ($match == 2) {
+            if (2 == $match) {
                 break;
             }
-            $name = uniqid('work_');
+            $name = uniqid('work_', true);
         }
 
         return $workdir;
     }
 
+    /**
+     * @param $workdir
+     * @return int
+     */
     public function read_workdir($workdir)
     {
         $match = 0;
@@ -95,14 +119,13 @@ class webphoto_inc_workdir
         }
 
         foreach ($lines as $line) {
-            if (trim($line[0]) == $workdir) {
+            if (isset($line[0]) && trim($line[0]) == $workdir) {
                 $match = 1;
 
-                if ((trim($line[1]) == XOOPS_DB_NAME)
-                    && (trim($line[2]) == XOOPS_DB_PREFIX)
-                    && (trim($line[3]) == XOOPS_URL)
-                    && (trim($line[4]) == $this->_DIRNAME)
-                ) {
+                if ((XOOPS_DB_NAME == trim($line[1]))
+                    && (XOOPS_DB_PREFIX == trim($line[2]))
+                    && (XOOPS_URL == trim($line[3]))
+                    && (trim($line[4]) == $this->_DIRNAME)) {
                     $match = 2;
                 }
 
@@ -113,6 +136,10 @@ class webphoto_inc_workdir
         return $match;
     }
 
+    /**
+     * @param $workdir
+     * @return bool|int
+     */
     public function write_workdir($workdir)
     {
         $data = $workdir;
@@ -129,9 +156,14 @@ class webphoto_inc_workdir
         return $this->write_file($this->_FILE_WORKDIR, $data, 'a', true);
     }
 
+    /**
+     * @param        $file
+     * @param string $mode
+     * @return array|bool
+     */
     public function read_file_cvs($file, $mode = 'r')
     {
-        $lines = array();
+        $lines = [];
 
         $fp = fopen($file, $mode);
         if (!$fp) {
@@ -143,9 +175,17 @@ class webphoto_inc_workdir
         }
 
         fclose($fp);
+
         return $lines;
     }
 
+    /**
+     * @param        $file
+     * @param        $data
+     * @param string $mode
+     * @param bool   $flag_chmod
+     * @return bool|int
+     */
     public function write_file($file, $data, $mode = 'w', $flag_chmod = false)
     {
         $fp = fopen($file, $mode);
@@ -164,6 +204,10 @@ class webphoto_inc_workdir
         return $byte;
     }
 
+    /**
+     * @param $file
+     * @param $mode
+     */
     public function chmod_file($file, $mode)
     {
         if (!$this->_ini_safe_mode) {
@@ -171,6 +215,9 @@ class webphoto_inc_workdir
         }
     }
 
+    /**
+     * @return string
+     */
     public function get_filename()
     {
         return $this->_FILE_WORKDIR;

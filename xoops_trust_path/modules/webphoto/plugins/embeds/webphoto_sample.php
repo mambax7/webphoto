@@ -23,6 +23,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // </object>
 //
 //=========================================================
+
+/**
+ * Class webphoto_embed_webphoto_sample
+ */
 class webphoto_embed_webphoto_sample extends webphoto_embed_base
 {
     public $_SITE = '';
@@ -38,10 +42,16 @@ class webphoto_embed_webphoto_sample extends webphoto_embed_base
         $this->set_sample('123');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
-        $movie     = $this->_SITE . 'libs/mediaplayer.swf';
-        $config    = $this->_SITE . 'index.php?fct=flash_config&item_id=' . $src;
+        $movie = $this->_SITE . 'libs/mediaplayer.swf';
+        $config = $this->_SITE . 'index.php?fct=flash_config&item_id=' . $src;
         $flashvars = 'config=' . urlencode($config);
 
         $object_extra = 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
@@ -55,20 +65,33 @@ class webphoto_embed_webphoto_sample extends webphoto_embed_base
         $str .= $this->build_param('flashvars', $flashvars);
         $str .= $this->build_embed_flash($movie, $width, $height, $embed_extra);
         $str .= $this->build_object_end();
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function thumb($src)
     {
         $str = $this->_SITE . 'index.php?fct=image&item_id=' . $src . '&file_kind=2';
+
         return $str;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();

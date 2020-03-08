@@ -21,6 +21,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext_pdf
 //=========================================================
+
+/**
+ * Class webphoto_ext_pdf
+ */
 class webphoto_ext_pdf extends webphoto_ext_base
 {
     public $_pdf_class;
@@ -28,6 +32,12 @@ class webphoto_ext_pdf extends webphoto_ext_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext_pdf constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -40,6 +50,11 @@ class webphoto_ext_pdf extends webphoto_ext_base
     //---------------------------------------------------------
     // check ext
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_ext($ext)
     {
         return $this->match_ext_kind($ext, _C_WEBPHOTO_MIME_KIND_OFFICE_PDF);
@@ -48,19 +63,31 @@ class webphoto_ext_pdf extends webphoto_ext_base
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return int|null
+     */
     public function create_jpeg($param)
     {
-        $src_file  = $param['src_file'];
+        $src_file = $param['src_file'];
         $jpeg_file = $param['jpeg_file'];
+
         return $this->_pdf_class->create_jpeg($src_file, $jpeg_file);
     }
 
     //---------------------------------------------------------
     // text content
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array|int|null
+     */
     public function get_text_content($param)
     {
         $file = isset($param['file_cont']) ? $param['file_cont'] : null;
+
         return $this->_pdf_class->get_text_content($file);
     }
 

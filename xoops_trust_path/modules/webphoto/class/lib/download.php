@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_download
 //=========================================================
+
+/**
+ * Class webphoto_main_download
+ */
 class webphoto_main_download extends webphoto_file_read
 {
     public $_readfile_class;
@@ -35,13 +39,19 @@ class webphoto_main_download extends webphoto_file_read
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_download constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_readfile_class = webphoto_lib_readfile::getInstance();
-        $this->_browser_class  = webphoto_lib_browser::getInstance();
-        $this->_filename_class = webphoto_download_filename::getInstance();
+        $this->_browser_class = webphoto_lib_browser::getInstance();
+        $this->_filename_class = webphoto_lib_download_filename::getInstance();
 
         $is_japanese = $this->xoops_class->is_japanese(_C_WEBPHOTO_JPAPANESE);
 
@@ -50,12 +60,18 @@ class webphoto_main_download extends webphoto_file_read
         $this->_filename_class->set_is_japanese($is_japanese);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_file_read|\webphoto_item_public|\webphoto_lib_error|\webphoto_main_download
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_download($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -64,7 +80,7 @@ class webphoto_main_download extends webphoto_file_read
     //---------------------------------------------------------
     public function main()
     {
-        $item_id   = $this->_post_class->get_post_get_int('item_id');
+        $item_id = $this->_post_class->get_post_get_int('item_id');
         $file_kind = $this->_post_class->get_post_get_int('file_kind');
 
         $item_row = $this->get_item_row($item_id);
@@ -85,7 +101,7 @@ class webphoto_main_download extends webphoto_file_read
             exit();
         }
 
-        $mime      = $file_row['file_mime'];
+        $mime = $file_row['file_mime'];
         $file_name = $file_row['file_name'];
 
         // Notice [PHP]: Undefined index: file_full
@@ -100,14 +116,19 @@ class webphoto_main_download extends webphoto_file_read
         exit();
     }
 
+    /**
+     * @param $item_row
+     * @param $file_row
+     * @return array
+     */
     public function build_filename_by_row($item_row, $file_row)
     {
         $item_title = $item_row['item_title'];
-        $file_name  = $file_row['file_name'];
-        $file_ext   = $file_row['file_ext'];
-        $file_kind  = $file_row['file_kind'];
+        $file_name = $file_row['file_name'];
+        $file_ext = $file_row['file_ext'];
+        $file_kind = $file_row['file_kind'];
 
-        $aux = $this->_file_handler->get_download_image_aux($file_kind);
+        $aux = $this->_fileHandler->get_download_image_aux($file_kind);
 
         if ($item_title) {
             if ($aux && $file_ext) {
@@ -123,13 +144,18 @@ class webphoto_main_download extends webphoto_file_read
             $name = $file_name;
         }
 
-        return array($name, $file_name);
+        return [$name, $file_name];
     }
 
+    /**
+     * @param $name
+     * @param $name_alt
+     * @return array
+     */
     public function build_filename_encode($name, $name_alt)
     {
         if (!$this->get_ini('download_filename_encode')) {
-            return array($name_alt, false);
+            return [$name_alt, false];
         }
 
         $this->_browser_class->presume_agent();

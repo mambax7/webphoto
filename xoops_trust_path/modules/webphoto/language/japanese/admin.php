@@ -9,7 +9,7 @@
 //---------------------------------------------------------
 // change log
 // 2010-10-01 K.OHWADA
-// ¼Ì¿¿ -> ¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢
+// ï¿½Ì¿ï¿½ -> ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½
 //---------------------------------------------------------
 
 // === define begin ===
@@ -21,194 +21,193 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //=========================================================
 
     // menu
-    define('_AM_WEBPHOTO_MYMENU_TPLSADMIN', '¥Æ¥ó¥×¥ì¡¼¥È´ÉÍý');
-    define('_AM_WEBPHOTO_MYMENU_BLOCKSADMIN', '¥Ö¥í¥Ã¥¯´ÉÍý/¥¢¥¯¥»¥¹¸¢¸Â');
+    define('_AM_WEBPHOTO_MYMENU_TPLSADMIN', 'ï¿½Æ¥ï¿½×¥ì¡¼ï¿½È´ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MYMENU_BLOCKSADMIN', 'ï¿½Ö¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
-    //define("_AM_WEBPHOTO_MYMENU_MYPREFERENCES","°ìÈÌÀßÄê");
+    //define("_AM_WEBPHOTO_MYMENU_MYPREFERENCES","ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
     // add for webphoto
-    define('_AM_WEBPHOTO_MYMENU_GOTO_MODULE', '¥â¥¸¥å¡¼¥ë¤Ø');
+    define('_AM_WEBPHOTO_MYMENU_GOTO_MODULE', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½');
 
     // Index (Categories)
-    define('_AM_WEBPHOTO_CAT_TH_PHOTOS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define('_AM_WEBPHOTO_CAT_TH_OPERATION', 'Áàºî');
-    define('_AM_WEBPHOTO_CAT_TH_IMAGE', '¥¤¥á¡¼¥¸');
-    define('_AM_WEBPHOTO_CAT_TH_PARENT', '¿Æ¥«¥Æ¥´¥ê¡¼');
-    define('_AM_WEBPHOTO_CAT_MENU_NEW', '¥«¥Æ¥´¥ê¡¼¤Î¿·µ¬ºîÀ®');
-    define('_AM_WEBPHOTO_CAT_MENU_EDIT', '¥«¥Æ¥´¥ê¡¼¤ÎÊÔ½¸');
-    define('_AM_WEBPHOTO_CAT_INSERTED', '¥«¥Æ¥´¥ê¡¼¤òÄÉ²Ã¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_CAT_UPDATED', '¥«¥Æ¥´¥ê¡¼¤ò¹¹¿·¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_CAT_BTN_BATCH', 'ÊÑ¹¹¤òÈ¿±Ç¤¹¤ë');
-    define('_AM_WEBPHOTO_CAT_LINK_MAKETOPCAT', '¥È¥Ã¥×¥«¥Æ¥´¥ê¡¼¤òÄÉ²Ã');
-    define('_AM_WEBPHOTO_CAT_LINK_ADDPHOTOS', '¤³¤Î¥«¥Æ¥´¥ê¡¼¤Ë²èÁü¤òÄÉ²Ã');
-    define('_AM_WEBPHOTO_CAT_LINK_EDIT', '¤³¤Î¥«¥Æ¥´¥ê¡¼¤ÎÊÔ½¸');
-    define('_AM_WEBPHOTO_CAT_LINK_MAKESUBCAT', '¤³¤Î¥«¥Æ¥´¥ê¡¼²¼¤Ë¥µ¥Ö¥«¥Æ¥´¥ê¡¼ºîÀ®');
-    define('_AM_WEBPHOTO_CAT_FMT_NEEDADMISSION', 'Ì¤¾µÇ§¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¢¤ê (%s Ëç)');
-    define('_AM_WEBPHOTO_CAT_FMT_CATDELCONFIRM', '¥«¥Æ¥´¥ê¡¼ %s ¤òºï½ü¤·¤Æ¤è¤í¤·¤¤¤Ç¤¹¤«¡© ÇÛ²¼¤Î¥µ¥Ö¥«¥Æ¥´¥ê¡¼¤â´Þ¤á¡¢¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ä¥³¥á¥ó¥È¤¬¤¹¤Ù¤Æºï½ü¤µ¤ì¤Þ¤¹');
+    define('_AM_WEBPHOTO_CAT_TH_PHOTOS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define('_AM_WEBPHOTO_CAT_TH_OPERATION', 'ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_TH_IMAGE', 'ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_TH_PARENT', 'ï¿½Æ¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼');
+    define('_AM_WEBPHOTO_CAT_MENU_NEW', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_MENU_EDIT', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½Ô½ï¿½');
+    define('_AM_WEBPHOTO_CAT_INSERTED', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_UPDATED', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ò¹¹¿ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_BTN_BATCH', 'ï¿½Ñ¹ï¿½ï¿½ï¿½È¿ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_LINK_MAKETOPCAT', 'ï¿½È¥Ã¥×¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_CAT_LINK_ADDPHOTOS', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_CAT_LINK_EDIT', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½Ô½ï¿½');
+    define('_AM_WEBPHOTO_CAT_LINK_MAKESUBCAT', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½Ë¥ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_FMT_NEEDADMISSION', 'Ì¤ï¿½ï¿½Ç§ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (%s ï¿½ï¿½)');
+    define('_AM_WEBPHOTO_CAT_FMT_CATDELCONFIRM', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ %s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û²ï¿½ï¿½Î¥ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½Þ¤á¡¢ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ä¥³ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½ï¿½Ù¤Æºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
     // Admission
-    define('_AM_WEBPHOTO_TH_BATCHUPDATE', '¥Á¥§¥Ã¥¯¤·¤¿¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò¤Þ¤È¤á¤ÆÊÑ¹¹¤¹¤ë');
-    define('_AM_WEBPHOTO_OPT_NOCHANGE', 'ÊÑ¹¹¤Ê¤·');
-    define('_AM_WEBPHOTO_JS_UPDATECONFIRM', '»ØÄê¤µ¤ì¤¿¹àÌÜ¤Ë¤Ä¤¤¤Æ¤Î¤ß¡¢¥Á¥§¥Ã¥¯¤·¤¿¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÊÑ¹¹¤·¤Þ¤¹');
+    define('_AM_WEBPHOTO_TH_BATCHUPDATE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤È¤ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_OPT_NOCHANGE', 'ï¿½Ñ¹ï¿½ï¿½Ê¤ï¿½');
+    define('_AM_WEBPHOTO_JS_UPDATECONFIRM', 'ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½ï¿½ï¿½Ü¤Ë¤Ä¤ï¿½ï¿½Æ¤Î¤ß¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
     // Module Checker
-    define('_AM_WEBPHOTO_H4_ENVIRONMENT', '´Ä¶­¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_PHPDIRECTIVE', 'PHPÀßÄê');
-    define('_AM_WEBPHOTO_BOTHOK', 'Î¾Êýok');
-    define('_AM_WEBPHOTO_NEEDON', 'Í×on');
+    define('_AM_WEBPHOTO_H4_ENVIRONMENT', 'ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_PHPDIRECTIVE', 'PHPï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BOTHOK', 'Î¾ï¿½ï¿½ok');
+    define('_AM_WEBPHOTO_NEEDON', 'ï¿½ï¿½on');
 
-    define('_AM_WEBPHOTO_H4_TABLE', '¥Æ¡¼¥Ö¥ë¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_COMMENTSTABLE', '¥³¥á¥ó¥È¥Æ¡¼¥Ö¥ë');
-    define('_AM_WEBPHOTO_NUMBEROFPHOTOS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÁí¿ô');
-    define('_AM_WEBPHOTO_NUMBEROFDESCRIPTIONS', '¥Æ¥­¥¹¥ÈÁí¿ô');
-    define('_AM_WEBPHOTO_NUMBEROFCATEGORIES', '¥«¥Æ¥´¥ê¡¼Áí¿ô');
-    define('_AM_WEBPHOTO_NUMBEROFVOTEDATA', 'ÅêÉ¼Áí¿ô');
-    define('_AM_WEBPHOTO_NUMBEROFCOMMENTS', '¥³¥á¥ó¥ÈÁí¿ô');
+    define('_AM_WEBPHOTO_H4_TABLE', 'ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_COMMENTSTABLE', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¥Æ¡ï¿½ï¿½Ö¥ï¿½');
+    define('_AM_WEBPHOTO_NUMBEROFPHOTOS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_NUMBEROFDESCRIPTIONS', 'ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_NUMBEROFCATEGORIES', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_NUMBEROFVOTEDATA', 'ï¿½ï¿½É¼ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_NUMBEROFCOMMENTS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_H4_CONFIG', 'ÀßÄê¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_PIPEFORIMAGES', '²èÁü½èÍý¥×¥í¥°¥é¥à');
+    define('_AM_WEBPHOTO_H4_CONFIG', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_PIPEFORIMAGES', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_ERR_LASTCHAR', "¥¨¥é¡¼: ºÇ¸å¤ÎÊ¸»ú¤Î'/'¤ÏÉ¬Í×¤¢¤ê¤Þ¤»¤ó");
-    define('_AM_WEBPHOTO_ERR_FIRSTCHAR', "¥¨¥é¡¼: ºÇ½é¤ÎÊ¸»ú¤Ï'/'¤Ç¤Ê¤±¤ì¤Ð¤Ê¤ê¤Þ¤»¤ó");
-    define('_AM_WEBPHOTO_ERR_PERMISSION', '¥¨¥é¡¼: ¤Þ¤º¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò¤Ä¤¯¤Ã¤Æ²¼¤µ¤¤¡£¤½¤Î¾å¤Ç¡¢½ñ¹þ²ÄÇ½¤ËÀßÄê¤·¤Æ²¼¤µ¤¤¡£Unix¤Ç¤Ïchmod 777¡¢Windows¤Ç¤ÏÆÉ¤ß¼è¤êÀìÍÑÂ°À­¤ò³°¤·¤Þ¤¹');
-    define('_AM_WEBPHOTO_ERR_NOTDIRECTORY', '¥¨¥é¡¼: »ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤¬¤¢¤ê¤Þ¤»¤ó.');
-    define('_AM_WEBPHOTO_ERR_READORWRITE',
-           '¥¨¥é¡¼: »ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤ÏÆÉ¤ß½Ð¤»¤Ê¤¤¤«½ñ¤­¹þ¤á¤Ê¤¤¤«¤Î¤¤¤º¤ì¤«¤Ç¤¹¡£¤½¤ÎÎ¾Êý¤òµö²Ä¤¹¤ëÀßÄê¤Ë¤·¤Æ²¼¤µ¤¤¡£Unix¤Ç¤Ïchmod 777¡¢Windows¤Ç¤ÏÆÉ¤ß¼è¤êÀìÍÑÂ°À­¤ò³°¤·¤Þ¤¹');
-    define('_AM_WEBPHOTO_ERR_SAMEDIR', '¥¨¥é¡¼: ¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢ÍÑ¥Ç¥£¥ì¥¯¥È¥ê¤È¥µ¥à¥Í¥¤¥ëÍÑ¥Ç¥£¥ì¥¯¥È¥ê¤¬°ì½ï¤Ç¤¹¡£¡Ê¤½¤ÎÀßÄê¤ÏÉÔ²ÄÇ½¤Ç¤¹¡Ë');
-    define('_AM_WEBPHOTO_LNK_CHECKGD2', 'GD2(truecolor)¥â¡¼¥É¤¬Æ°¤¯¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_CHECKGD2', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢GD2¥â¡¼¥É¤Ç¤ÏÆ°¤«¤Ê¤¤¤â¤Î¤ÈÄü¤á¤Æ¤¯¤À¤µ¤¤¡Ë');
-    define('_AM_WEBPHOTO_GD2SUCCESS', 'À®¸ù¤·¤Þ¤·¤¿!<br />¤ª¤½¤é¤¯¡¢¤³¤Î¥µ¡¼¥Ð¤ÎPHP¤Ç¤Ï¡¢GD2(true color)¥â¡¼¥É¤Ç²èÁü¤òÀ¸À®²ÄÇ½¤Ç¤¹¡£');
+    define('_AM_WEBPHOTO_ERR_LASTCHAR', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç¸ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBPHOTO_ERR_FIRSTCHAR', "ï¿½ï¿½ï¿½é¡¼: ï¿½Ç½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½'/'ï¿½Ç¤Ê¤ï¿½ï¿½ï¿½Ð¤Ê¤ï¿½Þ¤ï¿½ï¿½ï¿½");
+    define('_AM_WEBPHOTO_ERR_PERMISSION', 'ï¿½ï¿½ï¿½é¡¼: ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Ä¤ï¿½ï¿½Ã¤Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Unixï¿½Ç¤ï¿½chmod 777ï¿½ï¿½Windowsï¿½Ç¤ï¿½ï¿½É¤ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ò³°¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_ERR_NOTDIRECTORY', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤¬ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½.');
+    define('_AM_WEBPHOTO_ERR_READORWRITE', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½ï¿½É¤ß½Ð¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ñ¤­¹ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ì¤«ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Unixï¿½Ç¤ï¿½chmod 777ï¿½ï¿½Windowsï¿½Ç¤ï¿½ï¿½É¤ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ò³°¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_ERR_SAMEDIR', 'ï¿½ï¿½ï¿½é¡¼: ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Ñ¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½È¥ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½Ñ¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤¬ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô²ï¿½Ç½ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LNK_CHECKGD2', 'GD2(truecolor)ï¿½â¡¼ï¿½É¤ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_CHECKGD2', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½GD2ï¿½â¡¼ï¿½É¤Ç¤ï¿½Æ°ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GD2SUCCESS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½!<br>ï¿½ï¿½ï¿½ï¿½ï¿½é¤¯ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ð¤ï¿½PHPï¿½Ç¤Ï¡ï¿½GD2(true color)ï¿½â¡¼ï¿½É¤Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½Ç¤ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_H4_PHOTOLINK', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤È¥µ¥à¥Í¥¤¥ë¤Î¥ê¥ó¥¯¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_NOWCHECKING', '¥Á¥§¥Ã¥¯Ãæ .');
+    define('_AM_WEBPHOTO_H4_PHOTOLINK', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½Î¥ï¿½ó¥¯¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_NOWCHECKING', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ .');
 
-    define('_AM_WEBPHOTO_FMT_NUMBEROFDEADPHOTOS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¤Ê¤¤¥ì¥³¡¼¥É¤¬ %s ¸Ä¤¢¤ê¤Þ¤·¤¿¡£');
-    define('_AM_WEBPHOTO_FMT_NUMBEROFDEADTHUMBS', '¥µ¥à¥Í¥¤¥ë¤¬ %s ¸ÄÌ¤ºîÀ®¤Ç¤¹');
-    define('_AM_WEBPHOTO_FMT_NUMBEROFREMOVEDTMPS', '¥Æ¥ó¥Ý¥é¥ê¤ò %s ¸Äºï½ü¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_LINK_REDOTHUMBS', '¥µ¥à¥Í¥¤¥ëºÆ¹½ÃÛ');
-    define('_AM_WEBPHOTO_LINK_TABLEMAINTENANCE', '¥Æ¡¼¥Ö¥ë¥á¥ó¥Æ¥Ê¥ó¥¹');
+    define('_AM_WEBPHOTO_FMT_NUMBEROFDEADPHOTOS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¤Ê¤ï¿½ï¿½ì¥³ï¿½ï¿½ï¿½É¤ï¿½ %s ï¿½Ä¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FMT_NUMBEROFDEADTHUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ë¤¬ %s ï¿½ï¿½Ì¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½');
+    define('_AM_WEBPHOTO_FMT_NUMBEROFREMOVEDTMPS', 'ï¿½Æ¥ï¿½Ý¥ï¿½ï¿½ï¿½ %s ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LINK_REDOTHUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½Æ¹ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LINK_TABLEMAINTENANCE', 'ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½Æ¥Ê¥ï¿½');
 
     // Redo Thumbnail
-    define('_AM_WEBPHOTO_FMT_CHECKING', '%s ¤ò¥Á¥§¥Ã¥¯Ãæ ... ');
-    define('_AM_WEBPHOTO_FORM_RECORDMAINTENANCE', '¥µ¥à¥Í¥¤¥ë¤ÎºÆ¹½ÃÛ¤Ê¤É¡¢¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î³Æ¼ï¥á¥ó¥Æ¥Ê¥ó¥¹');
+    define('_AM_WEBPHOTO_FMT_CHECKING', '%s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ ... ');
+    define('_AM_WEBPHOTO_FORM_RECORDMAINTENANCE', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ÎºÆ¹ï¿½ï¿½Û¤Ê¤É¡ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î³Æ¼ï¿½ï¿½ï¿½Æ¥Ê¥ï¿½');
 
-    define('_AM_WEBPHOTO_FAILEDREADING', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹þ¤ß¼ºÇÔ');
-    define('_AM_WEBPHOTO_CREATEDTHUMBS', '¥µ¥à¥Í¥¤¥ëºîÀ®´°Î»');
-    define('_AM_WEBPHOTO_BIGTHUMBS', '¥µ¥à¥Í¥¤¥ë¤òºîÀ®¤Ç¤­¤Ê¤¤¤Î¤Ç¡¢¥³¥Ô¡¼¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_SKIPPED', '¥¹¥­¥Ã¥×¤·¤Þ¤¹');
-    define('_AM_WEBPHOTO_SIZEREPAIRED', '(ÅÐÏ¿¤µ¤ì¤Æ¤¤¤¿¥Ô¥¯¥»¥ë¿ô¤ò½¤Àµ¤·¤Þ¤·¤¿)');
-    define('_AM_WEBPHOTO_RECREMOVED', '¤³¤Î¥ì¥³¡¼¥É¤Ïºï½ü¤µ¤ì¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_PHOTONOTEXISTS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬¤¢¤ê¤Þ¤»¤ó');
-    define('_AM_WEBPHOTO_PHOTORESIZED', '¥µ¥¤¥ºÄ´À°¤·¤Þ¤·¤¿');
+    define('_AM_WEBPHOTO_FAILEDREADING', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤ß¹ï¿½ï¿½ß¼ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CREATEDTHUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»');
+    define('_AM_WEBPHOTO_BIGTHUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Ê¤ï¿½ï¿½Î¤Ç¡ï¿½ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_SKIPPED', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥×¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_SIZEREPAIRED', '(ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½Ô¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½)');
+    define('_AM_WEBPHOTO_RECREMOVED', 'ï¿½ï¿½ï¿½Î¥ì¥³ï¿½ï¿½ï¿½É¤Ïºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PHOTONOTEXISTS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PHOTORESIZED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_TEXT_RECORDFORSTARTING', '½èÍý¤ò³«»Ï¤¹¤ë¥ì¥³¡¼¥ÉÈÖ¹æ');
-    define('_AM_WEBPHOTO_TEXT_NUMBERATATIME', '°ìÅÙ¤Ë½èÍý¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define('_AM_WEBPHOTO_LABEL_DESCNUMBERATATIME', '¤³¤Î¿ô¤òÂç¤­¤¯¤·¤¹¤®¤ë¤È¥µ¡¼¥Ð¤Î¥¿¥¤¥à¥¢¥¦¥È¤ò¾·¤­¤Þ¤¹');
+    define('_AM_WEBPHOTO_TEXT_RECORDFORSTARTING', 'ï¿½ï¿½ï¿½ï¿½ï¿½ò³«»Ï¤ï¿½ï¿½ï¿½ì¥³ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½');
+    define('_AM_WEBPHOTO_TEXT_NUMBERATATIME', 'ï¿½ï¿½ï¿½Ù¤Ë½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define('_AM_WEBPHOTO_LABEL_DESCNUMBERATATIME', 'ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ð¤Î¥ï¿½ï¿½ï¿½ï¿½à¥¢ï¿½ï¿½ï¿½È¤ò¾·¤ï¿½ï¿½Þ¤ï¿½');
 
-    define('_AM_WEBPHOTO_RADIO_FORCEREDO', '¥µ¥à¥Í¥¤¥ë¤¬¤¢¤Ã¤Æ¤â¾ï¤ËºîÀ®¤·Ä¾¤¹');
-    define('_AM_WEBPHOTO_RADIO_REMOVEREC', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬¤Ê¤¤¥ì¥³¡¼¥É¤òºï½ü¤¹¤ë');
-    define('_AM_WEBPHOTO_RADIO_RESIZE', 'º£¤Î¥Ô¥¯¥»¥ë¿ôÀßÄê¤è¤ê¤âÂç¤­¤Ê²èÁü¤Ï¥µ¥¤¥º¤òÀÚ¤ê¤Ä¤á¤ë');
+    define('_AM_WEBPHOTO_RADIO_FORCEREDO', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½Ã¤Æ¤ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½Ä¾ï¿½ï¿½');
+    define('_AM_WEBPHOTO_RADIO_REMOVEREC', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ì¥³ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_RADIO_RESIZE', 'ï¿½ï¿½ï¿½Î¥Ô¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½Ê²ï¿½ï¿½ï¿½ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¤ï¿½Ä¤ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_FINISHED', '´°Î»');
-    define('_AM_WEBPHOTO_LINK_RESTART', 'ºÆ¥¹¥¿¡¼¥È');
-    define('_AM_WEBPHOTO_SUBMIT_NEXT', '¼¡¤Ø');
+    define('_AM_WEBPHOTO_FINISHED', 'ï¿½ï¿½Î»');
+    define('_AM_WEBPHOTO_LINK_RESTART', 'ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_SUBMIT_NEXT', 'ï¿½ï¿½ï¿½ï¿½');
 
     // GroupPerm Global
-    define('_AM_WEBPHOTO_GROUPPERM_GLOBALDESC', '¥°¥ë¡¼¥×¸Ä¡¹¤Ë¤Ä¤¤¤Æ¡¢¸¢¸Â¤òÀßÄê¤·¤Þ¤¹');
-    define('_AM_WEBPHOTO_GPERMUPDATED', '¸¢¸ÂÀßÄê¤òÊÑ¹¹¤·¤Þ¤·¤¿');
+    define('_AM_WEBPHOTO_GROUPPERM_GLOBALDESC', 'ï¿½ï¿½ï¿½ë¡¼ï¿½×¸Ä¡ï¿½ï¿½Ë¤Ä¤ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½Â¤ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_GPERMUPDATED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     // Import
-    define('_AM_WEBPHOTO_H3_FMT_IMPORTTO', '%s ¤Ø¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥¤¥ó¥Ý¡¼¥È');
-    define('_AM_WEBPHOTO_FMT_IMPORTFROMMYALBUMP', 'myAblum-P¥â¥¸¥å¡¼¥ë: ¡Ö%s¡× ¤«¤é¤Î¼è¤ê¹þ¤ß¡Ê¥«¥Æ¥´¥ê¡¼Ã±°Ì¡Ë');
-    define('_AM_WEBPHOTO_FMT_IMPORTFROMIMAGEMANAGER', '¥¤¥á¡¼¥¸¡¦¥Þ¥Í¡¼¥¸¥ã¤«¤é¤Î¼è¤ê¹þ¤ß¡Ê¥«¥Æ¥´¥ê¡¼Ã±°Ì¡Ë');
+    define('_AM_WEBPHOTO_H3_FMT_IMPORTTO', '%s ï¿½Ø¤Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FMT_IMPORTFROMMYALBUMP', 'myAblum-Pï¿½â¥¸ï¿½å¡¼ï¿½ï¿½: ï¿½ï¿½%sï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ï¿½ß¡Ê¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼Ã±ï¿½Ì¡ï¿½');
+    define('_AM_WEBPHOTO_FMT_IMPORTFROMIMAGEMANAGER', 'ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Þ¥Í¡ï¿½ï¿½ï¿½ï¿½ã¤«ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ï¿½ß¡Ê¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼Ã±ï¿½Ì¡ï¿½');
 
-    define('_AM_WEBPHOTO_IMPORTCONFIRM', '¥¤¥ó¥Ý¡¼¥È¤·¤Þ¤¹¡£¤è¤í¤·¤¤¤Ç¤¹¤«¡©');
-    define('_AM_WEBPHOTO_FMT_IMPORTSUCCESS', '%s Ëç¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò¥¤¥ó¥Ý¡¼¥È¤·¤Þ¤·¤¿');
+    define('_AM_WEBPHOTO_IMPORTCONFIRM', 'ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FMT_IMPORTSUCCESS', '%s ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ò¥¤¥ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     // Export
-    define('_AM_WEBPHOTO_H3_FMT_EXPORTTO', '%s ¤«¤éÂ¾¥â¥¸¥å¡¼¥ëÅù¤Ø¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥¨¥¯¥¹¥Ý¡¼¥È');
-    define('_AM_WEBPHOTO_FMT_EXPORTTOIMAGEMANAGER', '¥¤¥á¡¼¥¸¡¦¥Þ¥Í¡¼¥¸¥ã¤Ø¤Î½ñ¤­½Ð¤·¡Ê¥«¥Æ¥´¥ê¡¼Ã±°Ì¡Ë');
-    define('_AM_WEBPHOTO_FMT_EXPORTIMSRCCAT', '¥³¥Ô¡¼¸µ¥«¥Æ¥´¥ê¡¼');
-    define('_AM_WEBPHOTO_FMT_EXPORTIMDSTCAT', '¥³¥Ô¡¼Àè¥«¥Æ¥´¥ê¡¼');
-    define('_AM_WEBPHOTO_CB_EXPORTRECURSIVELY', '¥µ¥Ö¥«¥Æ¥´¥ê¡¼¤â¥¨¥¯¥¹¥Ý¡¼¥È¤¹¤ë');
-    define('_AM_WEBPHOTO_CB_EXPORTTHUMB', '¥µ¥à¥Í¥¤¥ë²èÁü¤ÎÊý¤ò¥¨¥¯¥¹¥Ý¡¼¥È¤¹¤ë');
-    define('_AM_WEBPHOTO_EXPORTCONFIRM', '¥¨¥¯¥¹¥Ý¡¼¥È¤·¤Þ¤¹¡£¤è¤í¤·¤¤¤Ç¤¹¤«¡©');
-    define('_AM_WEBPHOTO_FMT_EXPORTSUCCESS', '%s Ëç¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò¥¨¥¯¥¹¥Ý¡¼¥È¤·¤Þ¤·¤¿');
+    define('_AM_WEBPHOTO_H3_FMT_EXPORTTO', '%s ï¿½ï¿½ï¿½ï¿½Â¾ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ø¤Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FMT_EXPORTTOIMAGEMANAGER', 'ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Þ¥Í¡ï¿½ï¿½ï¿½ï¿½ï¿½Ø¤Î½ñ¤­½Ð¤ï¿½ï¿½Ê¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼Ã±ï¿½Ì¡ï¿½');
+    define('_AM_WEBPHOTO_FMT_EXPORTIMSRCCAT', 'ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼');
+    define('_AM_WEBPHOTO_FMT_EXPORTIMDSTCAT', 'ï¿½ï¿½ï¿½Ô¡ï¿½ï¿½è¥«ï¿½Æ¥ï¿½ï¿½ê¡¼');
+    define('_AM_WEBPHOTO_CB_EXPORTRECURSIVELY', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½â¥¨ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CB_EXPORTTHUMB', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¥¨¥ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_EXPORTCONFIRM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FMT_EXPORTSUCCESS', '%s ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ò¥¨¥ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // move from main.php
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_BTN_SELECTALL', 'Á´ÁªÂò');
-    define('_AM_WEBPHOTO_BTN_SELECTNONE', 'ÁªÂò²ò½ü');
-    define('_AM_WEBPHOTO_BTN_SELECTRVS', 'ÁªÂòÈ¿Å¾');
-    define('_AM_WEBPHOTO_FMT_PHOTONUM', '%s Ëç');
+    define('_AM_WEBPHOTO_BTN_SELECTALL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BTN_SELECTNONE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BTN_SELECTRVS', 'ï¿½ï¿½ï¿½ï¿½È¿Å¾');
+    define('_AM_WEBPHOTO_FMT_PHOTONUM', '%s ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_ADMISSION', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¾µÇ§');
-    define('_AM_WEBPHOTO_ADMITTING', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò¾µÇ§¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_LABEL_ADMIT', '¥Á¥§¥Ã¥¯¤·¤¿¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò¾µÇ§¤¹¤ë');
-    define('_AM_WEBPHOTO_BUTTON_ADMIT', '¾µÇ§');
-    define('_AM_WEBPHOTO_BUTTON_EXTRACT', 'Ãê½Ð');
+    define('_AM_WEBPHOTO_ADMISSION', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¾ï¿½Ç§');
+    define('_AM_WEBPHOTO_ADMITTING', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç§ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LABEL_ADMIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç§ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BUTTON_ADMIT', 'ï¿½ï¿½Ç§');
+    define('_AM_WEBPHOTO_BUTTON_EXTRACT', 'ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_LABEL_REMOVE', '¥Á¥§¥Ã¥¯¤·¤¿¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òºï½ü¤¹¤ë');
-    define('_AM_WEBPHOTO_JS_REMOVECONFIRM', 'ºï½ü¤·¤Æ¤è¤í¤·¤¤¤Ç¤¹¤«');
-    define('_AM_WEBPHOTO_LABEL_MOVE', '¥Á¥§¥Ã¥¯¤·¤¿¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ò°ÜÆ°¤¹¤ë');
-    define('_AM_WEBPHOTO_BUTTON_MOVE', '°ÜÆ°');
-    define('_AM_WEBPHOTO_BUTTON_UPDATE', 'ÊÑ¹¹');
-    define('_AM_WEBPHOTO_DEADLINKMAINPHOTO', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬Â¸ºß¤·¤Þ¤»¤ó');
+    define('_AM_WEBPHOTO_LABEL_REMOVE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_JS_REMOVECONFIRM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LABEL_MOVE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BUTTON_MOVE', 'ï¿½ï¿½Æ°');
+    define('_AM_WEBPHOTO_BUTTON_UPDATE', 'ï¿½Ñ¹ï¿½');
+    define('_AM_WEBPHOTO_DEADLINKMAINPHOTO', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_NOSUBMITTED', '¿·µ¬Åê¹Æ¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Ï¤¢¤ê¤Þ¤»¤ó¡£');
-    define('_AM_WEBPHOTO_ADDMAIN', '¥È¥Ã¥×¥«¥Æ¥´¥ê¤òÄÉ²Ã');
-    define('_AM_WEBPHOTO_IMGURL', '²èÁü¤ÎURL (²èÁü¤Î¹â¤µ¤Ï¤¢¤é¤«¤¸¤á50pixel¤Ë): ');
-    define('_AM_WEBPHOTO_ADD', 'ÄÉ²Ã');
-    define('_AM_WEBPHOTO_ADDSUB', '¥µ¥Ö¥«¥Æ¥´¥ê¤ÎÄÉ²Ã');
+    define('_AM_WEBPHOTO_NOSUBMITTED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ADDMAIN', 'ï¿½È¥Ã¥×¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_IMGURL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½URL (ï¿½ï¿½ï¿½ï¿½ï¿½Î¹â¤µï¿½Ï¤ï¿½ï¿½é¤«ï¿½ï¿½ï¿½ï¿½50pixelï¿½ï¿½): ');
+    define('_AM_WEBPHOTO_ADD', 'ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_ADDSUB', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½É²ï¿½');
     define('_AM_WEBPHOTO_IN', '');
-    define('_AM_WEBPHOTO_MODCAT', '¥«¥Æ¥´¥êÊÑ¹¹');
+    define('_AM_WEBPHOTO_MODCAT', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½');
 
-    define('_AM_WEBPHOTO_MODREQDELETED', 'ÊÑ¹¹Í×ÀÁ¤òºï½ü');
-    define('_AM_WEBPHOTO_IMGURLMAIN', '²èÁüURL (²èÁü¤Î¹â¤µ¤Ï¤¢¤é¤«¤¸¤á50pixel¤Ë): ');
-    define('_AM_WEBPHOTO_PARENT', '¿Æ¥«¥Æ¥´¥ê:');
-    define('_AM_WEBPHOTO_SAVE', 'ÊÑ¹¹¤òÊÝÂ¸');
-    define('_AM_WEBPHOTO_CATDELETED', '¥«¥Æ¥´¥ê¤Î¾Ãµî´°Î»');
-    define('_AM_WEBPHOTO_CATDEL_WARNING', '¥«¥Æ¥´¥ê¤ÈÆ±»þ¤Ë¤³¤³¤Ë´Þ¤Þ¤ì¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ª¤è¤Ó¥³¥á¥ó¥È¤¬Á´¤Æºï½ü¤µ¤ì¤Þ¤¹¤¬¤è¤í¤·¤¤¤Ç¤¹¤«¡©');
+    define('_AM_WEBPHOTO_MODREQDELETED', 'ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_IMGURLMAIN', 'ï¿½ï¿½ï¿½ï¿½URL (ï¿½ï¿½ï¿½ï¿½ï¿½Î¹â¤µï¿½Ï¤ï¿½ï¿½é¤«ï¿½ï¿½ï¿½ï¿½50pixelï¿½ï¿½): ');
+    define('_AM_WEBPHOTO_PARENT', 'ï¿½Æ¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½:');
+    define('_AM_WEBPHOTO_SAVE', 'ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Â¸');
+    define('_AM_WEBPHOTO_CATDELETED', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¾Ãµî´°Î»');
+    define('_AM_WEBPHOTO_CATDEL_WARNING', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½ï¿½Ë´Þ¤Þ¤ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¥ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_NEWCATADDED', '¿·¥«¥Æ¥´¥êÄÉ²Ã¤ËÀ®¸ù!');
-    define('_AM_WEBPHOTO_ERROREXIST', '¥¨¥é¡¼: Äó¶¡¤µ¤ì¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Ï¤¹¤Ç¤Ë¥Ç¡¼¥¿¥Ù¡¼¥¹¤ËÂ¸ºß¤·¤Þ¤¹¡£');
-    define('_AM_WEBPHOTO_ERRORTITLE', '¥¨¥é¡¼: ¥¿¥¤¥È¥ë¤¬É¬Í×¤Ç¤¹!');
-    define('_AM_WEBPHOTO_ERRORDESC', '¥¨¥é¡¼: ÀâÌÀ¤¬É¬Í×¤Ç¤¹!');
-    define('_AM_WEBPHOTO_WEAPPROVED', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥Ç¡¼¥¿¥Ù¡¼¥¹¤Ø¤Î¥ê¥ó¥¯Í×ÀÁ¤ò¾µÇ§¤·¤Þ¤·¤¿¡£');
-    define('_AM_WEBPHOTO_THANKSSUBMIT', '¤´Åê¹ÆÍ­¤êÆñ¤¦¤´¤¶¤¤¤Þ¤¹¡£');
-    define('_AM_WEBPHOTO_CONFUPDATED', 'ÀßÄê¤ò¹¹¿·¤·¤Þ¤·¤¿¡£');
+    define('_AM_WEBPHOTO_NEWCATADDED', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½!');
+    define('_AM_WEBPHOTO_ERROREXIST', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ó¶¡¤ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½Ç¤Ë¥Ç¡ï¿½ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ERRORTITLE', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ï¿½ï¿½È¥ë¤¬É¬ï¿½×¤Ç¤ï¿½!');
+    define('_AM_WEBPHOTO_ERRORDESC', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¬ï¿½×¤Ç¤ï¿½!');
+    define('_AM_WEBPHOTO_WEAPPROVED', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥Ç¡ï¿½ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½Ø¤Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç§ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_THANKSSUBMIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½Í­ï¿½ï¿½ï¿½ñ¤¦¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CONFUPDATED', 'ï¿½ï¿½ï¿½ï¿½ò¹¹¿ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
-    define('_AM_WEBPHOTO_PHOTOBATCHUPLOAD', '¥µ¡¼¥Ð¤Ë¥¢¥Ã¥×¥í¡¼¥ÉºÑ¥Õ¥¡¥¤¥ë¤Î°ì³çÅÐÏ¿');
+    define('_AM_WEBPHOTO_PHOTOBATCHUPLOAD', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ð¤Ë¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½ÉºÑ¥Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½Ï¿');
     define('_AM_WEBPHOTO_PHOTOPATH', 'Path:');
-    define('_AM_WEBPHOTO_TEXT_DIRECTORY', '¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_DESC_PHOTOPATH', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î´Þ¤Þ¤ì¤ë¥Ç¥£¥ì¥¯¥È¥ê¤òÀäÂÐ¥Ñ¥¹¤Ç»ØÄê¤·¤Æ²¼¤µ¤¤');
-    define('_AM_WEBPHOTO_MES_INVALIDDIRECTORY', '»ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤«¤é¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÆÉ¤ß½Ð¤»¤Þ¤»¤ó');
-    define('_AM_WEBPHOTO_MES_BATCHDONE', '%s Ëç¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÅÐÏ¿¤·¤Þ¤·¤¿');
-    define('_AM_WEBPHOTO_MES_BATCHNONE', '»ØÄê¤µ¤ì¤¿¥Ç¥£¥ì¥¯¥È¥ê¤Ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¥Õ¥¡¥¤¥ë¤¬¤ß¤Ä¤«¤ê¤Þ¤»¤ó¤Ç¤·¤¿');
+    define('_AM_WEBPHOTO_TEXT_DIRECTORY', 'ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_DESC_PHOTOPATH', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î´Þ¤Þ¤ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MES_INVALIDDIRECTORY', 'ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ê¤«ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤ß½Ð¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MES_BATCHDONE', '%s ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MES_BATCHNONE', 'ï¿½ï¿½ï¿½ê¤µï¿½ì¤¿ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ë¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ß¤Ä¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // move from myalbum_constants.php
     //---------------------------------------------------------
     // Global Group Permission
-    define('_AM_WEBPHOTO_GPERM_INSERTABLE', 'Åê¹Æ²Ä¡ÊÍ×¾µÇ§¡Ë');
-    define('_AM_WEBPHOTO_GPERM_SUPERINSERT', 'Åê¹Æ²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
-    define('_AM_WEBPHOTO_GPERM_EDITABLE', 'ÊÔ½¸²Ä¡ÊÍ×¾µÇ§¡Ë');
-    define('_AM_WEBPHOTO_GPERM_SUPEREDIT', 'ÊÔ½¸²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
-    define('_AM_WEBPHOTO_GPERM_DELETABLE', 'ºï½ü²Ä¡ÊÍ×¾µÇ§¡Ë');
-    define('_AM_WEBPHOTO_GPERM_SUPERDELETE', 'ºï½ü²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
-    define('_AM_WEBPHOTO_GPERM_TOUCHOTHERS', 'Â¾¥æ¡¼¥¶¤Î¥¤¥á¡¼¥¸¤òÊÔ½¸¡¦ºï½ü²Ä¡ÊÍ×¾µÇ§¡Ë');
-    define('_AM_WEBPHOTO_GPERM_SUPERTOUCHOTHERS', 'Â¾¥æ¡¼¥¶¤Î¥¤¥á¡¼¥¸¤òÊÔ½¸¡¦ºï½ü²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
-    define('_AM_WEBPHOTO_GPERM_RATEVIEW', 'ÅêÉ¼±ÜÍ÷²Ä');
-    define('_AM_WEBPHOTO_GPERM_RATEVOTE', 'ÅêÉ¼²Ä');
-    define('_AM_WEBPHOTO_GPERM_TELLAFRIEND', 'Í§¿Í¤ËÃÎ¤é¤»¤ë');
+    define('_AM_WEBPHOTO_GPERM_INSERTABLE', 'ï¿½ï¿½Æ²Ä¡ï¿½ï¿½×¾ï¿½Ç§ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_SUPERINSERT', 'ï¿½ï¿½Æ²Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
+    define('_AM_WEBPHOTO_GPERM_EDITABLE', 'ï¿½Ô½ï¿½ï¿½Ä¡ï¿½ï¿½×¾ï¿½Ç§ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_SUPEREDIT', 'ï¿½Ô½ï¿½ï¿½Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
+    define('_AM_WEBPHOTO_GPERM_DELETABLE', 'ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½×¾ï¿½Ç§ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_SUPERDELETE', 'ï¿½ï¿½ï¿½ï¿½Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
+    define('_AM_WEBPHOTO_GPERM_TOUCHOTHERS', 'Â¾ï¿½æ¡¼ï¿½ï¿½ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½×¾ï¿½Ç§ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_SUPERTOUCHOTHERS', 'Â¾ï¿½æ¡¼ï¿½ï¿½ï¿½Î¥ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
+    define('_AM_WEBPHOTO_GPERM_RATEVIEW', 'ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_RATEVOTE', 'ï¿½ï¿½É¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_TELLAFRIEND', 'Í§ï¿½Í¤ï¿½ï¿½Î¤é¤»ï¿½ï¿½');
 
     // add for webphoto
-    define('_AM_WEBPHOTO_GPERM_TAGEDIT', '¥¿¥°ÊÔ½¸²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
+    define('_AM_WEBPHOTO_GPERM_TAGEDIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
 
     // v0.30
-    define('_AM_WEBPHOTO_GPERM_MAIL', '¥á¡¼¥ëÅê¹Æ²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
-    define('_AM_WEBPHOTO_GPERM_FILE', '¥Õ¥¡¥¤¥ëÅê¹Æ²Ä¡Ê¾µÇ§ÉÔÍ×¡Ë');
+    define('_AM_WEBPHOTO_GPERM_MAIL', 'ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½Æ²Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
+    define('_AM_WEBPHOTO_GPERM_FILE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²Ä¡Ê¾ï¿½Ç§ï¿½ï¿½ï¿½×¡ï¿½');
 
     //=========================================================
     // add for webphoto
@@ -220,20 +219,20 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
 
     // list
-    define('_AM_WEBPHOTO_GICON_ADD', '¥¢¥¤¥³¥ó¤ò¿·µ¬ÄÉ²Ã');
-    define('_AM_WEBPHOTO_GICON_LIST_IMAGE', '¥¢¥¤¥³¥ó');
-    define('_AM_WEBPHOTO_GICON_LIST_SHADOW', '¥·¥ã¥É¡¼');
-    define('_AM_WEBPHOTO_GICON_ANCHOR', '¥¢¥ó¥«¡¼¥Ý¥¤¥ó¥È');
-    define('_AM_WEBPHOTO_GICON_WINANC', '¥¦¥£¥ó¥É¥¦¥¢¥ó¥«¡¼');
-    define('_AM_WEBPHOTO_GICON_LIST_EDIT', '¥¢¥¤¥³¥ó¤ÎÊÔ½¸');
+    define('_AM_WEBPHOTO_GICON_ADD', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò¿·µï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_GICON_LIST_IMAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_LIST_SHADOW', 'ï¿½ï¿½ï¿½ï¿½É¡ï¿½');
+    define('_AM_WEBPHOTO_GICON_ANCHOR', 'ï¿½ï¿½ï¿½ó¥«¡ï¿½ï¿½Ý¥ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_WINANC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¥ï¿½ï¿½ï¿½ï¿½ó¥«¡ï¿½');
+    define('_AM_WEBPHOTO_GICON_LIST_EDIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½');
 
     // form
-    define('_AM_WEBPHOTO_GICON_MENU_NEW', '¥¢¥¤¥³¥ó¤Î¿·µ¬ºîÀ®');
-    define('_AM_WEBPHOTO_GICON_MENU_EDIT', '¥¢¥¤¥³¥ó¤ÎÊÔ½¸');
-    define('_AM_WEBPHOTO_GICON_IMAGE_SEL', '¥¢¥¤¥³¥ó²èÁü¤ÎÁªÂò');
-    define('_AM_WEBPHOTO_GICON_SHADOW_SEL', '¥¢¥¤¥³¥ó¥·¥ã¥É¡¼¤ÎÁªÂò');
-    define('_AM_WEBPHOTO_GICON_SHADOW_DEL', '¥¢¥¤¥³¥ó¥·¥ã¥É¡¼¤òºï½ü');
-    define('_AM_WEBPHOTO_GICON_DELCONFIRM', '¥¢¥¤¥³¥ó %s ¤òºï½ü¤·¤Æ¤è¤í¤·¤¤¤Ç¤¹¤«¡© ');
+    define('_AM_WEBPHOTO_GICON_MENU_NEW', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_MENU_EDIT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½');
+    define('_AM_WEBPHOTO_GICON_IMAGE_SEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_SHADOW_SEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥·¥ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_SHADOW_DEL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¥·¥ï¿½É¡ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GICON_DELCONFIRM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ %s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ ');
 
     //---------------------------------------------------------
     // mime type
@@ -241,267 +240,267 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
 
     // Mimetype Form
-    define('_AM_WEBPHOTO_MIME_CREATEF', 'MIME¥¿¥¤¥× ºîÀ®');
-    define('_AM_WEBPHOTO_MIME_MODIFYF', 'MIME¥¿¥¤¥× ÊÔ½¸');
-    define('_AM_WEBPHOTO_MIME_NOMIMEINFO', 'MIME¥¿¥¤¥×¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Þ¤»¤ó¡£');
-    define('_AM_WEBPHOTO_MIME_INFOTEXT', '<ul><li>¿·¤·¤¤MIME¥¿¥¤¥×¤òºîÀ®¤¹¤ë¤³¤È¤¬¤Ç¤­¡¢¤³¤Î¥Õ¥©¡¼¥à¤«¤é´ÊÃ±¤ËÊÔ½¸µÚ¤Óºï½ü¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£ </li>
-    <li>´ÉÍý¼ÔµÚ¤Ó¥æ¡¼¥¶¤¬¥¢¥Ã¥×¥í¡¼¥É¤Ç¤­¤ëMIME¥¿¥¤¥×¤ò³ÎÇ§¤Ç¤­¤Þ¤¹¡£</li>
-    <li>¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤Æ¤¤¤ëMIME¥¿¥¤¥×¤òÊÑ¹¹¤¹¤ë»ö¤¬½ÐÍè¤Þ¤¹¡£</li></ul>
+    define('_AM_WEBPHOTO_MIME_CREATEF', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_MODIFYF', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½');
+    define('_AM_WEBPHOTO_MIME_NOMIMEINFO', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ò¤µ¤ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_INFOTEXT', '<ul><li>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¤³ï¿½È¤ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½à¤«ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½Ô½ï¿½ï¿½Ú¤Óºï¿½ï¿½ï¿½ï¿½ï¿½ë¤³ï¿½È¤ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ </li>
+    <li>ï¿½ï¿½ï¿½ï¿½ï¿½ÔµÚ¤Ó¥æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤Ç¤ï¿½ï¿½ï¿½MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½Ç§ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½</li>
+    <li>ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½</li></ul>
     ');
 
     // Mimetype Database
-    define('_AM_WEBPHOTO_MIME_DELETETHIS', 'ÁªÂò¤µ¤ì¤¿MIME¥¿¥¤¥×¤òºï½ü¤·¤Þ¤¹¡£¤è¤í¤·¤¤¤Ç¤¹¤«¡©');
-    define('_AM_WEBPHOTO_MIME_MIMEDELETED', 'MIME¥¿¥¤¥× %s ¤Ïºï½ü¤µ¤ì¤Þ¤·¤¿¡£');
-    define('_AM_WEBPHOTO_MIME_CREATED', 'MIME¥¿¥¤¥×¤òºîÀ®¤·¤Þ¤·¤¿¡£');
-    define('_AM_WEBPHOTO_MIME_MODIFIED', 'MIME¥¿¥¤¥×¤ò¹¹¿·¤·¤Þ¤·¤¿¡£');
+    define('_AM_WEBPHOTO_MIME_DELETETHIS', 'ï¿½ï¿½ï¿½ò¤µ¤ì¤¿MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_MIMEDELETED', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ %s ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_CREATED', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_MODIFIED', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½×¤ò¹¹¿ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //image admin icon
-    define('_AM_WEBPHOTO_MIME_ICO_EDIT', '¤³¤Î¥¢¥¤¥Æ¥à¤òÊÔ½¸');
-    define('_AM_WEBPHOTO_MIME_ICO_DELETE', '¤³¤Î¥¢¥¤¥Æ¥à¤òºï½ü');
-    define('_AM_WEBPHOTO_MIME_ICO_ONLINE', '¥ª¥ó¥é¥¤¥ó');
-    define('_AM_WEBPHOTO_MIME_ICO_OFFLINE', '¥ª¥Õ¥é¥¤¥ó');
+    define('_AM_WEBPHOTO_MIME_ICO_EDIT', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Ô½ï¿½');
+    define('_AM_WEBPHOTO_MIME_ICO_DELETE', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_ICO_ONLINE', 'ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_ICO_OFFLINE', 'ï¿½ï¿½ï¿½Õ¥é¥¤ï¿½ï¿½');
 
     // added for webphoto
-    define('_AM_WEBPHOTO_MIME_PERMS', 'µö²Ä¤µ¤ì¤Æ¤¤¤ë¥°¥ë¡¼¥×');
-    define('_AM_WEBPHOTO_MIME_ALLOWED', 'µö²Ä¤µ¤ì¤Æ¤¤¤ëMIME¥¿¥¤¥×');
-    define('_AM_WEBPHOTO_MIME_NOT_ENTER_EXT', '³ÈÄ¥»Ò¤¬ÆþÎÏ¤µ¤ì¤Æ¤¤¤Ê¤¤');
+    define('_AM_WEBPHOTO_MIME_PERMS', 'ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ë¥°ï¿½ë¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_ALLOWED', 'ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½MIMEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MIME_NOT_ENTER_EXT', 'ï¿½ï¿½Ä¥ï¿½Ò¤ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
 
     //---------------------------------------------------------
     // check config
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_DIRECTORYFOR_PHOTOS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢ ¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_DIRECTORYFOR_THUMBS', '¥µ¥à¥Í¥¤¥ë ¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_DIRECTORYFOR_GICONS', 'Google ¥¢¥¤¥³¥ó ¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_DIRECTORYFOR_TMP', '°ì»þ¥Õ¥¡¥¤¥ë ¥Ç¥£¥ì¥¯¥È¥ê');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_PHOTOS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_THUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_GICONS', 'Google ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_TMP', 'ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
 
     //---------------------------------------------------------
     // check table
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_NUMBEROFRECORED', '¥ì¥³¡¼¥É¿ô');
+    define('_AM_WEBPHOTO_NUMBEROFRECORED', 'ï¿½ì¥³ï¿½ï¿½ï¿½É¿ï¿½');
 
     //---------------------------------------------------------
     // manage
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_MANAGE_DESC', '<b>Ãí°Õ</b><br />¥Æ¡¼¥Ö¥ëÃ±ÂÎ¤Î´ÉÍý¤Ç¤¹<br />´ØÏ¢¤¹¤ë¥Æ¡¼¥Ö¥ë¤ÏÊÑ¹¹¤µ¤ì¤Þ¤»¤ó');
-    define('_AM_WEBPHOTO_ERR_NO_RECORD', '¥Ç¡¼¥¿¤¬Â¸ºß¤·¤Ê¤¤');
+    define('_AM_WEBPHOTO_MANAGE_DESC', '<b>ï¿½ï¿½ï¿½</b><br>ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½Ã±ï¿½Î¤Î´ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½<br>ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ERR_NO_RECORD', 'ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½Ê¤ï¿½');
 
     //---------------------------------------------------------
     // import
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_FMT_IMPORTFROM_WEBPHOTO', 'webphoto ¥â¥¸¥å¡¼¥ë: ¡Ö%s¡× ¤«¤é¤Î¼è¤ê¹þ¤ß¡Ê¥«¥Æ¥´¥ê¡¼Ã±°Ì¡Ë');
-    define('_AM_WEBPHOTO_IMPORT_COMMENT_NO', '¥³¥á¥ó¥È¤ò¥³¥Ô¡¼¤·¤Ê¤¤');
-    define('_AM_WEBPHOTO_IMPORT_COMMENT_YES', '¥³¥á¥ó¥È¤ò¥³¥Ô¡¼¤¹¤ë');
+    define('_AM_WEBPHOTO_FMT_IMPORTFROM_WEBPHOTO', 'webphoto ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½: ï¿½ï¿½%sï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ï¿½ß¡Ê¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼Ã±ï¿½Ì¡ï¿½');
+    define('_AM_WEBPHOTO_IMPORT_COMMENT_NO', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¤ò¥³¥Ô¡ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½');
+    define('_AM_WEBPHOTO_IMPORT_COMMENT_YES', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¤ò¥³¥Ô¡ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.20
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_PATHINFO_LINK', 'Pathinfo ¤¬Æ°¤¯¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_PATHINFO_DSC', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢Pathinfo ¤¬Æ°¤«¤Ê¤¤¤â¤Î¤ÈÄü¤á¤Æ¤¯¤À¤µ¤¤¡Ë');
-    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', 'À®¸ù¤·¤Þ¤·¤¿!<br />¤ª¤½¤é¤¯¡¢¤³¤Î¥µ¡¼¥Ð¤Ç¤Ï¡¢Pathinfo ¤¬»ÈÍÑ¤Ç¤­¤Þ¤¹');
-    define('_AM_WEBPHOTO_CAP_REDO_EXIF', 'Exif ¤Î¼èÆÀ');
-    define('_AM_WEBPHOTO_RADIO_REDO_EXIF_TRY', 'ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È¤­¤Ë¼èÆÀ');
-    define('_AM_WEBPHOTO_RADIO_REDO_EXIF_ALWAYS', '¾ï¤Ë¼èÆÀ¤¹¤ë');
+    define('_AM_WEBPHOTO_PATHINFO_LINK', 'Pathinfo ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_PATHINFO_DSC', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½Pathinfo ï¿½ï¿½Æ°ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½!<br>ï¿½ï¿½ï¿½ï¿½ï¿½é¤¯ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ð¤Ç¤Ï¡ï¿½Pathinfo ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤Ç¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_CAP_REDO_EXIF', 'Exif ï¿½Î¼ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_RADIO_REDO_EXIF_TRY', 'ï¿½ï¿½ï¿½ê¤µï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½ï¿½È¤ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_RADIO_REDO_EXIF_ALWAYS', 'ï¿½ï¿½Ë¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.30
     //---------------------------------------------------------
     // checkconfigs
-    define('_AM_WEBPHOTO_DIRECTORYFOR_FILE', 'FTP ¥Õ¥¡¥¤¥ë ¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_WARN_GEUST_CAN_READ', '¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ï¥²¥¹¥È¤âÆÉ¤à¤³¤È¤¬½ÐÍè¤Þ¤¹');
-    define('_AM_WEBPHOTO_WARN_RECOMMEND_PATH', '¥É¥­¥å¥á¥ó¥È¡¦¥ë¡¼¥È°Ê³°¤ËÀßÄê¤¹¤ë¤³¤È¤ò¤ª´«¤á¤·¤Þ¤¹');
-    define('_AM_WEBPHOTO_MULTIBYTE_LINK', 'Ê¸»ú¥³¡¼¥ÉÊÑ´¹¤¬Æ°¤¯¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_MULTIBYTE_DSC', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢Ê¸»ú¥³¡¼¥ÉÊÑ´¹¤¬Æ°¤«¤Ê¤¤¤è¤¦¤Ç¤¹¡Ë');
-    define('_AM_WEBPHOTO_MULTIBYTE_SUCCESS', '¤³¤ÎÊ¸¤¬Ê¸»ú²½¤±¤»¤º¤ËÉ½¼¨¤µ¤ì¤Æ¤¤¤Þ¤¹¤«¡©');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_FILE', 'FTP ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_WARN_GEUST_CAN_READ', 'ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½É¤à¤³ï¿½È¤ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_WARN_RECOMMEND_PATH', 'ï¿½É¥ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ë¡¼ï¿½È°Ê³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ë¤³ï¿½È¤ò¤ª´ï¿½ï¿½á¤·ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_MULTIBYTE_LINK', 'Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_MULTIBYTE_DSC', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½è¤¦ï¿½Ç¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MULTIBYTE_SUCCESS', 'ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // maillog manager
-    define('_AM_WEBPHOTO_SHOW_LIST', '°ìÍ÷É½¼¨');
-    define('_AM_WEBPHOTO_MAILLOG_STATUS_REJECT', 'µñÈÝ¤µ¤ì¤¿¥á¡¼¥ë');
-    define('_AM_WEBPHOTO_MAILLOG_STATUS_PARTIAL', '°ìÉô¤ÎÅºÉÕ¥Õ¥¡¥¤¥ë¤¬µñÈÝ¤µ¤ì¤¿¥á¡¼¥ë');
-    define('_AM_WEBPHOTO_MAILLOG_STATUS_SUBMIT', 'Åê¹Æ¤µ¤ì¤¿¥á¡¼¥ë');
-    define('_AM_WEBPHOTO_BUTTON_SUBMIT_MAIL', '¤³¤Î¥á¡¼¥ë¤òÅê¹Æ¤¹¤ë');
-    define('_AM_WEBPHOTO_ERR_MAILLOG_NO_ATTACH', 'ÅºÉÕ¥Õ¥¡¥¤¥ë¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤');
+    define('_AM_WEBPHOTO_SHOW_LIST', 'ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MAILLOG_STATUS_REJECT', 'ï¿½ï¿½ï¿½Ý¤ï¿½ï¿½ì¤¿ï¿½á¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MAILLOG_STATUS_PARTIAL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½Õ¥Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½Ý¤ï¿½ï¿½ì¤¿ï¿½á¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MAILLOG_STATUS_SUBMIT', 'ï¿½ï¿½Æ¤ï¿½ï¿½ì¤¿ï¿½á¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BUTTON_SUBMIT_MAIL', 'ï¿½ï¿½ï¿½Î¥á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ERR_MAILLOG_NO_ATTACH', 'Åºï¿½Õ¥Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½ò¤µ¤ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
 
     // mimetype
-    define('_AM_WEBPHOTO_MIME_ADD_NEW', 'MIME ¥¿¥¤¥×¤òÄÉ²Ã¤¹¤ë');
+    define('_AM_WEBPHOTO_MIME_ADD_NEW', 'MIME ï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.40
     //---------------------------------------------------------
     // index
-    define('_AM_WEBPHOTO_MUST_UPDATE', '¥¢¥Ã¥×¥Ç¡¼¥È¤¬É¬Í×¤Ç¤¹');
-    define('_AM_WEBPHOTO_TITLE_BIN', '¥³¥Þ¥ó¥É¤Î´ÉÍý');
-    define('_AM_WEBPHOTO_TEST_BIN', '¥³¥Þ¥ó¥É¤Î¥Æ¥¹¥È¼Â¹Ô');
+    define('_AM_WEBPHOTO_MUST_UPDATE', 'ï¿½ï¿½ï¿½Ã¥×¥Ç¡ï¿½ï¿½È¤ï¿½É¬ï¿½×¤Ç¤ï¿½');
+    define('_AM_WEBPHOTO_TITLE_BIN', 'ï¿½ï¿½ï¿½Þ¥ï¿½É¤Î´ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_TEST_BIN', 'ï¿½ï¿½ï¿½Þ¥ï¿½É¤Î¥Æ¥ï¿½ï¿½È¼Â¹ï¿½');
 
     // redothumbs
-    define('_AM_WEBPHOTO_ERR_GET_IMAGE_SIZE', 'image size ¤¬¼èÆÀ¤Ç¤­¤Ê¤¤');
+    define('_AM_WEBPHOTO_ERR_GET_IMAGE_SIZE', 'image size ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Ê¤ï¿½');
 
     // checktables
-    define('_AM_WEBPHOTO_FMT_NOT_READABLE', '%s (%s) ¤¬ÆÉ¤á¤Þ¤»¤ó.');
+    define('_AM_WEBPHOTO_FMT_NOT_READABLE', '%s (%s) ï¿½ï¿½ï¿½É¤ï¿½Þ¤ï¿½ï¿½ï¿½.');
 
     //---------------------------------------------------------
     // v0.50
     //---------------------------------------------------------
     // config check
-    define('_AM_WEBPHOTO_DIRECTORYFOR_UPLOADS', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Ç¥£¥ì¥¯¥È¥ê');
-    define('_AM_WEBPHOTO_DIRECTORYFOR_MEDIAS', '¥á¥Ç¥£¥¢¡¦¥Ç¥£¥ì¥¯¥È¥ê');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_UPLOADS', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define('_AM_WEBPHOTO_DIRECTORYFOR_MEDIAS', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
 
     // item manager
-    define('_AM_WEBPHOTO_ITEM_SELECT', '¥¢¥¤¥Æ¥à¤ÎÁªÂò');
-    define('_AM_WEBPHOTO_ITEM_ADD', '¥¢¥¤¥Æ¥à¤ÎÄÉ²Ã');
-    define('_AM_WEBPHOTO_ITEM_LISTING', '¥¢¥¤¥Æ¥à¤Î±ÜÍ÷');
-    define('_AM_WEBPHOTO_VOTE_DELETED', 'ÅêÉ¼¥Ç¡¼¥¿¤Ïºï½ü¤µ¤ì¤¿');
-    define('_AM_WEBPHOTO_VOTE_STATS', 'ÅêÉ¼¤ÎÅý·×');
-    define('_AM_WEBPHOTO_VOTE_ENTRY', 'Á´ÂÎ¤ÎÅêÉ¼');
-    define('_AM_WEBPHOTO_VOTE_USER', 'ÅÐÏ¿¥æ¡¼¥¶¤ÎÅêÉ¼');
-    define('_AM_WEBPHOTO_VOTE_GUEST', '¥²¥¹¥È¤ÎÅêÉ¼');
-    define('_AM_WEBPHOTO_VOTE_TOTAL', 'ÅêÉ¼¿ô');
-    define('_AM_WEBPHOTO_VOTE_USERAVG', '¥æ¡¼¥¶¤ÎÊ¿¶ÑÉ¾²Á');
-    define('_AM_WEBPHOTO_VOTE_USERVOTES', '¥æ¡¼¥¶¤ÎÁ´ÅêÉ¼¿ô');
-    define('_AM_WEBPHOTO_LOG_VIEW', '¥í¥°¥Õ¥¡¥¤¥ë¤Î±ÜÍ÷');
-    define('_AM_WEBPHOTO_LOG_EMPT', '¥í¥°¥Õ¥¡¥¤¥ë¤ò¶õ¤Ë¤¹¤ë');
-    define('_AM_WEBPHOTO_PLAYLIST_PATH', '¥×¥ì¥¤¥ê¥¹¥È¤Î¥Ñ¥¹');
-    define('_AM_WEBPHOTO_PLAYLIST_REFRESH', '¥×¥ì¥¤¥ê¥¹¥È¤Î¥­¥ã¥Ã¥·¥å¤ÎºÆÀ¸À®');
-    define('_AM_WEBPHOTO_STATUS_CHANGE', '¥¹¥Æ¡¼¥¿¥¹¤ÎÊÑ¹¹');
-    define('_AM_WEBPHOTO_STATUS_OFFLINE', '¥ª¥Õ¥é¥¤¥ó');
-    define('_AM_WEBPHOTO_STATUS_ONLINE', '¥ª¥ó¥é¥¤¥ó');
-    define('_AM_WEBPHOTO_STATUS_AUTO', '¼«Æ°È¯¹Ô');
+    define('_AM_WEBPHOTO_ITEM_SELECT', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ITEM_ADD', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_ITEM_LISTING', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½Î±ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_VOTE_DELETED', 'ï¿½ï¿½É¼ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½ì¤¿');
+    define('_AM_WEBPHOTO_VOTE_STATS', 'ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_VOTE_ENTRY', 'ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½É¼');
+    define('_AM_WEBPHOTO_VOTE_USER', 'ï¿½ï¿½Ï¿ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼');
+    define('_AM_WEBPHOTO_VOTE_GUEST', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½É¼');
+    define('_AM_WEBPHOTO_VOTE_TOTAL', 'ï¿½ï¿½É¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_VOTE_USERAVG', 'ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½Ê¿ï¿½ï¿½É¾ï¿½ï¿½');
+    define('_AM_WEBPHOTO_VOTE_USERVOTES', 'ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LOG_VIEW', 'ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_LOG_EMPT', 'ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYLIST_PATH', 'ï¿½×¥ì¥¤ï¿½ê¥¹ï¿½È¤Î¥Ñ¥ï¿½');
+    define('_AM_WEBPHOTO_PLAYLIST_REFRESH', 'ï¿½×¥ì¥¤ï¿½ê¥¹ï¿½È¤Î¥ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_STATUS_CHANGE', 'ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½');
+    define('_AM_WEBPHOTO_STATUS_OFFLINE', 'ï¿½ï¿½ï¿½Õ¥é¥¤ï¿½ï¿½');
+    define('_AM_WEBPHOTO_STATUS_ONLINE', 'ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½');
+    define('_AM_WEBPHOTO_STATUS_AUTO', 'ï¿½ï¿½Æ°È¯ï¿½ï¿½');
 
     // item form
-    define('_AM_WEBPHOTO_TIME_NOW', '¸½ºßÆü»þ');
+    define('_AM_WEBPHOTO_TIME_NOW', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // playlist form
-    define('_AM_WEBPHOTO_PLAYLIST_ADD', '¥×¥ì¥¤¥ê¥¹¥È¤òÄÉ²Ã¤¹¤ë');
-    define('_AM_WEBPHOTO_PLAYLIST_TYPE', '¥×¥ì¥¤¥ê¥¹¥È¤Î¥¿¥¤¥×');
-    define('_AM_WEBPHOTO_PLAYLIST_FEED_DSC', 'WEB Feed URL ¤òÆþÎÏ¤¹¤ë');
-    define('_AM_WEBPHOTO_PLAYLIST_DIR_DSC', '¥Ç¥£¥ì¥¯¥È¥êÌ¾¤òÁªÂò¤¹¤ë ');
+    define('_AM_WEBPHOTO_PLAYLIST_ADD', 'ï¿½×¥ì¥¤ï¿½ê¥¹ï¿½È¤ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYLIST_TYPE', 'ï¿½×¥ì¥¤ï¿½ê¥¹ï¿½È¤Î¥ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYLIST_FEED_DSC', 'WEB Feed URL ï¿½ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYLIST_DIR_DSC', 'ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ò¤¹¤ï¿½ ');
 
     // player manager
-    define('_AM_WEBPHOTO_PLAYER_MANAGER', '¥×¥ì¥¤¥ä¡¼´ÉÍý');
-    define('_AM_WEBPHOTO_PLAYER_ADD', '¥×¥ì¥¤¥ä¡¼¤ÎÄÉ²Ã');
-    define('_AM_WEBPHOTO_PLAYER_MOD', '¥×¥ì¥¤¥ä¡¼¤ÎÊÑ¹¹');
-    define('_AM_WEBPHOTO_PLAYER_CLONE', '¥×¥ì¥¤¥ä¡¼¤ÎÊ£À½');
-    define('_AM_WEBPHOTO_PLAYER_ADDED', '¥×¥ì¥¤¥ä¡¼¤òÄÉ²Ã¤·¤¿');
-    define('_AM_WEBPHOTO_PLAYER_DELETED', '¥×¥ì¥¤¥ä¡¼¤òºï½ü¤·¤¿');
-    define('_AM_WEBPHOTO_PLAYER_MODIFIED', '¥×¥ì¥¤¥ä¡¼¤òÊÑ¹¹¤·¤¿');
-    define('_AM_WEBPHOTO_PLAYER_PREVIEW', '¥×¥ì¥Ó¥å¡¼');
-    define('_AM_WEBPHOTO_PLAYER_PREVIEW_DSC', 'ºÇ½é¤ËÊÑ¹¹¤òÊÝÂ¸¤·¤Æ¤¯¤À¤µ¤¤¡ª');
-    define('_AM_WEBPHOTO_PLAYER_PREVIEW_LINK', '¥×¥ì¥Ó¥å¡¼¤Î¥½¡¼¥¹');
-    define('_AM_WEBPHOTO_PLAYER_NO_ITEM', 'ºÆÀ¸¤¹¤ë¥¢¥¤¥Æ¥à¤¬¤¢¤ê¤Þ¤»¤ó');
-    define('_AM_WEBPHOTO_PLAYER_WARNING', '[·Ù¹ð] ¥×¥ì¥¤¥ä¡¼¤òºï½ü¤·¤Æ¤â¤¤¤¤¤Ç¤¹¤«¡© <br />ºï½ü¤¹¤ëÁ°¤Ë¡¢¤³¤Î¥×¥¤¥ä¡¼¤ò»ÈÍÑ¤·¤Æ¤¤¤ëÁ´¤Æ¤Î¥¢¥¤¥Æ¥à¤ò¼êÆ°¤ÇÊÑ¹¹¤·¤Æ¤¯¤À¤µ¤¤¡£');
-    define('_AM_WEBPHOTO_PLAYER_ERR_EXIST', '[¥¨¥é¡¼] Æ±¤¸Ì¾Á°¤Î¥×¥ì¥¤¥ä¡¼¤¬Â¸ºß¤·¤Æ¤¤¤Þ¤¹¡ª');
-    define('_AM_WEBPHOTO_BUTTON_CLONE', 'Ê£À½');
+    define('_AM_WEBPHOTO_PLAYER_MANAGER', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_ADD', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½É²ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_MOD', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½Ñ¹ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_CLONE', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½Ê£ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_ADDED', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_DELETED', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_MODIFIED', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_PREVIEW', 'ï¿½×¥ï¿½Ó¥å¡¼');
+    define('_AM_WEBPHOTO_PLAYER_PREVIEW_DSC', 'ï¿½Ç½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_PREVIEW_LINK', 'ï¿½×¥ï¿½Ó¥å¡¼ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_NO_ITEM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¥¢ï¿½ï¿½ï¿½Æ¥à¤¬ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_WARNING', '[ï¿½Ù¹ï¿½] ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤â¤¤ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ <br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½Î¥×¥ï¿½ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤Î¥ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_PLAYER_ERR_EXIST', '[ï¿½ï¿½ï¿½é¡¼] Æ±ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Î¥×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_BUTTON_CLONE', 'Ê£ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.60
     //---------------------------------------------------------
     // cat form
-    define('_AM_WEBPHOTO_CAP_CAT_SELECT', '¥«¥Æ¥´¥ê²èÁü¤ÎÁªÂò');
-    define('_AM_WEBPHOTO_DSC_CAT_PATH', "XOOPS¥¤¥ó¥¹¥È¡¼¥ëÀè¤«¤é¤Î¥Ñ¥¹¤ò»ØÄê¤·¤Þ¤¹¡ÊºÇ½é¤Î'/'¤ÏÉ¬Í×¡Ë");
-    define('_AM_WEBPHOTO_DSC_CAT_FOLDER', 'ÀßÄê¤·¤Ê¤¤¤È¤­¤Ï¡¢¥Õ¥©¥ë¥À¡¼¥¢¥¤¥³¥ó¤¬É½¼¨¤µ¤ì¤Þ¤¹');
+    define('_AM_WEBPHOTO_CAP_CAT_SELECT', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_DSC_CAT_PATH', "XOOPSï¿½ï¿½ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½è¤«ï¿½ï¿½Î¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ÊºÇ½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¡ï¿½");
+    define('_AM_WEBPHOTO_DSC_CAT_FOLDER', 'ï¿½ï¿½ï¿½ê¤·ï¿½Ê¤ï¿½ï¿½È¤ï¿½ï¿½Ï¡ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
     //---------------------------------------------------------
     // v0.70
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_RECOMMEND_OFF', '¿ä¾© off');
+    define('_AM_WEBPHOTO_RECOMMEND_OFF', 'ï¿½ä¾© off');
 
     //---------------------------------------------------------
     // v0.80
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_TITLE_WAITING', '¾µÇ§ÂÔ¤Á°ìÍ÷');
-    define('_AM_WEBPHOTO_TITLE_OFFLINE', '¥ª¥Õ¥é¥¤¥ó°ìÍ÷');
-    define('_AM_WEBPHOTO_TITLE_EXPIRED', '´ü¸ÂÀÚ¤ì°ìÍ÷');
+    define('_AM_WEBPHOTO_TITLE_WAITING', 'ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_TITLE_OFFLINE', 'ï¿½ï¿½ï¿½Õ¥é¥¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_TITLE_EXPIRED', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ú¤ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.81
     //---------------------------------------------------------
     // checkconfigs
-    define('_AM_WEBPHOTO_QR_CHECK_LINK', 'QR¥³¡¼¥É¤¬É½¼¨¤Ç¤­¤ë¤«¤Î¥Á¥§¥Ã¥¯');
-    define('_AM_WEBPHOTO_QR_CHECK_DSC', '¡Ê¤³¤Î¥ê¥ó¥¯Àè¤¬Àµ¾ï¤ËÉ½¼¨¤µ¤ì¤Ê¤±¤ì¤Ð¡¢QR¥³¡¼¥É¤¬É½¼¨¤Ç¤­¤Þ¤»¤ó¡Ë');
-    define('_AM_WEBPHOTO_QR_CHECK_SUCCESS', 'QR¥³¡¼¥É¤¬É½¼¨¤µ¤ì¤Æ¤¤¤Þ¤¹¤«¡©');
-    define('_AM_WEBPHOTO_QR_CHECK_SHOW', '¥Ç¥Ð¥Ã¥¯¾ðÊó¤ò¸«¤ë');
-    define('_AM_WEBPHOTO_QR_CHECK_INFO', '¥Ç¥Ð¥Ã¥¯¾ðÊó');
+    define('_AM_WEBPHOTO_QR_CHECK_LINK', 'QRï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½É½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ë¤«ï¿½Î¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define('_AM_WEBPHOTO_QR_CHECK_DSC', 'ï¿½Ê¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½è¤¬ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Ð¡ï¿½QRï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½É½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_QR_CHECK_SUCCESS', 'QRï¿½ï¿½ï¿½ï¿½ï¿½É¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_QR_CHECK_SHOW', 'ï¿½Ç¥Ð¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ò¸«¤ï¿½');
+    define('_AM_WEBPHOTO_QR_CHECK_INFO', 'ï¿½Ç¥Ð¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.90
     //---------------------------------------------------------
     // cat form
-    define('_AM_WEBPHOTO_CAT_PARENT_CAP', '¿Æ¥«¥Æ¥´¥ê¤Î¸¢¸Â');
-    define('_AM_WEBPHOTO_CAT_PARENT_FMT', '¿Æ¥«¥Æ¥´¥ê ( %s ) ¤Î¸¢¸Â¤ò·Ñ¾µ¤¹¤ë');
-    define('_AM_WEBPHOTO_CAT_CHILD_CAP', '²¼°Ì¤Î¥«¥Æ¥´¥ê');
-    define('_AM_WEBPHOTO_CAT_CHILD_NUM', '²¼°Ì¤Î¥«¥Æ¥´¥ê¤Î¿ô');
-    define('_AM_WEBPHOTO_CAT_CHILD_PERM', '²¼°Ì¤Î¥«¥Æ¥´¥ê¤Î¸¢¸Â¤òÊÑ¹¹¤¹¤ë');
+    define('_AM_WEBPHOTO_CAT_PARENT_CAP', 'ï¿½Æ¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_PARENT_FMT', 'ï¿½Æ¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ ( %s ) ï¿½Î¸ï¿½ï¿½Â¤ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_CHILD_CAP', 'ï¿½ï¿½ï¿½Ì¤Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_CAT_CHILD_NUM', 'ï¿½ï¿½ï¿½Ì¤Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¿ï¿½');
+    define('_AM_WEBPHOTO_CAT_CHILD_PERM', 'ï¿½ï¿½ï¿½Ì¤Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¸ï¿½ï¿½Â¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.00
     //---------------------------------------------------------
     // groupperm
-    define('_AM_WEBPHOTO_GPERM_HTML', 'HTMLÅê¹Æ²Ä');
+    define('_AM_WEBPHOTO_GPERM_HTML', 'HTMLï¿½ï¿½Æ²ï¿½');
 
     //---------------------------------------------------------
     // v1.21
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_RSS_DEBUG', 'RSS ¥Ç¥Ð¥Ã¥¯É½¼¨');
-    define('_AM_WEBPHOTO_RSS_CLEAR', 'RSS ¥­¥ã¥Ã¥·¥å¡¦¥¯¥ê¥¢');
-    define('_AM_WEBPHOTO_RSS_CLEARED', '¥¯¥ê¥¢¤·¤¿');
+    define('_AM_WEBPHOTO_RSS_DEBUG', 'RSS ï¿½Ç¥Ð¥Ã¥ï¿½É½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_RSS_CLEAR', 'RSS ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½å¡¦ï¿½ï¿½ï¿½ê¥¢');
+    define('_AM_WEBPHOTO_RSS_CLEARED', 'ï¿½ï¿½ï¿½ê¥¢ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.40
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_TIMELINE_MODULE', '¥¿¥¤¥à¥é¥¤¥ó¡¦¥â¥¸¥å¡¼¥ë');
-    define('_AM_WEBPHOTO_MODULE_NOT_INSTALL', '¥â¥¸¥å¡¼¥ë¤Ï¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤Ê¤¤');
+    define('_AM_WEBPHOTO_TIMELINE_MODULE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ó¡¦¥â¥¸ï¿½å¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MODULE_NOT_INSTALL', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½Ï¥ï¿½ï¿½ó¥¹¥È¡ï¿½ï¿½ë¤µï¿½ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
 
     //---------------------------------------------------------
     // v1.50
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_FILE_CHECK', '¥Õ¥¡¥¤¥ë¤ÎÂÅÅöÀ­¤Î¸¡ºº');
-    define('_AM_WEBPHOTO_FILE_CHECK_DSC', 'É¬Í×¤Ê¥Õ¥¡¥¤¥ë¤¬¤¢¤ë¤«¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤Ç¥Á¥§¥Ã¥¯¤¹¤ë');
+    define('_AM_WEBPHOTO_FILE_CHECK', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_FILE_CHECK_DSC', 'É¬ï¿½×¤Ê¥Õ¥ï¿½ï¿½ï¿½ï¿½ë¤¬ï¿½ï¿½ï¿½ë¤«ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¥µï¿½ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.72
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_MYSQL_CONFIG', 'MySQL ÀßÄê');
-    define('_AM_WEBPHOTO_MULTIBYTE_CONFIG', '¥Þ¥ë¥Á¥Ð¥¤¥È ÀßÄê');
+    define('_AM_WEBPHOTO_MYSQL_CONFIG', 'MySQL ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_MULTIBYTE_CONFIG', 'ï¿½Þ¥ï¿½ï¿½ï¿½Ð¥ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.00
     //---------------------------------------------------------
     // invite
-    define('_AM_WEBPHOTO_INVITE_EMAIL', '¾·ÂÔÁê¼ê¤Î¥á¡¼¥ë¥¢¥É¥ì¥¹');
-    define('_AM_WEBPHOTO_INVITE_NAME', '¤¢¤Ê¤¿¤Î¤ªÌ¾Á°');
-    define('_AM_WEBPHOTO_INVITE_MESSAGE', '¥á¥Ã¥»¡¼¥¸');
-    define('_AM_WEBPHOTO_INVITE_SUBMIT', '¾·ÂÔ¤¹¤ë');
-    define('_AM_WEBPHOTO_INVITE_EXAMPLE', 'Îã¡§¤³¤ó¤Ë¤Á¤Ï¡¢¡û¡û¤Ç¤¹¡£¤³¤ÎÁ°ÏÃ¤·¤¿¥µ¥¤¥È¤Î¾·ÂÔ¾õ¤òÁ÷¤ê¤Þ¤¹¡£<br />¢¤¢¤¤µ¤ó¤â¤¼¤ÒÅÐÏ¿¤·¤Æ¤ß¤Æ¤¯¤À¤µ¤¤¡£');
-    define('_AM_WEBPHOTO_INVITE_SUBJECT', '%s ¤µ¤ó¤«¤é %s ¤Ø¤Î¾·ÂÔ¾õ¤¬ÆÏ¤¤¤Æ¤¤¤Þ¤¹');
-    define('_AM_WEBPHOTO_INVITE_ERR_NO_NAME', 'Ì¾Á°¤¬¤Ê¤¤');
+    define('_AM_WEBPHOTO_INVITE_EMAIL', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥á¡¼ï¿½ë¥¢ï¿½É¥ì¥¹');
+    define('_AM_WEBPHOTO_INVITE_NAME', 'ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½Î¤ï¿½Ì¾ï¿½ï¿½');
+    define('_AM_WEBPHOTO_INVITE_MESSAGE', 'ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_INVITE_SUBMIT', 'ï¿½ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_INVITE_EXAMPLE', 'ï¿½ã¡§ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Ï¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤Î¾ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¤¼ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½Æ¤ß¤Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_INVITE_SUBJECT', '%s ï¿½ï¿½ï¿½ó¤«¤ï¿½ %s ï¿½Ø¤Î¾ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½Æ¤ï¿½ï¿½Þ¤ï¿½');
+    define('_AM_WEBPHOTO_INVITE_ERR_NO_NAME', 'Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½');
 
     // gperm
-    define('_AM_WEBPHOTO_GROUP_MOD_ADMIN', '¤³¤Î¥â¥¸¥å¡¼¥ë¤Î´ÉÍý¼Ô¥°¥ë¡¼¥×');
-    define('_AM_WEBPHOTO_GROUP_MOD_USER', '¤³¤Î¥â¥¸¥å¡¼¥ë¤Î¥æ¡¼¥¶¡¦¥°¥ë¡¼¥×');
-    define('_AM_WEBPHOTO_GROUP_MOD_CATEGORY', '¤³¤Î¥â¥¸¥å¡¼¥ë¤Î¥«¥Æ¥´¥ê¤Î¥°¥ë¡¼¥×');
-    define('_AM_WEBPHOTO_GPERM_MODULE_ADMIN', '¥â¥¸¥å¡¼¥ë´ÉÍý');
-    define('_AM_WEBPHOTO_GPERM_MODULE_READ', '¥â¥¸¥å¡¼¥ë¡¦¥¢¥¯¥»¥¹');
+    define('_AM_WEBPHOTO_GROUP_MOD_ADMIN', 'ï¿½ï¿½ï¿½Î¥â¥¸ï¿½å¡¼ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½Ô¥ï¿½ï¿½ë¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GROUP_MOD_USER', 'ï¿½ï¿½ï¿½Î¥â¥¸ï¿½å¡¼ï¿½ï¿½Î¥æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GROUP_MOD_CATEGORY', 'ï¿½ï¿½ï¿½Î¥â¥¸ï¿½å¡¼ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ë¡¼ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_MODULE_ADMIN', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_GPERM_MODULE_READ', 'ï¿½â¥¸ï¿½å¡¼ï¿½ë¡¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // item manage
-    define('_AM_WEBPHOTO_BUTTON_REFUSE', 'µñÈÝ');
-    define('_AM_WEBPHOTO_ERR_NO_SELECT', '¥¨¥é¡¼: ¥¢¥¤¥Æ¥à¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤');
+    define('_AM_WEBPHOTO_BUTTON_REFUSE', 'ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_ERR_NO_SELECT', 'ï¿½ï¿½ï¿½é¡¼: ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥à¤¬ï¿½ï¿½ï¿½ò¤µ¤ï¿½Æ¤ï¿½ï¿½Ê¤ï¿½');
 
     // user list
     define('_AM_WEBPHOTO_USER_UID', 'UID');
-    define('_AM_WEBPHOTO_USER_UNAME', '¥æ¡¼¥¶¡¼Ì¾');
-    define('_AM_WEBPHOTO_USER_NAME', 'ËÜÌ¾');
-    define('_AM_WEBPHOTO_USER_POSTS', 'Åê¹Æ¿ô');
-    define('_AM_WEBPHOTO_USER_LEVEL', '¥ì¥Ù¥ë');
-    define('_AM_WEBPHOTO_USER_REGDATE', 'ÅÐÏ¿Æü');
-    define('_AM_WEBPHOTO_USER_LASTLOGIN', 'ºÇ½ª¥í¥°¥¤¥ó');
-    define('_AM_WEBPHOTO_USER_CONTROL', 'Áàºî');
-    define('_AM_WEBPHOTO_USER_TOTAL', '¥á¥ó¥Ð¡¼¿ô');
-    define('_AM_WEBPHOTO_USER_ASSIGN', '¥á¥ó¥Ð¡¼¤ÎÅÐÏ¿');
-    define('_AM_WEBPHOTO_USER_USER', '¥æ¡¼¥¶¡¼');
+    define('_AM_WEBPHOTO_USER_UNAME', 'ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½Ì¾');
+    define('_AM_WEBPHOTO_USER_NAME', 'ï¿½ï¿½Ì¾');
+    define('_AM_WEBPHOTO_USER_POSTS', 'ï¿½ï¿½Æ¿ï¿½');
+    define('_AM_WEBPHOTO_USER_LEVEL', 'ï¿½ï¿½Ù¥ï¿½');
+    define('_AM_WEBPHOTO_USER_REGDATE', 'ï¿½ï¿½Ï¿ï¿½ï¿½');
+    define('_AM_WEBPHOTO_USER_LASTLOGIN', 'ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_USER_CONTROL', 'ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_USER_TOTAL', 'ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½');
+    define('_AM_WEBPHOTO_USER_ASSIGN', 'ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿');
+    define('_AM_WEBPHOTO_USER_USER', 'ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.40
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_PLEASE_IMPORT_MYALBUM', 'Myalbum ¤«¤é¤Î°ì³ç¥¤¥ó¥Ý¡¼¥È¤ò¼Â¹Ô¤¯¤À¤µ¤¤');
+    define('_AM_WEBPHOTO_PLEASE_IMPORT_MYALBUM', 'Myalbum ï¿½ï¿½ï¿½ï¿½Î°ï¿½ç¥¤ï¿½ï¿½Ý¡ï¿½ï¿½È¤ï¿½Â¹Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // === define end ===
 }

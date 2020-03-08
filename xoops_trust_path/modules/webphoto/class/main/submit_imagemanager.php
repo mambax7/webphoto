@@ -37,17 +37,27 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_submit_imagemanager
 //=========================================================
+
+/**
+ * Class webphoto_main_submit_imagemanager
+ */
 class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submit
 {
     public $_THIS_CLOSE_FCT = 'close';
     public $_THIS_CLOSE_URL;
 
     public $_TIME_SUCCESS = 3;
-    public $_TIME_FAILED  = 5;
+    public $_TIME_FAILED = 5;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_submit_imagemanager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -55,12 +65,18 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
         $this->_THIS_CLOSE_URL = $this->_MODULE_URL . '/index.php?fct=' . $this->_THIS_CLOSE_FCT;
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_imagemanager_submit|\webphoto_lib_error|\webphoto_main_submit_imagemanager
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_submit_imagemanager($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -88,18 +104,27 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
     //---------------------------------------------------------
     // create item row
     //---------------------------------------------------------
+
+    /**
+     * @return array|void
+     */
     public function _create_item_row_default()
     {
-        $row                = $this->_item_create_class->create(true);
+        $row = $this->_item_create_class->create(true);
         $row['item_cat_id'] = $this->get_post_cat_id();
+
         return $row;
     }
 
+    /**
+     * @return array|void
+     */
     public function _create_item_row_by_post()
     {
-        $row                = $this->_item_create_class->create(true);
+        $row = $this->_item_create_class->create(true);
         $row['item_cat_id'] = $this->get_post_cat_id();
-        $row['item_title']  = $this->get_post_text('item_title');
+        $row['item_title'] = $this->get_post_text('item_title');
+
         return $row;
     }
 
@@ -125,6 +150,9 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
         exit();
     }
 
+    /**
+     * @return bool|int
+     */
     public function _submit_exec()
     {
         $this->clear_msg_array();
@@ -141,18 +169,18 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
             return $ret;
         }
 
-        $item_row   = $this->_row_fetch;
+        $item_row = $this->_row_fetch;
         $photo_name = $this->_photo_tmp_name;
 
         // --- insert item ---
         $item_row = $this->build_item_row_submit_insert($item_row);
-        $item_id  = $this->format_and_insert_item($item_row);
+        $item_id = $this->format_and_insert_item($item_row);
         if (!$item_id) {
             return _C_WEBPHOTO_ERR_DB;
         }
 
         $item_row['item_id'] = $item_id;
-        $this->_row_create   = $item_row;
+        $this->_row_create = $item_row;
 
         // --- insert files
         $ret = $this->_insert_media_files($item_row, $photo_name);
@@ -162,7 +190,7 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
 
         // --- update item ---
         $item_row = $this->build_item_row_submit_update($item_row);
-        $ret      = $this->format_and_update_item($item_row);
+        $ret = $this->format_and_update_item($item_row);
         if (!$ret) {
             return _C_WEBPHOTO_ERR_DB;
         }
@@ -171,6 +199,10 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
         $this->unlink_uploaded_files();
     }
 
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function _submit_exec_fetch($item_row)
     {
         $this->_row_fetch = $item_row;
@@ -187,23 +219,34 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
         if (empty($this->_photo_tmp_name)) {
             return _C_WEBPHOTO_ERR_NO_IMAGE;
         }
+
         return 0;
     }
 
+    /**
+     * @param $is_failed
+     * @return array
+     */
     public function _build_redirect_param($is_failed)
     {
-        $param = array(
-            'is_failed'   => $is_failed,
+        $param = [
+            'is_failed' => $is_failed,
             'url_success' => $this->_THIS_CLOSE_URL,
-            'url_failed'  => $this->_THIS_CLOSE_URL,
+            'url_failed' => $this->_THIS_CLOSE_URL,
             'msg_success' => $this->get_constant('SUBMIT_RECEIVED'),
-        );
+        ];
+
         return $param;
     }
 
     //---------------------------------------------------------
     // media files
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function _insert_media_files($item_row)
     {
         $ret = $this->_create_media_file_params($item_row);
@@ -213,9 +256,14 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
 
         // --- insert file ---
         $this->_file_id_array = $this->insert_media_files_from_params($item_row);
+
         return 0;
     }
 
+    /**
+     * @param $item_row
+     * @return int
+     */
     public function _create_media_file_params($item_row)
     {
         $item_ext = $item_row['item_ext'];
@@ -228,18 +276,19 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
             return $ret;
         }
 
-        $file_params = array(
+        $file_params = [
             'cont' => $cont_param,
-        );
+        ];
 
         if (is_array($cont_param)) {
             $image_params = $this->create_image_params_by_photo($photo_param);
             if (is_array($image_params)) {
-                $file_params = $file_params + $image_params;
+                $file_params += $image_params;
             }
         }
 
         $this->_media_file_params = $file_params;
+
         return 0;
     }
 
@@ -250,16 +299,16 @@ class webphoto_main_submit_imagemanager extends webphoto_edit_imagemanager_submi
     {
         $form_class = webphoto_edit_imagemanager_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
-        $template = 'db:' . $this->_DIRNAME . '_main_submit_imagemanager.html';
+        $template = 'db:' . $this->_DIRNAME . '_main_submit_imagemanager.tpl';
 
         $row = $this->_create_item_row_default();
 
-        $param = array(
-            'has_resize'   => $this->_has_image_resize,
+        $param = [
+            'has_resize' => $this->_has_image_resize,
             'allowed_exts' => $this->get_normal_exts(),
-        );
+        ];
 
-        $arr                   = $form_class->build_form_imagemanager($row, $param);
+        $arr = $form_class->build_form_imagemanager($row, $param);
         $arr['xoops_themecss'] = $this->_xoops_class->get_xoops_themecss();
 
         $tpl = new XoopsTpl();

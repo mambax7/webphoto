@@ -18,13 +18,17 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_staticmap
 //=========================================================
+
+/**
+ * Class webphoto_lib_staticmap
+ */
 class webphoto_lib_staticmap
 {
     // map param
-    public $_key      = null;
-    public $_width    = 220;
-    public $_height   = 220;
-    public $_maptype  = 'mobile';
+    public $_key = null;
+    public $_width = 220;
+    public $_height = 220;
+    public $_maptype = 'mobile';
     public $_sanitize = true;
 
     //---------------------------------------------------------
@@ -35,29 +39,38 @@ class webphoto_lib_staticmap
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_staticmap
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_staticmap();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // build url
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return string
+     */
     public function build_url($param)
     {
-        $latitude  = $param['latitude'];
+        $latitude = $param['latitude'];
         $longitude = $param['longitude'];
-        $zoom      = $param['zoom'];
+        $zoom = $param['zoom'];
 
-        $key      = isset($param['key']) ? $param['key'] : $this->_key;
-        $maptype  = isset($param['maptype']) ? $param['maptype'] : $this->_maptype;
-        $markers  = isset($param['markers']) ? $param['markers'] : null;
-        $width    = isset($param['width']) ? (int)$param['width'] : $this->_width;
-        $height   = isset($param['height']) ? (int)$param['height'] : $this->_height;
+        $key = isset($param['key']) ? $param['key'] : $this->_key;
+        $maptype = isset($param['maptype']) ? $param['maptype'] : $this->_maptype;
+        $markers = isset($param['markers']) ? $param['markers'] : null;
+        $width = isset($param['width']) ? (int)$param['width'] : $this->_width;
+        $height = isset($param['height']) ? (int)$param['height'] : $this->_height;
         $sanitize = isset($param['sanitize']) ? (bool)$param['sanitize'] : $this->_sanitize;
 
         $static_markers = $this->build_markers($markers);
@@ -80,18 +93,22 @@ class webphoto_lib_staticmap
         return $str;
     }
 
+    /**
+     * @param $markers
+     * @return null|string
+     */
     public function build_markers($markers)
     {
         if (!is_array($markers) || !count($markers)) {
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($markers as $marker) {
-            $latitude  = $marker['latitude'];
+            $latitude = $marker['latitude'];
             $longitude = $marker['longitude'];
-            $color     = isset($marker['color']) ? $marker['color'] : null;
-            $alpha     = isset($marker['alpha']) ? $marker['alpha'] : null;
+            $color = isset($marker['color']) ? $marker['color'] : null;
+            $alpha = isset($marker['alpha']) ? $marker['alpha'] : null;
 
             $str = $latitude . ',' . $longitude;
             if ($color) {
@@ -107,35 +124,56 @@ class webphoto_lib_staticmap
         return implode('|', $arr);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize_url($str)
     {
         $str = str_replace('|', '%7C', $str);
+
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_key($val)
     {
         $this->_key = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_maptype($val)
     {
         $this->_maptype = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_width($val)
     {
         $this->_width = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_height($val)
     {
         $this->_height = (int)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_sanitize($val)
     {
         $this->_sanitize = (bool)$val;

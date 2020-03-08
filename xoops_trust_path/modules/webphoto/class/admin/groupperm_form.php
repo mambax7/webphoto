@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_groupperm_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_groupperm_form
+ */
 class webphoto_admin_groupperm_form extends webphoto_edit_base
 {
     public $_def_class;
@@ -30,89 +34,126 @@ class webphoto_admin_groupperm_form extends webphoto_edit_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_groupperm_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_form_class = webphoto_lib_groupperm_form::getInstance();
-        $this->_def_class  = webphoto_inc_gperm_def::getInstance();
+        $this->_def_class = webphoto_inc_gperm_def::getInstance();
 
-        $this->_TEMPLATE = 'db:' . $dirname . '_form_admin_groupperm.html';
+        $this->_TEMPLATE = 'db:' . $dirname . '_form_admin_groupperm.tpl';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_groupperm_form|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_groupperm_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $fct
+     * @return mixed|string|void
+     */
     public function build_form($fct)
     {
         $group_list = $this->_form_class->build_group_list($this->_MODULE_ID, _C_WEBPHOTO_GPERM_NAME, $this->_def_class->get_perm_list(), $this->_FLAG_PERM_ADMIN);
 
         $group_list = $this->rebuild_group_list($group_list);
 
-        $hidden_list = array(
-            array('name' => 'fct', 'value' => $fct),
-        );
+        $hidden_list = [
+            ['name' => 'fct', 'value' => $fct],
+        ];
 
         $param = $this->build_param($group_list, $hidden_list);
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_TEMPLATE);
     }
 
+    /**
+     * @param $group_id
+     * @param $fct
+     * @param $cat_id
+     * @return mixed|string|void
+     */
     public function build_form_by_groupid($group_id, $fct, $cat_id)
     {
-        $group_list =
-            $this->_form_class->build_group_list_single($this->_MODULE_ID, $group_id, $this->_form_class->get_group_name($group_id), _C_WEBPHOTO_GPERM_NAME, $this->_def_class->get_perm_list());
+        $group_list = $this->_form_class->build_group_list_single($this->_MODULE_ID, $group_id, $this->_form_class->get_group_name($group_id), _C_WEBPHOTO_GPERM_NAME, $this->_def_class->get_perm_list());
 
-        $hidden_list = array(
-            array('name' => 'fct', 'value' => $fct),
-            array('name' => 'cat_id', 'value' => $cat_id),
-        );
+        $hidden_list = [
+            ['name' => 'fct', 'value' => $fct],
+            ['name' => 'cat_id', 'value' => $cat_id],
+        ];
 
-        $param = $this->build_param(array($group_list), $hidden_list);
+        $param = $this->build_param([$group_list], $hidden_list);
 
         $tpl = new XoopsTpl();
         $tpl->assign($param);
+
         return $tpl->fetch($this->_TEMPLATE);
     }
 
+    /**
+     * @param $group_list
+     * @param $hidden_list
+     * @return array
+     */
     public function build_param($group_list, $hidden_list)
     {
-        $param                            = $this->_form_class->build_param($this->_MODULE_ID, $this->_ADMIN_INDEX_PHP);
-        $param['lang_title_groupperm']    = $this->get_admin_title('GROUPPERM');
+        $param = $this->_form_class->build_param($this->_MODULE_ID, $this->_ADMIN_INDEX_PHP);
+        $param['lang_title_groupperm'] = $this->get_admin_title('GROUPPERM');
         $param['lang_group_mod_category'] = _AM_WEBPHOTO_GROUP_MOD_CATEGORY;
-        $param['group_list']              = $group_list;
-        $param['hidden_list']             = $hidden_list;
+        $param['group_list'] = $group_list;
+        $param['hidden_list'] = $hidden_list;
 
         return array_merge($param, $this->get_gperm_lang());
     }
 
+    /**
+     * @return array
+     */
     public function get_gperm_lang()
     {
-        $arr = array(
+        $arr = [
             'lang_gperm_module_admin' => _AM_WEBPHOTO_GPERM_MODULE_ADMIN,
-            'lang_gperm_module_read'  => _AM_WEBPHOTO_GPERM_MODULE_READ,
-        );
+            'lang_gperm_module_read' => _AM_WEBPHOTO_GPERM_MODULE_READ,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $group_list
+     * @return array
+     */
     public function rebuild_group_list($group_list)
     {
         list($groupid_admin, $groupid_user) = $this->get_mod_groupid();
 
         list($cat_rows, $cat_groupid_array) = $this->get_cat_rows_by_groupid();
 
-        $new_list = array();
+        $new_list = [];
         foreach ($group_list as $id => $group) {
             $mod_right_name = '';
             if ($id == $groupid_admin) {
@@ -121,17 +162,17 @@ class webphoto_admin_groupperm_form extends webphoto_edit_base
                 $mod_right_name = _AM_WEBPHOTO_GROUP_MOD_USER;
             }
 
-            $cat_id    = 0;
+            $cat_id = 0;
             $cat_title = '';
             if (in_array($id, $cat_groupid_array)) {
-                $cat_row   = $cat_rows[$id];
-                $cat_id    = $cat_row['cat_id'];
+                $cat_row = $cat_rows[$id];
+                $cat_id = $cat_row['cat_id'];
                 $cat_title = $cat_row['cat_title'];
             }
 
             $group['mod_right_name'] = $mod_right_name;
-            $group['cat_id']         = $cat_id;
-            $group['cat_title']      = $cat_title;
+            $group['cat_id'] = $cat_id;
+            $group['cat_title'] = $cat_title;
 
             $new_list[$id] = $group;
         }
@@ -139,10 +180,13 @@ class webphoto_admin_groupperm_form extends webphoto_edit_base
         return $new_list;
     }
 
+    /**
+     * @return array
+     */
     public function get_mod_groupid()
     {
         $groupid_admin = 0;
-        $groupid_user  = 0;
+        $groupid_user = 0;
 
         if ($this->get_ini('xoops_version_cfg_groupid_admin')) {
             $groupid_admin = $this->get_config_by_name('groupid_admin');
@@ -151,24 +195,27 @@ class webphoto_admin_groupperm_form extends webphoto_edit_base
             $groupid_user = $this->get_config_by_name('groupid_user');
         }
 
-        return array($groupid_admin, $groupid_user);
+        return [$groupid_admin, $groupid_user];
     }
 
+    /**
+     * @return array
+     */
     public function get_cat_rows_by_groupid()
     {
-        $groupid_array   = array();
-        $rows_by_groupid = array();
-        $rows            = $this->_cat_handler->get_rows_all_asc();
+        $groupid_array = [];
+        $rows_by_groupid = [];
+        $rows = $this->_catHandler->get_rows_all_asc();
 
         foreach ($rows as $row) {
             $id = $row['cat_group_id'];
             if ($id > 0) {
-                $groupid_array[]      = $id;
+                $groupid_array[] = $id;
                 $rows_by_groupid[$id] = $row;
             }
         }
 
-        return array($rows_by_groupid, $groupid_array);
+        return [$rows_by_groupid, $groupid_array];
     }
 
     // --- class end ---

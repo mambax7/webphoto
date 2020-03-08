@@ -14,10 +14,13 @@
 
 // === class begin ===
 if (!class_exists('webphoto_timeline_init')) {
-
     //=========================================================
     // class webphoto_timeline_init
     //=========================================================
+
+    /**
+     * Class webphoto_timeline_init
+     */
     class webphoto_timeline_init
     {
         public $_config_class;
@@ -29,27 +32,45 @@ if (!class_exists('webphoto_timeline_init')) {
         //---------------------------------------------------------
         // constructor
         //---------------------------------------------------------
+
+        /**
+         * webphoto_timeline_init constructor.
+         * @param $dirname
+         */
         public function __construct($dirname)
         {
-            $this->_config_class   = webphoto_config::getInstance($dirname);
+            $this->_config_class = webphoto_config::getInstance($dirname);
             $this->_timeline_class = webphoto_inc_timeline::getSingleton($dirname);
 
             $this->_cfg_timeline_dirname = $this->_config_class->get_by_name('timeline_dirname');
-            $this->_init_timeline        = $this->_timeline_class->init($this->_cfg_timeline_dirname);
+            $this->_init_timeline = $this->_timeline_class->init($this->_cfg_timeline_dirname);
         }
 
+        /**
+         * @param null $dirname
+         * @return \webphoto_timeline_init
+         */
         public static function getInstance($dirname = null)
         {
             static $instance;
-            if (!isset($instance)) {
-                $instance = new webphoto_timeline_init($dirname);
+            if (null === $instance) {
+                $instance = new self($dirname);
             }
+
             return $instance;
         }
 
         //---------------------------------------------------------
         // webphoto_inc_timeline
         //---------------------------------------------------------
+
+        /**
+         * @param $mode
+         * @param $unit
+         * @param $date
+         * @param $photos
+         * @return mixed
+         */
         public function fetch_timeline($mode, $unit, $date, $photos)
         {
             return $this->_timeline_class->fetch_timeline($mode, $unit, $date, $photos);
@@ -58,21 +79,32 @@ if (!class_exists('webphoto_timeline_init')) {
         //---------------------------------------------------------
         // function
         //---------------------------------------------------------
+
+        /**
+         * @return mixed
+         */
         public function get_timeline_dirname()
         {
             return $this->_timeline_dirname;
         }
 
+        /**
+         * @return mixed
+         */
         public function get_init()
         {
             return $this->_init_timeline;
         }
 
+        /**
+         * @param bool $flag_none
+         * @return array|bool
+         */
         public function get_scale_options($flag_none = false)
         {
-            $arr1 = array(
+            $arr1 = [
                 'none' => _WEBPHOTO_TIMELINE_OFF,
-            );
+            ];
 
             $arr2 = $this->_timeline_class->get_scale_options();
 
@@ -90,9 +122,14 @@ if (!class_exists('webphoto_timeline_init')) {
             return $arr;
         }
 
+        /**
+         * @param        $scale
+         * @param string $default
+         * @return string
+         */
         public function scale_to_unit($scale, $default = 'month')
         {
-            if ($scale == 0) {
+            if (0 == $scale) {
                 return $default;
             }
 
@@ -105,6 +142,11 @@ if (!class_exists('webphoto_timeline_init')) {
             return $default;
         }
 
+        /**
+         * @param     $unit
+         * @param int $default
+         * @return int
+         */
         public function unit_to_scale($unit, $default = 6)
         {
             $arr1 = $this->_timeline_class->get_int_unit_array();
@@ -117,6 +159,9 @@ if (!class_exists('webphoto_timeline_init')) {
             return $default;
         }
 
+        /**
+         * @return array|bool
+         */
         public function get_lang_param()
         {
             $param = $this->_timeline_class->get_scale_options();
@@ -124,10 +169,11 @@ if (!class_exists('webphoto_timeline_init')) {
                 return false;
             }
 
-            $arr = array();
+            $arr = [];
             foreach ($param as $k => $v) {
                 $arr['lang_timeline_unit_' . $k] = $v;
             }
+
             return $arr;
         }
 

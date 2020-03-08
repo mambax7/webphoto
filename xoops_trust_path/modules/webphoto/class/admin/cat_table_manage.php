@@ -21,12 +21,21 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_cat_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_cat_table_manage
+ */
 class webphoto_admin_cat_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_cat_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -34,15 +43,21 @@ class webphoto_admin_cat_table_manage extends webphoto_lib_manage
         $this->set_manage_handler($webphotoCat);
         $this->set_manage_title_by_name('CAT_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('cat_title', 'cat_pid'));
+        $this->set_manage_list_column_array(['cat_title', 'cat_pid']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_cat_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_cat_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -57,46 +72,50 @@ class webphoto_admin_cat_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'cat_id'             => $this->_post_class->get_post_get_int('cat_id'),
-            'cat_time_create'    => $this->_post_class->get_post_int('cat_time_create'),
-            'cat_time_update'    => $this->_post_class->get_post_int('cat_time_update'),
-            'cat_gicon_id'       => $this->_post_class->get_post_int('cat_gicon_id'),
-            'cat_forum_id'       => $this->_post_class->get_post_int('cat_forum_id'),
-            'cat_group_id'       => $this->_post_class->get_post_int('cat_group_id'),
-            'cat_pid'            => $this->_post_class->get_post_int('cat_pid'),
-            'cat_title'          => $this->_post_class->get_post_text('cat_title'),
-            'cat_img_path'       => $this->_post_class->get_post_text('cat_img_path'),
-            'cat_weight'         => $this->_post_class->get_post_int('cat_weight'),
-            'cat_depth'          => $this->_post_class->get_post_int('cat_depth'),
-            'cat_allowed_ext'    => $this->_post_class->get_post_text('cat_allowed_ext'),
-            'cat_img_mode'       => $this->_post_class->get_post_int('cat_img_mode'),
-            'cat_orig_width'     => $this->_post_class->get_post_int('cat_orig_width'),
-            'cat_orig_height'    => $this->_post_class->get_post_int('cat_orig_height'),
-            'cat_main_width'     => $this->_post_class->get_post_int('cat_main_width'),
-            'cat_main_height'    => $this->_post_class->get_post_int('cat_main_height'),
-            'cat_sub_width'      => $this->_post_class->get_post_int('cat_sub_width'),
-            'cat_sub_height'     => $this->_post_class->get_post_int('cat_sub_height'),
-            'cat_item_type'      => $this->_post_class->get_post_int('cat_item_type'),
-            'cat_gmap_mode'      => $this->_post_class->get_post_int('cat_gmap_mode'),
-            'cat_gmap_latitude'  => $this->_post_class->get_post_float('cat_gmap_latitude'),
+        $row = [
+            'cat_id' => $this->_post_class->get_post_get_int('cat_id'),
+            'cat_time_create' => $this->_post_class->get_post_int('cat_time_create'),
+            'cat_time_update' => $this->_post_class->get_post_int('cat_time_update'),
+            'cat_gicon_id' => $this->_post_class->get_post_int('cat_gicon_id'),
+            'cat_forum_id' => $this->_post_class->get_post_int('cat_forum_id'),
+            'cat_group_id' => $this->_post_class->get_post_int('cat_group_id'),
+            'cat_pid' => $this->_post_class->get_post_int('cat_pid'),
+            'cat_title' => $this->_post_class->get_post_text('cat_title'),
+            'cat_img_path' => $this->_post_class->get_post_text('cat_img_path'),
+            'cat_weight' => $this->_post_class->get_post_int('cat_weight'),
+            'cat_depth' => $this->_post_class->get_post_int('cat_depth'),
+            'cat_allowed_ext' => $this->_post_class->get_post_text('cat_allowed_ext'),
+            'cat_img_mode' => $this->_post_class->get_post_int('cat_img_mode'),
+            'cat_orig_width' => $this->_post_class->get_post_int('cat_orig_width'),
+            'cat_orig_height' => $this->_post_class->get_post_int('cat_orig_height'),
+            'cat_main_width' => $this->_post_class->get_post_int('cat_main_width'),
+            'cat_main_height' => $this->_post_class->get_post_int('cat_main_height'),
+            'cat_sub_width' => $this->_post_class->get_post_int('cat_sub_width'),
+            'cat_sub_height' => $this->_post_class->get_post_int('cat_sub_height'),
+            'cat_item_type' => $this->_post_class->get_post_int('cat_item_type'),
+            'cat_gmap_mode' => $this->_post_class->get_post_int('cat_gmap_mode'),
+            'cat_gmap_latitude' => $this->_post_class->get_post_float('cat_gmap_latitude'),
             'cat_gmap_longitude' => $this->_post_class->get_post_float('cat_gmap_longitude'),
-            'cat_gmap_zoom'      => $this->_post_class->get_post_int('cat_gmap_zoom'),
-            'cat_gmap_type'      => $this->_post_class->get_post_int('cat_gmap_type'),
-            'cat_perm_read'      => $this->_post_class->get_post_text('cat_perm_read'),
-            'cat_perm_post'      => $this->_post_class->get_post_text('cat_perm_post'),
-            'cat_text1'          => $this->_post_class->get_post_text('cat_text1'),
-            'cat_text2'          => $this->_post_class->get_post_text('cat_text2'),
-            'cat_text3'          => $this->_post_class->get_post_text('cat_text3'),
-            'cat_text4'          => $this->_post_class->get_post_text('cat_text4'),
-            'cat_text5'          => $this->_post_class->get_post_text('cat_text5'),
-            'cat_description'    => $this->_post_class->get_post_text('cat_description'),
-        );
+            'cat_gmap_zoom' => $this->_post_class->get_post_int('cat_gmap_zoom'),
+            'cat_gmap_type' => $this->_post_class->get_post_int('cat_gmap_type'),
+            'cat_perm_read' => $this->_post_class->get_post_text('cat_perm_read'),
+            'cat_perm_post' => $this->_post_class->get_post_text('cat_perm_post'),
+            'cat_text1' => $this->_post_class->get_post_text('cat_text1'),
+            'cat_text2' => $this->_post_class->get_post_text('cat_text2'),
+            'cat_text3' => $this->_post_class->get_post_text('cat_text3'),
+            'cat_text4' => $this->_post_class->get_post_text('cat_text4'),
+            'cat_text5' => $this->_post_class->get_post_text('cat_text5'),
+            'cat_description' => $this->_post_class->get_post_text('cat_description'),
+        ];
 
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_CAT_TEXT; ++$i) {
-            $name       = 'cat_text' . $i;
+            $name = 'cat_text' . $i;
             $row[$name] = $this->_post_class->get_post_text($name);
         }
 
@@ -106,6 +125,10 @@ class webphoto_admin_cat_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

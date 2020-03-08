@@ -27,13 +27,17 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_embed
 //=========================================================
+
+/**
+ * Class webphoto_embed
+ */
 class webphoto_embed extends webphoto_lib_plugin
 {
     public $_config_class;
 
     public $_param = null;
 
-    public $_WIDTH_DEFAULT  = _C_WEBPHOTO_EMBED_WIDTH_DEFAULT;
+    public $_WIDTH_DEFAULT = _C_WEBPHOTO_EMBED_WIDTH_DEFAULT;
     public $_HEIGHT_DEFAULT = _C_WEBPHOTO_EMBED_HEIGHT_DEFAULT;
 
     public $_WORK_DIR;
@@ -42,6 +46,12 @@ class webphoto_embed extends webphoto_lib_plugin
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_embed constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -49,22 +59,32 @@ class webphoto_embed extends webphoto_lib_plugin
         $this->set_prefix('webphoto_embed_');
 
         $this->_config_class = webphoto_config::getInstance($dirname);
-        $this->_WORK_DIR     = $this->_config_class->get_by_name('workdir');
-        $this->_TMP_DIR      = $this->_WORK_DIR . '/tmp';
+        $this->_WORK_DIR = $this->_config_class->get_by_name('workdir');
+        $this->_TMP_DIR = $this->_WORK_DIR . '/tmp';
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_embed|\webphoto_lib_plugin
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_embed($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // embed
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_param($val)
     {
         if (is_array($val)) {
@@ -72,6 +92,11 @@ class webphoto_embed extends webphoto_lib_plugin
         }
     }
 
+    /**
+     * @param $type
+     * @param $src
+     * @return bool
+     */
     public function get_xml_params($type, $src)
     {
         if (empty($type)) {
@@ -88,9 +113,17 @@ class webphoto_embed extends webphoto_lib_plugin
         }
 
         $class->set_tmp_dir($this->_TMP_DIR);
+
         return $class->get_xml_params($src);
     }
 
+    /**
+     * @param $type
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return array|bool
+     */
     public function build_embed_link($type, $src, $width, $height)
     {
         if (empty($type)) {
@@ -127,11 +160,16 @@ class webphoto_embed extends webphoto_lib_plugin
         }
 
         $embed = $class->embed($src, $width, $height);
-        $link  = $class->link($src);
+        $link = $class->link($src);
 
-        return array($embed, $link);
+        return [$embed, $link];
     }
 
+    /**
+     * @param $type
+     * @param $src
+     * @return bool
+     */
     public function build_link($type, $src)
     {
         if (empty($type)) {
@@ -150,13 +188,17 @@ class webphoto_embed extends webphoto_lib_plugin
         return $class->link($src);
     }
 
+    /**
+     * @param $flag_general
+     * @return array
+     */
     public function build_type_options($flag_general)
     {
         $list = $this->build_list();
 
-        $arr = array();
+        $arr = [];
         foreach ($list as $type) {
-            if (($type == _C_WEBPHOTO_EMBED_NAME_GENERAL) && !$flag_general) {
+            if ((_C_WEBPHOTO_EMBED_NAME_GENERAL == $type) && !$flag_general) {
                 continue;
             }
             $arr[$type] = $type;
@@ -165,6 +207,11 @@ class webphoto_embed extends webphoto_lib_plugin
         return $arr;
     }
 
+    /**
+     * @param $type
+     * @param $src
+     * @return bool|string
+     */
     public function build_src_desc($type, $src)
     {
         if (empty($type)) {
@@ -182,18 +229,23 @@ class webphoto_embed extends webphoto_lib_plugin
         }
 
         // typo
-        $str = $lang . "<br />\n";
-        $str .= _WEBPHOTO_EMBED_EXAMPLE . "<br />\n";
-        $str .= $class->desc() . "<br />\n";
+        $str = $lang . "<br>\n";
+        $str .= _WEBPHOTO_EMBED_EXAMPLE . "<br>\n";
+        $str .= $class->desc() . "<br>\n";
 
         if ($src) {
-            $str .= '<img src="' . $class->thumb($src) . ' border="0" />';
-            $str .= "<br />\n";
+            $str .= '<img src="' . $class->thumb($src) . ' border="0" >';
+            $str .= "<br>\n";
         }
 
         return $str;
     }
 
+    /**
+     * @param $type
+     * @param $src
+     * @return bool
+     */
     public function build_thumb($type, $src)
     {
         if (empty($type)) {
@@ -212,6 +264,10 @@ class webphoto_embed extends webphoto_lib_plugin
         return $class->thumb($src);
     }
 
+    /**
+     * @param $type
+     * @return array|bool
+     */
     public function build_support_params($type)
     {
         if (empty($type)) {
@@ -230,9 +286,9 @@ class webphoto_embed extends webphoto_lib_plugin
 
         $ret = $class->thumb('example');
         if ($ret) {
-            $arr = array(
+            $arr = [
                 'thumb' => true,
-            );
+            ];
         }
 
         return false;

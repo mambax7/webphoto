@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_oninstall_cat
 //=========================================================
+
+/**
+ * Class webphoto_inc_oninstall_cat
+ */
 class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
 {
     public $_table_cat;
@@ -20,21 +24,33 @@ class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_oninstall_cat constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_table_cat = $this->prefix_dirname('cat');
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_oninstall_cat($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -48,9 +64,11 @@ class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
         $this->_cat_add_column_200();
     }
 
+    /**
+     * @return bool
+     */
     public function _cat_add_column_260()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_cat, 'cat_timeline_mode')) {
             return true;
@@ -64,16 +82,19 @@ class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
         $ret = $this->query($sql);
         if ($ret) {
             $this->set_msg('Add cat_timeline_scale in <b>' . $this->_table_cat . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
+
+        return false;
     }
 
+    /**
+     * @return bool
+     */
     public function _cat_add_column_060()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_cat, 'cat_img_name')) {
             return true;
@@ -86,16 +107,19 @@ class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
         $ret = $this->query($sql);
         if ($ret) {
             $this->set_msg('Add cat_img_name in <b>' . $this->_table_cat . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
+
+        return false;
     }
 
+    /**
+     * @return bool
+     */
     public function _cat_add_column_200()
     {
-
         // return if already exists
         if ($this->exists_column($this->_table_cat, 'cat_group_id')) {
             return true;
@@ -108,11 +132,12 @@ class webphoto_inc_oninstall_cat extends webphoto_inc_base_ini
         $ret = $this->query($sql);
         if ($ret) {
             $this->set_msg('Add cat_img_name in <b>' . $this->_table_cat . '</b>');
+
             return true;
-        } else {
-            $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
-            return false;
         }
+        $this->set_msg($this->highlight('ERROR: Could not update <b>' . $this->_table_cat . '</b>.'));
+
+        return false;
     }
 
     // --- class end ---

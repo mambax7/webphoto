@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_exif
 // wrapper for webphoto_lib_exif
 //=========================================================
+
+/**
+ * Class webphoto_exif
+ */
 class webphoto_exif
 {
     public $_exif_class;
@@ -35,23 +39,32 @@ class webphoto_exif
     //---------------------------------------------------------
     public function __construct()
     {
-        $this->_exif_class          = webphoto_lib_exif::getInstance();
-        $this->_utility_class       = webphoto_lib_utility::getInstance();
+        $this->_exif_class = webphoto_lib_exif::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
         $this->_mysql_utility_class = webphoto_lib_mysql_utility::getInstance();
     }
 
+    /**
+     * @return \webphoto_exif
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_exif();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // exif
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @return array|bool|null
+     */
     public function get_exif($file)
     {
         $info = $this->_exif_class->read_file($file);
@@ -60,12 +73,17 @@ class webphoto_exif
         }
 
         $info['datetime_mysql'] = $this->exif_to_mysql_datetime($info);
+
         return $info;
     }
 
+    /**
+     * @param $exif
+     * @return bool|false|string
+     */
     public function exif_to_mysql_datetime($exif)
     {
-        $datetime     = $exif['datetime'];
+        $datetime = $exif['datetime'];
         $datetime_gnu = $exif['datetime_gnu'];
 
         if ($datetime_gnu) {
@@ -83,11 +101,20 @@ class webphoto_exif
     //---------------------------------------------------------
     // utility class
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return false|int
+     */
     public function str_to_time($str)
     {
         return $this->_utility_class->str_to_time($str);
     }
 
+    /**
+     * @param $time
+     * @return false|string
+     */
     public function time_to_mysql_datetime($time)
     {
         return $this->_mysql_utility_class->time_to_mysql_datetime($time);

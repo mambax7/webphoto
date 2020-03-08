@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_embed_general
 //=========================================================
+
+/**
+ * Class webphoto_embed_general
+ */
 class webphoto_embed_general extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('general');

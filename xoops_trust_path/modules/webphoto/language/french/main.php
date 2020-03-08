@@ -79,8 +79,8 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_SUBMIT_RECEIVED', 'Nous avons reçu votre image. Merci !');
     define('_WEBPHOTO_SUBMIT_ALLPENDING', 'Toutes les photos proposées sont vérifiées avant publication.');
 
-    define('_WEBPHOTO_ERR_MUSTREGFIRST', 'Désolé, vous ne disposez pas des permissions requises pour effactuer cette action.<br />Veuillez vous identifier ou vous créer un compte.');
-    define('_WEBPHOTO_ERR_MUSTADDCATFIRST', "Désolé, aucune Catégorie n'est disponible.<br />Veuillez créer d'abord créer une Catégorie");
+    define('_WEBPHOTO_ERR_MUSTREGFIRST', 'Désolé, vous ne disposez pas des permissions requises pour effactuer cette action.<br>Veuillez vous identifier ou vous créer un compte.');
+    define('_WEBPHOTO_ERR_MUSTADDCATFIRST', "Désolé, aucune Catégorie n'est disponible.<br>Veuillez créer d'abord créer une Catégorie");
     define('_WEBPHOTO_ERR_NOIMAGESPECIFIED', "Aucune photo n'a été téléversée");
     define('_WEBPHOTO_ERR_FILE', 'Les photos sont trop volumineuses ou un problème de configuration est survenu');
     define('_WEBPHOTO_ERR_FILEREAD', 'Les photos ne peuvent pas être atteintes.');
@@ -107,8 +107,8 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
     define('_WEBPHOTO_RATE_S_THANKURATE', "Merci d'avoir pris quelques instants pour évaluer cette ressources sur %s.");
 
     define('_WEBPHOTO_ERR_NORATING', 'Aucune note sélectionnée');
-    define('_WEBPHOTO_ERR_CANTVOTEOWN', "Vous n'êtes pas autorisé à voter pour vos propres ressources.<br />Toutes les évaluations sont enregistrées et contrôlées.");
-    define('_WEBPHOTO_ERR_VOTEONCE', "Ne votez pas plus d'une fois pour la même ressources.<br />Toutes les évaluations sont enregistrées et contrôlées.");
+    define('_WEBPHOTO_ERR_CANTVOTEOWN', "Vous n'êtes pas autorisé à voter pour vos propres ressources.<br>Toutes les évaluations sont enregistrées et contrôlées.");
+    define('_WEBPHOTO_ERR_VOTEONCE', "Ne votez pas plus d'une fois pour la même ressources.<br>Toutes les évaluations sont enregistrées et contrôlées.");
 
     //---------------------------------------------------------
     // movo to admin.php
@@ -631,21 +631,21 @@ if (!defined('_MB_WEBPHOTO_LANG_LOADED')) {
 
     define('_WEBPHOTO_HELP_PICLENS_TITLE', 'PicLens');
     define('_WEBPHOTO_HELP_PICLENS_DSC', '
-Piclens est une extension firefox réalisée par Cooliris<br />
-qui vous permet d\'installer une visionneuse de photo sur votre site<br /><br />
-<b>Mise en place</b><br />
-(1) Télécharger Firefox<br />
+Piclens est une extension firefox réalisée par Cooliris<br>
+qui vous permet d\'installer une visionneuse de photo sur votre site<br><br>
+<b>Mise en place</b><br>
+(1) Télécharger Firefox<br>
 <a href="http://www.mozilla-japan.org/products/firefox/" target="_blank">
 http://www.mozilla-japan.org/products/firefox/
-</a><br /><br />
-(2) Télécharger Piclens<br />
+</a><br><br>
+(2) Télécharger Piclens<br>
 <a href="http://www.piclens.com/" target="_blank">
 http://www.piclens.com/
-</a><br /><br />
-(3) Accéder au module Webphoto<br />
-http://THIS-SITE/modules/webphoto/ <br /><br />
-(4) Cliquer sur le bouton situé à l\extrémité droite du navigateur Firefox<br />
-Note : lorsque l\'icône est noire, vous ne pouvez pas activer Piclens<br />');
+</a><br><br>
+(3) Accéder au module Webphoto<br>
+http://THIS-SITE/modules/webphoto/ <br><br>
+(4) Cliquer sur le bouton situé à l\extrémité droite du navigateur Firefox<br>
+Note : lorsque l\'icône est noire, vous ne pouvez pas activer Piclens<br>');
 
     //
     // dummy lines , adjusts line number for Japanese lang file.
@@ -653,18 +653,18 @@ Note : lorsque l\'icône est noire, vous ne pouvez pas activer Piclens<br />');
 
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_TITLE', 'Media RSS Slide Show');
     define('_WEBPHOTO_HELP_MEDIARSSSLIDESHOW_DSC', '
-"Media RSS Slide Show" est une Gadget Google qui fonctionne avec Google Desktop<br />
-Il permet d\'afficher sur votre bureau un diaporama de vos galeries d\'images<br /><br />
-<b>Mise en place</b><br />
-(1) Télécharger "Google Desktop"<br />
+"Media RSS Slide Show" est une Gadget Google qui fonctionne avec Google Desktop<br>
+Il permet d\'afficher sur votre bureau un diaporama de vos galeries d\'images<br><br>
+<b>Mise en place</b><br>
+(1) Télécharger "Google Desktop"<br>
 <a href="http://desktop.google.co.jp/" target="_blank">
 http://desktop.google.co.jp/
-</a><br /><br />
-(2) Télécharger le Gadget "Media RSS  Slide Show"<br />
+</a><br><br>
+(2) Télécharger le Gadget "Media RSS  Slide Show"<br>
 <a href="http://desktop.google.com/plugins/i/mediarssslideshow.html" target="_blank">
 http://desktop.google.com/plugins/i/mediarssslideshow.html
-</a><br /><br />
-(3) Modifier "URL of MediaRSS" dans les options du Gadget<br />');
+</a><br><br>
+(3) Modifier "URL of MediaRSS" dans les options du Gadget<br>');
 
     //---------------------------------------------------------
     // others
@@ -754,8 +754,7 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_SUBTITLE_MAIL_PHOTO', 'Soumettre les photos attachés aux e-mails');
     define('_WEBPHOTO_TEXT_MAIL_ACCESS_TIME', "Limitation d'accès");
     define('_WEBPHOTO_TEXT_MAIL_RETRY', "Accéder au bout d'une minute");
-    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE',
-           'Impossible de récupérer les e-mails.<br />La communication est probablement interrompue provisoirement.<br />Merci de patienter un moment avant de tenter une nouvelle récupération');
+    define('_WEBPHOTO_TEXT_MAIL_NOT_RETRIEVE', 'Impossible de récupérer les e-mails.<br>La communication est probablement interrompue provisoirement.<br>Merci de patienter un moment avant de tenter une nouvelle récupération');
     define('_WEBPHOTO_TEXT_MAIL_NO_NEW', 'Aucun nouvel e-mail trouvé');
     define('_WEBPHOTO_TEXT_MAIL_RETRIEVED_FMT', '%s e-mails récupérés');
     define('_WEBPHOTO_TEXT_MAIL_NO_VALID', 'Aucun e-mail valide');
@@ -779,9 +778,9 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_HELP_NOT_PERM', 'Les permissions requises ne vous ont pas été accordées. Veuillez contacter le webmestre');
 
     define('_WEBPHOTO_HELP_MOBILE_TITLE', 'Téléphone modile');
-    define('_WEBPHOTO_HELP_MOBILE_DSC', "Vous pouvez consulter la photo et la vidéo sur votre téléphone mobile<br/>Les dimensions de l'écran doivent être de 240x320 ");
+    define('_WEBPHOTO_HELP_MOBILE_DSC', "Vous pouvez consulter la photo et la vidéo sur votre téléphone mobile<br>Les dimensions de l'écran doivent être de 240x320 ");
     define('_WEBPHOTO_HELP_MOBILE_TEXT_FMT', '
-<b>URL d\'accès</b><br />
+<b>URL d\'accès</b><br>
 <a href="{MODULE_URL}/i.php" rel="external">{MODULE_URL}/i.php</a>');
 
     define('_WEBPHOTO_HELP_MAIL_TITLE', 'E-mail via mobile');
@@ -791,9 +790,9 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
     define('_WEBPHOTO_HELP_FILE_TITLE', 'Transmission par FTP');
     define('_WEBPHOTO_HELP_FILE_DSC', 'Les transferts par FTP vous permettent de téléverser des photos et des vidéos de grandes tailles');
     define('_WEBPHOTO_HELP_FILE_TEXT_FMT', '
-<b>Envoyer un fichier</b><br />
-(1) Téléverser le fichier sur le serveur via FTP<br />
-(2) Cliquer sur <a href="{MODULE_URL}/index.php?fct=submit_file" rel="external">Ajouter une photo depuis le fichier</a><br />
+<b>Envoyer un fichier</b><br>
+(1) Téléverser le fichier sur le serveur via FTP<br>
+(2) Cliquer sur <a href="{MODULE_URL}/index.php?fct=submit_file" rel="external">Ajouter une photo depuis le fichier</a><br>
 (3) Sélectionner le fichier téléversé et Valider');
 
     // mail check
@@ -895,24 +894,24 @@ http://desktop.google.com/plugins/i/mediarssslideshow.html
 
     // help
     define('_WEBPHOTO_HELP_MAIL_POST_FMT', '
-<b>Préparation</b><br />
-Enregistrez votre adresse e-mail liée à votre téléphone mobile<br />
-<a href="{MODULE_URL}/index.php?fct=mail_register" rel="external">Enregistrer l\'adresse e-mail</a><br /><br />
-<b>Envoyer une photo</b><br />
-Transmettre l\'e-mail à l\'adresse suivante avec la photo en pièce jointe.<br />
-<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br /><br />
-<b>Faire pivoter les photos</b><br />
-Vous pouvez faire pivoter les photos vers la droite et vers la gauche en précisant à la fin du Sujet de l\'e-mail<br />
- R@ : pivoter vers la droite <br />
- L@ : pivoter vers la gauche<br /><br />');
-    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>Récupérer les e-mails et leurs documents joints</b><br />');
+<b>Préparation</b><br>
+Enregistrez votre adresse e-mail liée à votre téléphone mobile<br>
+<a href="{MODULE_URL}/index.php?fct=mail_register" rel="external">Enregistrer l\'adresse e-mail</a><br><br>
+<b>Envoyer une photo</b><br>
+Transmettre l\'e-mail à l\'adresse suivante avec la photo en pièce jointe.<br>
+<a href="mailto:{MAIL_ADDR}">{MAIL_ADDR}</a> {MAIL_GUEST} <br><br>
+<b>Faire pivoter les photos</b><br>
+Vous pouvez faire pivoter les photos vers la droite et vers la gauche en précisant à la fin du Sujet de l\'e-mail<br>
+ R@ : pivoter vers la droite <br>
+ L@ : pivoter vers la gauche<br><br>');
+    define('_WEBPHOTO_HELP_MAIL_SUBTITLE_RETRIEVE', '<b>Récupérer les e-mails et leurs documents joints</b><br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_FMT', '
-Cliquer sur <a href="{MODULE_URL}/i.php?op=post" rel="external">Envois par e-mail</a>, quelques secondes après la transmission de l\'e-mail.<br />
-Webphoto va récupérer l\'e-mail que vous avez envoyé et afficher la photo proposée<br />');
-    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'Webphoto récupère le mail que vous avez envoyé et affiche la photo transmise en pièce jointe<br />');
+Cliquer sur <a href="{MODULE_URL}/i.php?op=post" rel="external">Envois par e-mail</a>, quelques secondes après la transmission de l\'e-mail.<br>
+Webphoto va récupérer l\'e-mail que vous avez envoyé et afficher la photo proposée<br>');
+    define('_WEBPHOTO_HELP_MAIL_RETRIEVE_TEXT', 'Webphoto récupère le mail que vous avez envoyé et affiche la photo transmise en pièce jointe<br>');
     define('_WEBPHOTO_HELP_MAIL_RETRIEVE_AUTO_FMT', '
-L\'e-mail est traité automatiquement %s secondes après la transmission de l\'e-mail.<br />
-Merci de cliquer <a href="{MODULE_URL}/i.php?op=post" rel="external">Evoyer par e-mail</a>, si l\'e-mail n\'est pas traité.<br />');
+L\'e-mail est traité automatiquement %s secondes après la transmission de l\'e-mail.<br>
+Merci de cliquer <a href="{MODULE_URL}/i.php?op=post" rel="external">Evoyer par e-mail</a>, si l\'e-mail n\'est pas traité.<br>');
 
     //---------------------------------------------------------
     // v0.50
@@ -1077,81 +1076,77 @@ Merci de cliquer <a href="{MODULE_URL}/i.php?op=post" rel="external">Evoyer par 
     define('_WEBPHOTO_PLAYER_STYLE_PAGE', 'Lecteur / page personnalisé');
 
     // flashvar desc
-    define('_WEBPHOTO_FLASHVAR_ID_DSC',
-           "[Paramètres de base] <br />A utiliser pour indiquer l'idebntifiant de diffusion RTMP du lecteur.<br />L'ID sera également utilisé pour les statistiques.<br />Si vous lisez une playlist, vous pouvez indiquer un ID pour chaque élément. ");
+    define('_WEBPHOTO_FLASHVAR_ID_DSC', "[Paramètres de base] <br>A utiliser pour indiquer l'idebntifiant de diffusion RTMP du lecteur.<br>L'ID sera également utilisé pour les statistiques.<br>Si vous lisez une playlist, vous pouvez indiquer un ID pour chaque élément. ");
     define('_WEBPHOTO_FLASHVAR_HEIGHT_DSC', '[Paramètres de base] ');
     define('_WEBPHOTO_FLASHVAR_WIDTH_DSC', '[Paramètres de base]  ');
-    define('_WEBPHOTO_FLASHVAR_DISPLAYHEIGHT_DSC',
-           '[Playlist] [mediaplayer] <br />Paramétrer une dimension inférieure à la hauteur afin de voir la playlist. <br />Si vous conservez une valeur identique à la hauteur, les commandes du lecteur seront automatiquement masquées au sommet de la vidéo. ');
-    define('_WEBPHOTO_FLASHVAR_DISPLAYWIDTH_DSC', '[Playlist] [mediaplayer] <br />Pistes du bas :<br /> Ecran = lecteur<br /> Pistes latérales :<br />Ecran < au lecteur ');
+    define('_WEBPHOTO_FLASHVAR_DISPLAYHEIGHT_DSC', '[Playlist] [mediaplayer] <br>Paramétrer une dimension inférieure à la hauteur afin de voir la playlist. <br>Si vous conservez une valeur identique à la hauteur, les commandes du lecteur seront automatiquement masquées au sommet de la vidéo. ');
+    define('_WEBPHOTO_FLASHVAR_DISPLAYWIDTH_DSC', '[Playlist] [mediaplayer] <br>Pistes du bas :<br> Ecran = lecteur<br> Pistes latérales :<br>Ecran < au lecteur ');
     define('_WEBPHOTO_FLASHVAR_DISPLAY_DEFAULT', 'si la valeur indiquée est 0, celle du lecteur sera utilisée.');
-    define('_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC',
-           "[Couleurs] <br />[imagerotator] Modifier ce paramètre couleur dans le code HTML de votre page permet d'améliorer la mise en page lorsque les images sont de tailles différentes. ");
-    define('_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC', '[Couleurs] <br />Couleur de fond des commandes');
-    define('_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC', '[Couleurs] <br />Couleur du texte des commandes');
-    define('_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC', '[Couleurs] <br />Couleur de survol des commandes');
+    define('_WEBPHOTO_FLASHVAR_SCREENCOLOR_DSC', "[Couleurs] <br>[imagerotator] Modifier ce paramètre couleur dans le code HTML de votre page permet d'améliorer la mise en page lorsque les images sont de tailles différentes. ");
+    define('_WEBPHOTO_FLASHVAR_BACKCOLOR_DSC', '[Couleurs] <br>Couleur de fond des commandes');
+    define('_WEBPHOTO_FLASHVAR_FRONTCOLOR_DSC', '[Couleurs] <br>Couleur du texte des commandes');
+    define('_WEBPHOTO_FLASHVAR_LIGHTCOLOR_DSC', '[Couleurs] <br>Couleur de survol des commandes');
     define('_WEBPHOTO_FLASHVAR_COLOR_DEFAULT', "Si aucune valeur n'est indiquée, celle du lecteur sera utilisée.");
-    define('_WEBPHOTO_FLASHVAR_SEARCHBAR_DSC',
-           '(Paramètres de base) <br />Sélectionner False pour masquer la barre de recherche sous le lecteur. <br />Vous pouvez indiquer le lien de la page de résultat en utilisant le lien de recherhce du FlashVar. ');
-    define('_WEBPHOTO_FLASHVAR_IMAGE_SHOW_DSC', "(Paramètres de base) <br />True = l'image de prévisualisation s'affiche");
-    define('_WEBPHOTO_FLASHVAR_IMAGE_DSC',
-           "(Paramètres de base) <br />Si vous lisez un son ou une vidéo, indiquez l'url de l'image de prévisualisation. <br />Si vous lisez une playlist, vous pouvez indiquer une image pour chaque élément. ");
-    define('_WEBPHOTO_FLASHVAR_FILE_DSC', "(Paramètres de base) <br />Indiquer l'emplacement du fichier ou de la playlist à lire. <br />L'Imagerotator ne reconnaît que les playlists. ");
-    define('_WEBPHOTO_FLASHVAR_LOGO_DSC',
-           '(Affichage) <br />Indiquer une image qui pourra être employée comme filigrane (visible en haut à droite). <br />Pour un meilleur rendu, ne image png transparente est recommandée. ');
-    define('_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC',
-           "(Affichage) <br />Indiquer comment éleragir l'image ou la vidéo dans la zone de lecture. <br />false (par défaut) = la zone de lecture est entièrement utilisée. <br />true = la zone de lecture est utilisée en conservant les proportions du média. <br />fit = élargissement du média stretch sans conserver les proportions<br />none = les dimensions originales sont conservées. ");
-    define('_WEBPHOTO_FLASHVAR_SHOWEQ_DSC',
-           '(Affichage) <br />Sélectionner true pour afficher un égaliseur (fictif) au pied de la zone de lecture. <br />Recommandé pour la lecture de fichiers MP3. ');
-    define('_WEBPHOTO_FLASHVAR_SHOWICONS_DSC', "(Affichage) <br />Sélectionner false afin de masquer l'icône d'activité et le bouton de lecture situé au centre de la zone de lecture. ");
-    define('_WEBPHOTO_FLASHVAR_TRANSITION_DSC', '(Affichage) [Imagerotator] <br />Sélectionner la transition à utiliser entre les images. ');
-    define('_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC', '[Barre de contrôle] <br />Sélectionner false to completely hide the controlbar. ');
-    define('_WEBPHOTO_FLASHVAR_SHOWSTOP_DSC', '[Barre de contrôle] [mediaplayer] <br />Sélectionner true pour afficher le bouton Stop dans la barre de contrôle. ');
-    define('_WEBPHOTO_FLASHVAR_SHOWDIGITS_DSC', '[Barre de contrôle] [mediaplayer] <br />Sélectionner false pour masquer le compteur de lecture dans la barre de contrôle. ');
-    define('_WEBPHOTO_FLASHVAR_SHOWDOWNLOAD_DSC',
-           '[Barre de contrôle] [mediaplayer] <br />Sélectionner true pour afficher dans la barre de contrôle le boutton permettant de relier le media à FlashVar. ');
-    define('_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC', '[Barre de contrôle] <br />Sélectionner false pour masquer le bouton Plein écran (le mode lecture plein écran sera également désactivé). ');
-    define('_WEBPHOTO_FLASHVAR_AUTOSCROLL_DSC', '[Playlist] [mediaplayer] <br />Sélectionner true  pour pouvoir faire défiler verticalement le média sans recourir aux ascenseurs. ');
-    define('_WEBPHOTO_FLASHVAR_THUMBSINPLAYLIST_DSC', '[Playlist] [mediaplayer] <br />Sélectionner false pour masquer la prévisualisation dans la zone de lecture');
-    define('_WEBPHOTO_FLASHVAR_AUDIO_DSC',
-           '(Lecture) <br />Assigne un MP3 supplémentaire synchrone. <br />A utiliser pour achever une description audio, un commentaire réalisé sur fond sonore ou encore une musique associée à Imagerotator. <br />When using the mediaplayer and a playlist, you can assign audio to every entry. ');
-    define('_WEBPHOTO_FLASHVAR_AUTOSTART_DSC',
-           "(Lecture) <br />Sélectionner true pour lancer le média dès son chargement<br />ou sélectionner false lorsque le média est associé à Imagerotator (afin d'empêcher sa rotation automatique).");
-    define('_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC',
-           "(Lecture)  [mediaplayer] <br />Indiquer le délais (n secondes) durant lequel la vidéo devra être mise en mémoire tampon avant d'être lue.<br />Indiquer une valeur réduite pour les connections rapides ou pour les vidéos de courte durée.  ");
-    define('_WEBPHOTO_FLASHVAR_CAPTIONS_DSC',
-           '(Lecture) [mediaplayer] <br />Les légendes devraient être au format Timedtext. <br />Lorsque vous utiliser un lecteur, vous pouvez indiquer une légende pour chacune des ressource lue. ');
-    define('_WEBPHOTO_FLASHVAR_FALLBACK_DSC',
-           "(Lecture) [mediaplayer] <br />Si vous lisez un fichier MP4, indiquer l'emplacement d'un FLV. <br />Il sera automatiquement employé par un lecteur flash, qui devient alors compatible. ");
-    define('_WEBPHOTO_FLASHVAR_REPEAT_DSC',
-           '(Lecture) <br />Sélectionner true pour déclencher automatiquement la relecture de tous les fichiers. <br />A utiliser pour lire à nouveau en intégralité une playlist. ');
-    define('_WEBPHOTO_FLASHVAR_ROTATETIME_DSC', "(Lecture) <br />Indiquer le nombre de secondes durant lesquelle l'image sera lue. ");
-    define('_WEBPHOTO_FLASHVAR_SHUFFLE_DSC', "(Lecture) <br />Sélectionner true pour lire les élements d'une playlist au hasard. ");
-    define('_WEBPHOTO_FLASHVAR_SMOOTHING_DSC',
-           '(Lecture) [mediaplayer] <br />Sélectionner false pour désactiver la fonction de lissage de la vidéo. <br />La qualité de la vidéo sera réduite mais les performances meilleures. <br />Ce paramètre est recommandé pour les films en haute résolution ou pour les ordinateurs anciens ');
-    define('_WEBPHOTO_FLASHVAR_VOLUME_DSC', '(Lecture) <br />Paramètre le volume initial de la lecture (sons, vidéos et fichiers musicaux). ');
-    define('_WEBPHOTO_FLASHVAR_ENABLEJS_DSC',
-           "(Intéraction web)<br />Sélectionner true pour autoriser l'intéraction javascript. <br />Ce paramètre ne peut fonctionner qu'avec une connection<br />L'intéraction javascript inclut le commandes de lecture, le chargement asynchrone des médias et l'affichage des informations relatives au média. ");
-    define('_WEBPHOTO_FLASHVAR_JAVASCRIPTID_DSC',
-           '(Intéraction web)<br />Si vous mettez en relation plusieurs lecteurs / diaporamas en javascript, utiliser le Flashvar pour les singulariser avec un ID propre. ');
-    define('_WEBPHOTO_FLASHVAR_LINK_TYPE_DSC',
-           "(Intéraction web)<br />Ce lien est assigné à l'affichage, au logo et au bouton Lien. <br >Lorsqu'aucune information n'est saisie, aucun lien n'est assigné. <br />Si une valeur est précisée, alors une page sera accessible. ");
+    define('_WEBPHOTO_FLASHVAR_SEARCHBAR_DSC', '(Paramètres de base) <br>Sélectionner False pour masquer la barre de recherche sous le lecteur. <br>Vous pouvez indiquer le lien de la page de résultat en utilisant le lien de recherhce du FlashVar. ');
+    define('_WEBPHOTO_FLASHVAR_IMAGE_SHOW_DSC', "(Paramètres de base) <br>True = l'image de prévisualisation s'affiche");
+    define('_WEBPHOTO_FLASHVAR_IMAGE_DSC', "(Paramètres de base) <br>Si vous lisez un son ou une vidéo, indiquez l'url de l'image de prévisualisation. <br>Si vous lisez une playlist, vous pouvez indiquer une image pour chaque élément. ");
+    define('_WEBPHOTO_FLASHVAR_FILE_DSC', "(Paramètres de base) <br>Indiquer l'emplacement du fichier ou de la playlist à lire. <br>L'Imagerotator ne reconnaît que les playlists. ");
+    define('_WEBPHOTO_FLASHVAR_LOGO_DSC', '(Affichage) <br>Indiquer une image qui pourra être employée comme filigrane (visible en haut à droite). <br>Pour un meilleur rendu, ne image png transparente est recommandée. ');
+    define(
+        '_WEBPHOTO_FLASHVAR_OVERSTRETCH_DSC',
+        "(Affichage) <br>Indiquer comment éleragir l'image ou la vidéo dans la zone de lecture. <br>false (par défaut) = la zone de lecture est entièrement utilisée. <br>true = la zone de lecture est utilisée en conservant les proportions du média. <br>fit = élargissement du média stretch sans conserver les proportions<br>none = les dimensions originales sont conservées. "
+    );
+    define('_WEBPHOTO_FLASHVAR_SHOWEQ_DSC', '(Affichage) <br>Sélectionner true pour afficher un égaliseur (fictif) au pied de la zone de lecture. <br>Recommandé pour la lecture de fichiers MP3. ');
+    define('_WEBPHOTO_FLASHVAR_SHOWICONS_DSC', "(Affichage) <br>Sélectionner false afin de masquer l'icône d'activité et le bouton de lecture situé au centre de la zone de lecture. ");
+    define('_WEBPHOTO_FLASHVAR_TRANSITION_DSC', '(Affichage) [Imagerotator] <br>Sélectionner la transition à utiliser entre les images. ');
+    define('_WEBPHOTO_FLASHVAR_SHOWNAVIGATION_DSC', '[Barre de contrôle] <br>Sélectionner false to completely hide the controlbar. ');
+    define('_WEBPHOTO_FLASHVAR_SHOWSTOP_DSC', '[Barre de contrôle] [mediaplayer] <br>Sélectionner true pour afficher le bouton Stop dans la barre de contrôle. ');
+    define('_WEBPHOTO_FLASHVAR_SHOWDIGITS_DSC', '[Barre de contrôle] [mediaplayer] <br>Sélectionner false pour masquer le compteur de lecture dans la barre de contrôle. ');
+    define('_WEBPHOTO_FLASHVAR_SHOWDOWNLOAD_DSC', '[Barre de contrôle] [mediaplayer] <br>Sélectionner true pour afficher dans la barre de contrôle le boutton permettant de relier le media à FlashVar. ');
+    define('_WEBPHOTO_FLASHVAR_USEFULLSCREEN_DSC', '[Barre de contrôle] <br>Sélectionner false pour masquer le bouton Plein écran (le mode lecture plein écran sera également désactivé). ');
+    define('_WEBPHOTO_FLASHVAR_AUTOSCROLL_DSC', '[Playlist] [mediaplayer] <br>Sélectionner true  pour pouvoir faire défiler verticalement le média sans recourir aux ascenseurs. ');
+    define('_WEBPHOTO_FLASHVAR_THUMBSINPLAYLIST_DSC', '[Playlist] [mediaplayer] <br>Sélectionner false pour masquer la prévisualisation dans la zone de lecture');
+    define(
+        '_WEBPHOTO_FLASHVAR_AUDIO_DSC',
+        '(Lecture) <br>Assigne un MP3 supplémentaire synchrone. <br>A utiliser pour achever une description audio, un commentaire réalisé sur fond sonore ou encore une musique associée à Imagerotator. <br>When using the mediaplayer and a playlist, you can assign audio to every entry. '
+    );
+    define('_WEBPHOTO_FLASHVAR_AUTOSTART_DSC', "(Lecture) <br>Sélectionner true pour lancer le média dès son chargement<br>ou sélectionner false lorsque le média est associé à Imagerotator (afin d'empêcher sa rotation automatique).");
+    define('_WEBPHOTO_FLASHVAR_BUFFERLENGTH_DSC', "(Lecture)  [mediaplayer] <br>Indiquer le délais (n secondes) durant lequel la vidéo devra être mise en mémoire tampon avant d'être lue.<br>Indiquer une valeur réduite pour les connections rapides ou pour les vidéos de courte durée.  ");
+    define('_WEBPHOTO_FLASHVAR_CAPTIONS_DSC', '(Lecture) [mediaplayer] <br>Les légendes devraient être au format Timedtext. <br>Lorsque vous utiliser un lecteur, vous pouvez indiquer une légende pour chacune des ressource lue. ');
+    define('_WEBPHOTO_FLASHVAR_FALLBACK_DSC', "(Lecture) [mediaplayer] <br>Si vous lisez un fichier MP4, indiquer l'emplacement d'un FLV. <br>Il sera automatiquement employé par un lecteur flash, qui devient alors compatible. ");
+    define('_WEBPHOTO_FLASHVAR_REPEAT_DSC', '(Lecture) <br>Sélectionner true pour déclencher automatiquement la relecture de tous les fichiers. <br>A utiliser pour lire à nouveau en intégralité une playlist. ');
+    define('_WEBPHOTO_FLASHVAR_ROTATETIME_DSC', "(Lecture) <br>Indiquer le nombre de secondes durant lesquelle l'image sera lue. ");
+    define('_WEBPHOTO_FLASHVAR_SHUFFLE_DSC', "(Lecture) <br>Sélectionner true pour lire les élements d'une playlist au hasard. ");
+    define(
+        '_WEBPHOTO_FLASHVAR_SMOOTHING_DSC',
+        '(Lecture) [mediaplayer] <br>Sélectionner false pour désactiver la fonction de lissage de la vidéo. <br>La qualité de la vidéo sera réduite mais les performances meilleures. <br>Ce paramètre est recommandé pour les films en haute résolution ou pour les ordinateurs anciens '
+    );
+    define('_WEBPHOTO_FLASHVAR_VOLUME_DSC', '(Lecture) <br>Paramètre le volume initial de la lecture (sons, vidéos et fichiers musicaux). ');
+    define(
+        '_WEBPHOTO_FLASHVAR_ENABLEJS_DSC',
+        "(Intéraction web)<br>Sélectionner true pour autoriser l'intéraction javascript. <br>Ce paramètre ne peut fonctionner qu'avec une connection<br>L'intéraction javascript inclut le commandes de lecture, le chargement asynchrone des médias et l'affichage des informations relatives au média. "
+    );
+    define('_WEBPHOTO_FLASHVAR_JAVASCRIPTID_DSC', '(Intéraction web)<br>Si vous mettez en relation plusieurs lecteurs / diaporamas en javascript, utiliser le Flashvar pour les singulariser avec un ID propre. ');
+    define('_WEBPHOTO_FLASHVAR_LINK_TYPE_DSC', "(Intéraction web)<br>Ce lien est assigné à l'affichage, au logo et au bouton Lien. <br>Lorsqu'aucune information n'est saisie, aucun lien n'est assigné. <br>Si une valeur est précisée, alors une page sera accessible. ");
 
-    //define("_WEBPHOTO_FLASHVAR_LINK_DSC","(Intéraction web)<br />Set this to an external URL or downloadeable version of the file. <br />This link is assigned to the display, logo and link button. <br />With playlists, set links for every entry in the XML. ");
+    //define("_WEBPHOTO_FLASHVAR_LINK_DSC","(Intéraction web)<br>Set this to an external URL or downloadeable version of the file. <br>This link is assigned to the display, logo and link button. <br>With playlists, set links for every entry in the XML. ");
 
-    define('_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC', '(Intéraction web)<br />Sélectionner true pour que le clic sur le média redirige sur la page assignée par Flashvar. ');
-    define('_WEBPHOTO_FLASHVAR_LINKTARGET_DSC',
-           "(Intéraction web)<br />Indiquer la destination (frame) dans laquelle vous souhaitez voir s'ouvrir le lien. <br />Indiquer _blank pour ouvrir dans une nouvelle fenêtre ou _top pour ouvrir dans la fenêtre active. ");
-    define('_WEBPHOTO_FLASHVAR_CALLBACK_DSC',
-           '(Intéraction web)<br />Indiquer le script chargé de collecter les statistiques. <br />Le lecteur enverra une valeur à chaque déclenchement et arrêtde lecture. <br />Pour transmettre les informations à Google Analytics automatiquement, indiquer urchin ou analytics. ');
-    define('_WEBPHOTO_FLASHVAR_RECOMMENDATIONS_DSC',
-           "(Intéraction web)[mediaplayer] <br />Indiquez un fichier XML contenant la liste des ressources que vous souhaitez recommander <br />Les vignettes s'afficheront à l'arrêt de la vidéo (exemple sur Youtube). ");
-    define('_WEBPHOTO_FLASHVAR_SEARCHLINK_DSC',
-           "(Intéraction web)[mediaplayer] <br />Indiquer la destination de la page de résultat des recherches <br />Par défaut il s'agit de 'search.longtail.tv', mais vous pouvez indiquer des destinations différente. <br />Appliquer Flashvar à la barre de recherche pour la masquer totalement. ");
-    define('_WEBPHOTO_FLASHVAR_STREAMSCRIPT_DSC',
-           "(Intéraction web)[mediaplayer] <br />Indiquer l'URL du script à exécuter pour utiliser le streaming vidéo. <br />Les paramètres du fichier et sa position seront transmis au script. <br />Si vous utilisez le streaming LigHTTPD, indiquez lighttpd. ");
-    define('_WEBPHOTO_FLASHVAR_TYPE_DSC',
-           "(Intéraction web)[mediaplayer] <br />Le lecteur qui détermine le type de fichier à jouer se base sur les 3 derniers caractères du Flashvar. <br />Ce paramétrage ne fonctionne pas avec l'ID enregistré en base de données et avec le mod_rewrite sur On. Vous devez dans ce cas indiquer le Flashvar avec le Type de fichier approprié. <br />Si vous n'êtes pas sûr, le lecteur considèrera qu'une la plylist est chargée. ");
+    define('_WEBPHOTO_FLASHVAR_LINKFROMDISPLAY_DSC', '(Intéraction web)<br>Sélectionner true pour que le clic sur le média redirige sur la page assignée par Flashvar. ');
+    define('_WEBPHOTO_FLASHVAR_LINKTARGET_DSC', "(Intéraction web)<br>Indiquer la destination (frame) dans laquelle vous souhaitez voir s'ouvrir le lien. <br>Indiquer _blank pour ouvrir dans une nouvelle fenêtre ou _top pour ouvrir dans la fenêtre active. ");
+    define(
+        '_WEBPHOTO_FLASHVAR_CALLBACK_DSC',
+        '(Intéraction web)<br>Indiquer le script chargé de collecter les statistiques. <br>Le lecteur enverra une valeur à chaque déclenchement et arrêtde lecture. <br>Pour transmettre les informations à Google Analytics automatiquement, indiquer urchin ou analytics. '
+    );
+    define('_WEBPHOTO_FLASHVAR_RECOMMENDATIONS_DSC', "(Intéraction web)[mediaplayer] <br>Indiquez un fichier XML contenant la liste des ressources que vous souhaitez recommander <br>Les vignettes s'afficheront à l'arrêt de la vidéo (exemple sur Youtube). ");
+    define(
+        '_WEBPHOTO_FLASHVAR_SEARCHLINK_DSC',
+        "(Intéraction web)[mediaplayer] <br>Indiquer la destination de la page de résultat des recherches <br>Par défaut il s'agit de 'search.longtail.tv', mais vous pouvez indiquer des destinations différente. <br>Appliquer Flashvar à la barre de recherche pour la masquer totalement. "
+    );
+    define('_WEBPHOTO_FLASHVAR_STREAMSCRIPT_DSC', "(Intéraction web)[mediaplayer] <br>Indiquer l'URL du script à exécuter pour utiliser le streaming vidéo. <br>Les paramètres du fichier et sa position seront transmis au script. <br>Si vous utilisez le streaming LigHTTPD, indiquez lighttpd. ");
+    define(
+        '_WEBPHOTO_FLASHVAR_TYPE_DSC',
+        "(Intéraction web)[mediaplayer] <br>Le lecteur qui détermine le type de fichier à jouer se base sur les 3 derniers caractères du Flashvar. <br>Ce paramétrage ne fonctionne pas avec l'ID enregistré en base de données et avec le mod_rewrite sur On. Vous devez dans ce cas indiquer le Flashvar avec le Type de fichier approprié. <br>Si vous n'êtes pas sûr, le lecteur considèrera qu'une la plylist est chargée. "
+    );
 
     // flashvar option
     define('_WEBPHOTO_FLASHVAR_LINK_TYPE_NONE', 'Aucun');
@@ -1196,7 +1191,7 @@ Merci de cliquer <a href="{MODULE_URL}/i.php?op=post" rel="external">Evoyer par 
     define('_WEBPHOTO_FLASHVARS_LIST', 'Liste des variables flash');
     define('_WEBPHOTO_FLASHVARS_LOGO_SELECT', 'Sélectionner un logo de lecteur');
     define('_WEBPHOTO_FLASHVARS_LOGO_UPLOAD', 'Charger un logo de lecteur');
-    define('_WEBPHOTO_FLASHVARS_LOGO_DSC', '(Affichage) <br />Les logos de lecteur sont en place');
+    define('_WEBPHOTO_FLASHVARS_LOGO_DSC', '(Affichage) <br>Les logos de lecteur sont en place');
     define('_WEBPHOTO_BUTTON_COLOR_PICKUP', 'Couleur');
     define('_WEBPHOTO_BUTTON_RESTORE', 'Restaurer les valeurs par défaut');
 
@@ -1205,7 +1200,7 @@ Merci de cliquer <a href="{MODULE_URL}/i.php?op=post" rel="external">Evoyer par 
     define('_WEBPHOTO_PLAYLIST_STATUS_FETCHED', 'Ce flux a été récupéré et mis en cache.');
     define('_WEBPHOTO_PLAYLIST_STATUS_CREATED', 'Une nouvelle playlist a été mise en cache');
     define('_WEBPHOTO_PLAYLIST_ERR_CACHE', '[ERREUR] lors de la création du cache');
-    define('_WEBPHOTO_PLAYLIST_ERR_FETCH', "Impossible de récupérer le flux. <br />Veuillez confirmer l'emplacement du flux et mettre à jour le cache.");
+    define('_WEBPHOTO_PLAYLIST_ERR_FETCH', "Impossible de récupérer le flux. <br>Veuillez confirmer l'emplacement du flux et mettre à jour le cache.");
     define('_WEBPHOTO_PLAYLIST_ERR_NODIR', "Le répertoire des médias n'existe pas");
     define('_WEBPHOTO_PLAYLIST_ERR_EMPTYDIR', 'Le répertoire des médias est vide');
     define('_WEBPHOTO_PLAYLIST_ERR_WRITE', 'Impossible de créer le fichier de cache');

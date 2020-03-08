@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_download
 //=========================================================
+
+/**
+ * Class webphoto_main_download
+ */
 class webphoto_main_download extends webphoto_file_read
 {
     public $_readfile_class;
@@ -34,20 +38,32 @@ class webphoto_main_download extends webphoto_file_read
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_download constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_readfile_class = webphoto_lib_readfile::getInstance();
-        $this->_browser_class  = webphoto_lib_browser::getInstance();
+        $this->_browser_class = webphoto_lib_browser::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_file_read|\webphoto_item_public|\webphoto_lib_error|\webphoto_main_download
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_download($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -56,7 +72,7 @@ class webphoto_main_download extends webphoto_file_read
     //---------------------------------------------------------
     public function main()
     {
-        $item_id   = $this->_post_class->get_post_get_int('item_id');
+        $item_id = $this->_post_class->get_post_get_int('item_id');
         $file_kind = $this->_post_class->get_post_get_int('file_kind');
 
         $item_row = $this->get_item_row($item_id);
@@ -77,7 +93,7 @@ class webphoto_main_download extends webphoto_file_read
             exit();
         }
 
-        $mime      = $file_row['file_mime'];
+        $mime = $file_row['file_mime'];
         $file_name = $file_row['file_name'];
 
         // Notice [PHP]: Undefined index: file_full
@@ -92,14 +108,19 @@ class webphoto_main_download extends webphoto_file_read
         exit();
     }
 
+    /**
+     * @param $item_row
+     * @param $file_row
+     * @return array
+     */
     public function build_filename_by_row($item_row, $file_row)
     {
         $item_title = $item_row['item_title'];
-        $file_name  = $file_row['file_name'];
-        $file_ext   = $file_row['file_ext'];
-        $file_kind  = $file_row['file_kind'];
+        $file_name = $file_row['file_name'];
+        $file_ext = $file_row['file_ext'];
+        $file_kind = $file_row['file_kind'];
 
-        $aux = $this->_file_handler->get_download_image_aux($file_kind);
+        $aux = $this->_fileHandler->get_download_image_aux($file_kind);
 
         if ($item_title) {
             if ($aux && $file_ext) {
@@ -121,15 +142,20 @@ class webphoto_main_download extends webphoto_file_read
         $name = $this->_multibyte_class->convert_space_zen_to_han($name);
         $name = str_replace(' ', '_', $name);
 
-        return array($name, $file_name);
+        return [$name, $file_name];
     }
 
+    /**
+     * @param $name
+     * @param $name_alt
+     * @return array
+     */
     public function build_filename_encode($name, $name_alt)
     {
         $is_rfc2231 = false;
 
         if (!$this->get_ini('download_filename_encode')) {
-            return array($name_alt, $is_rfc2231);
+            return [$name_alt, $is_rfc2231];
         }
 
         $browser = $this->get_convert_kind($name);
@@ -138,34 +164,34 @@ class webphoto_main_download extends webphoto_file_read
             case 'ascii':
                 $name = rawurlencode($name);
                 break;
-
             // SJIS
             case 'msie_ja':
                 $name = $this->_multibyte_class->convert_encoding($name, 'SJIS', _CHARSET);
                 break;
-
             // RFC2231
             case 'firefox':
             case 'chrome':
             case 'opera':
-                $name       = $this->_multibyte_class->convert_to_utf8($name);
-                $name       = $this->_utility_class->build_filename_rfc2231($name, 'utf-8', _LANGCODE);
+                $name = $this->_multibyte_class->convert_to_utf8($name);
+                $name = $this->_utility_class->build_filename_rfc2231($name, 'utf-8', _LANGCODE);
                 $is_rfc2231 = true;
                 break;
-
             // UTF-8
             case 'safari_utf8':
                 $name = $this->_multibyte_class->convert_to_utf8($name);
                 break;
-
             default:
                 $name = rawurlencode($name_alt);
                 break;
         }
 
-        return array($name, $is_rfc2231);
+        return [$name, $is_rfc2231];
     }
 
+    /**
+     * @param $name
+     * @return null|string
+     */
     public function get_convert_kind($name)
     {
         $is_japanese = $this->_xoops_class->is_japanese(_C_WEBPHOTO_JPAPANESE);
@@ -178,11 +204,11 @@ class webphoto_main_download extends webphoto_file_read
             $browser = 'ascii';
         }
 
-        if (($browser == 'msie') && $is_japanese) {
+        if (('msie' == $browser) && $is_japanese) {
             $browser = 'msie_ja';
         }
 
-        if (($browser == 'safari') && (_CHARSET == 'UTF-8')) {
+        if (('safari' == $browser) && (_CHARSET == 'UTF-8')) {
             $browser = 'safari_utf8';
         }
 

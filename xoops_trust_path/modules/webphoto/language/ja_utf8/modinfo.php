@@ -25,7 +25,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -33,7 +33,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -57,29 +57,29 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'BNAME_HITS_P', '人気の写真・動画・メディア(サムネイル付)');
 
     define($constpref . 'CFG_IMAGINGPIPE', '画像処理を行わせるパッケージ選択');
-    define($constpref . 'CFG_DESCIMAGINGPIPE', 'ほとんどのPHP環境で標準的に利用可能なのはGDですが機能的に劣ります<br />可能であればImageMagickかNetPBMの使用をお勧めします');
+    define($constpref . 'CFG_DESCIMAGINGPIPE', 'ほとんどのPHP環境で標準的に利用可能なのはGDですが機能的に劣ります<br>可能であればImageMagickかNetPBMの使用をお勧めします');
     define($constpref . 'CFG_FORCEGD2', '強制GD2モード');
-    define($constpref . 'CFG_DESCFORCEGD2', '強制的にGD2モードで動作させます<br />一部のPHPでは強制GD2モードでサムネイル作成に失敗します<br />画像処理パッケージとしてGDを選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_DESCFORCEGD2', '強制的にGD2モードで動作させます<br>一部のPHPでは強制GD2モードでサムネイル作成に失敗します<br>画像処理パッケージとしてGDを選択した時のみ意味を持ちます');
     define($constpref . 'CFG_IMAGICKPATH', 'ImageMagickの実行パス');
-    define($constpref . 'CFG_DESCIMAGICKPATH', 'convertの存在するディレクトリをフルパスで指定しますが、空白でうまく行くことが多いでしょう。<br />画像処理パッケージとしてImageMagickを選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_DESCIMAGICKPATH', 'convertの存在するディレクトリをフルパスで指定しますが、空白でうまく行くことが多いでしょう。<br>画像処理パッケージとしてImageMagickを選択した時のみ意味を持ちます');
     define($constpref . 'CFG_NETPBMPATH', 'NetPBMの実行パス');
-    define($constpref . 'CFG_DESCNETPBMPATH', 'pnmscale等の存在するディレクトリをフルパスで指定しますが、空白でうまく行くことが多いでしょう。<br />画像処理パッケージとしてNetPBMを選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_DESCNETPBMPATH', 'pnmscale等の存在するディレクトリをフルパスで指定しますが、空白でうまく行くことが多いでしょう。<br>画像処理パッケージとしてNetPBMを選択した時のみ意味を持ちます');
     define($constpref . 'CFG_POPULAR', "'POP'アイコンがつくために必要なヒット数");
     define($constpref . 'CFG_NEWDAYS', "'new'や'update'アイコンが表示される日数");
     define($constpref . 'CFG_NEWPHOTOS', 'トップページで新規として表示する数');
     define($constpref . 'CFG_PERPAGE', '1ページに表示される写真・動画・メディアの数');
-    define($constpref . 'CFG_DESCPERPAGE', '選択可能な数字を | で区切って下さい<br />例: 10|20|50|100');
+    define($constpref . 'CFG_DESCPERPAGE', '選択可能な数字を | で区切って下さい<br>例: 10|20|50|100');
     define($constpref . 'CFG_ALLOWNOIMAGE', '写真・動画・メディアのない投稿を許可する');
     define($constpref . 'CFG_MAKETHUMB', 'サムネイルを作成する');
     define($constpref . 'CFG_DESCMAKETHUMB', '「生成しない」から「生成する」に変更した時には、「サムネイルの再構築」が必要です。');
 
     // v2.30
     //define( $constpref."CFG_WIDTH" , "最大画像幅" ) ;
-    //define( $constpref."CFG_DESCWIDTH" , "画像アップロード時に自動調整されるメイン画像の最大幅。<br />GDモードでTrueColorを扱えない時には単なるサイズ制限" ) ;
+    //define( $constpref."CFG_DESCWIDTH" , "画像アップロード時に自動調整されるメイン画像の最大幅。<br>GDモードでTrueColorを扱えない時には単なるサイズ制限" ) ;
     //define( $constpref."CFG_HEIGHT" , "最大画像高" ) ;
     //define( $constpref."CFG_DESCHEIGHT" , "最大幅と同じ意味です" ) ;
     define($constpref . 'CFG_WIDTH', 'ポップアップでの画像の幅');
-    define($constpref . 'CFG_DESCWIDTH', 'ポップアップしたときの画像の大きさです。<br /><br />従来のバージョンではアップロード可能な画像の大きさの制限でした。<br />この制限はなくなりました。<br />2.30にて仕様が変わりました。');
+    define($constpref . 'CFG_DESCWIDTH', 'ポップアップしたときの画像の大きさです。<br><br>従来のバージョンではアップロード可能な画像の大きさの制限でした。<br>この制限はなくなりました。<br>2.30にて仕様が変わりました。');
     define($constpref . 'CFG_HEIGHT', 'ポップアップでの画像の幅さ');
     define($constpref . 'CFG_DESCHEIGHT', '画像の幅と同じ意味です');
 
@@ -93,7 +93,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_VIEWTYPE', '一覧表示の表示タイプ');
     define($constpref . 'CFG_COLSOFTABLE', 'テーブル表示時のカラム数');
     define($constpref . 'CFG_USESITEIMG', 'イメージマネージャ統合での[siteimg]タグ');
-    define($constpref . 'CFG_DESCUSESITEIMG', 'イメージマネージャ統合で、[img]タグの代わりに[siteimg]タグを挿入するようになります。<br />利用モジュール側で[siteimg]タグが有効に機能するようになっている必要があります');
+    define($constpref . 'CFG_DESCUSESITEIMG', 'イメージマネージャ統合で、[img]タグの代わりに[siteimg]タグを挿入するようになります。<br>利用モジュール側で[siteimg]タグが有効に機能するようになっている必要があります');
     define($constpref . 'OPT_USENAME', 'ハンドル名');
     define($constpref . 'OPT_USEUNAME', 'ログイン名');
     define($constpref . 'OPT_VIEWLIST', '説明文付リスト表示');
@@ -140,8 +140,10 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_THUMB_HEIGHT', 'サムネイル画像の高さ');
 
     define($constpref . 'CFG_APIKEY', 'Google API Key');
-    define($constpref . 'CFG_APIKEY_DSC',
-           "Google Maps を利用する場合は <br /> <a href=\"http://www.google.com/apis/maps/signup.html\" target=\"_blank\">Sign Up for the Google Maps API</a> <br /> にて <br /> API key を取得してください<br /><br />パラメータの詳細は下記をご覧ください<br /><a href=\"http://www.google.com/apis/maps/documentation/reference.html\" target=\"_blank\">Google Maps API Reference</a>");
+    define(
+        $constpref . 'CFG_APIKEY_DSC',
+        'Google Maps を利用する場合は <br> <a href="http://www.google.com/apis/maps/signup.html" target="_blank">Sign Up for the Google Maps API</a> <br> にて <br> API key を取得してください<br><br>パラメータの詳細は下記をご覧ください<br><a href="http://www.google.com/apis/maps/documentation/reference.html" target="_blank">Google Maps API Reference</a>'
+    );
     define($constpref . 'CFG_LATITUDE', '緯度');
     define($constpref . 'CFG_LONGITUDE', '経度');
     define($constpref . 'CFG_ZOOM', 'ズーム');
@@ -149,7 +151,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_USE_POPBOX', 'PopBox を使用する');
 
     define($constpref . 'CFG_INDEX_DESC', 'トップページに表示する説明文');
-    define($constpref . 'CFG_INDEX_DESC_DEFAULT', 'ここには説明文を表示します。<br />説明文は「一般設定」にて編集できます。<br />');
+    define($constpref . 'CFG_INDEX_DESC_DEFAULT', 'ここには説明文を表示します。<br>説明文は「一般設定」にて編集できます。<br>');
 
     // Sub menu titles
     define($constpref . 'SMNAME_SUBMIT', '投稿');
@@ -184,7 +186,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_FFMPEG', 'ffmpeg を使用する');
     define($constpref . 'CFG_FFMPEGPATH', 'ffmpeg の実行パス');
-    define($constpref . 'CFG_DESCFFMPEGPATH', 'ffmpeg の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br />「ffmpeg を使用する」の「はい」を選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_DESCFFMPEGPATH', 'ffmpeg の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br>「ffmpeg を使用する」の「はい」を選択した時のみ意味を持ちます');
     define($constpref . 'CFG_USE_PATHINFO', 'pathinfo を使用する');
 
     //---------------------------------------------------------
@@ -195,18 +197,18 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_MAIL_PASS', 'メール パスワード');
     define($constpref . 'CFG_MAIL_ADDR', '投稿先 メールアドレス');
     define($constpref . 'CFG_MAIL_CHARSET', 'メールの文字コード');
-    define($constpref . 'CFG_MAIL_CHARSET_DSC', "'|' で区切って入力して下さい。<br />文字コードによるチェックを行わない時には、ここを空欄にします");
+    define($constpref . 'CFG_MAIL_CHARSET_DSC', "'|' で区切って入力して下さい。<br>文字コードによるチェックを行わない時には、ここを空欄にします");
     define($constpref . 'CFG_MAIL_CHARSET_LIST', 'ISO-2022-JP|JIS|Shift_JIS|EUC-JP|UTF-8');
     define($constpref . 'CFG_FILE_DIR', 'FTP ファイルの保存先ディレクトリ');
-    define($constpref . 'CFG_FILE_DIR_DSC', "フルパスを指定（最後の'/'は不要）<br />ドキュメント・ルート以外に設定することをお勧めします");
+    define($constpref . 'CFG_FILE_DIR_DSC', "フルパスを指定（最後の'/'は不要）<br>ドキュメント・ルート以外に設定することをお勧めします");
     define($constpref . 'CFG_FILE_SIZE', 'FTP 最大ファイル容量 (byte)');
     define($constpref . 'CFG_FILE_DESC', 'FTP ヘルプ説明文');
     define($constpref . 'CFG_FILE_DESC_DSC', '「ファイル投稿」の権限がある場合に、ヘルプに表示されます');
     define($constpref . 'CFG_FILE_DESC_TEXT', '
-<b>FTP サーバー</b><br />
-FTP サーバー ホスト名: xxx<br />
-FTP ユーザーID: xxx<br />
-FTP パスワード: xxx<br />');
+<b>FTP サーバー</b><br>
+FTP サーバー ホスト名: xxx<br>
+FTP ユーザーID: xxx<br>
+FTP パスワード: xxx<br>');
 
     define($constpref . 'ADMENU_MAILLOG_MANAGER', 'メールログ管理');
     define($constpref . 'ADMENU_MAILLOG_TABLE_MANAGE', 'メールログ・テーブル管理');
@@ -228,9 +230,9 @@ FTP パスワード: xxx<br />');
     // v0.50
     //---------------------------------------------------------
     define($constpref . 'CFG_UPLOADSPATH', 'アップロード・ファイルの保存先ディレクトリ');
-    define($constpref . 'CFG_UPLOADSPATH_DSC', "XOOPSインストール先からのパスを指定（最初の'/'は必要、最後の'/'は不要）<br />Unixではこのディレクトリへの書込属性をONにして下さい");
+    define($constpref . 'CFG_UPLOADSPATH_DSC', "XOOPSインストール先からのパスを指定（最初の'/'は必要、最後の'/'は不要）<br>Unixではこのディレクトリへの書込属性をONにして下さい");
     define($constpref . 'CFG_MEDIASPATH', 'メディア・ファイルのディレクトリ');
-    define($constpref . 'CFG_MEDIASPATH_DSC', "プレイリストの元になるメディア・ファイルのあるディレクトリ <br />XOOPSインストール先からのパスを指定（最初の'/'は必要、最後の'/'は不要）");
+    define($constpref . 'CFG_MEDIASPATH_DSC', "プレイリストの元になるメディア・ファイルのあるディレクトリ <br>XOOPSインストール先からのパスを指定（最初の'/'は必要、最後の'/'は不要）");
     define($constpref . 'CFG_LOGO_WIDTH', 'プレイヤー・ロゴ画像の幅と高さ');
     define($constpref . 'CFG_USE_CALLBACK', 'コールバック・ログを使用する');
     define($constpref . 'CFG_USE_CALLBACK_DSC', 'コールバックを使用して Flash Player のイベントを記録する');
@@ -245,12 +247,12 @@ FTP パスワード: xxx<br />');
     // v0.60
     //---------------------------------------------------------
     define($constpref . 'CFG_WORKDIR', '作業用のディレクトリ');
-    define($constpref . 'CFG_WORKDIR_DSC', "フルパスを指定（最後の'/'は不要）<br />ドキュメント・ルート以外に設定することをお勧めします");
+    define($constpref . 'CFG_WORKDIR_DSC', "フルパスを指定（最後の'/'は不要）<br>ドキュメント・ルート以外に設定することをお勧めします");
     define($constpref . 'CFG_CAT_WIDTH', 'カテゴリ画像の幅と高さ');
     define($constpref . 'CFG_CSUB_WIDTH', 'サブカテゴリに表示する画像の幅と高さ');
     define($constpref . 'CFG_GICON_WIDTH', 'GoogleMap アイコン画像の幅と高さ');
     define($constpref . 'CFG_JPEG_QUALITY', 'JPEG 品質');
-    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br />画像処理パッケージとしてGDを選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br>画像処理パッケージとしてGDを選択した時のみ意味を持ちます');
 
     //---------------------------------------------------------
     // v0.80
@@ -274,7 +276,7 @@ FTP パスワード: xxx<br />');
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_XPDF', 'xpdf を使用する');
     define($constpref . 'CFG_XPDFPATH', 'xpdf の実行パス');
-    define($constpref . 'CFG_XPDFPATH_DSC', 'pdftoppm などの存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br />「xpdf を使用する」の「はい」を選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_XPDFPATH_DSC', 'pdftoppm などの存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br>「xpdf を使用する」の「はい」を選択した時のみ意味を持ちます');
 
     //---------------------------------------------------------
     // v1.21
@@ -311,9 +313,9 @@ FTP パスワード: xxx<br />');
     // v1.70
     //---------------------------------------------------------
     define($constpref . 'CFG_ITEM_SUMMARY', '写真・動画・メディアの説明の最大の文字数');
-    define($constpref . 'CFG_ITEM_SUMMARY_DSC', '一覧に表示する写真・動画・メディアの説明文の最大の文字数を指定する<br />-1 は制限なし');
+    define($constpref . 'CFG_ITEM_SUMMARY_DSC', '一覧に表示する写真・動画・メディアの説明文の最大の文字数を指定する<br>-1 は制限なし');
     define($constpref . 'CFG_CAT_SUMMARY', 'カテゴリの説明の最大の文字数');
-    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'カテゴリ一覧に表示する説明文の最大の文字数を指定する<br />-1 は制限なし');
+    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'カテゴリ一覧に表示する説明文の最大の文字数を指定する<br>-1 は制限なし');
     define($constpref . 'CFG_CAT_CHILD', '下位カテゴリの写真・動画・メディアの表示');
     define($constpref . 'CFG_CAT_CHILD_DSC', 'カテゴリ表示のときに下位カテゴリの写真・動画・メディアを表示するか否かを指定する');
     define($constpref . 'OPT_CAT_CHILD_NON', 'カテゴリの写真・動画・メディアのみを表示する。常に下位カテゴリの写真・動画・メディアを表示しない');
@@ -325,11 +327,11 @@ FTP パスワード: xxx<br />');
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_LAME', 'lame を使用する');
     define($constpref . 'CFG_LAMEPATH', 'lame の実行パス');
-    define($constpref . 'CFG_LAMEPATH_DSC', 'lame の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br />「lame を使用する」の「はい」を選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_LAMEPATH_DSC', 'lame の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br>「lame を使用する」の「はい」を選択した時のみ意味を持ちます');
 
     define($constpref . 'CFG_USE_TIMIDITY', 'timidity を使用する');
     define($constpref . 'CFG_TIMIDITYPATH', 'timidity の実行パス');
-    define($constpref . 'CFG_TIMIDITYPATH_DSC', 'timidity の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br />「timidity を使用する」の「はい」を選択した時のみ意味を持ちます');
+    define($constpref . 'CFG_TIMIDITYPATH_DSC', 'timidity の存在するディレクトリをフルパスで指定します、空白でうまく行くことが多いでしょう。<br>「timidity を使用する」の「はい」を選択した時のみ意味を持ちます');
 
     define($constpref . 'SMNAME_SEARCH', '検索');
 
@@ -338,9 +340,9 @@ FTP パスワード: xxx<br />');
     //---------------------------------------------------------
     // config
     define($constpref . 'CFG_GROUPID_ADMIN', '管理者 グループID');
-    define($constpref . 'CFG_GROUPID_ADMIN_DSC', 'このモジュールの管理者のユーザグループID。<br />モジュールインストール時に設定される。<br />むやみに変更しないこと');
+    define($constpref . 'CFG_GROUPID_ADMIN_DSC', 'このモジュールの管理者のユーザグループID。<br>モジュールインストール時に設定される。<br>むやみに変更しないこと');
     define($constpref . 'CFG_GROUPID_USER', '利用者 グループID');
-    define($constpref . 'CFG_GROUPID_USER_DSC', 'このモジュールの利用者のユーザグループID。<br />モジュールインストール時に設定される。<br />むやみに変更しないこと');
+    define($constpref . 'CFG_GROUPID_USER_DSC', 'このモジュールの利用者のユーザグループID。<br>モジュールインストール時に設定される。<br>むやみに変更しないこと');
 
     // admin menu
     define($constpref . 'ADMENU_INVITE', '友人を招待する');
@@ -371,7 +373,7 @@ FTP パスワード: xxx<br />');
     // v2.40
     //---------------------------------------------------------
     define($constpref . 'CFG_PEAR_PATH', 'PEAR ライブラリのパス');
-    define($constpref . 'CFG_PEAR_PATH_DSC', 'Net_POP3 のある PEAR ライブラリの絶対パスを指定する<br />指定しないときは modules/webphoto/PEAR が使用される');
+    define($constpref . 'CFG_PEAR_PATH_DSC', 'Net_POP3 のある PEAR ライブラリの絶対パスを指定する<br>指定しないときは modules/webphoto/PEAR が使用される');
 
     //---------------------------------------------------------
     // v2.60
@@ -381,4 +383,3 @@ FTP パスワード: xxx<br />');
     define($constpref . 'OPT_TIMELINE_SCALE_CENTURY', '１世紀');
     define($constpref . 'OPT_TIMELINE_SCALE_MILLENNIUM', '１０世紀');
 }// === define begin ===
-;

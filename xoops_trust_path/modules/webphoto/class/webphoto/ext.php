@@ -25,14 +25,24 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_ext
 //=========================================================
+
+/**
+ * Class webphoto_ext
+ */
 class webphoto_ext extends webphoto_lib_plugin
 {
-    public $_cached_list        = null;
-    public $_cached_objs_by_ext = array();
+    public $_cached_list = null;
+    public $_cached_objs_by_ext = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_ext constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -40,18 +50,29 @@ class webphoto_ext extends webphoto_lib_plugin
         $this->set_prefix('webphoto_ext_');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_ext|\webphoto_lib_plugin
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_ext($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $method
+     * @param $param
+     */
     public function execute($method, $param)
     {
         $ext = isset($param['src_ext']) ? $param['src_ext'] : null;
@@ -70,6 +91,11 @@ class webphoto_ext extends webphoto_lib_plugin
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool|mixed
+     */
     public function &get_cached_class_object_by_ext($ext)
     {
         if (isset($this->_cached_objs_by_ext[$ext])) {
@@ -90,21 +116,31 @@ class webphoto_ext extends webphoto_lib_plugin
         }
 
         $false = false;
+
         return $false;
     }
 
+    /**
+     * @return array|null
+     */
     public function get_cached_list()
     {
         if (is_array($this->_cached_list)) {
             return $this->_cached_list;
         }
 
-        $list               = $this->build_list();
+        $list = $this->build_list();
         $this->_cached_list = $list;
+
         return $list;
     }
 
     // overwrite
+
+    /**
+     * @param $type
+     * @return bool
+     */
     public function &get_class_object($type)
     {
         $false = false;
@@ -121,6 +157,7 @@ class webphoto_ext extends webphoto_lib_plugin
         }
 
         $class = new $class_name($this->_DIRNAME, $this->_TRUST_DIRNAME);
+
         return $class;
     }
 

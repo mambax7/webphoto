@@ -22,6 +22,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_imagemagick
 // wrapper for webphoto_lib_imagemagick
 //=========================================================
+
+/**
+ * Class webphoto_imagemagick
+ */
 class webphoto_imagemagick extends webphoto_cmd_base
 {
     public $_imagemagick_class;
@@ -35,6 +39,12 @@ class webphoto_imagemagick extends webphoto_cmd_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_imagemagick constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -48,18 +58,32 @@ class webphoto_imagemagick extends webphoto_cmd_base
         $this->set_debug_by_ini_name($this->_imagemagick_class);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_imagemagick|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_imagemagick($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param      $src_file
+     * @param      $dst_file
+     * @param int  $rotate
+     * @param null $option
+     * @return int
+     */
     public function create_jpeg_from_cmyk($src_file, $dst_file, $rotate = 0, $option = null)
     {
         $new_option = $this->_CMYK_OPTION;
@@ -73,6 +97,12 @@ class webphoto_imagemagick extends webphoto_cmd_base
         return $this->create_jpeg($src_file, $dst_file, $new_option);
     }
 
+    /**
+     * @param      $src_file
+     * @param      $dst_file
+     * @param null $option
+     * @return int
+     */
     public function create_jpeg($src_file, $dst_file, $option = null)
     {
         if ($this->_cfg_imagingpipe != $this->_PIPEID_IMAGICK) {
@@ -86,10 +116,12 @@ class webphoto_imagemagick extends webphoto_cmd_base
         $this->_imagemagick_class->convert($src_file, $dst_file, $option);
         if (is_file($dst_file)) {
             $this->chmod_file($dst_file);
+
             return 1;  // suceess
         }
 
         $this->set_error($this->_imagemagick_class->get_msg_array());
+
         return -1; // fail
     }
 

@@ -30,10 +30,10 @@ $manage = webphoto_main_submit::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIR
 // exit if execute submit
 $manage->check_submit();
 
-$xoopsOption['template_main'] = WEBPHOTO_DIRNAME . '_main_submit.html';
-include(XOOPS_ROOT_PATH . '/header.php');
+$GLOBALS['xoopsOption']['template_main'] = WEBPHOTO_DIRNAME . '_main_submit.html';
+include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign($manage->form_param());
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();

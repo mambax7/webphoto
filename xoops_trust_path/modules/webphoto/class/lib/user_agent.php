@@ -21,14 +21,18 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_user_agent
 //=========================================================
+
+/**
+ * Class webphoto_lib_user_agent
+ */
 class webphoto_lib_user_agent
 {
-    public $_os             = null;
-    public $_browser        = null;
+    public $_os = null;
+    public $_browser = null;
     public $_mobile_carrier = null;
-    public $_mobile_model   = null;
+    public $_mobile_model = null;
 
-    public $_FCT_MOBILE           = 'i';
+    public $_FCT_MOBILE = 'i';
     public $_MOBILE_CARRIER_ARRAY = null;
 
     //---------------------------------------------------------
@@ -39,12 +43,16 @@ class webphoto_lib_user_agent
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_user_agent
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_user_agent();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -57,6 +65,11 @@ class webphoto_lib_user_agent
     // Safari : Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/525.19 (KHTML, like Gecko) Version/3.1.2 Safari/525.21
     // Chrome : Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13
     //---------------------------------------------------------
+
+    /**
+     * @param null $ua
+     * @return null|string
+     */
     public function parse_browser($ua = null)
     {
         if (empty($ua)) {
@@ -67,7 +80,7 @@ class webphoto_lib_user_agent
             return null;    // undefined
         }
 
-        $os      = '';
+        $os = '';
         $browser = '';
 
         // presume OS
@@ -106,7 +119,7 @@ class webphoto_lib_user_agent
             $browser = 'mozilla';
         }
 
-        $this->_os      = $os;
+        $this->_os = $os;
         $this->_browser = $browser;
 
         return $browser;
@@ -115,12 +128,18 @@ class webphoto_lib_user_agent
     public function get_user_agent()
     {
         $ret = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // parse mobile
     //---------------------------------------------------------
+
+    /**
+     * @param null $agent
+     * @return mixed|null
+     */
     public function parse_mobile_carrier($agent = null)
     {
         if (empty($agent)) {
@@ -138,24 +157,34 @@ class webphoto_lib_user_agent
             $pattern = '/' . preg_quote($k) . '/i';
             if (preg_match($pattern, $agent)) {
                 $this->_mobile_carrier = $v;
+
                 return $v;
             }
         }
+
         return null;
     }
 
+    /**
+     * @return null|string
+     */
     public function get_fct_mobile()
     {
         $val = $this->parse_mobile_carrier();
         if ($val) {
             return $this->_FCT_MOBILE;
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_mobile_carrier_array($val)
     {
         $this->_MOBILE_CARRIER_ARRAY = $val;
@@ -164,6 +193,7 @@ class webphoto_lib_user_agent
     //---------------------------------------------------------
     // get param
     //---------------------------------------------------------
+
     public function get_os()
     {
         return $this->_os;

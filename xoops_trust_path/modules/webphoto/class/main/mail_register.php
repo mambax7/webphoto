@@ -29,6 +29,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_mail_register
 //=========================================================
+
+/**
+ * Class webphoto_main_mail_register
+ */
 class webphoto_main_mail_register extends webphoto_edit_base
 {
     public $_user_handler;
@@ -36,49 +40,65 @@ class webphoto_main_mail_register extends webphoto_edit_base
     public $_xoops_user_class;
 
     public $_is_set_mail = false;
-    public $_has_mail    = false;
+    public $_has_mail = false;
 
     public $_post_user_uid = 0;
 
     public $_row_current = null;
-    public $_row_update  = null;
-    public $_is_new      = false;
+    public $_row_update = null;
+    public $_is_new = false;
 
     public $_REDIRECT_THIS_URL = null;
 
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     public $_ERR_NOMATCH_USER = -1;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_mail_register constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_user_handler = webphoto_user_handler::getInstance($dirname, $trust_dirname);
 
-        $this->_mail_class       = webphoto_lib_mail::getInstance();
+        $this->_mail_class = webphoto_lib_mail::getInstance();
         $this->_xoops_user_class = webphoto_xoops_user::getInstance();
 
         $this->_is_set_mail = $this->_config_class->is_set_mail();
-        $this->_has_mail    = $this->_perm_class->has_mail();
+        $this->_has_mail = $this->_perm_class->has_mail();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_main_mail_register
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_main_mail_register($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function check_action()
     {
         $this->_check();
@@ -92,7 +112,6 @@ class webphoto_main_mail_register extends webphoto_edit_base
                     exit();
                 }
                 break;
-
             default:
                 break;
         }
@@ -103,6 +122,10 @@ class webphoto_main_mail_register extends webphoto_edit_base
     //---------------------------------------------------------
     // check
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _check()
     {
         $this->clear_errors();
@@ -129,6 +152,10 @@ class webphoto_main_mail_register extends webphoto_edit_base
         return true;
     }
 
+    /**
+     * @param $user_uid
+     * @return int
+     */
     public function _exec_check($user_uid)
     {
         if (!$this->_is_set_mail) {
@@ -148,8 +175,8 @@ class webphoto_main_mail_register extends webphoto_edit_base
 
             $row = $this->_user_handler->get_row_by_uid($user_uid);
             if (!is_array($row)) {
-                $this->_is_new   = true;
-                $row             = $this->_user_handler->create(true);
+                $this->_is_new = true;
+                $row = $this->_user_handler->create(true);
                 $row['user_uid'] = $user_uid;
             }
 
@@ -164,9 +191,14 @@ class webphoto_main_mail_register extends webphoto_edit_base
 
         // save
         $this->_row_current = $row;
+
         return 0;
     }
 
+    /**
+     * @param $row
+     * @return bool
+     */
     public function _check_perm($row)
     {
         // if admin
@@ -175,15 +207,17 @@ class webphoto_main_mail_register extends webphoto_edit_base
         }
 
         // user can register own record
-        if (($this->_xoops_uid != 0)
-            && ($this->_xoops_uid == $row['user_uid'])
-        ) {
+        if ((0 != $this->_xoops_uid)
+            && ($this->_xoops_uid == $row['user_uid'])) {
             return true;
         }
 
         return false;
     }
 
+    /**
+     * @return array|string
+     */
     public function _get_action()
     {
         return $this->_post_class->get_post_text('op');
@@ -194,7 +228,7 @@ class webphoto_main_mail_register extends webphoto_edit_base
         if (!$this->check_token()) {
             $msg = 'Token Error';
             if ($this->_is_module_admin) {
-                $msg .= '<br />' . $this->get_token_errors();
+                $msg .= '<br>' . $this->get_token_errors();
             }
             redirect_header($this->_REDIRECT_THIS_URL, $this->_TIME_FAIL, $msg);
             exit();
@@ -204,6 +238,10 @@ class webphoto_main_mail_register extends webphoto_edit_base
     //---------------------------------------------------------
     // modify
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _check_submit()
     {
         $email = $this->_post_class->get_post_text('user_email');
@@ -216,16 +254,15 @@ class webphoto_main_mail_register extends webphoto_edit_base
         $this->_row_current['user_cat_id'] = $this->_post_class->get_post_int('user_cat_id');
 
         if (empty($email) && empty($text2) && empty($text3) && empty($text4) && empty($text5)) {
-
             // if new
             if ($this->_is_new) {
                 $this->set_error($this->get_constant('ERR_MAIL_EMPTY'));
-                return false;
 
+                return false;
                 // allow to clear email
-            } else {
-                return true;
             }
+
+            return true;
         }
 
         if (!$this->_check_mail_addr($email)) {
@@ -254,6 +291,10 @@ class webphoto_main_mail_register extends webphoto_edit_base
         return true;
     }
 
+    /**
+     * @param $mail
+     * @return bool
+     */
     public function _check_mail_addr($mail)
     {
         $lang_error = $this->get_constant('ERR_MAIL_ILLEGAL');
@@ -277,7 +318,7 @@ class webphoto_main_mail_register extends webphoto_edit_base
             case _C_WEBPHOTO_ERR_DB:
                 $msg = 'DB Error';
                 if ($this->_is_module_admin) {
-                    $msg .= '<br />' . $this->get_format_error();
+                    $msg .= '<br>' . $this->get_format_error();
                 }
                 redirect_header($this->_REDIRECT_THIS_URL, $this->_TIME_FAIL, $msg);
                 exit();
@@ -291,9 +332,11 @@ class webphoto_main_mail_register extends webphoto_edit_base
         exit();
     }
 
+    /**
+     * @return int
+     */
     public function _exec_submit()
     {
-
         // load
         $row = $this->_row_current;
 
@@ -304,6 +347,7 @@ class webphoto_main_mail_register extends webphoto_edit_base
         }
         if (!$ret) {
             $this->set_error($this->_user_handler->get_errors());
+
             return _C_WEBPHOTO_ERR_DB;
         }
 
@@ -321,16 +365,16 @@ class webphoto_main_mail_register extends webphoto_edit_base
         echo $this->build_bread_crumb($this->get_constant('TITLE_MAIL_REGISTER'), $this->_REDIRECT_THIS_URL);
 
         echo $this->get_constant('HELP_MAIL_DSC');
-        echo "<br /><br />\n";
+        echo "<br><br>\n";
 
         $url = $this->_uri_class->build_full_uri_mode('help');
         echo '<a href="' . $url . '" target="_blank">';
         echo $this->get_constant('MAIL_HELP');
-        echo "</a><br /><br />\n";
+        echo "</a><br><br>\n";
 
         if ($this->has_error()) {
             echo $this->build_error_msg($this->get_format_error(false, false), null, false);
-            echo "<br />\n";
+            echo "<br>\n";
         }
 
         if ($this->_is_new) {
@@ -339,26 +383,30 @@ class webphoto_main_mail_register extends webphoto_edit_base
             $mode = 'edit';
         }
 
-        $param = array(
+        $param = [
             'mode' => $mode,
-        );
+        ];
 
         $form = webphoto_edit_mail_register_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
         if ($this->_check_user_form()) {
             $form->print_user_form($row);
-            echo "<br />\n";
+            echo "<br>\n";
         }
 
         $form->print_submit_form($row, $param);
     }
 
+    /**
+     * @return bool
+     */
     public function _check_user_form()
     {
         $action = $this->_get_action();
-        if ($this->_is_module_admin && ($action != 'submit') && ($action != 'form')) {
+        if ($this->_is_module_admin && ('submit' != $action) && ('form' != $action)) {
             return true;
         }
+
         return false;
     }
 

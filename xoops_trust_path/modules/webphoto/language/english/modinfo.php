@@ -24,7 +24,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -32,7 +32,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -57,24 +57,20 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
 
     // Config Items
     //define($constpref."CFG_PHOTOSPATH" , "Path to photos" ) ;
-    //define($constpref."CFG_DESCPHOTOSPATH" , "Path from the directory installed XOOPS.<br />(The first character must be '/'. The last character should not be '/'.)<br />This directory's permission is 777 or 707 in unix." ) ;
+    //define($constpref."CFG_DESCPHOTOSPATH" , "Path from the directory installed XOOPS.<br>(The first character must be '/'. The last character should not be '/'.)<br>This directory's permission is 777 or 707 in unix." ) ;
     //define($constpref."CFG_THUMBSPATH" , "Path to thumbnails" ) ;
     //define($constpref."CFG_DESCTHUMBSPATH" , "Same as 'Path to photos'." ) ;
     //define($constpref."CFG_USEIMAGICK" , "Use ImageMagick for treating images" ) ;
-    //define($constpref."CFG_DESCIMAGICK" , "Not use ImageMagick cause Not work resize or rotate the main photo, and make thumbnails by GD.<br />You'd better use ImageMagick if you can." ) ;
+    //define($constpref."CFG_DESCIMAGICK" , "Not use ImageMagick cause Not work resize or rotate the main photo, and make thumbnails by GD.<br>You'd better use ImageMagick if you can." ) ;
 
     define($constpref . 'CFG_IMAGINGPIPE', 'Package treating images');
-    define($constpref . 'CFG_DESCIMAGINGPIPE',
-           'Almost all PHP environments can use GD. But GD is functionally inferior than 2 other packages.<br />It is best to use ImageMagick or NetPBM if you can.');
+    define($constpref . 'CFG_DESCIMAGINGPIPE', 'Almost all PHP environments can use GD. But GD is functionally inferior than 2 other packages.<br>It is best to use ImageMagick or NetPBM if you can.');
     define($constpref . 'CFG_FORCEGD2', 'Force GD2 conversion');
-    define($constpref . 'CFG_DESCFORCEGD2',
-           'Even if the GD is a bundled version of PHP, it force GD2(truecolor) conversion.<br />Some configured PHP fails to create thumbnails in GD2<br />This configuration is significant only when using GD');
+    define($constpref . 'CFG_DESCFORCEGD2', 'Even if the GD is a bundled version of PHP, it force GD2(truecolor) conversion.<br>Some configured PHP fails to create thumbnails in GD2<br>This configuration is significant only when using GD');
     define($constpref . 'CFG_IMAGICKPATH', 'Path of ImageMagick');
-    define($constpref . 'CFG_DESCIMAGICKPATH',
-           "Although the full path to 'convert' should be written, leave it blank in most environments.<br />This configuration is significant only when using ImageMagick");
+    define($constpref . 'CFG_DESCIMAGICKPATH', "Although the full path to 'convert' should be written, leave it blank in most environments.<br>This configuration is significant only when using ImageMagick");
     define($constpref . 'CFG_NETPBMPATH', 'Path of NetPBM');
-    define($constpref . 'CFG_DESCNETPBMPATH',
-           "Alhough the full path to 'pnmscale' should be written, leave it blank in most environments.<br />This configuration is significant only when using NetPBM");
+    define($constpref . 'CFG_DESCNETPBMPATH', "Alhough the full path to 'pnmscale' should be written, leave it blank in most environments.<br>This configuration is significant only when using NetPBM");
     define($constpref . 'CFG_POPULAR', 'Hits to be Popular');
     define($constpref . 'CFG_NEWDAYS', "Days between displaying icon of 'new'&'update'");
     define($constpref . 'CFG_NEWPHOTOS', 'Number of Photo Video Media as New on Top Page');
@@ -82,7 +78,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     //define($constpref."CFG_DEFAULTORDER" , "Default order in category's view" ) ;
 
     define($constpref . 'CFG_PERPAGE', 'Displayed Photo Video Media per Page');
-    define($constpref . 'CFG_DESCPERPAGE', "Input selectable numbers separated with '|'<br />eg) 10|20|50|100");
+    define($constpref . 'CFG_DESCPERPAGE', "Input selectable numbers separated with '|'<br>eg) 10|20|50|100");
     define($constpref . 'CFG_ALLOWNOIMAGE', 'Allow a submit without images');
     define($constpref . 'CFG_MAKETHUMB', 'Make Thumbnail Image');
     define($constpref . 'CFG_DESCMAKETHUMB', "When you change 'No' to 'Yes', You'd better 'Redo thumbnails'.");
@@ -94,11 +90,11 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
 
     // v2.30
     //define($constpref."CFG_WIDTH" , "Max photo width" ) ;
-    //define($constpref."CFG_DESCWIDTH" , "This means the photo's width to be resized.<br />If you use GD without truecolor, this means the limitation of width." ) ;
+    //define($constpref."CFG_DESCWIDTH" , "This means the photo's width to be resized.<br>If you use GD without truecolor, this means the limitation of width." ) ;
     //define($constpref."CFG_HEIGHT" , "Max photo height" ) ;
-    //define($constpref."CFG_DESCHEIGHT" , "This means the photo's height to be resized.<br />If you use GD without truecolor, this means the limitation of height." ) ;
+    //define($constpref."CFG_DESCHEIGHT" , "This means the photo's height to be resized.<br>If you use GD without truecolor, this means the limitation of height." ) ;
     define($constpref . 'CFG_WIDTH', 'Image Width in popup');
-    define($constpref . 'CFG_DESCWIDTH', 'Image size when popup. <br /><br />In old version, this parameter was the limitation of the image size when upload. <br />This limitation was abolished. <br />The specification was changed in V2.30.
+    define($constpref . 'CFG_DESCWIDTH', 'Image size when popup. <br><br>In old version, this parameter was the limitation of the image size when upload. <br>This limitation was abolished. <br>The specification was changed in V2.30.
 ');
     define($constpref . 'CFG_HEIGHT', 'Image Height in popup');
     define($constpref . 'CFG_DESCHEIGHT', 'Same as Image Width');
@@ -107,7 +103,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_DESCFSIZE', 'The limitation of the size of uploading file.(bytes)');
 
     //define($constpref."CFG_MIDDLEPIXEL" , "Max image size in single view" ) ;
-    //define($constpref."CFG_DESCMIDDLEPIXEL" , "Specify (width)x(height)<br />(eg. 480x480)" ) ;
+    //define($constpref."CFG_DESCMIDDLEPIXEL" , "Specify (width)x(height)<br>(eg. 480x480)" ) ;
 
     define($constpref . 'CFG_ADDPOSTS', "The number added User's posts by posting a photo.");
     define($constpref . 'CFG_DESCADDPOSTS', 'Normally, 0 or 1. Under 0 mean 0');
@@ -122,13 +118,12 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_COLSOFTABLE', 'Number of columns in table view');
 
     //define($constpref."CFG_ALLOWEDEXTS" , "File extensions that can be uploaded" ) ;
-    //define($constpref."CFG_DESCALLOWEDEXTS" , "Input extensions with separator '|'. (eg 'jpg|jpeg|gif|png') .<br />All characters must be lowercase. Don't insert periods or spaces<br />Never add php or phtml etc." ) ;
+    //define($constpref."CFG_DESCALLOWEDEXTS" , "Input extensions with separator '|'. (eg 'jpg|jpeg|gif|png') .<br>All characters must be lowercase. Don't insert periods or spaces<br>Never add php or phtml etc." ) ;
     //define($constpref."CFG_ALLOWEDMIME" , "MIME Types can be uploaded" ) ;
-    //define($constpref."CFG_DESCALLOWEDMIME" , "Input MIME Types with separator '|'. (eg 'image/gif|image/jpeg|image/png')<br />If you want to be checked by MIME Type, leave this blank" ) ;
+    //define($constpref."CFG_DESCALLOWEDMIME" , "Input MIME Types with separator '|'. (eg 'image/gif|image/jpeg|image/png')<br>If you want to be checked by MIME Type, leave this blank" ) ;
 
     define($constpref . 'CFG_USESITEIMG', 'Use [siteimg] in ImageManager Integration');
-    define($constpref . 'CFG_DESCUSESITEIMG',
-           'The Integrated Image Manager input [siteimg] instead of [img].<br />You have to hack module.textsanitizer.php for each module to enable tag of [siteimg]');
+    define($constpref . 'CFG_DESCUSESITEIMG', 'The Integrated Image Manager input [siteimg] instead of [img].<br>You have to hack module.textsanitizer.php for each module to enable tag of [siteimg]');
 
     define($constpref . 'OPT_USENAME', 'Real Name');
     define($constpref . 'OPT_USEUNAME', 'Login Name');
@@ -204,8 +199,10 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_THUMB_HEIGHT', 'Thumb Image Height');
 
     define($constpref . 'CFG_APIKEY', 'Google API Key');
-    define($constpref . 'CFG_APIKEY_DSC',
-           'Get the API key on <br/><a href="http://www.google.com/apis/maps/signup.html" target="_blank">Sign Up for the Google Maps API</a><br /><br />For the details of the parameter, see the following<br /><a href="http://www.google.com/apis/maps/documentation/reference.html" target="_blank">Google Maps API Reference</a>');
+    define(
+        $constpref . 'CFG_APIKEY_DSC',
+        'Get the API key on <br><a href="http://www.google.com/apis/maps/signup.html" target="_blank">Sign Up for the Google Maps API</a><br><br>For the details of the parameter, see the following<br><a href="http://www.google.com/apis/maps/documentation/reference.html" target="_blank">Google Maps API Reference</a>'
+    );
     define($constpref . 'CFG_LATITUDE', 'Latitude');
     define($constpref . 'CFG_LONGITUDE', 'Longitude');
     define($constpref . 'CFG_ZOOM', 'Zoom Level');
@@ -213,7 +210,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_USE_POPBOX', 'Use PopBox');
 
     define($constpref . 'CFG_INDEX_DESC', 'Introductory Text in main page');
-    define($constpref . 'CFG_INDEX_DESC_DEFAULT', 'Here is where your page introduction goes.<br />You can edit it at Preferences');
+    define($constpref . 'CFG_INDEX_DESC_DEFAULT', 'Here is where your page introduction goes.<br>You can edit it at Preferences');
 
     // Sub menu titles
     define($constpref . 'SMNAME_SUBMIT', 'Submit');
@@ -251,22 +248,21 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_FFMPEG', 'Use ffmpeg');
     define($constpref . 'CFG_FFMPEGPATH', 'Path to ffmpeg');
-    define($constpref . 'CFG_DESCFFMPEGPATH',
-           "Alhough the full path to 'ffmpeg' should be written, leave it blank in most environments.<br />This configuration is significant only when 'Use ffmpeg' is yes");
+    define($constpref . 'CFG_DESCFFMPEGPATH', "Alhough the full path to 'ffmpeg' should be written, leave it blank in most environments.<br>This configuration is significant only when 'Use ffmpeg' is yes");
     define($constpref . 'CFG_USE_PATHINFO', 'Use pathinfo');
 
     //---------------------------------------------------------
     // v0.30
     //---------------------------------------------------------
     //define($constpref."CFG_TMPDIR" ,   "Path to temporary" ) ;
-    //define($constpref."CFG_TMPDIR_DSC" , "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br />Recommend to set to this out of the document route.");
+    //define($constpref."CFG_TMPDIR_DSC" , "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br>Recommend to set to this out of the document route.");
 
     define($constpref . 'CFG_MAIL_HOST', 'Mail Server Hostname');
     define($constpref . 'CFG_MAIL_USER', 'Mail User ID');
     define($constpref . 'CFG_MAIL_PASS', 'Mail Password');
     define($constpref . 'CFG_MAIL_ADDR', 'Mail Addresss');
     define($constpref . 'CFG_MAIL_CHARSET', 'Mail Charset');
-    define($constpref . 'CFG_MAIL_CHARSET_DSC', "Input Charset with separator '|'.<br />If you want not to be checked by MIME Type, leave this blank");
+    define($constpref . 'CFG_MAIL_CHARSET_DSC', "Input Charset with separator '|'.<br>If you want not to be checked by MIME Type, leave this blank");
     define($constpref . 'CFG_MAIL_CHARSET_LIST', 'ISO-8859-1|US-ASCII');
     define($constpref . 'CFG_FILE_DIR', 'Path to files by FTP');
     define($constpref . 'CFG_FILE_DIR_DSC', "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)Recommend to set to this out of the document route.");
@@ -274,10 +270,10 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'CFG_FILE_DESC', 'FTP Help Description');
     define($constpref . 'CFG_FILE_DESC_DSC', "Show in Help, when has the permission of 'Post by FTP' ");
     define($constpref . 'CFG_FILE_DESC_TEXT', '
-<b>FTP Server</b><br />
-FTP Server Host: xxx<br />
-FTP UserID: xxx<br />
-FTP Password: xxx<br />');
+<b>FTP Server</b><br>
+FTP Server Host: xxx<br>
+FTP UserID: xxx<br>
+FTP Password: xxx<br>');
 
     define($constpref . 'ADMENU_MAILLOG_MANAGER', 'Maillog Management');
     define($constpref . 'ADMENU_MAILLOG_TABLE_MANAGE', 'Maillog Table Management');
@@ -299,11 +295,9 @@ FTP Password: xxx<br />');
     // v0.50
     //---------------------------------------------------------
     define($constpref . 'CFG_UPLOADSPATH', 'Path to upload files');
-    define($constpref . 'CFG_UPLOADSPATH_DSC',
-           "Path from the directory installed XOOPS.<br />(The first character must be '/'. The last character should not be '/'.)<br />This directory's permission is 777 or 707 in unix.");
+    define($constpref . 'CFG_UPLOADSPATH_DSC', "Path from the directory installed XOOPS.<br>(The first character must be '/'. The last character should not be '/'.)<br>This directory's permission is 777 or 707 in unix.");
     define($constpref . 'CFG_MEDIASPATH', 'Path to medias');
-    define($constpref . 'CFG_MEDIASPATH_DSC',
-           "The directory where there are media files which are created the playlist. <br />Path from the directory installed XOOPS.<br />(The first character must be '/'. The last character should not be '/'.)");
+    define($constpref . 'CFG_MEDIASPATH_DSC', "The directory where there are media files which are created the playlist. <br>Path from the directory installed XOOPS.<br>(The first character must be '/'. The last character should not be '/'.)");
     define($constpref . 'CFG_LOGO_WIDTH', 'Player Logo Width and Height');
     define($constpref . 'CFG_USE_CALLBACK', 'Use callback log');
     define($constpref . 'CFG_USE_CALLBACK_DSC', 'loggin Flash Player events by callback.');
@@ -318,12 +312,12 @@ FTP Password: xxx<br />');
     // v0.60
     //---------------------------------------------------------
     define($constpref . 'CFG_WORKDIR', 'Work Directory Path');
-    define($constpref . 'CFG_WORKDIR_DSC', "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br />Recommend to set to this out of the document route.");
+    define($constpref . 'CFG_WORKDIR_DSC', "Fill the fullpath (The first character must be '/'. The last character should not be '/'.)<br>Recommend to set to this out of the document route.");
     define($constpref . 'CFG_CAT_WIDTH', 'Category Image Width and Height');
     define($constpref . 'CFG_CSUB_WIDTH', 'Image Width and Height in Sub Category');
     define($constpref . 'CFG_GICON_WIDTH', 'GoogleMap Icon Width and Height');
     define($constpref . 'CFG_JPEG_QUALITY', 'JPEG Quality');
-    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br />This configuration is significant only when using GD');
+    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br>This configuration is significant only when using GD');
 
     //---------------------------------------------------------
     // v0.80
@@ -347,7 +341,7 @@ FTP Password: xxx<br />');
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_XPDF', 'Use xpdf');
     define($constpref . 'CFG_XPDFPATH', 'Path to xpdf');
-    define($constpref . 'CFG_XPDFPATH_DSC', "Alhough the full path to 'pdftoppm' should be written, leave it blank in most environments.<br />This configuration is significant only when using xpdf");
+    define($constpref . 'CFG_XPDFPATH_DSC', "Alhough the full path to 'pdftoppm' should be written, leave it blank in most environments.<br>This configuration is significant only when using xpdf");
 
     //---------------------------------------------------------
     // v1.21
@@ -384,9 +378,9 @@ FTP Password: xxx<br />');
     // v1.70
     //---------------------------------------------------------
     define($constpref . 'CFG_ITEM_SUMMARY', 'Max characters of photo description');
-    define($constpref . 'CFG_ITEM_SUMMARY_DSC', 'Enter the maximum number of characters of photo description in the photo list.<br />-1 is unlimited');
+    define($constpref . 'CFG_ITEM_SUMMARY_DSC', 'Enter the maximum number of characters of photo description in the photo list.<br>-1 is unlimited');
     define($constpref . 'CFG_CAT_SUMMARY', 'Max characters of category description');
-    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'Enter the maximum number of characters of category description in the category list.<br />-1 is unlimited');
+    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'Enter the maximum number of characters of category description in the category list.<br>-1 is unlimited');
     define($constpref . 'CFG_CAT_CHILD', 'Show photos of subcategoies');
     define($constpref . 'CFG_CAT_CHILD_DSC', 'Enter to show or not photos of subcategoies in category list');
     define($constpref . 'OPT_CAT_CHILD_NON', 'Photo Video Media of this category only. Not show photos of subcategoies');
@@ -398,12 +392,11 @@ FTP Password: xxx<br />');
     //---------------------------------------------------------
     define($constpref . 'CFG_USE_LAME', 'Use lame');
     define($constpref . 'CFG_LAMEPATH', 'Path to lame');
-    define($constpref . 'CFG_LAMEPATH_DSC', "Alhough the full path to 'lame' should be written, leave it blank in most environments.<br />This configuration is significant only when using lame");
+    define($constpref . 'CFG_LAMEPATH_DSC', "Alhough the full path to 'lame' should be written, leave it blank in most environments.<br>This configuration is significant only when using lame");
 
     define($constpref . 'CFG_USE_TIMIDITY', 'Use timidity');
     define($constpref . 'CFG_TIMIDITYPATH', 'Path to timidity');
-    define($constpref . 'CFG_TIMIDITYPATH_DSC',
-           "Alhough the full path to 'timidity' should be written, leave it blank in most environments.<br />This configuration is significant only when using timidity");
+    define($constpref . 'CFG_TIMIDITYPATH_DSC', "Alhough the full path to 'timidity' should be written, leave it blank in most environments.<br>This configuration is significant only when using timidity");
 
     define($constpref . 'SMNAME_SEARCH', 'Search');
 
@@ -412,9 +405,9 @@ FTP Password: xxx<br />');
     //---------------------------------------------------------
     // config
     define($constpref . 'CFG_GROUPID_ADMIN', 'Admin Group ID');
-    define($constpref . 'CFG_GROUPID_ADMIN_DSC', "The user group ID of the administrator of this module. <br />This value is set in module installation. <br />Don't change rashly. ");
+    define($constpref . 'CFG_GROUPID_ADMIN_DSC', "The user group ID of the administrator of this module. <br>This value is set in module installation. <br>Don't change rashly. ");
     define($constpref . 'CFG_GROUPID_USER', 'User Group ID');
-    define($constpref . 'CFG_GROUPID_USER_DSC', "The user group ID of the user of this module. <br />This value is set in module installation. <br />Don't change rashly. ");
+    define($constpref . 'CFG_GROUPID_USER_DSC', "The user group ID of the user of this module. <br>This value is set in module installation. <br>Don't change rashly. ");
 
     // admin menu
     define($constpref . 'ADMENU_INVITE', 'Invite a friend');
@@ -445,7 +438,7 @@ FTP Password: xxx<br />');
     // v2.40
     //---------------------------------------------------------
     define($constpref . 'CFG_PEAR_PATH', 'Path of PEAR libraly');
-    define($constpref . 'CFG_PEAR_PATH_DSC', 'Enter the absolute path in the PEAR library with Net_POP3.<br />When not enter, modules/webphoto/PEAR is used.');
+    define($constpref . 'CFG_PEAR_PATH_DSC', 'Enter the absolute path in the PEAR library with Net_POP3.<br>When not enter, modules/webphoto/PEAR is used.');
 
     //---------------------------------------------------------
     // v2.60
@@ -455,4 +448,3 @@ FTP Password: xxx<br />');
     define($constpref . 'OPT_TIMELINE_SCALE_CENTURY', 'Century');
     define($constpref . 'OPT_TIMELINE_SCALE_MILLENNIUM', 'Millennium');
 }// === define begin ===
-;

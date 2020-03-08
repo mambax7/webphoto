@@ -35,6 +35,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_flash_log
 // caller webphoto_main_callback webphoto_admin_item_manager
 //=========================================================
+
+/**
+ * Class webphoto_flash_log
+ */
 class webphoto_flash_log
 {
     public $_config_class;
@@ -46,45 +50,59 @@ class webphoto_flash_log
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_flash_log constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
         $this->_utility_class = webphoto_lib_utility::getInstance();
-        $this->_post_class    = webphoto_lib_post::getInstance();
+        $this->_post_class = webphoto_lib_post::getInstance();
 
         $this->_init_xoops_config($dirname);
 
         $this->_LOG_FILE = $this->_WORK_DIR . '/log/flash.txt';
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_flash_log
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_flash_log($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // callback
     //---------------------------------------------------------
+
+    /**
+     * @return bool|int
+     */
     public function callback_log()
     {
-        $id       = $this->_post_class->get_post_int('id');
+        $id = $this->_post_class->get_post_int('id');
         $duration = $this->_post_class->get_post_int('duration');
-        $title    = $this->_post_class->get_post_text('title');
-        $file     = $this->_post_class->get_post_text('file');
-        $state    = $this->_post_class->get_post_text('state');
+        $title = $this->_post_class->get_post_text('title');
+        $file = $this->_post_class->get_post_text('file');
+        $state = $this->_post_class->get_post_text('state');
 
-        if ($state != 'start') {
+        if ('start' != $state) {
             return true;    // no action
         }
 
         $http_referer = null;
-        $remote_addr  = null;
+        $remote_addr = null;
 
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            $http_referer = $_SERVER['HTTP_REFERER'];
+        if (null !== (\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'))) {
+            $http_referer = \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER');
         }
 
         if (isset($_SERVER['REMOTE_ADDR'])) {
@@ -107,16 +125,27 @@ class webphoto_flash_log
     //---------------------------------------------------------
     // write read
     //---------------------------------------------------------
+
+    /**
+     * @return string
+     */
     public function get_filename()
     {
         return $this->_LOG_FILE;
     }
 
+    /**
+     * @param $data
+     * @return bool|int
+     */
     public function append_log($data)
     {
         return $this->_utility_class->write_file($this->_LOG_FILE, $data, 'a', true);
     }
 
+    /**
+     * @return array|bool
+     */
     public function read_log()
     {
         if (!file_exists($this->_LOG_FILE)) {
@@ -132,13 +161,13 @@ class webphoto_flash_log
         $count = count($lines);
 
         // empty file
-        if ($count == 0) {
-            return array();    // no data
+        if (0 == $count) {
+            return [];    // no data
         }
 
         // one line and empty line
-        if (($count == 1) && empty($lines[0])) {
-            return array();    // no data
+        if ((1 == $count) && empty($lines[0])) {
+            return [];    // no data
         }
 
         // remove last line if empty
@@ -149,6 +178,9 @@ class webphoto_flash_log
         return $lines;
     }
 
+    /**
+     * @return bool|int
+     */
     public function empty_log()
     {
         if (!file_exists($this->_LOG_FILE)) {
@@ -161,11 +193,15 @@ class webphoto_flash_log
     //---------------------------------------------------------
     // xoops_config
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     */
     public function _init_xoops_config($dirname)
     {
-        $config_handler = webphoto_inc_config::getSingleton($dirname);
+        $configHandler = webphoto_inc_config::getSingleton($dirname);
 
-        $this->_WORK_DIR = $config_handler->get_by_name('workdir');
+        $this->_WORK_DIR = $configHandler->get_by_name('workdir');
     }
 
     // --- class end ---

@@ -21,6 +21,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_image
 //=========================================================
+
+/**
+ * Class webphoto_main_image
+ */
 class webphoto_main_image extends webphoto_file_read
 {
     public $_readfile_class;
@@ -29,20 +33,32 @@ class webphoto_main_image extends webphoto_file_read
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_image constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_readfile_class = webphoto_lib_readfile::getInstance();
-        $this->_kind_class     = webphoto_kind::getInstance();
+        $this->_kind_class = webphoto_kind::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_file_read|\webphoto_item_public|\webphoto_lib_error|\webphoto_main_image
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_image($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -51,7 +67,7 @@ class webphoto_main_image extends webphoto_file_read
     //---------------------------------------------------------
     public function main()
     {
-        $item_id   = $this->_post_class->get_post_get_int('item_id');
+        $item_id = $this->_post_class->get_post_get_int('item_id');
         $file_kind = $this->_post_class->get_post_get_int('file_kind');
 
         $item_row = $this->get_item_row($item_id);
@@ -66,7 +82,7 @@ class webphoto_main_image extends webphoto_file_read
 
         //print_r($file_row);
 
-        $ext  = $file_row['file_ext'];
+        $ext = $file_row['file_ext'];
         $mime = $file_row['file_mime'];
         $size = $file_row['file_size'];
 

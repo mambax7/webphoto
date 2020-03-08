@@ -37,17 +37,17 @@ include_once WEBPHOTO_TRUST_PATH . '/include/optional.php';
 webphoto_include_once('preload/debug.php');
 
 // fork each pages
-$FCT_UNUSE = array('category', 'date', 'myphoto', 'place', 'search', 'tag', 'user');
-$fct       = webphoto_fct();
+$FCT_UNUSE = ['category', 'date', 'myphoto', 'place', 'search', 'tag', 'user'];
+$fct = webphoto_fct();
 if (in_array($fct, $FCT_UNUSE)) {
     $fct = '';
 }
 
-$WEBPHOTO_FCT     = $fct;
-$file_trust_fct   = WEBPHOTO_TRUST_PATH . '/main/' . $WEBPHOTO_FCT . '.php';
-$file_root_fct    = WEBPHOTO_ROOT_PATH . '/main/' . $WEBPHOTO_FCT . '.php';
+$WEBPHOTO_FCT = $fct;
+$file_trust_fct = WEBPHOTO_TRUST_PATH . '/main/' . $WEBPHOTO_FCT . '.php';
+$file_root_fct = WEBPHOTO_ROOT_PATH . '/main/' . $WEBPHOTO_FCT . '.php';
 $file_trust_index = WEBPHOTO_TRUST_PATH . '/main/index.php';
-$file_root_index  = WEBPHOTO_ROOT_PATH . '/main/index.php';
+$file_root_index = WEBPHOTO_ROOT_PATH . '/main/index.php';
 
 if (file_exists($file_root_fct)) {
     webphoto_debug_msg($file_root_fct);

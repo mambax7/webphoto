@@ -47,6 +47,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_index
 //=========================================================
+
+/**
+ * Class webphoto_main_index
+ */
 class webphoto_main_index extends webphoto_factory
 {
     public $_main_class;
@@ -63,6 +67,12 @@ class webphoto_main_index extends webphoto_factory
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_index constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -79,19 +89,25 @@ class webphoto_main_index extends webphoto_factory
 
         $this->_search_class = webphoto_search::getInstance($dirname, $trust_dirname);
 
-        $this->set_template_main('main_index.html');
+        $this->set_template_main('main_index.tpl');
 
         $this->_ini_tagcloud_list_limit = $this->get_ini('tagcloud_list_limit');
 
         $this->_ini_view_mode_default = $this->get_ini('view_mode_default');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_factory|\webphoto_lib_error|\webphoto_main_index
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_index($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -108,6 +124,10 @@ class webphoto_main_index extends webphoto_factory
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         switch ($this->_mode) {
@@ -118,49 +138,65 @@ class webphoto_main_index extends webphoto_factory
             case 'user':
                 $ret = $this->page_main();
                 break;
-
             case 'search':
             default:
                 $ret = $this->build_page_detail($this->_mode, $this->_param);
                 break;
         }
         $arr = array_merge($ret, $this->build_execution_time());
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function page_main()
     {
         if ($this->page_sel()) {
             return $this->build_page_detail($this->_mode, $this->_param);
         }
+
         return $this->build_page_list($this->_mode);
     }
 
+    /**
+     * @return bool
+     */
     public function page_sel()
     {
         switch ($this->_mode) {
             case 'user':
                 $ret = $this->_user_class->page_sel($this->_param);
                 break;
-
             default:
                 $ret = $this->page_sel_default();
                 break;
         }
+
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function page_sel_default()
     {
         if ($this->_param) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // page list
     //---------------------------------------------------------
+
+    /**
+     * @param $mode
+     * @return array
+     */
     public function build_page_list($mode)
     {
         $this->show_array_set_list_by_mode($mode);
@@ -188,78 +224,93 @@ class webphoto_main_index extends webphoto_factory
         $this->set_tpl_tagcloud_with_check($this->_ini_tagcloud_list_limit);
 
         $this->set_tpl_show_js_windows();
+
         return $this->tpl_get();
     }
 
+    /**
+     * @param $mode
+     * @return array
+     */
     public function build_photo_list_for_list($mode)
     {
-        $arr   = array();
+        $arr = [];
         $error = null;
 
         switch ($mode) {
             case 'category':
                 list($category_photo_list, $photo_rows) = $this->_category_class->build_photo_list_for_list();
-                return array(null, $photo_rows, $category_photo_list, null);
-                break;
 
+                return [null, $photo_rows, $category_photo_list, null];
+                break;
             case 'date':
-                $arr   = $this->_date_class->build_rows_for_list();
+                $arr = $this->_date_class->build_rows_for_list();
                 $error = $this->get_constant('DATE_NOT_SET');
                 break;
-
             case 'place':
-                $arr   = $this->_place_class->build_rows_for_list();
+                $arr = $this->_place_class->build_rows_for_list();
                 $error = $this->get_constant('PLACE_NOT_SET');
                 break;
-
             case 'tag':
-                $arr   = $this->_tag_class->build_rows_for_list();
+                $arr = $this->_tag_class->build_rows_for_list();
                 $error = $this->get_constant('NO_TAG');
                 break;
-
             case 'user':
                 $arr = $this->_user_class->build_rows_for_list();
                 break;
-
             default:
                 break;
         }
 
-        $photo_list = array();
-        $photo_rows = array();
+        $photo_list = [];
+        $photo_rows = [];
 
         if (!is_array($arr) || !count($arr)) {
-            return array($photo_list, $photo_rows, null, $error);
+            return [$photo_list, $photo_rows, null, $error];
         }
 
         foreach ($arr as $a) {
             list($title, $param, $total, $row) = $a;
-            $photo_list[]                = $this->build_photo_list_for_list_by_row($title, $param, $total, $row);
+            $photo_list[] = $this->build_photo_list_for_list_by_row($title, $param, $total, $row);
             $photo_rows[$row['item_id']] = $row;
         }
 
-        return array($photo_list, $photo_rows, null, null);
+        return [$photo_list, $photo_rows, null, null];
     }
 
+    /**
+     * @param $title
+     * @param $param
+     * @param $total
+     * @param $row
+     * @return array
+     */
     public function build_photo_list_for_list_by_row($title, $param, $total, $row)
     {
-        $link  = $this->_uri_class->build_list_link($this->_mode, $param);
+        $link = $this->_uri_class->build_list_link($this->_mode, $param);
         $photo = $this->build_photo_by_row($row);
 
-        $arr = array(
-            'title'   => $title,
+        $arr = [
+            'title' => $title,
             'title_s' => $this->sanitize($title),
-            'link'    => $link,
-            'link_s'  => $this->sanitize($link),
-            'total'   => $total,
-            'photo'   => $photo,
-        );
+            'link' => $link,
+            'link_s' => $this->sanitize($link),
+            'total' => $total,
+            'photo' => $photo,
+        ];
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // page detail
     //---------------------------------------------------------
+
+    /**
+     * @param $mode
+     * @param $param
+     * @return array
+     */
     public function build_page_detail($mode, $param)
     {
         $this->show_array_set_detail_by_mode($mode);
@@ -267,20 +318,20 @@ class webphoto_main_index extends webphoto_factory
 
         list($title, $total, $rows, $cat_param) = $this->build_rows_for_detail($mode, $param);
 
-        $param_extra = array(
-            'mode'      => $mode,
-            'rows'      => $rows,
+        $param_extra = [
+            'mode' => $mode,
+            'rows' => $rows,
             'cat_param' => $cat_param,
-            'cat_id'    => $this->_cat_id,
-            'sub_mode'  => $this->_sub_mode,
+            'cat_id' => $this->_cat_id,
+            'sub_mode' => $this->_sub_mode,
             'sub_param' => $this->_sub_param,
             'cat_param' => $cat_param,
-        );
+        ];
 
         $show_gmap = $this->set_tpl_gmap_for_detail_with_check($param_extra);
         $this->set_tpl_timeline_with_check($param_extra);
 
-        if ($mode == 'search') {
+        if ('search' == $mode) {
             $query_param = $this->_search_class->build_query_param($total);
             $query_array = $query_param['search_query_array'];
             $this->_photo_class->set_flag_highlight(true);
@@ -320,7 +371,7 @@ class webphoto_main_index extends webphoto_factory
         // for detail
         $this->set_tpl_total_for_detail($mode, $total);
 
-        if ($mode == 'search') {
+        if ('search' == $mode) {
             $this->tpl_merge($query_param);
         }
 
@@ -330,9 +381,15 @@ class webphoto_main_index extends webphoto_factory
         }
 
         $this->set_tpl_show_js_windows();
+
         return $this->tpl_get();
     }
 
+    /**
+     * @param $mode
+     * @param $param
+     * @return array
+     */
     public function build_rows_for_detail($mode, $param)
     {
         $param_out = null;
@@ -343,31 +400,24 @@ class webphoto_main_index extends webphoto_factory
             case 'timeline':
                 list($title, $total, $rows, $cat_param) = $this->map_timeline_build_rows_for_detail($mode);
                 break;
-
             case 'category':
                 list($title, $total, $rows, $cat_param) = $this->category_build_rows_for_detail($param);
                 break;
-
             case 'date':
                 list($title, $total, $rows, $param_out) = $this->date_build_rows_for_detail($param);
                 break;
-
             case 'place':
                 list($title, $total, $rows) = $this->place_build_rows_for_detail($param);
                 break;
-
             case 'tag':
                 list($title, $total, $rows) = $this->tag_build_rows_for_detail($param);
                 break;
-
             case 'user':
                 list($title, $total, $rows) = $this->user_build_rows_for_detail($param);
                 break;
-
             case 'search':
                 list($title, $total, $rows) = $this->search_build_rows_for_detail($param);
                 break;
-
             default:
                 list($title, $total, $rows) = $this->main_build_rows_for_detail($mode);
                 break;
@@ -377,9 +427,13 @@ class webphoto_main_index extends webphoto_factory
             $this->set_param_out($param_out);
         }
 
-        return array($title, $total, $rows, $cat_param);
+        return [$title, $total, $rows, $cat_param];
     }
 
+    /**
+     * @param $mode
+     * @return array
+     */
     public function map_build_rows_for_detail($mode)
     {
         $param_int = (int)$this->_sub_param;
@@ -387,7 +441,7 @@ class webphoto_main_index extends webphoto_factory
         $photo_total_sum = 0;
         $photo_small_sum = 0;
 
-        if (($this->_sub_mode == 'category') && ($param_int > 0)) {
+        if (('category' == $this->_sub_mode) && ($param_int > 0)) {
             list($title, $total, $rows, $photo_total_sum, $photo_small_sum) = $this->sub_category_build_rows_for_detail($mode, $param_int);
             $gmap_rows = $this->_gmap_class->build_rows_for_detail_category($param_int);
         } else {
@@ -395,119 +449,153 @@ class webphoto_main_index extends webphoto_factory
             $gmap_rows = $this->_gmap_class->build_rows_for_detail_main();
         }
 
-        return array($title, $total, $rows, $gmap_rows, $photo_total_sum, $photo_small_sum);
+        return [$title, $total, $rows, $gmap_rows, $photo_total_sum, $photo_small_sum];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function date_build_rows_for_detail($param)
     {
         list($title, $total, $param_out) = $this->_date_class->build_total_for_detail($param);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_date_class->build_rows_for_detail($param_out, $this->_orderby, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows, $param_out);
+        return [$title, $total, $rows, $param_out];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function place_build_rows_for_detail($param)
     {
         list($place_mode, $place_arr, $title, $total) = $this->_place_class->build_total_for_detail($param);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_place_class->build_rows_for_detail($place_mode, $place_arr, $this->_orderby, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows);
+        return [$title, $total, $rows];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function tag_build_rows_for_detail($param)
     {
         list($tag_name, $title, $total) = $this->_tag_class->build_total_for_detail($param);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_tag_class->build_rows_for_detail($tag_name, $this->_orderby, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows);
+        return [$title, $total, $rows];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function user_build_rows_for_detail($param)
     {
         list($title, $total) = $this->_user_class->build_total_for_detail($param);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_user_class->build_rows_for_detail($param, $this->_orderby, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows);
+        return [$title, $total, $rows];
     }
 
+    /**
+     * @param $param
+     * @return array
+     */
     public function search_build_rows_for_detail($param)
     {
         list($sql_query, $title, $total) = $this->_search_class->build_total_for_detail($param);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_search_class->build_rows_for_detail($sql_query, $this->_orderby, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows);
+        return [$title, $total, $rows];
     }
 
+    /**
+     * @param $mode
+     * @return array
+     */
     public function main_build_rows_for_detail($mode)
     {
         list($title, $total) = $this->_main_class->build_total_for_detail($mode);
 
-        $rows  = null;
+        $rows = null;
         $start = $this->calc_navi_start($total);
 
         if ($total > 0) {
             $rows = $this->_main_class->build_rows_for_detail($mode, $this->_sort, $this->_PHOTO_LIMIT, $start);
         }
 
-        return array($title, $total, $rows);
+        return [$title, $total, $rows];
     }
 
     //---------------------------------------------------------
     // map timeline
     //---------------------------------------------------------
+
+    /**
+     * @param $mode
+     * @return array
+     */
     public function map_timeline_build_rows_for_detail($mode)
     {
         $param_int = (int)$this->_sub_param;
 
         $cat_param = null;
 
-        if (($this->_sub_mode == 'category') && ($param_int > 0)) {
+        if (('category' == $this->_sub_mode) && ($param_int > 0)) {
             list($title, $total, $rows, $cat_param) = $this->build_rows_for_detail_sub_category($mode, $param_int);
         } else {
             list($title, $total, $rows) = $this->main_build_rows_for_detail($mode);
         }
 
-        return array($title, $total, $rows, $cat_param);
+        return [$title, $total, $rows, $cat_param];
     }
 
+    /**
+     * @param $mode
+     * @param $cat_id
+     * @return array
+     */
     public function build_rows_for_detail_sub_category($mode, $cat_id)
     {
         list($cat_title, $total, $rows, $cat_param) = $this->category_build_rows_for_detail($cat_id);
 
         $mode_title = $this->build_title_by_mode($mode);
-        $title      = $mode_title . ' : ' . $cat_title;
+        $title = $mode_title . ' : ' . $cat_title;
 
-        return array($title, $total, $rows, $cat_param);
+        return [$title, $total, $rows, $cat_param];
     }
 
     // --- class end ---

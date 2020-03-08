@@ -15,6 +15,10 @@
 //=========================================================
 // class pear_mail_pop3
 //=========================================================
+
+/**
+ * Class webphoto_pear_mail_pop3
+ */
 class webphoto_pear_mail_pop3
 {
     // set param
@@ -22,11 +26,11 @@ class webphoto_pear_mail_pop3
     public $_USER = null;
     public $_PASS = null;
 
-    public $_PORT     = '110'; // pop3
+    public $_PORT = '110'; // pop3
     public $_MAX_MAIL = 10;
 
-    public $_mail_arr  = array();
-    public $_error_arr = array();
+    public $_mail_arr = [];
+    public $_error_arr = [];
 
     //---------------------------------------------------------
     // constructor
@@ -36,33 +40,50 @@ class webphoto_pear_mail_pop3
         // dummy
     }
 
+    /**
+     * @return \webphoto_pear_mail_pop3
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_pear_mail_pop3();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_host($val)
     {
         $this->_HOST = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_user($val)
     {
         $this->_USER = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_pass($val)
     {
         $this->_PASS = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_max_mail($val)
     {
         $this->_MAX_MAIL = (int)$val;
@@ -71,6 +92,10 @@ class webphoto_pear_mail_pop3
     //---------------------------------------------------------
     // pop mail
     //---------------------------------------------------------
+
+    /**
+     * @return bool|int|mixed
+     */
     public function recv_mails()
     {
         $this->clear_mails();
@@ -78,6 +103,7 @@ class webphoto_pear_mail_pop3
 
         if (empty($this->_HOST) || empty($this->_USER) || empty($this->_PASS)) {
             $this->set_error('not set param');
+
             return false;
         }
 
@@ -95,21 +121,24 @@ class webphoto_pear_mail_pop3
         $ret = $pop->connect($host, $port);
         if (!$ret) {
             $this->set_error('not connect');
+
             return false;
         }
 
         $ret = $pop->login($this->_USER, $this->_PASS);
-        if ($ret !== true) {
+        if (true !== $ret) {
             $this->set_error($ret);
             $pop->disconnect();
+
             return false;
         }
 
         $num = $pop->numMsg();
 
         // no mail
-        if ($num == 0) {
+        if (0 == $num) {
             $pop->disconnect();
+
             return 0;
         }
 
@@ -125,6 +154,7 @@ class webphoto_pear_mail_pop3
         }
 
         $pop->disconnect();
+
         return $num;
     }
 
@@ -133,14 +163,20 @@ class webphoto_pear_mail_pop3
     //---------------------------------------------------------
     public function clear_mails()
     {
-        $this->_mail_arr = array();
+        $this->_mail_arr = [];
     }
 
+    /**
+     * @param $mail
+     */
     public function set_mail($mail)
     {
         $this->_mail_arr[] = $mail;
     }
 
+    /**
+     * @return array
+     */
     public function get_mails()
     {
         return $this->_mail_arr;
@@ -148,14 +184,20 @@ class webphoto_pear_mail_pop3
 
     public function clear_errors()
     {
-        $this->_error_arr = array();
+        $this->_error_arr = [];
     }
 
+    /**
+     * @param $err
+     */
     public function set_error($err)
     {
         $this->_error_arr[] = $err;
     }
 
+    /**
+     * @return array
+     */
     public function get_errors()
     {
         return $this->_error_arr;

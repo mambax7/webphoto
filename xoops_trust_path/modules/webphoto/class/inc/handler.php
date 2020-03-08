@@ -42,6 +42,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_handler
 //=========================================================
+
+/**
+ * Class webphoto_inc_handler
+ */
 class webphoto_inc_handler
 {
     public $_db;
@@ -63,7 +67,7 @@ class webphoto_inc_handler
     public $_PERM_DENOY_ALL = 'x';
     public $_PERM_SEPARATOR = '&';
 
-    public $_DEBUG_SQL   = false;
+    public $_DEBUG_SQL = false;
     public $_DEBUG_ERROR = 0;
 
     //---------------------------------------------------------
@@ -76,17 +80,20 @@ class webphoto_inc_handler
         $this->_init_xoops_groups();
     }
 
-    public function init_handler($dirname)
+    /**
+     * @param $dirname
+     */
+    public function initHandler($dirname)
     {
-        $this->_DIRNAME    = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_MODULE_URL = XOOPS_URL . '/modules/' . $dirname;
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
 
-        $this->_ROOT_EXTS_URL    = $this->_MODULE_URL . '/images/exts';
+        $this->_ROOT_EXTS_URL = $this->_MODULE_URL . '/images/exts';
         $this->_DEFAULT_ICON_SRC = $this->_MODULE_URL . '/images/exts/default.png';
-        $this->_PIXEL_ICON_SRC   = $this->_MODULE_URL . '/images/icons/pixel_trans.png';
+        $this->_PIXEL_ICON_SRC = $this->_MODULE_URL . '/images/icons/pixel_trans.png';
 
-        $constpref = strtoupper('_P_' . $dirname . '_');
+        $constpref = mb_strtoupper('_P_' . $dirname . '_');
         $this->set_debug_sql_by_const_name($constpref . 'DEBUG_INC_SQL');
         $this->set_debug_error_by_const_name($constpref . 'DEBUG_INC_ERROR');
     }
@@ -94,13 +101,17 @@ class webphoto_inc_handler
     //---------------------------------------------------------
     // xoops config table
     //---------------------------------------------------------
+
+    /**
+     * @return bool|mixed
+     */
     public function update_xoops_config()
     {
         // configs (Though I know it is not a recommended way...)
         $table_config = $this->_db->prefix('config');
 
         $check_sql = 'SHOW COLUMNS FROM ' . $table_config . " LIKE 'conf_title'";
-        $row       = $this->get_row_by_sql($check_sql);
+        $row = $this->get_row_by_sql($check_sql);
         if (!is_array($row)) {
             return false;
         }
@@ -122,77 +133,126 @@ class webphoto_inc_handler
     //---------------------------------------------------------
     // xoops config item table
     //---------------------------------------------------------
+
+    /**
+     * @param $mid
+     * @return mixed
+     */
     public function get_xoops_config_mod_objs($mid)
     {
         $config_item_handler = xoops_getHandler('ConfigItem');
-        $criteria            = new CriteriaCompo(new Criteria('conf_modid', $mid));
+        $criteria = new CriteriaCompo(new Criteria('conf_modid', $mid));
+
         return $config_item_handler->getObjects($criteria);
     }
 
+    /**
+     * @param $mid
+     * @param $name
+     * @return bool
+     */
     public function get_xoops_config_mod_obj($mid, $name)
     {
         $objs = $this->get_xoops_config_mod_objs($mid);
         if (isset($objs[$name])) {
             return $objs[$name];
         }
+
         return false;
     }
 
+    /**
+     * @param $mid
+     * @param $name
+     * @return bool
+     */
     public function get_xoops_config_mod_val($mid, $name)
     {
         $obj = $this->get_xoops_config_mod_obj($mid, $name);
         if (is_object($obj)) {
             return $obj->getVar('conf_value');
         }
+
         return false;
     }
 
+    /**
+     * @param $mid
+     * @param $name
+     * @param $val
+     * @return bool
+     */
     public function save_xoops_config_mod($mid, $name, $val)
     {
         $config_item_handler = xoops_getHandler('ConfigItem');
-        $obj                 = (int)$this->get_xoops_config_mod_obj($mid, $name);
+        $obj = (int)$this->get_xoops_config_mod_obj($mid, $name);
         if (is_object($obj)) {
             $obj->setVar('conf_value', $val);
+
             return $config_item_handler->update($obj);
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // cat handler
     //---------------------------------------------------------
+
+    /**
+     * @param $cat_id
+     * @return bool
+     */
     public function get_cat_row_by_id($cat_id)
     {
         $sql = 'SELECT * FROM ' . $this->prefix_dirname('cat');
         $sql .= ' WHERE cat_id=' . (int)$cat_id;
+
         return $this->get_row_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // item handler
     //---------------------------------------------------------
+
+    /**
+     * @param $item_id
+     * @return bool
+     */
     public function get_item_row_by_id($item_id)
     {
         $sql = 'SELECT * FROM ' . $this->prefix_dirname('item');
         $sql .= ' WHERE item_id=' . (int)$item_id;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $item_row
+     * @return array
+     */
     public function build_show_icon_image($item_row)
     {
-        $url    = null;
-        $name   = $item_row['item_icon_name'];
-        $width  = $item_row['item_icon_width'];
+        $url = null;
+        $name = $item_row['item_icon_name'];
+        $width = $item_row['item_icon_width'];
         $height = $item_row['item_icon_height'];
         if ($name) {
             $url = $this->_ROOT_EXTS_URL . '/' . $name;
         }
-        return array($url, $width, $height);
+
+        return [$url, $width, $height];
     }
 
     //---------------------------------------------------------
     // file handler
     //---------------------------------------------------------
+
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return array|bool
+     */
     public function get_file_extend_row_by_kind($item_row, $kind)
     {
         $id = $this->get_file_id_by_kind($item_row, $kind);
@@ -200,86 +260,135 @@ class webphoto_inc_handler
             $row = $this->get_file_row_by_id($id);
             if (is_array($row)) {
                 $row['file_full'] = $this->build_full_path($row['file_path']);
+
                 return $row;
             }
         }
+
         return false;
     }
 
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return bool
+     */
     public function get_file_row_by_kind($item_row, $kind)
     {
         $id = $this->get_file_id_by_kind($item_row, $kind);
         if ($id > 0) {
             return $this->get_file_row_by_id($id);
         }
+
         return false;
     }
 
+    /**
+     * @param $item_row
+     * @param $kind
+     * @return bool
+     */
     public function get_file_id_by_kind($item_row, $kind)
     {
         $name = $this->file_kind_to_item_name($kind);
         if (isset($item_row[$name])) {
             return $item_row[$name];
         }
+
         return false;
     }
 
+    /**
+     * @param $kind
+     * @return string
+     */
     public function file_kind_to_item_name($kind)
     {
         $str = 'item_file_id_' . $kind;
+
         return $str;
     }
 
+    /**
+     * @param $file_id
+     * @return bool
+     */
     public function get_file_row_by_id($file_id)
     {
         $sql = 'SELECT * FROM ' . $this->prefix_dirname('file');
         $sql .= ' WHERE file_id=' . (int)$file_id;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $file_row
+     * @return array
+     */
     public function build_show_file_image($file_row)
     {
-        $url    = null;
-        $width  = 0;
+        $url = null;
+        $width = 0;
         $height = 0;
 
         if (is_array($file_row)) {
-            $url    = $file_row['file_url'];
-            $path   = $file_row['file_path'];
-            $width  = $file_row['file_width'];
+            $url = $file_row['file_url'];
+            $path = $file_row['file_path'];
+            $width = $file_row['file_width'];
             $height = $file_row['file_height'];
-            $url    = $this->build_full_url($path);
+            $url = $this->build_full_url($path);
         }
 
-        return array($url, $width, $height);
+        return [$url, $width, $height];
     }
 
+    /**
+     * @param $path
+     * @return null|string
+     */
     public function build_full_path($path)
     {
         if ($path) {
             $str = XOOPS_ROOT_PATH . $path;
+
             return $str;
         }
+
         return null;
     }
 
+    /**
+     * @param $path
+     * @return null|string
+     */
     public function build_full_url($path)
     {
         if ($path) {
             $str = XOOPS_URL . $path;
+
             return $str;
         }
+
         return null;
     }
 
     //---------------------------------------------------------
     // get
     //---------------------------------------------------------
+
+    /**
+     * @param $sql
+     * @return int
+     */
     public function get_count_by_sql($sql)
     {
         return (int)$this->get_first_row_by_sql($sql);
     }
 
+    /**
+     * @param $sql
+     * @return bool
+     */
     public function get_first_row_by_sql($sql)
     {
         $res = $this->query($sql);
@@ -295,6 +404,10 @@ class webphoto_inc_handler
         return false;
     }
 
+    /**
+     * @param $sql
+     * @return bool
+     */
     public function get_row_by_sql($sql)
     {
         $res = $this->query($sql);
@@ -303,28 +416,43 @@ class webphoto_inc_handler
         }
 
         $row = $this->_db->fetchArray($res);
+
         return $row;
     }
 
+    /**
+     * @param      $sql
+     * @param int  $limit
+     * @param int  $offset
+     * @param null $key
+     * @return array|bool
+     */
     public function get_rows_by_sql($sql, $limit = 0, $offset = 0, $key = null)
     {
-        $arr = array();
+        $arr = [];
 
         $res = $this->query($sql, $limit, $offset);
         if (!$res) {
             return false;
         }
 
-        while ($row = $this->_db->fetchArray($res)) {
+        while (false !== ($row = $this->_db->fetchArray($res))) {
             if ($key && isset($row[$key])) {
                 $arr[$row[$key]] = $row;
             } else {
                 $arr[] = $row;
             }
         }
+
         return $arr;
     }
 
+    /**
+     * @param     $sql
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_first_rows_by_sql($sql, $limit = 0, $offset = 0)
     {
         $res = $this->query($sql, $limit, $offset);
@@ -332,17 +460,23 @@ class webphoto_inc_handler
             return false;
         }
 
-        $arr = array();
+        $arr = [];
 
-        while ($row = $this->_db->fetchRow($res)) {
+        while (false !== ($row = $this->_db->fetchRow($res))) {
             $arr[] = $row[0];
         }
+
         return $arr;
     }
 
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $table
+     * @return bool
+     */
     public function exists_table($table)
     {
         $sql = 'SHOW TABLES LIKE ' . $this->quote($table);
@@ -352,8 +486,8 @@ class webphoto_inc_handler
             return false;
         }
 
-        while ($row = $this->_db->fetchRow($res)) {
-            if (strtolower($row[0]) == strtolower($table)) {
+        while (false !== ($row = $this->_db->fetchRow($res))) {
+            if (mb_strtolower($row[0]) == mb_strtolower($table)) {
                 return true;
             }
         }
@@ -364,6 +498,14 @@ class webphoto_inc_handler
     //---------------------------------------------------------
     // handler
     //---------------------------------------------------------
+
+    /**
+     * @param      $sql
+     * @param int  $limit
+     * @param int  $offset
+     * @param bool $force
+     * @return mixed
+     */
     public function query($sql, $limit = 0, $offset = 0, $force = false)
     {
         // BUG: echo sql always if error
@@ -377,7 +519,7 @@ class webphoto_inc_handler
 
         if ($this->_DEBUG_SQL) {
             $flag_echo_sql = true;
-            echo $this->sanitize($sql_full) . "<br />\n";
+            echo $this->sanitize($sql_full) . "<br>\n";
         }
 
         $res = $this->_db->query($sql, (int)$limit, (int)$offset);
@@ -387,10 +529,10 @@ class webphoto_inc_handler
                 $error = 'Database update not allowed during processing of a GET request';
             }
             if ($this->_DEBUG_SQL && !$flag_echo_sql) {
-                echo $this->sanitize($sql_full) . "<br />\n";
+                echo $this->sanitize($sql_full) . "<br>\n";
             }
             if ($this->_DEBUG_ERROR) {
-                echo $this->highlight($this->_db_error) . "<br />\n";
+                echo $this->highlight($this->_db_error) . "<br>\n";
             }
             if ($this->_DEBUG_ERROR > 1) {
                 debug_print_backtrace();
@@ -400,37 +542,59 @@ class webphoto_inc_handler
         return $res;
     }
 
+    /**
+     * @param     $sql
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
     public function queryF($sql, $limit = 0, $offset = 0)
     {
         if ($this->_DEBUG_SQL) {
-            echo $this->sanitize($sql) . ': limit=' . $limit . ' :offset=' . $offset . "<br />\n";
+            echo $this->sanitize($sql) . ': limit=' . $limit . ' :offset=' . $offset . "<br>\n";
         }
 
         $res = $this->_db->queryF($sql, (int)$limit, (int)$offset);
         if (!$res) {
             $this->_db_error = $this->_db->error();
             if ($this->_DEBUG_ERROR) {
-                echo $this->highlight($this->_db_error) . "<br />\n";
+                echo $this->highlight($this->_db_error) . "<br>\n";
             }
         }
 
         return $res;
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function prefix_dirname($name)
     {
         return $this->_db->prefix($this->_DIRNAME . '_' . $name);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function quote($str)
     {
         $str = "'" . addslashes($str) . "'";
+
         return $str;
     }
 
     //---------------------------------------------------------
     // column
     //---------------------------------------------------------
+
+    /**
+     * @param $table
+     * @param $column
+     * @param $type
+     * @return bool
+     */
     public function preg_match_column_type($table, $column, $type)
     {
         $pattern = '/' . preg_quote($type) . '/i';
@@ -438,9 +602,16 @@ class webphoto_inc_handler
         if (preg_match($pattern, $subject)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $table
+     * @param $column
+     * @param $type_array
+     * @return bool
+     */
     public function preg_match_column_type_array($table, $column, $type_array)
     {
         $subject = $this->get_column_type($table, $column);
@@ -450,27 +621,45 @@ class webphoto_inc_handler
                 return true;
             }
         }
+
         return false;
     }
 
+    /**
+     * @param $table
+     * @param $column
+     * @return bool
+     */
     public function get_column_type($table, $column)
     {
         $row = $this->get_column_row($table, $column);
         if (isset($row['Type'])) {
             return $row['Type'];
         }
+
         return false;
     }
 
+    /**
+     * @param $table
+     * @param $column
+     * @return bool
+     */
     public function exists_column($table, $column)
     {
         $row = $this->get_column_row($table, $column);
         if (is_array($row)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $table
+     * @param $column
+     * @return bool
+     */
     public function get_column_row($table, $column)
     {
         $false = false;
@@ -482,7 +671,7 @@ class webphoto_inc_handler
             return $false;
         }
 
-        while ($row = $this->_db->fetchArray($res)) {
+        while (false !== ($row = $this->_db->fetchArray($res))) {
             if ($row['Field'] == $column) {
                 return $row;
             }
@@ -495,6 +684,11 @@ class webphoto_inc_handler
     // item cat handler
     // require $_xoops_groups $_cfg_perm_item_read
     //---------------------------------------------------------
+
+    /**
+     * @param null $groups
+     * @return mixed|string
+     */
     public function build_where_public_with_item_cat($groups = null)
     {
         $where = $this->convert_item_field($this->build_where_public_with_item());
@@ -504,28 +698,47 @@ class webphoto_inc_handler
         return $where;
     }
 
+    /**
+     * @param null $groups
+     * @return string
+     */
     public function build_where_public_with_item($groups = null)
     {
         $where = ' item_status > 0 ';
-        if ($this->_cfg_perm_item_read != _C_WEBPHOTO_OPT_PERM_READ_ALL) {
+        if (_C_WEBPHOTO_OPT_PERM_READ_ALL != $this->_cfg_perm_item_read) {
             $where .= ' AND ';
             $where .= $this->build_where_item_perm_read($groups);
         }
+
         return $where;
     }
 
+    /**
+     * @param null $groups
+     * @return string
+     */
     public function build_where_cat_perm_read($groups = null)
     {
         $where = $this->build_where_perm_groups('c.cat_perm_read', $groups);
+
         return $where;
     }
 
+    /**
+     * @param null $groups
+     * @return string
+     */
     public function build_where_item_perm_read($groups = null)
     {
         $where = $this->build_where_perm_groups('item_perm_read', $groups);
+
         return $where;
     }
 
+    /**
+     * @param $where
+     * @return int
+     */
     public function get_item_count_by_where_with_cat($where)
     {
         $sql = 'SELECT COUNT(*) FROM ';
@@ -534,17 +747,31 @@ class webphoto_inc_handler
         $sql .= $this->prefix_dirname('cat') . ' c ';
         $sql .= ' ON i.item_cat_id = c.cat_id ';
         $sql .= ' WHERE ' . $where;
+
         return $this->get_count_by_sql($sql);
     }
 
+    /**
+     * @param $where
+     * @return int
+     */
     public function get_item_count_by_where($where)
     {
         $sql = 'SELECT COUNT(*) FROM ';
         $sql .= $this->prefix_dirname('item');
         $sql .= ' WHERE ' . $where;
+
         return $this->get_count_by_sql($sql);
     }
 
+    /**
+     * @param      $where
+     * @param      $orderby
+     * @param int  $limit
+     * @param int  $offset
+     * @param null $key
+     * @return array|bool
+     */
     public function get_item_rows_by_where_orderby_with_cat($where, $orderby, $limit = 0, $offset = 0, $key = null)
     {
         $sql = 'SELECT i.* FROM ';
@@ -554,18 +781,32 @@ class webphoto_inc_handler
         $sql .= ' ON i.item_cat_id = c.cat_id ';
         $sql .= ' WHERE ' . $where;
         $sql .= ' ORDER BY ' . $orderby;
+
         return $this->get_rows_by_sql($sql, $limit, $offset, $key);
     }
 
+    /**
+     * @param      $where
+     * @param      $orderby
+     * @param int  $limit
+     * @param int  $offset
+     * @param null $key
+     * @return array|bool
+     */
     public function get_item_rows_by_where_orderby($where, $orderby, $limit = 0, $offset = 0, $key = null)
     {
         $sql = 'SELECT * FROM ';
         $sql .= $this->prefix_dirname('item');
         $sql .= ' WHERE ' . $where;
         $sql .= ' ORDER BY ' . $orderby;
+
         return $this->get_rows_by_sql($sql, $limit, $offset, $key);
     }
 
+    /**
+     * @param $str
+     * @return mixed
+     */
     public function convert_item_field($str)
     {
         return str_replace('item_', 'i.item_', $str);
@@ -574,13 +815,19 @@ class webphoto_inc_handler
     //---------------------------------------------------------
     // permission
     //---------------------------------------------------------
+
+    /**
+     * @param      $name
+     * @param null $groups
+     * @return string
+     */
     public function build_where_perm_groups($name, $groups = null)
     {
         if (empty($groups)) {
             $groups = $this->_xoops_groups;
         }
 
-        $pre  = '%' . $this->_PERM_SEPARATOR;
+        $pre = '%' . $this->_PERM_SEPARATOR;
         $post = $this->_PERM_SEPARATOR . '%';
 
         $where = $name . '=' . $this->quote($this->_PERM_ALLOW_ALL);
@@ -595,6 +842,12 @@ class webphoto_inc_handler
         return ' ( ' . $where . ' ) ';
     }
 
+    /**
+     * @param      $row
+     * @param      $name
+     * @param null $groups
+     * @return bool
+     */
     public function check_perm_by_row_name_groups($row, $name, $groups = null)
     {
         if (!isset($row[$name])) {
@@ -612,9 +865,15 @@ class webphoto_inc_handler
         }
 
         $perms = $this->str_to_array($val, $this->_PERM_SEPARATOR);
+
         return $this->check_perms_in_groups($perms, $groups);
     }
 
+    /**
+     * @param      $perms
+     * @param null $groups
+     * @return bool
+     */
     public function check_perms_in_groups($perms, $groups = null)
     {
         if (!is_array($perms) || !count($perms)) {
@@ -629,43 +888,65 @@ class webphoto_inc_handler
         if (is_array($arr) && count($arr)) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @param $pattern
+     * @return array
+     */
     public function str_to_array($str, $pattern)
     {
         $arr1 = explode($pattern, $str);
-        $arr2 = array();
+        $arr2 = [];
         foreach ($arr1 as $v) {
             $v = trim($v);
-            if ($v == '') {
+            if ('' == $v) {
                 continue;
             }
             $arr2[] = $v;
         }
+
         return $arr2;
     }
 
+    /**
+     * @param $arr
+     * @param $glue
+     * @return bool|string
+     */
     public function array_to_str($arr, $glue)
     {
         $val = false;
         if (is_array($arr) && count($arr)) {
             $val = implode($glue, $arr);
         }
+
         return $val;
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_normal_ext($ext)
     {
-        if (in_array(strtolower($ext), $this->_NORMAL_EXTS)) {
+        if (in_array(mb_strtolower($ext), $this->_NORMAL_EXTS)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $val
+     */
     public function set_normal_exts($val)
     {
         if (is_array($val)) {
@@ -675,76 +956,122 @@ class webphoto_inc_handler
         }
     }
 
+    /**
+     * @param $mime
+     * @return bool
+     */
     public function is_video_mime($mime)
     {
         if (preg_match('/^video/', $mime)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $kind
+     * @return bool
+     */
     public function is_image_kind($kind)
     {
-        if ($kind == _C_WEBPHOTO_ITEM_KIND_IMAGE) {
+        if (_C_WEBPHOTO_ITEM_KIND_IMAGE == $kind) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $kind
+     * @return bool
+     */
     public function is_video_kind($kind)
     {
-        if ($kind == _C_WEBPHOTO_ITEM_KIND_VIDEO) {
+        if (_C_WEBPHOTO_ITEM_KIND_VIDEO == $kind) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $kind
+     * @return bool
+     */
     public function is_embed_kind($kind)
     {
-        if ($kind == _C_WEBPHOTO_ITEM_KIND_EMBED) {
+        if (_C_WEBPHOTO_ITEM_KIND_EMBED == $kind) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $kind
+     * @return bool
+     */
     public function is_external_image_kind($kind)
     {
-        if ($kind == _C_WEBPHOTO_ITEM_KIND_EXTERNAL_IMAGE) {
+        if (_C_WEBPHOTO_ITEM_KIND_EXTERNAL_IMAGE == $kind) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_null($str)
     {
-        if (($str == '') || ($str == 'http://') || ($str == 'https://')) {
+        if (('' == $str) || ('http://' == $str) || ('https://' == $str)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool
+     */
     public function check_http_start($str)
     {
         if (preg_match('|^https?://|', $str)) {
             return true;    // include HTTP
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function add_slash_to_head($str)
     {
         // ord : the ASCII value of the first character of string
         // 0x2f slash
 
-        if (ord($str) != 0x2f) {
+        if (0x2f != ord($str)) {
             $str = '/' . $str;
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // error
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_sanitize
+     * @param bool $flag_highlight
+     * @return string
+     */
     public function get_db_error($flag_sanitize = true, $flag_highlight = true)
     {
         $str = $this->_db_error;
@@ -754,39 +1081,59 @@ class webphoto_inc_handler
         if ($flag_highlight) {
             $str = $this->highlight($str);
         }
+
         return $str;
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
     }
 
+    /**
+     * @param $str
+     * @return string
+     */
     public function highlight($str)
     {
         $val = '<span style="color:#ff0000;">' . $str . '</span>';
+
         return $val;
     }
 
     //---------------------------------------------------------
     // debug
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     */
     public function set_debug_sql_by_const_name($name)
     {
-        $name = strtoupper($name);
+        $name = mb_strtoupper($name);
         if (defined($name)) {
             $this->set_debug_sql(constant($name));
         }
     }
 
+    /**
+     * @param $name
+     */
     public function set_debug_error_by_const_name($name)
     {
-        $name = strtoupper($name);
+        $name = mb_strtoupper($name);
         if (defined($name)) {
             $this->set_debug_error(constant($name));
         }
     }
 
+    /**
+     * @param $val
+     */
     public function set_debug_sql($val)
     {
         echo " set_debug_sql( $val ) ";
@@ -794,6 +1141,9 @@ class webphoto_inc_handler
         $this->_DEBUG_SQL = (bool)$val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_debug_error($val)
     {
         $this->_DEBUG_ERROR = (int)$val;
@@ -808,7 +1158,7 @@ class webphoto_inc_handler
         if (is_object($xoopsUser)) {
             $this->_xoops_groups = $xoopsUser->getGroups();
         } else {
-            $this->_xoops_groups = array(XOOPS_GROUP_ANONYMOUS);
+            $this->_xoops_groups = [XOOPS_GROUP_ANONYMOUS];
         }
     }
 

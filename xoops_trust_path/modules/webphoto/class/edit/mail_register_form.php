@@ -25,34 +25,53 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_mail_register_form
 //=========================================================
+
+/**
+ * Class webphoto_edit_mail_register_form
+ */
 class webphoto_edit_mail_register_form extends webphoto_edit_form
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_mail_register_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_form|\webphoto_edit_mail_register_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_mail_register_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // user form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function print_user_form($row)
     {
         $userstart = $this->_post_class->get_get('userstart');
 
-        $template = 'db:' . $this->_DIRNAME . '_form_mail_user.html';
+        $template = 'db:' . $this->_DIRNAME . '_form_mail_user.tpl';
 
         $this->set_row($row);
 
@@ -63,34 +82,48 @@ class webphoto_edit_mail_register_form extends webphoto_edit_form
         echo $tpl->fetch($template);
     }
 
+    /**
+     * @param $userstart
+     * @return array
+     */
     public function build_form_user($userstart)
     {
         $uid = $this->get_row_by_key('user_uid');
 
         list($show_user_list, $user_list, $user_uid_options) = $this->get_user_param($uid, $userstart);
 
-        $arr = array(
+        $arr = [
             'user_uid_options' => $user_uid_options,
-            'show_user_list'   => $show_user_list,
-            'user_list'        => $user_list,
-        );
+            'show_user_list' => $show_user_list,
+            'user_list' => $user_list,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_user_submitter()
     {
-        $uid  = $this->get_row_by_key('user_uid');
+        $uid = $this->get_row_by_key('user_uid');
         $list = $this->get_xoops_user_list(0, 0);
         $text = $this->build_form_user_select($list, 'user_uid', $uid, false);
+
         return $text;
     }
 
     //---------------------------------------------------------
     // submit form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $param
+     */
     public function print_submit_form($row, $param)
     {
-        $template = 'db:' . $this->_DIRNAME . '_form_mail_register.html';
+        $template = 'db:' . $this->_DIRNAME . '_form_mail_register.tpl';
 
         $arr = array_merge($this->build_form_base_param(), $this->build_form_register($row, $param), $this->build_item_row($row));
 
@@ -99,6 +132,11 @@ class webphoto_edit_mail_register_form extends webphoto_edit_form
         echo $tpl->fetch($template);
     }
 
+    /**
+     * @param $row
+     * @param $param
+     * @return array
+     */
     public function build_form_register($row, $param)
     {
         $mode = $param['mode'];
@@ -107,7 +145,6 @@ class webphoto_edit_mail_register_form extends webphoto_edit_form
             case 'edit':
                 $submit = _EDIT;
                 break;
-
             case 'add':
             default:
                 $submit = $this->get_constant('BUTTON_REGISTER');
@@ -116,23 +153,31 @@ class webphoto_edit_mail_register_form extends webphoto_edit_form
 
         $this->set_row($row);
 
-        $arr = array(
+        $arr = [
             'ele_user_cat_id' => $this->_ele_user_cat_id(),
-            'submitter'       => $this->_submitter(),
-            'button_submit'   => $submit,
-        );
+            'submitter' => $this->_submitter(),
+            'button_submit' => $submit,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return string
+     */
     public function _submitter()
     {
         $uid = $this->get_row_by_key('user_uid');
+
         return $this->_xoops_class->get_user_uname_from_id($uid);
     }
 
+    /**
+     * @return string
+     */
     public function _ele_user_cat_id()
     {
-        return $this->_cat_handler->build_selbox_with_perm_post($this->get_row_by_key('user_cat_id'), 'user_cat_id');
+        return $this->_catHandler->build_selbox_with_perm_post($this->get_row_by_key('user_cat_id'), 'user_cat_id');
     }
 
     // --- class end ---

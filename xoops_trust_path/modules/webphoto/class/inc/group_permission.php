@@ -15,7 +15,7 @@
 // 2008-12-12 K.OHWADA
 // getInstance() -> getSingleton()
 // 2008-07-01 K.OHWADA
-// webphoto_xoops_base -> xoops_gethandler()
+// webphoto_xoops_base -> xoops_getHandler()
 //---------------------------------------------------------
 
 if (!defined('XOOPS_TRUST_PATH')) {
@@ -26,63 +26,97 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_inc_group_permission
 // caller webphoto_permission webphoto_inc_xoops_version
 //=========================================================
+
+/**
+ * Class webphoto_inc_group_permission
+ */
 class webphoto_inc_group_permission extends webphoto_inc_base_ini
 {
-    public $_cached_perms = array();
+    public $_cached_perms = [];
 
-    public $_xoops_mid        = 0;
-    public $_xoops_uid        = 0;
-    public $_xoops_groups     = null;
+    public $_xoops_mid = 0;
+    public $_xoops_uid = 0;
+    public $_xoops_groups = null;
     public $_is_module_adimin = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_group_permission constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_init_xoops($dirname);
         $this->_init_permission($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_group_permission($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // has permit
     //---------------------------------------------------------
+
+    /**
+     * @param      $name
+     * @param bool $flag_admin
+     * @return bool
+     */
     public function has_perm($name, $flag_admin = false)
     {
         if ($flag_admin && $this->_is_module_adimin) {
             return true;
         }
-        $bit = constant(strtoupper('_B_WEBPHOTO_GPERM_' . $name));
+        $bit = constant(mb_strtoupper('_B_WEBPHOTO_GPERM_' . $name));
+
         return $this->_has_perm_by_bit($bit);
     }
 
     //---------------------------------------------------------
     // cache
     //---------------------------------------------------------
+
+    /**
+     * @param $bit
+     * @return bool
+     */
     public function _has_perm_by_bit($bit)
     {
         if ($this->_cached_perms & $bit) {
             return true;
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // xoops_group_permission
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return int
+     */
     public function _init_permission($dirname)
     {
         $perms = 0;
@@ -110,6 +144,9 @@ class webphoto_inc_group_permission extends webphoto_inc_base_ini
         $this->_cached_perms = $perms;
     }
 
+    /**
+     * @return string
+     */
     public function _build_where_groupid()
     {
         if (is_array($this->_xoops_groups) && count($this->_xoops_groups)) {
@@ -117,7 +154,7 @@ class webphoto_inc_group_permission extends webphoto_inc_base_ini
             foreach ($this->_xoops_groups as $groupid) {
                 $where .= "$groupid,";
             }
-            $where = substr($where, 0, -1) . ')';
+            $where = mb_substr($where, 0, -1) . ')';
         } else {
             $where = 'gperm_groupid=' . XOOPS_GROUP_ANONYMOUS;
         }
@@ -128,18 +165,22 @@ class webphoto_inc_group_permission extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // xoops class
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     */
     public function _init_xoops($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+        $module = $moduleHandler->getByDirname($dirname);
         if (is_object($module)) {
             $this->_xoops_mid = $module->getVar('mid');
         }
 
         global $xoopsUser;
         if (is_object($xoopsUser)) {
-            $this->_xoops_uid        = $xoopsUser->getVar('uid');
-            $this->_xoops_groups     = $xoopsUser->getGroups();
+            $this->_xoops_uid = $xoopsUser->getVar('uid');
+            $this->_xoops_groups = $xoopsUser->getGroups();
             $this->_is_module_adimin = $xoopsUser->isAdmin($this->_xoops_mid);
         }
     }

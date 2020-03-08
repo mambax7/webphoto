@@ -13,11 +13,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_mysql_utility
 //=========================================================
+
+/**
+ * Class webphoto_lib_mysql_utility
+ */
 class webphoto_lib_mysql_utility
 {
     public $_utility_class;
 
-    public $_MYSQL_FMT_DATE     = 'Y-m-d';
+    public $_MYSQL_FMT_DATE = 'Y-m-d';
     public $_MYSQL_FMT_DATETIME = 'Y-m-d H:i:s';
 
     //---------------------------------------------------------
@@ -28,28 +32,44 @@ class webphoto_lib_mysql_utility
         $this->_utility_class = webphoto_lib_utility::getInstance();
     }
 
+    /**
+     * @return \webphoto_lib_mysql_utility
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_mysql_utility();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // mysql date
     //---------------------------------------------------------
+
+    /**
+     * @return false|string
+     */
     public function get_mysql_date_today()
     {
         return date($this->_MYSQL_FMT_DATE);
     }
 
+    /**
+     * @param $time
+     * @return false|string
+     */
     public function time_to_mysql_datetime($time)
     {
         return date($this->_MYSQL_FMT_DATETIME, $time);
     }
 
+    /**
+     * @param $datetime
+     * @return bool|false|int
+     */
     public function mysql_datetime_to_unixtime($datetime)
     {
         $p = $this->mysql_datetime_to_date_param($datetime);
@@ -62,6 +82,10 @@ class webphoto_lib_mysql_utility
         return $time;
     }
 
+    /**
+     * @param $datetime
+     * @return array|bool
+     */
     public function mysql_datetime_to_date_param($datetime)
     {
         if (empty($datetime)) {
@@ -72,11 +96,11 @@ class webphoto_lib_mysql_utility
         preg_match("/(\d+)\-(\d+)\-(\d+)\s+(\d+):(\d+):(\d+)/", $datetime, $match);
 
         $year = 0;
-        $mon  = 0;
-        $day  = 0;
+        $mon = 0;
+        $day = 0;
         $hour = 0;
-        $min  = 0;
-        $sec  = 0;
+        $min = 0;
+        $sec = 0;
 
         if (isset($match[1])) {
             $year = (int)$match[1];
@@ -97,28 +121,32 @@ class webphoto_lib_mysql_utility
             $sec = (int)$match[6];
         }
 
-        if ($year == 0) {
+        if (0 == $year) {
             return false;
         }
-        if ($mon == 0) {
+        if (0 == $mon) {
             $mon = 1;
         }
-        if ($day == 0) {
+        if (0 == $day) {
             $day = 1;
         }
 
-        $arr = array(
-            'year'   => $year,
-            'month'  => $mon,
-            'day'    => $day,
-            'hour'   => $hour,
+        $arr = [
+            'year' => $year,
+            'month' => $mon,
+            'day' => $day,
+            'hour' => $hour,
             'minute' => $min,
             'second' => $sec,
-        );
+        ];
 
         return $arr;
     }
 
+    /**
+     * @param $p
+     * @return false|int
+     */
     public function date_param_to_unixtime($p)
     {
         $time = mktime($p['hour'], $p['minute'], $p['second'], $p['month'], $p['day'], $p['year']);
@@ -126,6 +154,10 @@ class webphoto_lib_mysql_utility
         return $time;
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_day_or_month_or_year($datetime)
     {
         $val = $this->mysql_datetime_to_year_month_day($datetime);
@@ -135,44 +167,62 @@ class webphoto_lib_mysql_utility
         if (empty($val)) {
             $val = $this->mysql_datetime_to_year($datetime);
         }
+
         return $val;
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_year_month_day($datetime)
     {
         // like yyyy-mm-dd
         if (preg_match("/^(\d{4}\-\d{2}\-\d{2})/", $datetime, $match)) {
-
             // yyyy-00-00 -> yyyy
             $str = str_replace('-00-00', '', $match[1]);
 
             // yyyy-mm-00 -> yyyy-mm
             $str = str_replace('-00', '', $str);
+
             return $str;
         }
+
         return null;
     }
 
+    /**
+     * @param $datetime
+     * @return mixed|null
+     */
     public function mysql_datetime_to_year_month($datetime)
     {
         // like yyyy-mm
         if (preg_match("/^(\d{4}\-\d{2})/", $datetime, $match)) {
-
             // yyyy-00 -> yyyy
             return str_replace('-00', '', $match[1]);
         }
+
         return null;
     }
 
+    /**
+     * @param $datetime
+     */
     public function mysql_datetime_to_year($datetime)
     {
         // like yyyy
         if (preg_match("/^(\d{4})/", $datetime, $match)) {
             return $match[1];
         }
+
         return null;
     }
 
+    /**
+     * @param $date
+     * @return mixed
+     */
     public function mysql_datetime_to_str($date)
     {
         $date = str_replace('0000-00-00 00:00:00', '', $date);
@@ -188,12 +238,17 @@ class webphoto_lib_mysql_utility
         // 01:00:00 -> 01:00
         $date = preg_replace('/(.*\d+:\d+):00/', '$1', $date);
 
-        if ($date == ' ') {
+        if (' ' == $date) {
             $date = '';
         }
+
         return $date;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_datetime($str)
     {
         $date = '';
@@ -209,6 +264,7 @@ class webphoto_lib_mysql_utility
 
         if ($date && $time) {
             $val = $date . ' ' . $time;
+
             return $val;
         } elseif ($date) {
             return $date;
@@ -216,45 +272,50 @@ class webphoto_lib_mysql_utility
 
         // Incorrect datetime value
         $null = '0000-00-00 00:00:00';
+
         return $null;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_date($str)
     {
         // 2008-01-01
-        $year  = 2008;
+        $year = 2008;
         $month = 01;
-        $day   = 01;
+        $day = 01;
 
         // 0000-00-00
-        $mysql_year  = '0000';
+        $mysql_year = '0000';
         $mysql_month = '00';
-        $mysql_day   = '00';
-        $mysql_hour  = '00';
-        $mysql_min   = '00';
-        $mysql_sec   = '00';
+        $mysql_day = '00';
+        $mysql_hour = '00';
+        $mysql_min = '00';
+        $mysql_sec = '00';
 
         $arr = explode('-', $str);
 
         // ex) 2008-02-03
         if (isset($arr[0]) && isset($arr[1]) && isset($arr[2])) {
-            $year        = (int)trim($arr[0]);
-            $month       = (int)trim($arr[1]);
-            $day         = (int)trim($arr[2]);
-            $mysql_year  = $year;
+            $year = (int)trim($arr[0]);
+            $month = (int)trim($arr[1]);
+            $day = (int)trim($arr[2]);
+            $mysql_year = $year;
             $mysql_month = $month;
-            $mysql_day   = $day;
+            $mysql_day = $day;
 
-            // ex) 2008-02 -> 2008-02-00
+        // ex) 2008-02 -> 2008-02-00
         } elseif (isset($arr[0]) && isset($arr[1])) {
-            $year        = (int)trim($arr[0]);
-            $month       = (int)trim($arr[1]);
-            $mysql_year  = $year;
+            $year = (int)trim($arr[0]);
+            $month = (int)trim($arr[1]);
+            $mysql_year = $year;
             $mysql_month = $month;
 
-            // ex) 2008 -> 2008-00-00
+        // ex) 2008 -> 2008-00-00
         } elseif (isset($arr[0])) {
-            $year       = (int)trim($arr[0]);
+            $year = (int)trim($arr[0]);
             $mysql_year = $year;
         } else {
             return false;
@@ -263,30 +324,35 @@ class webphoto_lib_mysql_utility
         if (checkdate($month, $day, $year)) {
             return $this->build_mysql_date($mysql_year, $mysql_month, $mysql_day);
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return bool|string
+     */
     public function str_to_mysql_time($str)
     {
         // 0000-00-00
         $mysql_hour = '00';
-        $mysql_min  = '00';
-        $mysql_sec  = '00';
+        $mysql_min = '00';
+        $mysql_sec = '00';
 
         $arr = explode(':', $str);
 
         // ex) 01:02:03
         if (isset($arr[0]) && isset($arr[1]) && isset($arr[2])) {
             $mysql_hour = (int)trim($arr[0]);
-            $mysql_min  = (int)trim($arr[1]);
-            $mysql_sec  = (int)trim($arr[2]);
+            $mysql_min = (int)trim($arr[1]);
+            $mysql_sec = (int)trim($arr[2]);
 
-            // ex) 01:02 -> 01:02:00
+        // ex) 01:02 -> 01:02:00
         } elseif (isset($arr[0]) && isset($arr[1])) {
             $mysql_hour = (int)trim($arr[0]);
-            $mysql_min  = (int)trim($arr[1]);
+            $mysql_min = (int)trim($arr[1]);
 
-            // ex) 01 -> 01:00:00
+        // ex) 01 -> 01:00:00
         } elseif (isset($arr[0])) {
             $mysql_hour = (int)trim($arr[0]);
         } else {
@@ -296,35 +362,56 @@ class webphoto_lib_mysql_utility
         if ($this->check_time($mysql_hour, $mysql_min, $mysql_sec)) {
             return $this->build_mysql_time($mysql_hour, $mysql_min, $mysql_sec);
         }
+
         return false;
     }
 
+    /**
+     * @param $hour
+     * @param $min
+     * @param $sec
+     * @return bool
+     */
     public function check_time($hour, $min, $sec)
     {
         $hour = (int)$hour;
-        $min  = (int)$min;
-        $sec  = (int)$sec;
+        $min = (int)$min;
+        $sec = (int)$sec;
 
         if (($hour >= 0) && ($hour <= 24)
             && ($min >= 0)
             && ($min <= 60)
             && ($sec >= 0)
-            && ($sec <= 60)
-        ) {
+            && ($sec <= 60)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $year
+     * @param $month
+     * @param $day
+     * @return string
+     */
     public function build_mysql_date($year, $month, $day)
     {
         $str = $year . '-' . $month . '-' . $day;
+
         return $str;
     }
 
+    /**
+     * @param $hour
+     * @param $min
+     * @param $sec
+     * @return string
+     */
     public function build_mysql_time($hour, $min, $sec)
     {
         $str = $hour . ':' . $min . ':' . $sec;
+
         return $str;
     }
 

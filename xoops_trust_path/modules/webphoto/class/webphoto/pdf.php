@@ -28,6 +28,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_pdf
 // wrapper for webphoto_lib_xpdf
 //=========================================================
+
+/**
+ * Class webphoto_pdf
+ */
 class webphoto_pdf extends webphoto_cmd_base
 {
     public $_multibyte_class;
@@ -38,24 +42,30 @@ class webphoto_pdf extends webphoto_cmd_base
     public $_cfg_xpdfpath;
     public $_ini_cmd_pdf_jpeg;
 
-    public $_cached = array();
+    public $_cached = [];
 
     public $_PDF_EXT = 'pdf';
-    public $_PS_EXT  = 'ps';
+    public $_PS_EXT = 'ps';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_pdf constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_xpdf_class        = webphoto_lib_xpdf::getInstance();
+        $this->_xpdf_class = webphoto_lib_xpdf::getInstance();
         $this->_imagemagick_class = webphoto_lib_imagemagick::getInstance();
-        $this->_multibyte_class   = webphoto_multibyte::getInstance();
+        $this->_multibyte_class = webphoto_multibyte::getInstance();
 
-        $this->_cfg_use_xpdf     = $this->get_config_by_name('use_xpdf');
-        $this->_cfg_xpdfpath     = $this->get_config_dir_by_name('xpdfpath');
+        $this->_cfg_use_xpdf = $this->get_config_by_name('use_xpdf');
+        $this->_cfg_xpdfpath = $this->get_config_dir_by_name('xpdfpath');
         $this->_ini_cmd_pdf_jpeg = $this->get_ini('cmd_pdf_jpeg');
 
         $this->_xpdf_class->set_cmd_path($this->_cfg_xpdfpath);
@@ -63,18 +73,30 @@ class webphoto_pdf extends webphoto_cmd_base
         $this->set_debug_by_ini_name($this->_xpdf_class);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_pdf
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_pdf($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create jpeg
     //---------------------------------------------------------
+
+    /**
+     * @param $pdf_file
+     * @param $jpeg_file
+     * @return int
+     */
     public function create_jpeg($pdf_file, $jpeg_file)
     {
         if (!$this->_cfg_use_xpdf) {
@@ -94,42 +116,64 @@ class webphoto_pdf extends webphoto_cmd_base
         if (file_exists($jpeg_file)) {
             return 1;
         }
+
         return -1;
     }
 
+    /**
+     * @return bool
+     */
     public function pdftoppm_exists()
     {
         return $this->_xpdf_class->pdftoppm_exists();
     }
 
+    /**
+     * @param $pdf_file
+     * @param $jpeg_file
+     * @return bool
+     */
     public function create_jpeg_by_pdftoppm($pdf_file, $jpeg_file)
     {
-        $root     = $this->_TMP_DIR . '/' . uniqid('ppm_');
+        $root = $this->_TMP_DIR . '/' . uniqid('ppm_', true);
         $ppm_file = $this->_xpdf_class->pdf_to_ppm($pdf_file, $root);
 
         if (!is_file($ppm_file)) {
             $this->set_error($this->_xpdf_class->get_msg_array());
+
             return false;
         }
 
         $this->convert_to_jpeg($ppm_file, $jpeg_file);
+
         return true;
     }
 
+    /**
+     * @param $pdf_file
+     * @param $jpeg_file
+     * @return bool
+     */
     public function create_jpeg_by_pdftops($pdf_file, $jpeg_file)
     {
-        $ps_file = $this->build_file_by_prefix_ext(uniqid('ps_'), $this->_PS_EXT);
+        $ps_file = $this->build_file_by_prefix_ext(uniqid('ps_', true), $this->_PS_EXT);
         $this->_xpdf_class->pdf_to_ps($pdf_file, $ps_file);
 
         if (!is_file($ps_file)) {
             $this->set_error($this->_xpdf_class->get_msg_array());
+
             return false;
         }
 
         $this->convert_to_jpeg($ps_file, $jpeg_file);
+
         return true;
     }
 
+    /**
+     * @param $src_file
+     * @param $jpeg_file
+     */
     public function convert_to_jpeg($src_file, $jpeg_file)
     {
         $this->_imagemagick_class->convert($src_file, $jpeg_file);
@@ -145,6 +189,11 @@ class webphoto_pdf extends webphoto_cmd_base
     //---------------------------------------------------------
     // text content
     //---------------------------------------------------------
+
+    /**
+     * @param $pdf_file
+     * @return array|int
+     */
     public function get_text_content($pdf_file)
     {
         $this->_content = null;
@@ -159,30 +208,37 @@ class webphoto_pdf extends webphoto_cmd_base
             return 0;  // no action
         }
 
-        $txt_file = $this->_TMP_DIR . '/' . uniqid('tmp_') . '.' . $this->_TEXT_EXT;
-        $ret      = $this->pdf_to_text($pdf_file, $txt_file);
+        $txt_file = $this->_TMP_DIR . '/' . uniqid('tmp_', true) . '.' . $this->_TEXT_EXT;
+        $ret = $this->pdf_to_text($pdf_file, $txt_file);
         if (!$ret) {
-            $arr = array(
-                'flag'   => false,
+            $arr = [
+                'flag' => false,
                 'errors' => $this->get_errors(),
-            );
+            ];
+
             return $arr;
         }
 
-        $text           = file_get_contents($txt_file);
-        $text           = $this->_multibyte_class->convert_from_utf8($text);
-        $text           = $this->_multibyte_class->build_plane_text($text);
+        $text = file_get_contents($txt_file);
+        $text = $this->_multibyte_class->convert_from_utf8($text);
+        $text = $this->_multibyte_class->build_plane_text($text);
         $this->_content = $text;
 
         unlink($txt_file);
 
-        $arr = array(
-            'flag'    => true,
+        $arr = [
+            'flag' => true,
             'content' => $text,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $pdf_file
+     * @param $txt_file
+     * @return bool
+     */
     public function pdf_to_text($pdf_file, $txt_file)
     {
         if (!$this->_cfg_use_xpdf) {
@@ -194,10 +250,12 @@ class webphoto_pdf extends webphoto_cmd_base
             if ($this->_flag_chmod) {
                 chmod($txt_file, 0777);
             }
+
             return true;
         }
 
         $this->set_error($this->_xpdf_class->get_msg_array());
+
         return false;
     }
 

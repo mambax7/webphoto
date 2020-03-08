@@ -21,13 +21,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_user_handler
 //=========================================================
+
+/**
+ * Class webphoto_user_handler
+ */
 class webphoto_user_handler extends webphoto_handler_base_ini
 {
-    public $_cached_email_array = array();
+    public $_cached_email_array = [];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_user_handler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -35,38 +45,48 @@ class webphoto_user_handler extends webphoto_handler_base_ini
         $this->set_id_name('user_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_user_handler
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_user_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
-
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'user_id'          => 0,
+        $arr = [
+            'user_id' => 0,
             'user_time_create' => $time_create,
             'user_time_update' => $time_update,
-            'user_uid'         => 0,
-            'user_cat_id'      => 0,
-            'user_email'       => '',
-        );
+            'user_uid' => 0,
+            'user_cat_id' => 0,
+            'user_email' => '',
+        ];
 
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_USER_TEXT; ++$i) {
             $arr['user_text' . $i] = '';
@@ -78,6 +98,11 @@ class webphoto_user_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -121,6 +146,11 @@ class webphoto_user_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -147,13 +177,23 @@ class webphoto_user_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get row
     //---------------------------------------------------------
+
+    /**
+     * @param $uid
+     * @return bool
+     */
     public function get_row_by_uid($uid)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE user_uid=' . (int)$uid;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     public function get_row_by_email($email)
     {
         $email = $this->quote($email);
@@ -168,6 +208,10 @@ class webphoto_user_handler extends webphoto_handler_base_ini
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param $email
+     * @return bool|mixed
+     */
     public function get_cached_row_by_email($email)
     {
         if (isset($this->_cached_email_array[$email])) {
@@ -180,6 +224,7 @@ class webphoto_user_handler extends webphoto_handler_base_ini
         }
 
         $this->_cached_email_array[$email] = $row;
+
         return $row;
     }
 

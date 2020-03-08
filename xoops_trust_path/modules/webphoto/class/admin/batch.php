@@ -26,16 +26,26 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_batch
 //=========================================================
+
+/**
+ * Class webphoto_admin_batch
+ */
 class webphoto_admin_batch extends webphoto_edit_submit
 {
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     public $_SHOW_FORM_ADMIN_EDITOR = true;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_batch constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -48,12 +58,18 @@ class webphoto_admin_batch extends webphoto_edit_submit
         $this->_factory_create_class->set_flag_print_first_msg(true);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_batch|\webphoto_edit_imagemanager_submit|\webphoto_edit_submit|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_batch($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -77,7 +93,7 @@ class webphoto_admin_batch extends webphoto_edit_submit
         }
 
         $op = $this->get_post_text('op');
-        if ($op == 'submit') {
+        if ('submit' == $op) {
             $this->_submit();
             exit();
         }
@@ -90,13 +106,17 @@ class webphoto_admin_batch extends webphoto_edit_submit
         xoops_cp_footer();
     }
 
+    /**
+     * @return bool
+     */
     public function _check_cat()
     {
         // check Categories exist
-        $count = $this->_cat_handler->get_count_all();
+        $count = $this->_catHandler->get_count_all();
         if ($count > 0) {
             return true;
         }
+
         return false;
     }
 
@@ -120,21 +140,24 @@ class webphoto_admin_batch extends webphoto_edit_submit
 
         if ($this->has_error()) {
             echo $this->get_format_error(false, true);
-            echo "<br />\n";
+            echo "<br >\n";
         }
 
-        echo "<br /><hr />\n";
+        echo "<br ><hr>\n";
         echo '<h4>' . _AM_WEBPHOTO_FINISHED . "</h4>\n";
-        echo '<a href="index.php">GOTO Admin Menu</a>' . "<br />\n";
+        echo '<a href="index.php">GOTO Admin Menu</a>' . "<br >\n";
 
         xoops_cp_footer();
     }
 
+    /**
+     * @return bool
+     */
     public function _exec_submit()
     {
-        $post_dir    = $this->_post_class->get_post_text('batch_dir');
+        $post_dir = $this->_post_class->get_post_text('batch_dir');
         $post_update = $this->_post_class->get_post_time('item_time_update_disp');
-        $post_uid    = $this->_post_class->get_post_int('item_uid', $this->_xoops_uid);
+        $post_uid = $this->_post_class->get_post_int('item_uid', $this->_xoops_uid);
 
         if ($post_update > 0) {
             $item_time_update = $post_update;
@@ -145,6 +168,7 @@ class webphoto_admin_batch extends webphoto_edit_submit
         if (!$this->check_token()) {
             $this->set_error('Token Error');
             $this->set_error($this->get_token_errors());
+
             return false;
         }
 
@@ -153,73 +177,76 @@ class webphoto_admin_batch extends webphoto_edit_submit
         if (empty($dir)) {
             $this->set_error(_AM_WEBPHOTO_MES_INVALIDDIRECTORY);
             $this->set_error($post_dir);
+
             return false;
         }
 
         if (!is_dir($dir)) {
-            $dir    = $this->add_slash_to_head($dir);
+            $dir = $this->add_slash_to_head($dir);
             $prefix = XOOPS_ROOT_PATH;
-            while (strlen($prefix) > 0) {
+            while (mb_strlen($prefix) > 0) {
                 if (is_dir($prefix . $dir)) {
                     $dir = $prefix . $dir;
                     break;
                 }
-                $prefix = substr($prefix, 0, strrpos($prefix, '/'));
+                $prefix = mb_substr($prefix, 0, mb_strrpos($prefix, '/'));
             }
         }
 
         if (!is_dir($dir)) {
             $this->set_error(_AM_WEBPHOTO_MES_INVALIDDIRECTORY);
             $this->set_error($post_dir);
+
             return false;
         }
 
         $dir = $this->strip_slash_from_tail($dir);
 
         $dh = opendir($dir);
-        if ($dh === false) {
+        if (false === $dh) {
             $this->set_error(_AM_WEBPHOTO_MES_INVALIDDIRECTORY);
             $this->set_error($post_dir);
+
             return false;
         }
 
         // get all file_names from the directory.
-        $file_names = array();
+        $file_names = [];
         while ($file_name = readdir($dh)) {
             $file_names[] = $file_name;
         }
         sort($file_names);
         closedir($dh);
 
-        $item_row                     = $this->create_item_row_by_post();
+        $item_row = $this->create_item_row_by_post();
         $item_row['item_time_update'] = $item_time_update;
-        $item_row['item_uid']         = $post_uid;
-        $item_row['item_status']      = _C_WEBPHOTO_STATUS_APPROVED;
+        $item_row['item_uid'] = $post_uid;
+        $item_row['item_status'] = _C_WEBPHOTO_STATUS_APPROVED;
 
         $post_title = $item_row['item_title'];
 
-        $param = array(
+        $param = [
             'flag_video_single' => true,
-        );
+        ];
 
         $filecount = 1;
         foreach ($file_names as $file_name) {
             // Skip '.' , '..' and hidden file
-            if (substr($file_name, 0, 1) == '.') {
+            if ('.' == mb_substr($file_name, 0, 1)) {
                 continue;
             }
 
-            $ext      = $this->parse_ext($file_name);
-            $node     = substr($file_name, 0, -strlen($ext) - 1);
+            $ext = $this->parse_ext($file_name);
+            $node = mb_substr($file_name, 0, -mb_strlen($ext) - 1);
             $src_file = $dir . '/' . $file_name;
 
             if (!is_readable($src_file)) {
-                echo ' Skip : can not read : ' . $this->sanitize($file_name) . "<br />\n";
+                echo ' Skip : can not read : ' . $this->sanitize($file_name) . "<br >\n";
                 continue;
             }
 
             if (!$this->is_my_allow_ext($ext)) {
-                echo ' Skip : not allow ext : ' . $this->sanitize($file_name) . "<br />\n";
+                echo ' Skip : not allow ext : ' . $this->sanitize($file_name) . "<br >\n";
                 continue;
             }
 
@@ -229,7 +256,7 @@ class webphoto_admin_batch extends webphoto_edit_submit
 
             $this->_factory_create_class->create_item_from_param($item_row, $param);
             echo $this->_factory_create_class->get_main_msg();
-            echo "<br />\n";
+            echo "<br >\n";
 
             ++$filecount;
         }
@@ -240,8 +267,8 @@ class webphoto_admin_batch extends webphoto_edit_submit
             $msg = sprintf(_AM_WEBPHOTO_MES_BATCHDONE, $filecount - 1);
         }
 
-        echo "<br />\n";
-        echo '<b>' . $msg . "</b><br />\n";
+        echo "<br >\n";
+        echo '<b>' . $msg . "</b><br >\n";
 
         return $this->return_code();
     }

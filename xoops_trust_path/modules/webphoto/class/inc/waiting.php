@@ -23,35 +23,54 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_waiting
 //=========================================================
+
+/**
+ * Class webphoto_inc_waiting
+ */
 class webphoto_inc_waiting extends webphoto_inc_base_ini
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_waiting constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_waiting($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function waiting()
     {
-        $ret               = array();
-        $ret['adminlink']  = $this->_MODULE_URL . '/admin/index.php?fct=admission';
+        $ret = [];
+        $ret['adminlink'] = $this->_MODULE_URL . '/admin/index.php?fct=admission';
         $ret['pendingnum'] = $this->_get_item_count();
 
         // this constant is defined in wating module
@@ -60,10 +79,14 @@ class webphoto_inc_waiting extends webphoto_inc_base_ini
         return $ret;
     }
 
+    /**
+     * @return int
+     */
     public function _get_item_count()
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->prefix_dirname('item');
         $sql .= ' WHERE item_status=0';
+
         return $this->get_count_by_sql($sql);
     }
 

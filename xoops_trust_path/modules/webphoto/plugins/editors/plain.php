@@ -13,9 +13,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_editor_plain
 //=========================================================
+
+/**
+ * Class webphoto_editor_plain
+ */
 class webphoto_editor_plain extends webphoto_editor_base
 {
-
     public function __construct()
     {
         $this->webphoto_editor_base();
@@ -26,16 +29,28 @@ class webphoto_editor_plain extends webphoto_editor_base
         $this->set_display_br(1);
     }
 
+    /**
+     * @return bool
+     */
     public function exists()
     {
         return true;
     }
 
+    /**
+     * @param $id
+     * @param $name
+     * @param $value
+     * @param $rows
+     * @param $cols
+     * @return null|string
+     */
     public function build_textarea($id, $name, $value, $rows, $cols)
     {
         $str = '<textarea id="' . $id . '" name="' . $name . '" rows="' . $rows . '" cols="' . $cols . '" >';
         $str .= $this->sanitize($value);
         $str .= '</textarea>';
+
         return $str;
     }
 

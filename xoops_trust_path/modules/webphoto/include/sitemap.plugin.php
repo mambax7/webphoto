@@ -50,9 +50,14 @@ function b_sitemap_' . $MY_DIRNAME . '()
 
 // === function begin ===
 if (!function_exists('webphoto_sitemap_base')) {
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     function webphoto_sitemap_base($dirname)
     {
         $inc_class = webphoto_inc_sitemap::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->sitemap();
     }
 

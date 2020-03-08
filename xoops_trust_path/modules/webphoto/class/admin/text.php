@@ -21,6 +21,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_text
 //=========================================================
+
+/**
+ * Class webphoto_admin_text
+ */
 class webphoto_admin_text extends webphoto_base_this
 {
     public $_readfile_class;
@@ -28,6 +32,12 @@ class webphoto_admin_text extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_text constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -35,12 +45,18 @@ class webphoto_admin_text extends webphoto_base_this
         $this->_readfile_class = webphoto_lib_readfile::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_text|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_text($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 

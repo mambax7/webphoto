@@ -10,6 +10,10 @@
 // class webphoto_lib_mail_pop
 // base on mailbbs's pop.php
 //=========================================================
+
+/**
+ * Class webphoto_lib_mail_pop
+ */
 class webphoto_lib_mail_pop
 {
     // set param
@@ -17,14 +21,14 @@ class webphoto_lib_mail_pop
     public $_USER = null;
     public $_PASS = null;
 
-    public $_PORT     = '110'; // pop3
-    public $_TIMEOUT  = 10;
+    public $_PORT = '110'; // pop3
+    public $_TIMEOUT = 10;
     public $_MAX_MAIL = 10;
 
     public $_fp;
-    public $_mail_arr  = array();
-    public $_msg_arr   = array();
-    public $_error_arr = array();
+    public $_mail_arr = [];
+    public $_msg_arr = [];
+    public $_error_arr = [];
 
     //---------------------------------------------------------
     // constructor
@@ -34,28 +38,42 @@ class webphoto_lib_mail_pop
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_mail_pop
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_mail_pop();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_host($val)
     {
         $this->_HOST = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_user($val)
     {
         $this->_USER = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_pass($val)
     {
         $this->_PASS = $val;
@@ -64,6 +82,10 @@ class webphoto_lib_mail_pop
     //---------------------------------------------------------
     // pop mail
     //---------------------------------------------------------
+
+    /**
+     * @return int
+     */
     public function recv_mails()
     {
         $this->clear_mails();
@@ -72,12 +94,14 @@ class webphoto_lib_mail_pop
 
         if (empty($this->_HOST) || empty($this->_USER) || empty($this->_PASS)) {
             $this->set_error('not set param');
+
             return -1;
         }
 
         $fp = fsockopen($this->_HOST, $this->_PORT, $err, $errno, $this->_TIMEOUT);
         if (!$fp) {
             $this->set_error($err);
+
             return -1;
         }
         $this->_fp = $fp;
@@ -85,24 +109,28 @@ class webphoto_lib_mail_pop
         $ret = $this->recv();
         if (!$ret) {
             fclose($this->_fp);
+
             return -1;
         }
 
         $ret = $this->send_recv('USER ' . $this->_USER);
         if (!$ret) {
             fclose($this->_fp);
+
             return -1;
         }
 
         $ret = $this->send_recv('PASS ' . $this->_PASS);
         if (!$ret) {
             fclose($this->_fp);
+
             return -1;
         }
 
         $data = $this->send_recv('STAT');
         if (!$data) {
             fclose($this->_fp);
+
             return -1;
         }
 
@@ -110,9 +138,10 @@ class webphoto_lib_mail_pop
         $num = (int)$num;
 
         // no mail
-        if ($num == 0) {
+        if (0 == $num) {
             $this->send_recv('QUIT');
             fclose($this->_fp);
+
             return 0;
         }
 
@@ -127,6 +156,7 @@ class webphoto_lib_mail_pop
             $body = $this->recv_body();
             if (!$body) {
                 fclose($this->_fp);
+
                 return -1;
             }
 
@@ -134,6 +164,7 @@ class webphoto_lib_mail_pop
             $ret = $this->send_recv("DELE $i");
             if (!$ret) {
                 fclose($this->_fp);
+
                 return -1;
             }
         }
@@ -141,36 +172,52 @@ class webphoto_lib_mail_pop
         $this->send_recv('QUIT');
 
         fclose($this->_fp);
+
         return $num;
     }
 
+    /**
+     * @param $cmd
+     * @return bool|string
+     */
     public function send_recv($cmd)
     {
         $this->send($cmd);
+
         return $this->recv();
     }
 
+    /**
+     * @param $cmd
+     */
     public function send($cmd)
     {
         $this->set_msg($cmd);
         fwrite($this->_fp, $cmd . "\r\n");
     }
 
+    /**
+     * @return bool|string
+     */
     public function recv()
     {
         $buf = fgets($this->_fp, 512);
         $this->set_msg($buf);
-        if (substr($buf, 0, 3) == '+OK') {
+        if ('+OK' == mb_substr($buf, 0, 3)) {
             return $buf;
         }
         $this->set_error($buf);
+
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function recv_body()
     {
         $line = fgets($this->_fp, 512);
-        $dat  = '';
+        $dat = '';
 
         // read until '.'
         while (!preg_match("/^\.\r\n/", $line)) {
@@ -179,6 +226,7 @@ class webphoto_lib_mail_pop
         }
 
         $this->set_msg($dat);
+
         return $dat;
     }
 
@@ -187,14 +235,20 @@ class webphoto_lib_mail_pop
     //---------------------------------------------------------
     public function clear_mails()
     {
-        $this->_mail_arr = array();
+        $this->_mail_arr = [];
     }
 
+    /**
+     * @param $mail
+     */
     public function set_mail($mail)
     {
         $this->_mail_arr[] = $mail;
     }
 
+    /**
+     * @return array
+     */
     public function get_mails()
     {
         return $this->_mail_arr;
@@ -202,14 +256,20 @@ class webphoto_lib_mail_pop
 
     public function clear_msgs()
     {
-        $this->_msg_arr = array();
+        $this->_msg_arr = [];
     }
 
+    /**
+     * @param $msg
+     */
     public function set_msg($msg)
     {
         $this->_msg_arr[] = $msg;
     }
 
+    /**
+     * @return array
+     */
     public function get_msgs()
     {
         return $this->_msg_arr;
@@ -217,14 +277,20 @@ class webphoto_lib_mail_pop
 
     public function clear_errors()
     {
-        $this->_error_arr = array();
+        $this->_error_arr = [];
     }
 
+    /**
+     * @param $err
+     */
     public function set_error($err)
     {
         $this->_error_arr[] = $err;
     }
 
+    /**
+     * @return array
+     */
     public function get_errors()
     {
         return $this->_error_arr;

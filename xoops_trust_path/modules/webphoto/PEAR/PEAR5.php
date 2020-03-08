@@ -22,7 +22,7 @@ class PEAR5
     {
         static $properties;
         if (!isset($properties[$class])) {
-            $properties[$class] = array();
+            $properties[$class] = [];
         }
 
         if (!array_key_exists($var, $properties[$class])) {

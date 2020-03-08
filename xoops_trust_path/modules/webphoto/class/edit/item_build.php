@@ -38,12 +38,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_item_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_item_build
+ */
 class webphoto_edit_item_build extends webphoto_edit_base_create
 {
     public $_xoops_class;
     public $_post_class;
     public $_item_handler;
-    public $_cat_handler;
+    public $_catHandler;
     public $_perm_class;
     public $_use_item_class;
 
@@ -55,44 +59,60 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     public $_flag_admin = false;
 
     public $_FILE_LIST;
-    public $_NO_TITLE                = 'no title';
+    public $_NO_TITLE = 'no title';
     public $_PLAYER_ID_FLASH_DEFAULT = 1;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_item_build constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_xoops_class = webphoto_xoops_base::getInstance();
-        $this->_post_class  = webphoto_lib_post::getInstance();
+        $this->_post_class = webphoto_lib_post::getInstance();
 
-        $this->_item_handler   = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_cat_handler    = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
-        $this->_perm_class     = webphoto_permission::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_catHandler = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
+        $this->_perm_class = webphoto_permission::getInstance($dirname, $trust_dirname);
         $this->_use_item_class = webphoto_edit_use_item::getInstance($dirname, $trust_dirname);
 
-        $this->_xoops_uid          = $this->_xoops_class->get_my_user_uid();
-        $this->_has_superinsert    = $this->_perm_class->has_superinsert();
-        $this->_has_html           = $this->_perm_class->has_html();
+        $this->_xoops_uid = $this->_xoops_class->get_my_user_uid();
+        $this->_has_superinsert = $this->_perm_class->has_superinsert();
+        $this->_has_html = $this->_perm_class->has_html();
         $this->_cfg_perm_item_read = $this->get_config_by_name('perm_item_read');
 
         $this->_FILE_LIST = explode('|', _C_WEBPHOTO_FILE_LIST);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_item_build|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_item_build($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set param
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_flag_admin($val)
     {
         $this->_flag_admin = (bool)$val;
@@ -102,35 +122,54 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // post
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $item_datetime_checkbox
+     * @return mixed
+     */
     public function build_row_submit_by_post($row, $item_datetime_checkbox)
     {
         $row = $this->build_row_common_by_post($row, $item_datetime_checkbox);
         $row = $this->build_row_perm_by_post($row, true);
+
         return $row;
     }
 
+    /**
+     * @param      $row
+     * @param      $item_datetime_checkbox
+     * @param bool $flag_status
+     * @return mixed
+     */
     public function build_row_modify_by_post($row, $item_datetime_checkbox, $flag_status = true)
     {
         $row = $this->build_row_common_by_post($row, $item_datetime_checkbox);
         $row = $this->build_row_edit_by_post($row, $flag_status);
         $row = $this->build_row_perm_by_post($row, false);
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $item_datetime_checkbox
+     * @return mixed
+     */
     public function build_row_common_by_post($row, $item_datetime_checkbox)
     {
         // basic
-        $row['item_cat_id']             = $this->get_post_int('item_cat_id');
-        $row['item_title']              = $this->get_post_text('item_title');
-        $row['item_editor']             = $this->get_post_text('item_editor');
-        $row['item_description']        = $this->get_post_text('item_description');
+        $row['item_cat_id'] = $this->get_post_int('item_cat_id');
+        $row['item_title'] = $this->get_post_text('item_title');
+        $row['item_editor'] = $this->get_post_text('item_editor');
+        $row['item_description'] = $this->get_post_text('item_description');
         $row['item_description_smiley'] = $this->get_post_int('item_description_smiley');
-        $row['item_description_xcode']  = $this->get_post_int('item_description_xcode');
-        $row['item_description_image']  = $this->get_post_int('item_description_image');
-        $row['item_description_br']     = $this->get_post_int('item_description_br');
-        $row['item_embed_type']         = $this->get_post_text('item_embed_type');
-        $row['item_embed_src']          = $this->get_post_text('item_embed_src');
-        $row['item_embed_text']         = $this->get_post_text('item_embed_text');
+        $row['item_description_xcode'] = $this->get_post_int('item_description_xcode');
+        $row['item_description_image'] = $this->get_post_int('item_description_image');
+        $row['item_description_br'] = $this->get_post_int('item_description_br');
+        $row['item_embed_type'] = $this->get_post_text('item_embed_type');
+        $row['item_embed_src'] = $this->get_post_text('item_embed_src');
+        $row['item_embed_text'] = $this->get_post_text('item_embed_text');
 
         if ($this->use_item('description_scroll')) {
             $row['item_description_scroll'] = $this->get_post_int('item_description_scroll');
@@ -207,20 +246,20 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
 
         // gmap
         if ($this->use_gmap()) {
-            $row['item_gmap_latitude']  = $this->get_post_float('item_gmap_latitude');
+            $row['item_gmap_latitude'] = $this->get_post_float('item_gmap_latitude');
             $row['item_gmap_longitude'] = $this->get_post_float('item_gmap_longitude');
-            $row['item_gmap_zoom']      = $this->get_post_int('item_gmap_zoom');
-            $row['item_gicon_id']       = $this->get_post_int('item_gicon_id');
+            $row['item_gmap_zoom'] = $this->get_post_int('item_gmap_zoom');
+            $row['item_gicon_id'] = $this->get_post_int('item_gicon_id');
         }
 
         if ($this->_flag_admin) {
             $row['item_uid'] = $this->get_post_int('item_uid');
 
             // kind
-            $row['item_kind']        = $this->get_post_int('item_kind');
+            $row['item_kind'] = $this->get_post_int('item_kind');
             $row['item_displaytype'] = $this->get_post_int('item_displaytype');
             $row['item_displayfile'] = $this->get_post_int('item_displayfile');
-            $row['item_onclick']     = $this->get_post_int('item_onclick');
+            $row['item_onclick'] = $this->get_post_int('item_onclick');
 
             // BUG: flash player becomes default in the user edit
             $row['item_player_id'] = $this->get_post_int('item_player_id');
@@ -228,32 +267,37 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
             // playlist
             $row['item_playlist_type'] = $this->get_post_int('item_playlist_type');
             $row['item_playlist_feed'] = $this->get_post_text('item_playlist_feed');
-            $row['item_playlist_dir']  = $this->get_post_text('item_playlist_dir');
+            $row['item_playlist_dir'] = $this->get_post_text('item_playlist_dir');
             $row['item_playlist_time'] = $this->get_post_int('item_playlist_time');
         }
 
         // text
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_ITEM_TEXT; ++$i) {
-            $name       = $this->_item_handler->build_name_text_by_kind($i);
+            $name = $this->_item_handler->build_name_text_by_kind($i);
             $row[$name] = $this->get_post_text($name);
         }
 
         return $row;
     }
 
+    /**
+     * @param      $row
+     * @param bool $flag_status
+     * @return mixed
+     */
     public function build_row_edit_by_post($row, $flag_status = true)
     {
         $item_id = $row['item_id'];
 
-        $post_preview               = $this->get_post_text('preview');
-        $post_submit                = $this->get_post_text('submit');
-        $post_detail_onclick        = $this->get_post_int('item_detail_onclick');
-        $post_time_update_checkbox  = $this->get_post_int('item_time_update_checkbox');
+        $post_preview = $this->get_post_text('preview');
+        $post_submit = $this->get_post_text('submit');
+        $post_detail_onclick = $this->get_post_int('item_detail_onclick');
+        $post_time_update_checkbox = $this->get_post_int('item_time_update_checkbox');
         $post_time_publish_checkbox = $this->get_post_int('item_time_publish_checkbox');
-        $post_time_expire_checkbox  = $this->get_post_int('item_time_expire_checkbox');
-        $post_time_update           = $this->get_server_time_by_post('item_time_update');
-        $post_time_publish          = $this->get_server_time_by_post('item_time_publish');
-        $post_time_expire           = $this->get_server_time_by_post('item_time_expire');
+        $post_time_expire_checkbox = $this->get_post_int('item_time_expire_checkbox');
+        $post_time_update = $this->get_server_time_by_post('item_time_update');
+        $post_time_publish = $this->get_server_time_by_post('item_time_publish');
+        $post_time_expire = $this->get_server_time_by_post('item_time_expire');
 
         if (!$post_preview && !$post_submit) {
             return $row;
@@ -266,18 +310,18 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
             }
 
             $time_publish = 0;
-            $time_expire  = 0;
+            $time_expire = 0;
             if ($post_time_publish_checkbox) {
                 $time_publish = $post_time_publish;
             }
             if ($post_time_expire_checkbox) {
                 $time_expire = $post_time_expire;
             }
-            $row['item_time_publish']   = $time_publish;
-            $row['item_time_expire']    = $time_expire;
+            $row['item_time_publish'] = $time_publish;
+            $row['item_time_expire'] = $time_expire;
             $row['item_detail_onclick'] = $post_detail_onclick;
 
-            // user
+        // user
         } else {
             $row['item_time_update'] = time();
         }
@@ -289,17 +333,22 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $flag_submit
+     * @return mixed
+     */
     public function build_row_perm_by_post($row, $flag_submit)
     {
-        $item_perm       = $this->build_item_perm_by_post_level();
+        $item_perm = $this->build_item_perm_by_post_level();
         $item_perm_level = $this->get_post_int('item_perm_level');
-        $item_perm_read  = $this->get_group_perms_str_by_post('item_perm_read_ids');
-        $item_perm_down  = $this->get_group_perms_str_by_post('item_perm_down_ids');
+        $item_perm_read = $this->get_group_perms_str_by_post('item_perm_read_ids');
+        $item_perm_down = $this->get_group_perms_str_by_post('item_perm_down_ids');
 
         // admin
         if ($this->use_item_perm_level_admin()) {
             $row['item_perm_level'] = $item_perm_level;
-            $row['item_perm_read']  = $item_perm;
+            $row['item_perm_read'] = $item_perm;
 
             if ($this->use_item('perm_down')) {
                 $row['item_perm_down'] = $item_perm_down;
@@ -308,14 +357,14 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
             // user
         } elseif ($flag_submit && $this->use_item_perm_level()) {
             $row['item_perm_level'] = $item_perm_level;
-            $row['item_perm_read']  = $item_perm;
-            $row['item_perm_down']  = $item_perm;
+            $row['item_perm_read'] = $item_perm;
+            $row['item_perm_down'] = $item_perm;
         } elseif (!$flag_submit && $this->editable_item_perm_level()) {
             $row['item_perm_level'] = $item_perm_level;
-            $row['item_perm_read']  = $item_perm;
-            $row['item_perm_down']  = $item_perm;
+            $row['item_perm_read'] = $item_perm;
+            $row['item_perm_down'] = $item_perm;
 
-            // not use item_level
+        // not use item_level
         } else {
             if ($this->use_item_perm_read()) {
                 $row['item_perm_read'] = $item_perm_read;
@@ -328,36 +377,49 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         return $row;
     }
 
+    /**
+     * @param $checkbox
+     * @return bool|null|string
+     */
     public function get_item_datetime_by_post($checkbox)
     {
-        if ($checkbox == _C_WEBPHOTO_YES) {
+        if (_C_WEBPHOTO_YES == $checkbox) {
             return $this->_item_handler->build_datetime_by_post('item_datetime');
         }
+
         return null;
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function build_modify_status($row)
     {
         if ($this->_flag_admin) {
             return $this->build_modify_status_admin($row);
         }
+
         return $this->build_modify_status_user($row);
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function build_modify_status_user($row)
     {
         $current_status = $row['item_status'];
-        $new_status     = $current_status;
+        $new_status = $current_status;
 
         switch ($current_status) {
-            case _C_WEBPHOTO_STATUS_APPROVED :
+            case _C_WEBPHOTO_STATUS_APPROVED:
                 $new_status = _C_WEBPHOTO_STATUS_UPDATED;
                 break;
-
-            case _C_WEBPHOTO_STATUS_WAITING :
-            case _C_WEBPHOTO_STATUS_UPDATED :
-            case _C_WEBPHOTO_STATUS_OFFLINE :
-            case _C_WEBPHOTO_STATUS_EXPIRED :
+            case _C_WEBPHOTO_STATUS_WAITING:
+            case _C_WEBPHOTO_STATUS_UPDATED:
+            case _C_WEBPHOTO_STATUS_OFFLINE:
+            case _C_WEBPHOTO_STATUS_EXPIRED:
             default:
                 break;
         }
@@ -365,49 +427,49 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         return $new_status;
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function build_modify_status_admin($row)
     {
-        $post_valid  = $this->get_post_int('valid');
+        $post_valid = $this->get_post_int('valid');
         $post_status = $this->get_post_int('item_status');
 
         $current_status = $row['item_status'];
-        $time_publish   = $row['item_time_publish'];
+        $time_publish = $row['item_time_publish'];
 
         $new_status = $post_status;
 
         switch ($current_status) {
-            case _C_WEBPHOTO_STATUS_WAITING :
-                if ($post_valid == _C_WEBPHOTO_YES) {
+            case _C_WEBPHOTO_STATUS_WAITING:
+                if (_C_WEBPHOTO_YES == $post_valid) {
                     $new_status = _C_WEBPHOTO_STATUS_APPROVED;
                 }
                 break;
-
-            case _C_WEBPHOTO_STATUS_APPROVED :
-                if ($post_status == _C_WEBPHOTO_STATUS_APPROVED) {
+            case _C_WEBPHOTO_STATUS_APPROVED:
+                if (_C_WEBPHOTO_STATUS_APPROVED == $post_status) {
                     $new_status = _C_WEBPHOTO_STATUS_UPDATED;
                 }
                 break;
-
-            case _C_WEBPHOTO_STATUS_UPDATED :
-            case _C_WEBPHOTO_STATUS_OFFLINE :
-            case _C_WEBPHOTO_STATUS_EXPIRED :
+            case _C_WEBPHOTO_STATUS_UPDATED:
+            case _C_WEBPHOTO_STATUS_OFFLINE:
+            case _C_WEBPHOTO_STATUS_EXPIRED:
             default:
                 break;
         }
 
         switch ($new_status) {
-            case _C_WEBPHOTO_STATUS_APPROVED :
-            case _C_WEBPHOTO_STATUS_UPDATED :
+            case _C_WEBPHOTO_STATUS_APPROVED:
+            case _C_WEBPHOTO_STATUS_UPDATED:
                 if (($time_publish > 0)
-                    && ($time_publish > time())
-                ) {
+                    && ($time_publish > time())) {
                     $new_status = _C_WEBPHOTO_STATUS_OFFLINE;
                 }
                 break;
-
-            case _C_WEBPHOTO_STATUS_WAITING :
-            case _C_WEBPHOTO_STATUS_OFFLINE :
-            case _C_WEBPHOTO_STATUS_EXPIRED :
+            case _C_WEBPHOTO_STATUS_WAITING:
+            case _C_WEBPHOTO_STATUS_OFFLINE:
+            case _C_WEBPHOTO_STATUS_EXPIRED:
             default:
                 break;
         }
@@ -415,59 +477,91 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         return $new_status;
     }
 
+    /**
+     * @param $name
+     * @return bool|string
+     */
     public function build_info_by_post($name)
     {
         $arr = $this->get_post($name);
+
         return $this->_item_handler->build_info($arr);
     }
 
+    /**
+     * @param $name
+     * @return bool|string
+     */
     public function get_group_perms_str_by_post($name)
     {
         $arr = $this->get_post($name);
+
         return $this->_utility_class->convert_group_perms_array_to_str($arr);
     }
 
+    /**
+     * @param $key
+     * @return float|int
+     */
     public function get_server_time_by_post($key)
     {
         $time = $this->get_post_time($key);
+
         return $this->_xoops_class->user_to_server_time($time);
     }
 
+    /**
+     * @return bool
+     */
     public function use_item_perm_level_admin()
     {
         if ($this->_flag_admin && $this->use_item_perm_level()) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool|string
+     */
     public function build_item_perm_by_post_level()
     {
-        $level  = $this->get_post_int('item_perm_level');
+        $level = $this->get_post_int('item_perm_level');
         $cat_id = $this->get_post_int('item_cat_id');
+
         return $this->build_item_perm_by_level_catid($level, $cat_id);
     }
 
+    /**
+     * @param $level
+     * @param $cat_id
+     * @return bool|string
+     */
     public function build_item_perm_by_level_catid($level, $cat_id)
     {
         switch ($level) {
             case _C_WEBPHOTO_PERM_LEVEL_GROUP:
                 $val = $this->build_item_perm_group_by_catid($cat_id);
                 break;
-
             case _C_WEBPHOTO_PERM_LEVEL_PUBLIC:
             default:
                 $val = _C_WEBPHOTO_PERM_ALLOW_ALL;
                 break;
         }
+
         return $val;
     }
 
+    /**
+     * @param $cat_id
+     * @return bool|string
+     */
     public function build_item_perm_group_by_catid($cat_id)
     {
-        $arr = array(XOOPS_GROUP_ADMIN);
+        $arr = [XOOPS_GROUP_ADMIN];
 
-        $cat_row = $this->_cat_handler->get_cached_row_by_id($cat_id);
+        $cat_row = $this->_catHandler->get_cached_row_by_id($cat_id);
         if (is_array($cat_row)) {
             $cat_group_id = $cat_row['cat_group_id'];
             if ($cat_group_id > 0) {
@@ -476,32 +570,50 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         }
 
         $val = $this->_utility_class->array_to_perm($arr, _C_WEBPHOTO_PERM_SEPARATOR);
+
         return $val;
     }
 
     //---------------------------------------------------------
     // use item class
     //---------------------------------------------------------
+
+    /**
+     * @param $key
+     * @return bool
+     */
     public function use_item($key)
     {
         return $this->_use_item_class->use_item_or_admin($key);
     }
 
+    /**
+     * @return bool
+     */
     public function use_item_perm_read()
     {
         return $this->_use_item_class->use_item_perm_read();
     }
 
+    /**
+     * @return bool
+     */
     public function use_item_perm_level()
     {
         return $this->_use_item_class->use_item_perm_level();
     }
 
+    /**
+     * @return bool
+     */
     public function editable_item_perm_level()
     {
         return $this->_use_item_class->editable_item_perm_level();
     }
 
+    /**
+     * @return bool
+     */
     public function use_gmap()
     {
         return $this->_use_item_class->use_gmap();
@@ -510,6 +622,12 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // files
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $file_id_array
+     * @return mixed
+     */
     public function build_row_files($row, $file_id_array)
     {
         if (!is_array($file_id_array)) {
@@ -518,7 +636,7 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
 
         foreach ($this->_FILE_LIST as $file) {
             $file_id_name = $file . '_id';
-            $file_id      = $this->get_array_value_by_key($file_id_array, $file_id_name);
+            $file_id = $this->get_array_value_by_key($file_id_array, $file_id_name);
             if ($file_id > 0) {
                 $row = $this->build_row_files_individual($row, $file, $file_id);
             }
@@ -527,38 +645,40 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         return $row;
     }
 
+    /**
+     * @param $row
+     * @param $file
+     * @param $file_id
+     * @return mixed
+     */
     public function build_row_files_individual($row, $file, $file_id)
     {
-        $const_name  = strtoupper('_C_WEBPHOTO_ITEM_FILE_' . $file);
-        $const       = constant($const_name);
+        $const_name = mb_strtoupper('_C_WEBPHOTO_ITEM_FILE_' . $file);
+        $const = constant($const_name);
         $row[$const] = $file_id;
 
         switch ($file) {
             case 'thumb':
-                $row['item_icon_name']   = '';
-                $row['item_icon_width']  = 0;
+                $row['item_icon_name'] = '';
+                $row['item_icon_width'] = 0;
                 $row['item_icon_height'] = 0;
                 break;
-
             case 'flash':
                 // BUG: player id is not correctly selected
-                $row['item_player_id']   = $this->_PLAYER_ID_FLASH_DEFAULT;
+                $row['item_player_id'] = $this->_PLAYER_ID_FLASH_DEFAULT;
                 $row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
                 if (empty($row['item_displayfile'])) {
                     $row['item_displayfile'] = _C_WEBPHOTO_FILE_KIND_FLASH;
                 }
                 break;
-
             case 'mp3':
                 $row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
                 $row['item_displayfile'] = _C_WEBPHOTO_FILE_KIND_MP3;
                 break;
-
             case 'swf':
                 $row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_SWFOBJECT;
                 $row['item_displayfile'] = _C_WEBPHOTO_FILE_KIND_SWF;
                 break;
-
             case 'pdf':
                 if ($this->get_ini('item_detail_onclick_pdf')) {
                     $row['item_detail_onclick'] = _C_WEBPHOTO_FILE_KIND_PDF;
@@ -572,24 +692,41 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // ext kind
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $file
+     * @return mixed
+     */
     public function build_row_ext_kind_from_file($row, $file)
     {
-        $ext              = $this->parse_ext($file);
-        $kind             = $this->ext_to_kind($ext);
-        $row['item_ext']  = $ext;
+        $ext = $this->parse_ext($file);
+        $kind = $this->ext_to_kind($ext);
+        $row['item_ext'] = $ext;
         $row['item_kind'] = $kind;
+
         return $row;
     }
 
     //---------------------------------------------------------
     // onclick
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_onclick($row)
     {
         $row['item_onclick'] = $this->get_new_onclick($row);
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function get_new_onclick($row)
     {
         $item_ext = $row['item_ext'];
@@ -598,20 +735,30 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         if ($this->is_image_ext($item_ext)) {
             $ret = _C_WEBPHOTO_ONCLICK_POPUP;
         }
+
         return $ret;
     }
 
     //---------------------------------------------------------
     // status
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_status_if_empty($row)
     {
         if (empty($row['item_status'])) {
             $row['item_status'] = $this->get_new_status();
         }
+
         return $row;
     }
 
+    /**
+     * @return int
+     */
     public function get_new_status()
     {
         return (int)$this->_has_superinsert;
@@ -620,25 +767,41 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // uid
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_uid_if_empty($row)
     {
         if (empty($row['item_uid'])) {
             $row['item_uid'] = $this->_xoops_uid;
         }
+
         return $row;
     }
 
     //---------------------------------------------------------
     // displaytype
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_displaytype_if_empty($row)
     {
         if (empty($row['item_displaytype'])) {
             $row['item_displaytype'] = $this->get_new_displaytype($row);
         }
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function get_new_displaytype($row)
     {
         $item_ext = $row['item_ext'];
@@ -651,20 +814,31 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
         } elseif ($this->is_mediaplayer_ext($item_ext)) {
             $str = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // detail_onclick
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_detail_onclick_if_empty($row)
     {
         if (empty($row['item_detail_onclick'])) {
             $row['item_detail_onclick'] = $this->get_new_detail_onclick($row);
         }
+
         return $row;
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function get_new_detail_onclick($row)
     {
         $item_ext = $row['item_ext'];
@@ -677,43 +851,75 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
                 $str = _C_WEBPHOTO_DETAIL_ONCLICK_IMAGE;
             }
         }
+
         return $str;
     }
 
     //---------------------------------------------------------
     // title
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_row_title_if_empty($row)
     {
         if (empty($row['item_title'])) {
             $row['item_title'] = $this->_NO_TITLE;
         }
+
         return $row;
     }
 
     //---------------------------------------------------------
     // post class
     //---------------------------------------------------------
+
+    /**
+     * @param      $key
+     * @param null $default
+     * @return array|string
+     */
     public function get_post_text($key, $default = null)
     {
         return $this->_post_class->get_post_text($key, $default);
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return int
+     */
     public function get_post_int($key, $default = 0)
     {
         return $this->_post_class->get_post_int($key, $default);
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return float
+     */
     public function get_post_float($key, $default = 0)
     {
         return $this->_post_class->get_post_float($key, $default);
     }
 
+    /**
+     * @param     $key
+     * @param int $default
+     * @return false|int
+     */
     public function get_post_time($key, $default = 0)
     {
         return $this->_post_class->get_post_time($key, $default);
     }
 
+    /**
+     * @param      $key
+     * @param null $default
+     */
     public function get_post($key, $default = null)
     {
         return $this->_post_class->get_post($key, $default);
@@ -722,16 +928,29 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // kind class
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_image_ext($ext)
     {
         return $this->_kind_class->is_image_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_swfobject_ext($ext)
     {
         return $this->_kind_class->is_swfobject_ext($ext);
     }
 
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_mediaplayer_ext($ext)
     {
         return $this->_kind_class->is_mediaplayer_ext($ext);
@@ -740,6 +959,12 @@ class webphoto_edit_item_build extends webphoto_edit_base_create
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $array
+     * @param $key
+     * @return int
+     */
     public function get_array_value_by_key($array, $key)
     {
         return (int)$this->_utility_class->get_array_value_by_key($array, $key, 0);

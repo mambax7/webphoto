@@ -31,10 +31,10 @@ $manage = webphoto_main_edit::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TRUST_DIRNA
 // exit if execute edit
 $manage->check_action();
 
-$xoopsOption['template_main'] = WEBPHOTO_DIRNAME . '_main_edit.html';
-include(XOOPS_ROOT_PATH . '/header.php');
+$GLOBALS['xoopsOption']['template_main'] = WEBPHOTO_DIRNAME . '_main_edit.tpl';
+include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign($manage->form_param());
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();

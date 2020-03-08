@@ -23,27 +23,42 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_mime_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_mime_table_manage
+ */
 class webphoto_admin_mime_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_mime_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_mime_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('MIME_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('mime_ext', 'mime_name'));
+        $this->set_manage_list_column_array(['mime_ext', 'mime_name']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_mime_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_mime_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -58,27 +73,36 @@ class webphoto_admin_mime_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'mime_id'          => $this->_post_class->get_post_get_int('mime_id'),
+        $row = [
+            'mime_id' => $this->_post_class->get_post_get_int('mime_id'),
             'mime_time_create' => $this->_post_class->get_post_int('mime_time_create'),
             'mime_time_update' => $this->_post_class->get_post_int('mime_time_update'),
-            'mime_ext'         => $this->_post_class->get_post_text('mime_ext'),
-            'mime_medium'      => $this->_post_class->get_post_text('mime_medium'),
-            'mime_type'        => $this->_post_class->get_post_text('mime_type'),
-            'mime_name'        => $this->_post_class->get_post_text('mime_name'),
-            'mime_perms'       => $this->_post_class->get_post_text('mime_perms'),
-            'mime_ffmpeg'      => $this->_post_class->get_post_text('mime_ffmpeg'),
-            'mime_kind'        => $this->_post_class->get_post_int('mime_kind'),
-            'mime_option'      => $this->_post_class->get_post_text('mime_option'),
-        );
+            'mime_ext' => $this->_post_class->get_post_text('mime_ext'),
+            'mime_medium' => $this->_post_class->get_post_text('mime_medium'),
+            'mime_type' => $this->_post_class->get_post_text('mime_type'),
+            'mime_name' => $this->_post_class->get_post_text('mime_name'),
+            'mime_perms' => $this->_post_class->get_post_text('mime_perms'),
+            'mime_ffmpeg' => $this->_post_class->get_post_text('mime_ffmpeg'),
+            'mime_kind' => $this->_post_class->get_post_int('mime_kind'),
+            'mime_option' => $this->_post_class->get_post_text('mime_option'),
+        ];
+
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

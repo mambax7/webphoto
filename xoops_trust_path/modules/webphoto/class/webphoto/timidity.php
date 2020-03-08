@@ -22,6 +22,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_timidity
 // wrapper for webphoto_lib_timidity
 //=========================================================
+
+/**
+ * Class webphoto_timidity
+ */
 class webphoto_timidity extends webphoto_cmd_base
 {
     public $_timidity_class;
@@ -32,6 +36,12 @@ class webphoto_timidity extends webphoto_cmd_base
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_timidity constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -45,18 +55,31 @@ class webphoto_timidity extends webphoto_cmd_base
         $this->set_debug_by_ini_name($this->_timidity_class);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_timidity
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_timidity($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create wav
     //---------------------------------------------------------
+
+    /**
+     * @param        $src_file
+     * @param        $dst_file
+     * @param string $option
+     * @return int|null
+     */
     public function create_wav($src_file, $dst_file, $option = '')
     {
         if (empty($src_file)) {
@@ -73,16 +96,25 @@ class webphoto_timidity extends webphoto_cmd_base
 
         if (is_file($dst_file)) {
             $this->chmod_file($dst_file);
+
             return 1;  // suceess
         }
 
         $this->set_error($this->_timidity_class->get_msg_array());
+
         return -1; // fail
     }
 
     //---------------------------------------------------------
     // create wav tmp
     //---------------------------------------------------------
+
+    /**
+     * @param        $item_id
+     * @param        $src_file
+     * @param string $option
+     * @return array|null
+     */
     public function create_wav_tmp($item_id, $src_file, $option = '')
     {
         if (empty($src_file)) {
@@ -100,24 +132,30 @@ class webphoto_timidity extends webphoto_cmd_base
         $this->_timidity_class->mid_to_wav($src_file, $dst_file, $option);
 
         if (!is_file($dst_file)) {
-            $arr = array(
-                'flag'   => false,
+            $arr = [
+                'flag' => false,
                 'errors' => $this->set_get_errors($this->_timidity_class->get_msg_array()),
-            );
+            ];
+
             return $arr;
         }
 
         $this->chmod_file($dst_file);
 
-        $arr = array(
-            'flag'     => true,
-            'item_id'  => $item_id,
+        $arr = [
+            'flag' => true,
+            'item_id' => $item_id,
             'src_file' => $dst_file,
-            'src_ext'  => $this->_MP3_EXT,
-        );
+            'src_ext' => $this->_MP3_EXT,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $item_id
+     * @return string
+     */
     public function build_wav_file($item_id)
     {
         return $this->build_file_by_prefix_ext($this->build_prefix($item_id), $this->_WAV_EXT);

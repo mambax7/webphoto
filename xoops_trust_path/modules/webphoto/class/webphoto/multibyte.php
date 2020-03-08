@@ -14,9 +14,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_multibyte
 // wrapper for webphoto_lib_multibyte
 //=========================================================
+
+/**
+ * Class webphoto_multibyte
+ */
 class webphoto_multibyte extends webphoto_lib_multibyte
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -34,12 +37,16 @@ class webphoto_multibyte extends webphoto_lib_multibyte
         $this->set_ja_comma(_WEBPHOTO_JA_COMMA);
     }
 
+    /**
+     * @return \webphoto_lib_multibyte|\webphoto_multibyte
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_multibyte();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 

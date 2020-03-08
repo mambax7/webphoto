@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_player_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_player_form
+ */
 class webphoto_admin_player_form extends webphoto_edit_form
 {
     public $_player_handler;
@@ -31,6 +35,12 @@ class webphoto_admin_player_form extends webphoto_edit_form
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_player_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -38,18 +48,29 @@ class webphoto_admin_player_form extends webphoto_edit_form
         $this->_player_handler = webphoto_player_handler::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_player_form|\webphoto_edit_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_player_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $param
+     */
     public function print_form($row, $param)
     {
         $template = 'db:' . $this->_DIRNAME . '_form_admin_player.html';
@@ -61,60 +82,74 @@ class webphoto_admin_player_form extends webphoto_edit_form
         echo $tpl->fetch($template);
     }
 
+    /**
+     * @param $row
+     * @param $param
+     * @return array
+     */
     public function build_form_by_row($row, $param)
     {
-        $mode         = $param['mode'];
-        $item_id      = $param['item_id'];
+        $mode = $param['mode'];
+        $item_id = $param['item_id'];
         $player_style = $row['player_style'];
 
         switch ($mode) {
             case 'clone':
-                $title  = _AM_WEBPHOTO_PLAYER_CLONE;
+                $title = _AM_WEBPHOTO_PLAYER_CLONE;
                 $submit = _ADD;
                 break;
-
             case 'modify':
-                $title  = _AM_WEBPHOTO_PLAYER_MOD;
+                $title = _AM_WEBPHOTO_PLAYER_MOD;
                 $submit = _EDIT;
                 break;
-
             case 'submit':
             default:
-                $mode   = 'submit';
-                $title  = _AM_WEBPHOTO_PLAYER_ADD;
+                $mode = 'submit';
+                $title = _AM_WEBPHOTO_PLAYER_ADD;
                 $submit = _ADD;
                 break;
         }
 
         $show_color_style = $this->show_color_style($player_style);
 
-        $arr = array(
-            'title'                   => $title,
-            'op'                      => $mode,
-            'submit'                  => $submit,
-            'item_id'                 => $item_id,
-            'show_color_style'        => $show_color_style,
+        $arr = [
+            'title' => $title,
+            'op' => $mode,
+            'submit' => $submit,
+            'item_id' => $item_id,
+            'show_color_style' => $show_color_style,
             'show_color_style_hidden' => !$show_color_style,
-            'op_player_style'         => $mode . '_form',
-            'player_style_options'    => $this->player_style_options($player_style),
-        );
+            'op_player_style' => $mode . '_form',
+            'player_style_options' => $this->player_style_options($player_style),
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $value
+     * @return null|string
+     */
     public function player_style_options($value)
     {
         $options = $this->_player_handler->get_style_options();
+
         return $this->build_form_options($value, $options);
     }
 
+    /**
+     * @param $style
+     * @return bool
+     */
     public function show_color_style($style)
     {
-        if ($style == _C_WEBPHOTO_PLAYER_STYLE_PLAYER) {
+        if (_C_WEBPHOTO_PLAYER_STYLE_PLAYER == $style) {
             return true;
         }
-        if ($style == _C_WEBPHOTO_PLAYER_STYLE_PAGE) {
+        if (_C_WEBPHOTO_PLAYER_STYLE_PAGE == $style) {
             return true;
         }
+
         return false;
     }
 

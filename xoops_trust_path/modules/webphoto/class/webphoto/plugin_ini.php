@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_plugin_ini
 //=========================================================
+
+/**
+ * Class webphoto_plugin_ini
+ */
 class webphoto_plugin_ini extends webphoto_lib_plugin
 {
     public $_ini_class;
@@ -20,6 +24,12 @@ class webphoto_plugin_ini extends webphoto_lib_plugin
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_plugin_ini constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -31,11 +41,20 @@ class webphoto_plugin_ini extends webphoto_lib_plugin
     //---------------------------------------------------------
     // ini class
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_ini($name)
     {
         return $this->_ini_class->get_ini($name);
     }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function explode_ini($name)
     {
         return $this->_ini_class->explode_ini($name);

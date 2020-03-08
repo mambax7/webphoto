@@ -6,7 +6,7 @@
 // 2008-04-02 K.OHWADA
 //=========================================================
 
-$constpref = strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
+$constpref = mb_strtoupper('_BL_' . $GLOBALS['MY_DIRNAME'] . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {

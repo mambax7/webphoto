@@ -35,16 +35,26 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_search
 //=========================================================
+
+/**
+ * Class webphoto_inc_search
+ */
 class webphoto_inc_search extends webphoto_inc_public
 {
     public $_uri_class;
 
     public $_SHOW_IMAGE = true;
-    public $_SHOW_ICON  = false;
+    public $_SHOW_ICON = false;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_search constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
@@ -57,7 +67,7 @@ class webphoto_inc_search extends webphoto_inc_public
 
         // preload
         $show_image = $this->get_ini('search_show_image');
-        $show_icon  = $this->get_ini('search_show_icon');
+        $show_icon = $this->get_ini('search_show_icon');
 
         if ($show_image) {
             $this->_SHOW_IMAGE = $show_image;
@@ -67,23 +77,38 @@ class webphoto_inc_search extends webphoto_inc_public
         }
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_search($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $query_array
+     * @param $andor
+     * @param $limit
+     * @param $offset
+     * @param $uid
+     * @return array
+     */
     public function search($query_array, $andor, $limit, $offset, $uid)
     {
         $item_rows = $this->get_item_rows_for_search($query_array, $andor, $uid, $limit, $offset);
         if (!is_array($item_rows)) {
-            return array();
+            return [];
         }
 
         // no query_array called by userinfo
@@ -92,8 +117,8 @@ class webphoto_inc_search extends webphoto_inc_public
             $keywords = urlencode(implode(' ', $query_array));
         }
 
-        $i   = 0;
-        $ret = array();
+        $i = 0;
+        $ret = [];
 
         foreach ($item_rows as $item_row) {
             $item_id = $item_row['item_id'];
@@ -103,18 +128,18 @@ class webphoto_inc_search extends webphoto_inc_public
             $link = $this->_uri_class->build_search_photo_keywords($item_id, $keywords);
 
             // BUG: overwrited by the previous data
-            $arr = array();
+            $arr = [];
 
-            $arr['link']    = $link;
-            $arr['title']   = $item_row['item_title'];
-            $arr['time']    = $item_row['item_time_update'];
-            $arr['uid']     = $item_row['item_uid'];
-            $arr['image']   = 'images/icons/search.png';
+            $arr['link'] = $link;
+            $arr['title'] = $item_row['item_title'];
+            $arr['time'] = $item_row['item_time_update'];
+            $arr['uid'] = $item_row['item_uid'];
+            $arr['image'] = 'images/icons/search.png';
             $arr['context'] = $this->_build_context($item_row, $query_array);
 
             if ($img_url) {
-                $arr['img_url']    = $img_url;
-                $arr['img_width']  = $img_width;
+                $arr['img_url'] = $img_url;
+                $arr['img_width'] = $img_width;
                 $arr['img_height'] = $img_height;
             }
 
@@ -128,17 +153,23 @@ class webphoto_inc_search extends webphoto_inc_public
     //---------------------------------------------------------
     // private
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @param $query_array
+     * @return bool|null|string|string[]
+     */
     public function _build_context($row, $query_array)
     {
         $str = $this->build_item_description($row);
-        $str = preg_replace('/>/', '> ', $str);
+        $str = preg_replace('>/', '> ', $str);
         $str = strip_tags($str);
 
         // this function is defined in happy_linux module
         if (function_exists('happy_linux_build_search_context')) {
             $str = happy_linux_build_search_context($str, $query_array);
 
-            // this function is defined in search module
+        // this function is defined in search module
         } elseif (function_exists('search_make_context')) {
             $str = search_make_context($str, $query_array);
         }

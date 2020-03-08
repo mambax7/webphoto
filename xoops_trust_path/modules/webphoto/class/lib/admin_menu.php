@@ -24,6 +24,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_lib_admin_menu
 // base on myalbum's mymenu.php
 //=========================================================
+
+/**
+ * Class webphoto_lib_admin_menu
+ */
 class webphoto_lib_admin_menu
 {
     public $_menu_class;
@@ -38,57 +42,79 @@ class webphoto_lib_admin_menu
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_lib_admin_menu constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
-        $this->_DIRNAME    = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_MODULE_URL = XOOPS_URL . '/modules/' . $dirname;
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
 
         $this->_TRUST_DIRNAME = $trust_dirname;
-        $this->_TRUST_DIR     = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
 
         $this->_init_xoops_param();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_admin_menu
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_lib_admin_menu($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_sub
+     * @return null|string
+     */
     public function build_menu_with_sub($flag_sub = true)
     {
         $str = $this->build_menu(!$flag_sub, false);
 
         if ($flag_sub) {
-            $str .= "<br />\n";
+            $str .= "<br>\n";
             $str .= $this->build_sub_menu(true, false);
         }
 
         $str .= $this->build_hr(true);
+
         return $str;
     }
 
+    /**
+     * @param bool $flag_default
+     * @param bool $flag_hr
+     * @return null|string
+     */
     public function build_menu($flag_default = true, $flag_hr = true)
     {
         //  if( defined( 'XOOPS_ORETEKI' ) ) { return null; }
 
         $admin_menu_class = webphoto_inc_admin_menu::getSingleton($this->_DIRNAME, $this->_TRUST_DIRNAME);
-        $admin_menu       = $admin_menu_class->build_menu();
+        $admin_menu = $admin_menu_class->build_menu();
 
         $add_menu = $this->_build_additinal_menu();
 
         $menu_array = null;
         if (is_array($admin_menu) && count($admin_menu)
             && is_array($add_menu)
-            && count($add_menu)
-        ) {
+            && count($add_menu)) {
             $menu_array = array_merge($admin_menu, $add_menu);
         } elseif (is_array($admin_menu) && count($admin_menu)) {
             $menu_array = $admin_menu;
@@ -99,103 +125,122 @@ class webphoto_lib_admin_menu
         if (is_array($menu_array) && count($menu_array)) {
             $str = $this->_build_highlight($menu_array, $flag_default);
             $str .= $this->build_hr($flag_hr);
+
             return $str;
         }
 
         return null;
     }
 
+    /**
+     * @param bool $flag_default
+     * @param bool $flag_hr
+     * @return null|string
+     */
     public function build_sub_menu($flag_default = true, $flag_hr = true)
     {
         $admin_menu_class = webphoto_inc_admin_menu::getSingleton($this->_DIRNAME, $this->_TRUST_DIRNAME);
-        $menu_array       = $admin_menu_class->build_sub_menu();
+        $menu_array = $admin_menu_class->build_sub_menu();
 
         if (is_array($menu_array) && count($menu_array)) {
             $str = $this->_build_highlight($menu_array, $flag_default);
             $str .= $this->build_hr($flag_hr);
+
             return $str;
         }
 
         return null;
     }
 
+    /**
+     * @param bool $flag_hr
+     * @return null|string
+     */
     public function build_hr($flag_hr = true)
     {
         if ($flag_hr) {
-            $str = "<hr style='display:block;' />\n";
+            $str = "<hr style='display:block;' >\n";
+
             return $str;
         }
+
         return null;
     }
 
+    /**
+     * @return array
+     */
     public function _build_additinal_menu()
     {
         // with XOOPS_TRUST_PATH and altsys
 
         $flag_preferences = false;
 
-        $menu_array = array();
+        $menu_array = [];
 
         if ($this->is_installed_altsys()) {
-
             // mytplsadmin (TODO check if this module has tplfile)
             if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mytplsadmin.php')) {
-                array_push($menu_array, array(
+                array_push($menu_array, [
                     'title' => $this->get_title('tplsadmin'),
-                    'link'  => 'admin/index.php?mode=admin&lib=altsys&page=mytplsadmin'
-                ));
+                    'link' => 'admin/index.php?mode=admin&lib=altsys&page=mytplsadmin',
+                ]);
             }
 
             // myblocksadmin
             if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/myblocksadmin.php')) {
-                array_push($menu_array, array(
+                array_push($menu_array, [
                     'title' => $this->get_title('blocksadmin'),
-                    'link'  => 'admin/index.php?mode=admin&lib=altsys&page=myblocksadmin'
-                ));
+                    'link' => 'admin/index.php?mode=admin&lib=altsys&page=myblocksadmin',
+                ]);
             }
 
             // mypreferences
             if ($this->has_xoops_config_this_module()) {
                 if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mypreferences.php')) {
                     $flag_preferences = true;
-                    array_push($menu_array, array(
+                    array_push($menu_array, [
                         'title' => _PREFERENCES,
-                        'link'  => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences'
-                    ));
+                        'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences',
+                    ]);
                 }
             }
         }
 
         // preferences
         if (!$flag_preferences && $this->has_xoops_config_this_module()) {
-
             // XOOPS Cube 2.1
             if (defined('XOOPS_CUBE_LEGACY')) {
                 $link = XOOPS_URL . '/modules/legacy/admin/index.php?action=PreferenceEdit&confmod_id=' . $this->_MODULE_ID;
 
-                // XOOPS 2.0
+            // XOOPS 2.0
             } else {
                 $link = XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $this->_MODULE_ID;
             }
 
-            array_push($menu_array, array(
+            array_push($menu_array, [
                 'title' => _PREFERENCES,
-                'link'  => $link
-            ));
+                'link' => $link,
+            ]);
         }
 
-        array_push($menu_array, array(
+        array_push($menu_array, [
             'title' => $this->get_title('goto_module'),
-            'link'  => 'index.php',
-        ));
+            'link' => 'index.php',
+        ]);
 
         return $menu_array;
     }
 
+    /**
+     * @param      $menu_array
+     * @param bool $flag_default
+     * @return string
+     */
     public function _build_highlight($menu_array, $flag_default = true)
     {
-        $mymenu_uri  = $_SERVER['REQUEST_URI'];
-        $mymenu_link = substr(strstr($mymenu_uri, '/admin/'), 1);
+        $mymenu_uri = $_SERVER['REQUEST_URI'];
+        $mymenu_link = mb_substr(mb_strstr($mymenu_uri, '/admin/'), 1);
 
         $flag_highlight = false;
 
@@ -205,7 +250,7 @@ class webphoto_lib_admin_menu
         }
 
         $post_fct = isset($_POST['fct']) ? $_POST['fct'] : null;
-        $fct      = preg_replace('/[^a-zA-Z0-9_-]/', '', $post_fct);
+        $fct = preg_replace('/[^a-zA-Z0-9_-]/', '', $post_fct);
 
         // highlight
         if ($fct) {
@@ -213,7 +258,7 @@ class webphoto_lib_admin_menu
             foreach (array_keys($menu_array) as $i) {
                 if ($uri_fct == $menu_array[$i]['link']) {
                     $menu_array[$i]['color'] = '#FFCCCC';
-                    $flag_highlight          = true;
+                    $flag_highlight = true;
                     break;
                 }
             }
@@ -222,9 +267,9 @@ class webphoto_lib_admin_menu
         if ($fct && !$flag_highlight) {
             $uri_fct = $mymenu_uri . '?fct=' . $fct;
             foreach (array_keys($menu_array) as $i) {
-                if (stristr($uri_fct, $menu_array[$i]['link'])) {
+                if (mb_stristr($uri_fct, $menu_array[$i]['link'])) {
                     $menu_array[$i]['color'] = '#FFCCCC';
-                    $flag_highlight          = true;
+                    $flag_highlight = true;
                     break;
                 }
             }
@@ -234,7 +279,7 @@ class webphoto_lib_admin_menu
             foreach (array_keys($menu_array) as $i) {
                 if ($mymenu_link == $menu_array[$i]['link']) {
                     $menu_array[$i]['color'] = '#FFCCCC';
-                    $flag_highlight          = true;
+                    $flag_highlight = true;
                     break;
                 }
             }
@@ -243,11 +288,10 @@ class webphoto_lib_admin_menu
         if (!$flag_highlight) {
             foreach (array_keys($menu_array) as $i) {
                 $link = $menu_array[$i]['link'];
-                if ($link != 'admin/index.php'
-                    && strpos($mymenu_link, $link) === 0
-                ) {
+                if ('admin/index.php' != $link
+                    && 0 === mb_strpos($mymenu_link, $link)) {
                     $menu_array[$i]['color'] = '#FFCCCC';
-                    $flag_highlight          = true;
+                    $flag_highlight = true;
                     break;
                 }
             }
@@ -255,7 +299,7 @@ class webphoto_lib_admin_menu
 
         if (!$flag_highlight && $flag_default) {
             foreach (array_keys($menu_array) as $i) {
-                if (stristr($mymenu_uri, $menu_array[$i]['link'])) {
+                if (mb_stristr($mymenu_uri, $menu_array[$i]['link'])) {
                     $menu_array[$i]['color'] = '#FFCCCC';
                     break;
                 }
@@ -264,7 +308,7 @@ class webphoto_lib_admin_menu
 
         // link conversion from relative to absolute
         foreach (array_keys($menu_array) as $i) {
-            if (stristr($menu_array[$i]['link'], XOOPS_URL) === false) {
+            if (false === mb_stristr($menu_array[$i]['link'], XOOPS_URL)) {
                 $menu_array[$i]['link'] = $this->_MODULE_URL . '/' . $menu_array[$i]['link'];
             }
         }
@@ -280,7 +324,7 @@ class webphoto_lib_admin_menu
         }
 
         $text .= "</div>\n";
-        $text .= "<br style='clear:left;' />\n";
+        $text .= "<br style='clear:left;' >\n";
 
         return $text;
     }
@@ -288,6 +332,11 @@ class webphoto_lib_admin_menu
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return string
+     */
     public function sanitize($str)
     {
         return htmlspecialchars($str, ENT_QUOTES);
@@ -296,10 +345,16 @@ class webphoto_lib_admin_menu
     //---------------------------------------------------------
     // language
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return mixed
+     */
     public function get_title($name)
     {
-        $const_name = strtoupper('_AM_' . $this->_TRUST_DIRNAME . '_MYMENU_' . $name);
-        $title      = defined($const_name) ? constant($const_name) : $name;
+        $const_name = mb_strtoupper('_AM_' . $this->_TRUST_DIRNAME . '_MYMENU_' . $name);
+        $title = defined($const_name) ? constant($const_name) : $name;
+
         return $title;
     }
 
@@ -314,24 +369,37 @@ class webphoto_lib_admin_menu
         }
     }
 
+    /**
+     * @return int
+     */
     public function has_xoops_config_this_module()
     {
-        $config_handler = xoops_getHandler('config');
-        return count($config_handler->getConfigs(new Criteria('conf_modid', $this->_MODULE_ID)));
+        $configHandler = xoops_getHandler('config');
+
+        return count($configHandler->getConfigs(new Criteria('conf_modid', $this->_MODULE_ID)));
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public function get_xoops_module_by_dirname($dirname)
     {
-        $module_handler = xoops_getHandler('module');
-        return $module_handler->getByDirname($dirname);
+        $moduleHandler = xoops_getHandler('module');
+
+        return $moduleHandler->getByDirname($dirname);
     }
 
+    /**
+     * @return bool
+     */
     public function is_installed_altsys()
     {
         $module = $this->get_xoops_module_by_dirname('altsys');
         if (is_object($module)) {
             return true;
         }
+
         return false;
     }
 

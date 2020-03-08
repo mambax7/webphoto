@@ -49,9 +49,9 @@ $manage = webphoto_main_mail_register::getInstance(WEBPHOTO_DIRNAME, WEBPHOTO_TR
 // exit if execute edit
 $manage->check_action();
 
-include(XOOPS_ROOT_PATH . '/header.php');
+include XOOPS_ROOT_PATH . '/header.php';
 
 $manage->print_form();
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';
 exit();

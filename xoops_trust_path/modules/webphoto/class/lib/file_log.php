@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_lib_file_log
 //=========================================================
+
+/**
+ * Class webphoto_lib_file_log
+ */
 class webphoto_lib_file_log
 {
     public $_file = '';
@@ -26,15 +30,22 @@ class webphoto_lib_file_log
         $this->set_file($file);
     }
 
+    /**
+     * @return \webphoto_lib_file_log
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_file_log();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
+    /**
+     * @param $file
+     */
     public function set_file($file)
     {
         $this->_file = $file;
@@ -51,6 +62,9 @@ class webphoto_lib_file_log
         ob_end_clean();
     }
 
+    /**
+     * @param $val
+     */
     public function printr($val)
     {
         ob_start();
@@ -66,8 +80,8 @@ class webphoto_lib_file_log
 
     public function url()
     {
-        $protocol = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 'https' : 'http';
-        $url      = $protocol . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        $protocol = (isset($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) ? 'https' : 'http';
+        $url = $protocol . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
         $this->write('URL: ' . $url);
     }
 
@@ -81,6 +95,9 @@ class webphoto_lib_file_log
         $this->write('REQUEST_METHOD: ' . $_SERVER['REQUEST_METHOD']);
     }
 
+    /**
+     * @param $data
+     */
     public function write($data)
     {
         file_put_contents($this->_file, $data . "\n", FILE_APPEND);

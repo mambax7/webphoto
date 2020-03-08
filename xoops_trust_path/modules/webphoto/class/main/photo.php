@@ -52,25 +52,41 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_photo
 //=========================================================
+
+/**
+ * Class webphoto_main_photo
+ */
 class webphoto_main_photo extends webphoto_factory
 {
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_photo constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_factory|\webphoto_lib_error|\webphoto_main_photo
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_main_photo($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -81,7 +97,7 @@ class webphoto_main_photo extends webphoto_factory
     {
         $this->init_factory();
         $this->set_mode('photo');
-        $this->set_template_main('main_photo.html');
+        $this->set_template_main('main_photo.tpl');
 
         $this->init_preload();
     }
@@ -97,6 +113,10 @@ class webphoto_main_photo extends webphoto_factory
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         $this->init();
@@ -104,11 +124,11 @@ class webphoto_main_photo extends webphoto_factory
         $mode = $this->_mode;
 
         // load row
-        $row       = $this->_photo_class->get_photo_row();
-        $photo_id  = $row['item_id'];
+        $row = $this->_photo_class->get_photo_row();
+        $photo_id = $row['item_id'];
         $photo_uid = $row['item_uid'];
-        $cat_id    = $row['item_cat_id'];
-        $title     = $this->sanitize($row['item_title']);
+        $cat_id = $row['item_cat_id'];
+        $title = $this->sanitize($row['item_title']);
 
         // for xoops comment & notification
         $_GET['photo_id'] = $photo_id;
@@ -123,7 +143,7 @@ class webphoto_main_photo extends webphoto_factory
 
         $this->show_array_set_detail_by_mode($mode);
 
-        $show_gmap      = $this->set_tpl_gmap_for_photo_with_check($row);
+        $show_gmap = $this->set_tpl_gmap_for_photo_with_check($row);
         $show_ligthtbox = $this->set_tpl_photo_for_detail($row);
 
         $this->xoops_header_array_set_by_mode($mode);
@@ -158,6 +178,7 @@ class webphoto_main_photo extends webphoto_factory
         }
 
         $this->set_tpl_show_js_windows();
+
         return $this->tpl_get();
     }
 

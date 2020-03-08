@@ -1,5 +1,5 @@
 <?php
-// $Id: xoops_image_handler.php,v 1.1.1.1 2008/06/21 12:22:25 ohwada Exp $
+// $Id: xoops_imageHandler.php,v 1.1.1.1 2008/06/21 12:22:25 ohwada Exp $
 
 //=========================================================
 // webphoto module
@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class uploader_photo_handler
 //=========================================================
+
+/**
+ * Class webphoto_xoops_image_handler
+ */
 class webphoto_xoops_image_handler extends webphoto_lib_handler
 {
     public $_category_table;
@@ -27,20 +31,24 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
         parent::__construct();
 
         $this->_category_table = $this->db_prefix('imagecategory');
-        $this->_image_table    = $this->db_prefix('image');
-        $this->_body_table     = $this->db_prefix('imagebody');
+        $this->_image_table = $this->db_prefix('image');
+        $this->_body_table = $this->db_prefix('imagebody');
 
         //  $constpref = strtoupper( '_C_' . $dirname. '_' ) ;
         //  $this->set_debug_sql_by_const_name(   $constpref.'DEBUG_SQL' );
         //  $this->set_debug_error_by_const_name( $constpref.'DEBUG_ERROR' );
     }
 
+    /**
+     * @return \webphoto_lib_error|\webphoto_xoops_image_handler
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_xoops_image_handler();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
@@ -56,6 +64,11 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
     // image_weight smallint(5) unsigned NOT NULL default '0',
     // imgcat_id smallint(5) unsigned NOT NULL default '0',
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function insert_image($row)
     {
         extract($row);
@@ -81,6 +94,11 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
     // image_id mediumint(8) unsigned NOT NULL default '0',
     // image_body mediumblob,
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function insert_body($row)
     {
         extract($row);
@@ -100,13 +118,24 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
     //---------------------------------------------------------
     // category
     //---------------------------------------------------------
+
+    /**
+     * @param $id
+     * @return bool
+     */
     public function get_category_row_by_id($id)
     {
         $sql = 'SELECT * FROM ' . $this->_category_table;
         $sql .= ' WHERE imgcat_id=' . (int)$id;
+
         return $this->get_row_by_sql($sql);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_category_rows_with_image_count($limit = 0, $offset = 0)
     {
         $sql = 'SELECT c.*, COUNT(i.image_id) AS image_sum ';
@@ -114,33 +143,54 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
         $sql .= 'NATURAL LEFT JOIN ' . $this->_image_table . ' i ';
         $sql .= 'GROUP BY c.imgcat_id ';
         $sql .= 'ORDER BY c.imgcat_weight, c.imgcat_id';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // image
     //---------------------------------------------------------
+
+    /**
+     * @param     $catid
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_image_rows_by_catid($catid, $limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_image_table;
         $sql .= ' WHERE imgcat_id=' . (int)$catid;
         $sql .= ' ORDER BY image_id';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // body
     //---------------------------------------------------------
+
+    /**
+     * @param $image_id
+     * @return bool
+     */
     public function get_body_row_by_imageid($image_id)
     {
         $sql = 'SELECT * FROM ' . $this->_body_table;
         $sql .= ' WHERE image_id=' . (int)$image_id;
+
         return $this->get_row_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // category selbox
     //---------------------------------------------------------
+
+    /**
+     * @param string $name
+     * @param bool   $flag_storetype
+     * @return string
+     */
     public function build_cat_selbox($name = 'imgcat_id', $flag_storetype = true)
     {
         $cat_rows = $this->get_category_rows_with_image_count();
@@ -148,9 +198,9 @@ class webphoto_xoops_image_handler extends webphoto_lib_handler
         $str = '<select name="' . $name . '">' . "\n";
 
         foreach ($cat_rows as $row) {
-            $imgcat_id        = (int)$row['imgcat_id'];
-            $image_sum        = (int)$row['image_sum'];
-            $imgcat_name_s    = $this->sanitize($row['imgcat_name']);
+            $imgcat_id = (int)$row['imgcat_id'];
+            $image_sum = (int)$row['image_sum'];
+            $imgcat_name_s = $this->sanitize($row['imgcat_name']);
             $imgcat_storetype = $row['imgcat_storetype'];
 
             $str .= '<option value="' . $imgcat_id . '">';

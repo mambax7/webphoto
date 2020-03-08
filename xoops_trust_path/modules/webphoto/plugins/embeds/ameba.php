@@ -18,15 +18,17 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // <script language="JavaScript" type="text/JavaScript"
 // src="http://visionmovie.ameba.jp/mcj.php?id=XXX&width=320&height=240&skin=gray"></script>
 //
-// <meta name="keywords" content="ピグ,裏技,透明人間,動画" />
+// <meta name="keywords" content="ピグ,裏技,透明人間,動画" >
 //
 //=========================================================
 
+/**
+ * Class webphoto_embed_ameba
+ */
 class webphoto_embed_ameba extends webphoto_embed_base
 {
-
     // this word is written by UTF-8
-    public $_TAGS_REMOVE = array('動画');
+    public $_TAGS_REMOVE = ['動画'];
 
     public function __construct()
     {
@@ -35,6 +37,12 @@ class webphoto_embed_ameba extends webphoto_embed_base
         $this->set_sample('1726761');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return bool|null|string
+     */
     public function embed($src, $width, $height)
     {
         $item = $this->get_xml_item($src);
@@ -48,24 +56,38 @@ class webphoto_embed_ameba extends webphoto_embed_base
         }
 
         $str = $this->build_embed_script($url, $width, $height);
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return int
+     */
     public function width()
     {
         return 320;
     }
 
+    /**
+     * @return int
+     */
     public function height()
     {
         return 240;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();
@@ -74,11 +96,19 @@ class webphoto_embed_ameba extends webphoto_embed_base
     //---------------------------------------------------------
     // xml
     //---------------------------------------------------------
+
+    /**
+     * @return array|null
+     */
     public function support_params()
     {
         return $this->build_support_params();
     }
 
+    /**
+     * @param $src
+     * @return array|bool|null
+     */
     public function get_xml_params($src)
     {
         $item = $this->get_xml_item($src);
@@ -86,64 +116,94 @@ class webphoto_embed_ameba extends webphoto_embed_base
             return false;
         }
 
-        $arr = array(
-            'title'       => $this->get_xml_title($item),
+        $arr = [
+            'title' => $this->get_xml_title($item),
             'description' => $this->get_xml_description($item),
-            'url'         => $this->get_xml_url($item),
-            'thumb'       => $this->get_xml_thumb($item),
-            'duration'    => $this->get_xml_duration($item),
-            'tags'        => $this->get_xml_tags($src),
-            'script'      => $this->get_xml_script($item),
-        );
+            'url' => $this->get_xml_url($item),
+            'thumb' => $this->get_xml_thumb($item),
+            'duration' => $this->get_xml_duration($item),
+            'tags' => $this->get_xml_tags($src),
+            'script' => $this->get_xml_script($item),
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param $src
+     * @return bool
+     */
     public function get_xml_item($src)
     {
-        $url  = 'http://vision.ameba.jp/api/get/detailMovie.do?movie=' . $src;
+        $url = 'http://vision.ameba.jp/api/get/detailMovie.do?movie=' . $src;
         $cont = $this->get_remote_file($url);
         if (empty($cont)) {
             return false;
         }
 
-        $xml   = $this->get_simplexml($cont);
+        $xml = $this->get_simplexml($cont);
         $error = trim($this->get_obj_property($xml, 'error'));
         if ($error) {
             return false;
         }
 
         $item = $this->get_obj_property($xml, 'item');
+
         return $item;
     }
 
+    /**
+     * @param $item
+     * @return bool|null|string|string[]
+     */
     public function get_xml_title($item)
     {
         $str = $this->get_obj_property($item, 'title');
         $str = $this->convert_from_utf8((string)$str);
+
         return $str;
     }
 
+    /**
+     * @param $item
+     * @return bool|null|string|string[]
+     */
     public function get_xml_description($item)
     {
         $str = $this->get_obj_property($item, 'description');
         $str = $this->convert_from_utf8((string)$str);
+
         return $str;
     }
 
+    /**
+     * @param $item
+     * @return bool|string
+     */
     public function get_xml_url($item)
     {
         $str = $this->get_obj_property($item, 'link');
         $str = (string)$str;
+
         return $str;
     }
 
+    /**
+     * @param $item
+     * @return bool|string
+     */
     public function get_xml_thumb($item)
     {
         $str = $this->get_obj_property($item, 'imageUrlLarge');
         $str = (string)$str;
+
         return $str;
     }
 
+    /**
+     * @param $item
+     * @return bool|float|int
+     */
     public function get_xml_duration($item)
     {
         $str = $this->get_obj_property($item, 'playTimeSecond');
@@ -152,12 +212,17 @@ class webphoto_embed_ameba extends webphoto_embed_base
             return false;
         }
         $ret = ($arr[0] * 60) + $arr[1];
+
         return $ret;
     }
 
+    /**
+     * @param $src
+     * @return array|bool
+     */
     public function get_xml_tags($src)
     {
-        $url  = $this->build_link($src);
+        $url = $this->build_link($src);
         $tags = $this->get_remote_meta_tags($url);
         if (!isset($tags['keywords'])) {
             return false;
@@ -167,9 +232,14 @@ class webphoto_embed_ameba extends webphoto_embed_base
         $arr = $this->str_to_array($str, ',');
         $arr = $this->array_remove($arr, $this->_TAGS_REMOVE);
         $arr = $this->convert_array_from_utf8($arr);
+
         return $arr;
     }
 
+    /**
+     * @param $item
+     * @return bool|null
+     */
     public function get_xml_script($item)
     {
         $url = $this->get_xml_script_src($item);
@@ -178,22 +248,35 @@ class webphoto_embed_ameba extends webphoto_embed_base
         }
 
         $str = $this->build_embed_script_with_repalce($url);
+
         return $str;
     }
 
+    /**
+     * @param $item
+     * @return bool|string
+     */
     public function get_xml_script_src($item)
     {
         $player = $this->get_obj_property($item, 'player');
         $script = $this->get_obj_property($player, 'script');
-        $str    = $this->get_obj_attributes($script, 'src');
-        $str    = (string)$str;
+        $str = $this->get_obj_attributes($script, 'src');
+        $str = (string)$str;
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function build_embed_script($src, $width, $height)
     {
         $url = $src . '&width=' . $width . '&height=' . $height . '&skin=gray';
         $str = $this->build_script($url);
+
         return $str;
     }
 

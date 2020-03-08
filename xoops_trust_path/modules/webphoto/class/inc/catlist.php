@@ -27,9 +27,13 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_catlist
 //=========================================================
+
+/**
+ * Class webphoto_inc_catlist
+ */
 class webphoto_inc_catlist extends webphoto_inc_base_ini
 {
-    public $_xoops_tree_handler;
+    public $_xoops_treeHandler;
     public $_table_cat;
     public $_table_item;
 
@@ -43,28 +47,34 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
 
     public $_CATS_URL = null;
 
-    public $_CAT_ORDER   = 'cat_weight ASC, cat_title ASC, cat_id ASC';
+    public $_CAT_ORDER = 'cat_weight ASC, cat_title ASC, cat_id ASC';
     public $_PREFIX_NAME = 'prefix';
     public $_PREFIX_MARK = '.';
-    public $_PREFIX_BAR  = '--';
+    public $_PREFIX_BAR = '--';
 
-    public $_CAT_ID_NAME  = 'cat_id';
+    public $_CAT_ID_NAME = 'cat_id';
     public $_SUMMARY_TAIL = '';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_catlist constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
         $this->_init_xoops_config($dirname);
 
-        $this->_table_cat  = $this->prefix_dirname('cat');
+        $this->_table_cat = $this->prefix_dirname('cat');
         $this->_table_item = $this->prefix_dirname('item');
 
-        $this->_xoops_tree_handler = new XoopsTree($this->_table_cat, $this->_CAT_ID_NAME, 'cat_pid');
+        $this->_xoops_treeHandler = new XoopsTree($this->_table_cat, $this->_CAT_ID_NAME, 'cat_pid');
 
         $this->_myts = MyTextSanitizer::getInstance();
 
@@ -73,12 +83,18 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         $this->_CATS_URL = XOOPS_URL . $this->_cfg_uploadspath . '/categories';
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_catlist($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
@@ -86,34 +102,53 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     // top category
     // webphoto_inc_xoops_version
     //---------------------------------------------------------
+
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_top_cat_rows($limit = 0, $offset = 0)
     {
         $name_perm = $this->_get_name_perm();
+
         return $this->_get_cat_rows_by_pid_order_perm(0, $this->_CAT_ORDER, $name_perm, $limit, $offset);
     }
 
+    /**
+     * @return string
+     */
     public function _get_name_perm()
     {
         $str = '';
         if ($this->_is_perm_cat_read_no_cat()) {
             $str = 'cat_perm_read';
         }
+
         return $str;
     }
 
+    /**
+     * @return bool
+     */
     public function _is_perm_cat_read_all()
     {
-        if ($this->_cfg_perm_cat_read == _C_WEBPHOTO_OPT_PERM_READ_ALL) {
+        if (_C_WEBPHOTO_OPT_PERM_READ_ALL == $this->_cfg_perm_cat_read) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function _is_perm_cat_read_no_cat()
     {
-        if ($this->_cfg_perm_cat_read == _C_WEBPHOTO_OPT_PERM_READ_NO_CAT) {
+        if (_C_WEBPHOTO_OPT_PERM_READ_NO_CAT == $this->_cfg_perm_cat_read) {
             return true;
         }
+
         return false;
     }
 
@@ -121,6 +156,11 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     // cat list
     // webphoto_inc_blocks webphoto_category
     //---------------------------------------------------------
+
+    /**
+     * @param $cols
+     * @return array
+     */
     public function calc_width($cols)
     {
         if ($cols <= 0) {
@@ -132,18 +172,23 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
             $width = 1;
         }
 
-        return array($cols, $width);
+        return [$cols, $width];
     }
 
+    /**
+     * @param $parent_id
+     * @param $flag_sub
+     * @return array
+     */
     public function build_catlist($parent_id, $flag_sub)
     {
-        $catlist = array();
+        $catlist = [];
 
         $name_perm = $this->_get_name_perm();
-        $rows      = $this->_get_cat_rows_by_pid_order_perm($parent_id, $this->_CAT_ORDER, $name_perm);
+        $rows = $this->_get_cat_rows_by_pid_order_perm($parent_id, $this->_CAT_ORDER, $name_perm);
 
         if (!is_array($rows) || !count($rows)) {
-            return array();
+            return [];
         }
 
         foreach ($rows as $row) {
@@ -161,17 +206,22 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $catlist;
     }
 
+    /**
+     * @param $cat_row
+     * @param $flag_shub
+     * @return array
+     */
     public function _build_subcat($cat_row, $flag_shub)
     {
-        $subcat = array();
+        $subcat = [];
 
         if (!$flag_shub) {
-            return array();
+            return [];
         }
 
         $rows = $this->_get_cat_first_child_rows_perm($cat_row);
         if (!is_array($rows) || !count($rows)) {
-            return array();
+            return [];
         }
 
         foreach ($rows as $row) {
@@ -190,6 +240,11 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     }
 
     // show main
+
+    /**
+     * @param $cat_row
+     * @return mixed
+     */
     public function build_cat_show($cat_row)
     {
         $img_name = $cat_row['cat_img_name'];
@@ -199,15 +254,19 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
             $url = $this->_build_cat_img_path($cat_row);
         }
 
-        $show                = $cat_row;
+        $show = $cat_row;
         $show['cat_title_s'] = $this->sanitize($cat_row['cat_title']);
-        $show['imgurl']      = $url;
-        $show['imgurl_s']    = $this->sanitize($url);
-        $show['summary']     = $this->_build_cat_summary($cat_row['cat_description']);
+        $show['imgurl'] = $url;
+        $show['imgurl_s'] = $this->sanitize($url);
+        $show['summary'] = $this->_build_cat_summary($cat_row['cat_description']);
 
         return $show;
     }
 
+    /**
+     * @param $cat_row
+     * @return string
+     */
     public function _build_cat_img_path($cat_row)
     {
         $img_path = $cat_row['cat_img_path'];
@@ -218,15 +277,25 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         } else {
             $url = XOOPS_URL . $this->add_slash_to_head($img_path);
         }
+
         return $url;
     }
 
+    /**
+     * @param $cat_row
+     * @return int
+     */
     public function _get_photo_count_in_parent_all_children($cat_row)
     {
         $id_arr = $this->get_cat_parent_all_child_id_by_row($cat_row);
+
         return $this->_get_item_count_by_catid_array($id_arr);
     }
 
+    /**
+     * @param $cat_row
+     * @return int
+     */
     public function _get_photo_count_by_cat_row($cat_row)
     {
         if (!$this->_is_perm_cat_read_all()) {
@@ -238,11 +307,19 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $this->_get_item_count_by_catid($cat_row[$this->_CAT_ID_NAME]);
     }
 
+    /**
+     * @param $desc
+     * @return false|mixed|null|string|string[]
+     */
     public function _build_cat_summary($desc)
     {
         return $this->_multibyte_class->build_summary($this->_build_cat_desc_disp($desc), $this->_cfg_cat_summary, $this->_SUMMARY_TAIL);
     }
 
+    /**
+     * @param $desc
+     * @return mixed
+     */
     public function _build_cat_desc_disp($desc)
     {
         return $this->_myts->displayTarea($desc, 0, 1, 1, 1, 1, 1);
@@ -252,6 +329,10 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     // cat tree
     // webphoto_inc_weblinks
     //---------------------------------------------------------
+
+    /**
+     * @return array|null
+     */
     public function get_cat_titles()
     {
         $rows = $this->get_cat_all_tree_array();
@@ -259,41 +340,55 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
             return null;
         }
 
-        $arr = array();
+        $arr = [];
         foreach ($rows as $row) {
             $arr[$row['cat_id']] = $row['cat_title'];
         }
+
         return $arr;
     }
 
+    /**
+     * @return array|bool
+     */
     public function get_cat_all_tree_array()
     {
         $name_perm = $this->_get_name_perm();
+
         return $this->get_cat_all_tree_array_perm($this->_CAT_ORDER, $name_perm);
     }
 
+    /**
+     * @param $cat_id
+     * @return array|null
+     */
     public function get_cat_parent_all_child_id_by_id($cat_id)
     {
         $cat_row = $this->_get_cat_row_by_id($cat_id);
         if (is_array($cat_row)) {
             return $this->get_cat_parent_all_child_id_by_row($cat_row);
         }
+
         return null;
     }
 
+    /**
+     * @param $cat_row
+     * @return array|null
+     */
     public function get_cat_parent_all_child_id_by_row($cat_row)
     {
         if (!is_array($cat_row)) {
             return null;
         }
 
-        $cat_id    = $cat_row[$this->_CAT_ID_NAME];
+        $cat_id = $cat_row[$this->_CAT_ID_NAME];
         $name_perm = $this->_get_name_perm();
-        $tree_arr  = $this->_get_cat_child_tree_array_recusible($cat_id, $this->_CAT_ORDER, $name_perm);
+        $tree_arr = $this->_get_cat_child_tree_array_recusible($cat_id, $this->_CAT_ORDER, $name_perm);
 
         array_push($tree_arr, $cat_row);
 
-        $id_arr = array();
+        $id_arr = [];
 
         if (is_array($tree_arr) && count($tree_arr)) {
             foreach ($tree_arr as $row) {
@@ -306,13 +401,24 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $id_arr;
     }
 
+    /**
+     * @param int $cat_id
+     * @return array
+     */
     public function get_cat_all_child_tree_array($cat_id = 0)
     {
         $name_perm = $this->_get_name_perm();
+
         return $this->_get_cat_child_tree_array_recusible($cat_id, $this->_CAT_ORDER, $name_perm);
     }
 
     // XoopsTree::makeMySelBox
+
+    /**
+     * @param      $order
+     * @param null $name_perm
+     * @return array|bool
+     */
     public function get_cat_all_tree_array_perm($order, $name_perm = null)
     {
         $pid_rows = $this->_get_cat_rows_by_pid_order_perm(0, $order, $name_perm);
@@ -320,9 +426,9 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
             return false;
         }
 
-        $tree = array();
+        $tree = [];
         foreach ($pid_rows as $row) {
-            $catid                    = $row[$this->_CAT_ID_NAME];
+            $catid = $row[$this->_CAT_ID_NAME];
             $row[$this->_PREFIX_NAME] = '';
 
             $tree[] = $row;
@@ -339,6 +445,11 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // cat handler
     //---------------------------------------------------------
+
+    /**
+     * @param $cat_id
+     * @return bool
+     */
     public function get_cat_row_by_catid_perm($cat_id)
     {
         $cat_row = $this->_get_cat_row_by_id($cat_id);
@@ -348,18 +459,29 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         if (!$this->_check_cat_perm_by_cat_row($cat_row)) {
             return false;
         }
+
         return $cat_row;
     }
 
+    /**
+     * @param $cat_id
+     * @return bool
+     */
     public function check_cat_perm_by_catid($cat_id)
     {
         $cat_row = $this->_get_cat_row_by_id($cat_id);
         if (is_array($cat_row)) {
             return $this->_check_cat_perm_by_cat_row($cat_row);
         }
+
         return false;
     }
 
+    /**
+     * @param        $cat_row
+     * @param string $name_perm
+     * @return bool
+     */
     public function _check_cat_perm_by_cat_row($cat_row, $name_perm = 'cat_perm_read')
     {
         return $this->check_perm_by_row_name_groups($cat_row, $name_perm);
@@ -367,7 +489,16 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
 
     // recursible function
     // XoopsTree::getChildTreeArray
-    public function _get_cat_child_tree_array_recusible($sel_id, $order, $name_perm = null, $parray = array(), $r_prefix = '')
+
+    /**
+     * @param        $sel_id
+     * @param        $order
+     * @param null   $name_perm
+     * @param array  $parray
+     * @param string $r_prefix
+     * @return array
+     */
+    public function _get_cat_child_tree_array_recusible($sel_id, $order, $name_perm = null, $parray = [], $r_prefix = '')
     {
         $rows = $this->_get_cat_rows_by_pid_order_perm($sel_id, $order, $name_perm);
         if (!is_array($rows) || !count($rows)) {
@@ -376,19 +507,27 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
 
         foreach ($rows as $row) {
             // add mark
-            $new_r_prefix             = $r_prefix . $this->_PREFIX_MARK;
+            $new_r_prefix = $r_prefix . $this->_PREFIX_MARK;
             $row[$this->_PREFIX_NAME] = $new_r_prefix;
 
             array_push($parray, $row);
 
             // recursible call
             $new_sel_id = $row[$this->_CAT_ID_NAME];
-            $parray     = $this->_get_cat_child_tree_array_recusible($new_sel_id, $order, $name_perm, $parray, $new_r_prefix);
+            $parray = $this->_get_cat_child_tree_array_recusible($new_sel_id, $order, $name_perm, $parray, $new_r_prefix);
         }
 
         return $parray;
     }
 
+    /**
+     * @param      $pid
+     * @param      $order
+     * @param null $name_perm
+     * @param int  $limit
+     * @param int  $offset
+     * @return array|bool
+     */
     public function _get_cat_rows_by_pid_order_perm($pid, $order, $name_perm = null, $limit = 0, $offset = 0)
     {
         $rows = $this->_get_cat_rows_by_pid_order($pid, $order, $limit, $offset);
@@ -397,7 +536,7 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         }
 
         if ($name_perm) {
-            $arr = array();
+            $arr = [];
             foreach ($rows as $row) {
                 if ($this->_check_cat_perm_by_cat_row($row, $name_perm)) {
                     $arr[] = $row;
@@ -410,6 +549,13 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $arr;
     }
 
+    /**
+     * @param     $pid
+     * @param     $order
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function _get_cat_rows_by_pid_order($pid, $order, $limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_table_cat;
@@ -419,16 +565,20 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
+    /**
+     * @param $cat_row
+     * @return array
+     */
     public function _get_cat_first_child_rows_perm($cat_row)
     {
-        $rows = $this->_xoops_tree_handler->getFirstChild($cat_row[$this->_CAT_ID_NAME], $this->_CAT_ORDER);
+        $rows = $this->_xoops_treeHandler->getFirstChild($cat_row[$this->_CAT_ID_NAME], $this->_CAT_ORDER);
 
         if (!is_array($rows) || !count($rows)) {
-            return array();
+            return [];
         }
 
         if ($this->_is_perm_cat_read_no_cat()) {
-            $arr = array();
+            $arr = [];
             foreach ($rows as $row) {
                 if ($this->_check_cat_perm_by_cat_row($row)) {
                     $arr[] = $row;
@@ -441,26 +591,40 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $rows;
     }
 
+    /**
+     * @param $cat_row
+     * @return int
+     */
     public function _get_cat_count_first_child_perm($cat_row)
     {
         $rows = $this->_get_cat_first_child_rows_perm($cat_row);
         if (is_array($rows)) {
             return count($rows);
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function _get_cat_row_by_id($id)
     {
         $sql = 'SELECT * FROM ' . $this->_table_cat;
         $sql .= ' WHERE cat_id=' . $id;
+
         return $this->get_row_by_sql($sql);
     }
 
     //---------------------------------------------------------
     // item handler
     //---------------------------------------------------------
+
+    /**
+     * @param $cat_id
+     * @return int
+     */
     public function _get_item_count_by_catid($cat_id)
     {
         $where = $this->build_where_public_with_item();
@@ -469,6 +633,10 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
         return $this->get_item_count_by_where($where);
     }
 
+    /**
+     * @param $catid_array
+     * @return int
+     */
     public function _get_item_count_by_catid_array($catid_array)
     {
         if (!is_array($catid_array) || !count($catid_array)) {
@@ -487,14 +655,18 @@ class webphoto_inc_catlist extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // xoops_config
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     */
     public function _init_xoops_config($dirname)
     {
-        $config_handler = webphoto_inc_config::getSingleton($dirname);
+        $configHandler = webphoto_inc_config::getSingleton($dirname);
 
-        $this->_cfg_uploadspath    = $config_handler->get_path_by_name('uploadspath');
-        $this->_cfg_perm_cat_read  = $config_handler->get_by_name('perm_cat_read');
-        $this->_cfg_perm_item_read = $config_handler->get_by_name('perm_item_read');
-        $this->_cfg_cat_summary    = $config_handler->get_by_name('cat_summary');
+        $this->_cfg_uploadspath = $configHandler->get_path_by_name('uploadspath');
+        $this->_cfg_perm_cat_read = $configHandler->get_by_name('perm_cat_read');
+        $this->_cfg_perm_item_read = $configHandler->get_by_name('perm_item_read');
+        $this->_cfg_cat_summary = $configHandler->get_by_name('cat_summary');
     }
 
     // --- class end ---

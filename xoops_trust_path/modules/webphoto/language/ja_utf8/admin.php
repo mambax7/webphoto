@@ -77,7 +77,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     define('_AM_WEBPHOTO_ERR_SAMEDIR', 'エラー: 写真・動画・メディア用ディレクトリとサムネイル用ディレクトリが一緒です。（その設定は不可能です）');
     define('_AM_WEBPHOTO_LNK_CHECKGD2', 'GD2(truecolor)モードが動くかどうかのチェック');
     define('_AM_WEBPHOTO_CHECKGD2', '（このリンク先が正常に表示されなければ、GD2モードでは動かないものと諦めてください）');
-    define('_AM_WEBPHOTO_GD2SUCCESS', '成功しました!<br />おそらく、このサーバのPHPでは、GD2(true color)モードで画像を生成可能です。');
+    define('_AM_WEBPHOTO_GD2SUCCESS', '成功しました!<br>おそらく、このサーバのPHPでは、GD2(true color)モードで画像を生成可能です。');
 
     define('_AM_WEBPHOTO_H4_PHOTOLINK', '写真・動画・メディアとサムネイルのリンクチェック');
     define('_AM_WEBPHOTO_NOWCHECKING', 'チェック中 .');
@@ -282,7 +282,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     // manage
     //---------------------------------------------------------
-    define('_AM_WEBPHOTO_MANAGE_DESC', '<b>注意</b><br />テーブル単体の管理です<br />関連するテーブルは変更されません');
+    define('_AM_WEBPHOTO_MANAGE_DESC', '<b>注意</b><br>テーブル単体の管理です<br>関連するテーブルは変更されません');
     define('_AM_WEBPHOTO_ERR_NO_RECORD', 'データが存在しない');
 
     //---------------------------------------------------------
@@ -297,7 +297,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     //---------------------------------------------------------
     define('_AM_WEBPHOTO_PATHINFO_LINK', 'Pathinfo が動くかどうかのチェック');
     define('_AM_WEBPHOTO_PATHINFO_DSC', '（このリンク先が正常に表示されなければ、Pathinfo が動かないものと諦めてください）');
-    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', '成功しました!<br />おそらく、このサーバでは、Pathinfo が使用できます');
+    define('_AM_WEBPHOTO_PATHINFO_SUCCESS', '成功しました!<br>おそらく、このサーバでは、Pathinfo が使用できます');
     define('_AM_WEBPHOTO_CAP_REDO_EXIF', 'Exif の取得');
     define('_AM_WEBPHOTO_RADIO_REDO_EXIF_TRY', '設定されていないときに取得');
     define('_AM_WEBPHOTO_RADIO_REDO_EXIF_ALWAYS', '常に取得する');
@@ -387,7 +387,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_DSC', '最初に変更を保存してください！');
     define('_AM_WEBPHOTO_PLAYER_PREVIEW_LINK', 'プレビューのソース');
     define('_AM_WEBPHOTO_PLAYER_NO_ITEM', '再生するアイテムがありません');
-    define('_AM_WEBPHOTO_PLAYER_WARNING', '[警告] プレイヤーを削除してもいいですか？ <br />削除する前に、このプイヤーを使用している全てのアイテムを手動で変更してください。');
+    define('_AM_WEBPHOTO_PLAYER_WARNING', '[警告] プレイヤーを削除してもいいですか？ <br>削除する前に、このプイヤーを使用している全てのアイテムを手動で変更してください。');
     define('_AM_WEBPHOTO_PLAYER_ERR_EXIST', '[エラー] 同じ名前のプレイヤーが存在しています！');
     define('_AM_WEBPHOTO_BUTTON_CLONE', '複製');
 
@@ -470,7 +470,7 @@ if (!defined('_AM_WEBPHOTO_LANG_LOADED')) {
     define('_AM_WEBPHOTO_INVITE_NAME', 'あなたのお名前');
     define('_AM_WEBPHOTO_INVITE_MESSAGE', 'メッセージ');
     define('_AM_WEBPHOTO_INVITE_SUBMIT', '招待する');
-    define('_AM_WEBPHOTO_INVITE_EXAMPLE', '例：こんにちは、○○です。この前話したサイトの招待状を送ります。<br />△△さんもぜひ登録してみてください。');
+    define('_AM_WEBPHOTO_INVITE_EXAMPLE', '例：こんにちは、○○です。この前話したサイトの招待状を送ります。<br>△△さんもぜひ登録してみてください。');
     define('_AM_WEBPHOTO_INVITE_SUBJECT', '%s さんから %s への招待状が届いています');
     define('_AM_WEBPHOTO_INVITE_ERR_NO_NAME', '名前がない');
 

@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_create_file_list
 //=========================================================
+
+/**
+ * Class webphoto_admin_create_file_list
+ */
 class webphoto_admin_create_file_list extends webphoto_base_this
 {
     public $_file_class;
@@ -20,6 +24,12 @@ class webphoto_admin_create_file_list extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_create_file_list constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -27,12 +37,18 @@ class webphoto_admin_create_file_list extends webphoto_base_this
         $this->_file_class = webphoto_lib_file_check::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_create_file_list|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_create_file_list($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -52,13 +68,20 @@ class webphoto_admin_create_file_list extends webphoto_base_this
         exit();
     }
 
+    /**
+     * @param $name
+     */
     public function create_list($name)
     {
         echo '<h4>' . $name . "</h4>\n";
         $data = $this->_file_class->create_list($name);
-        echo nl2br($data) . '<br />';
+        echo nl2br($data) . '<br>';
     }
 
+    /**
+     * @param $name
+     * @param $data
+     */
     public function write_file($name, $data)
     {
         $file = XOOPS_TRUST_PATH . '/tmp/' . $this->_TRUST_DIRNAME . '_check_' . $name . '.txt';

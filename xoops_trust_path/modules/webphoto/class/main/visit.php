@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_visit
 //=========================================================
+
+/**
+ * Class webphoto_main_visit
+ */
 class webphoto_main_visit extends webphoto_item_public
 {
     public $_post_class;
@@ -28,6 +32,12 @@ class webphoto_main_visit extends webphoto_item_public
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_visit constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -35,12 +45,18 @@ class webphoto_main_visit extends webphoto_item_public
         $this->_post_class = webphoto_lib_post::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_item_public|\webphoto_lib_error|\webphoto_main_visit
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_main_visit($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -49,7 +65,7 @@ class webphoto_main_visit extends webphoto_item_public
     //---------------------------------------------------------
     public function main()
     {
-        $item_id  = $this->_post_class->get_get_int('item_id');
+        $item_id = $this->_post_class->get_get_int('item_id');
         $item_row = $this->get_item_row($item_id);
         if (!is_array($item_row)) {
             exit();
@@ -57,8 +73,8 @@ class webphoto_main_visit extends webphoto_item_public
 
         $this->_item_handler->countup_hits($item_id, true);
 
-        $siteurl   = $item_row['item_siteurl'];
-        $siteurl   = preg_replace('/javascript:/si', 'java script:', $siteurl);
+        $siteurl = $item_row['item_siteurl'];
+        $siteurl = preg_replace('/javascript:/si', 'java script:', $siteurl);
         $siteurl_s = $this->sanitize($siteurl);
 
         if ($this->_FLAG_REDIRECT) {

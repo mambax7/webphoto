@@ -16,17 +16,20 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // http://www.ustream.tv/recorded/6501293
 //
 // <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="320" height="260" id="utv605411" name="utv_n_329299">
-// <param name="flashvars" value="autoplay=false" />
-// <param name="allowfullscreen" value="true" />
-// <param name="allowscriptaccess" value="always" />
-// <param name="src" value="http://www.ustream.tv/flash/video/6501293" />
-// <embed flashvars="autoplay=false" width="320" height="260" allowfullscreen="true" allowscriptaccess="always" id="utv605411" name="utv_n_329299" src="http://www.ustream.tv/flash/video/6501293" type="application/x-shockwave-flash" />
+// <param name="flashvars" value="autoplay=false" >
+// <param name="allowfullscreen" value="true" >
+// <param name="allowscriptaccess" value="always" >
+// <param name="src" value="http://www.ustream.tv/flash/video/6501293" >
+// <embed flashvars="autoplay=false" width="320" height="260" allowfullscreen="true" allowscriptaccess="always" id="utv605411" name="utv_n_329299" src="http://www.ustream.tv/flash/video/6501293" type="application/x-shockwave-flash" >
 // </object>
 
 //=========================================================
+
+/**
+ * Class webphoto_embed_ustream
+ */
 class webphoto_embed_ustream extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('ustream');
@@ -34,12 +37,18 @@ class webphoto_embed_ustream extends webphoto_embed_base
         $this->set_sample('6996774');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
         $movie = 'http://www.ustream.tv/flash/video/' . $src;
 
-        $flashvars         = 'autoplay=false';
-        $allowfullscreen   = 'true';
+        $flashvars = 'autoplay=false';
+        $allowfullscreen = 'true';
         $allowscriptaccess = 'always';
 
         $obj_extra = 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
@@ -54,24 +63,38 @@ class webphoto_embed_ustream extends webphoto_embed_base
         $str .= $this->build_param('allowscriptaccess', $allowscriptaccess);
         $str .= $this->build_embed_flash($movie, $width, $height, $embed_extra);
         $str .= $this->build_object_end();
+
         return $str;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return int
+     */
     public function width()
     {
         return 320;
     }
 
+    /**
+     * @return int
+     */
     public function height()
     {
         return 260;
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();
@@ -80,20 +103,28 @@ class webphoto_embed_ustream extends webphoto_embed_base
     //---------------------------------------------------------
     // xml
     //---------------------------------------------------------
+
+    /**
+     * @return array|null
+     */
     public function support_params()
     {
         return $this->build_support_params();
     }
 
+    /**
+     * @param $src
+     * @return array|bool|null
+     */
     public function get_xml_params($src)
     {
-        $url  = 'http://api.ustream.tv/xml/video/' . $src . '/getinfo';
+        $url = 'http://api.ustream.tv/xml/video/' . $src . '/getinfo';
         $cont = $this->get_remote_file($url);
         if (empty($cont)) {
             return false;
         }
 
-        $xml   = $this->get_simplexml($cont);
+        $xml = $this->get_simplexml($cont);
         $error = trim($this->get_obj_property($xml, 'error'));
         if ($error) {
             return false;
@@ -104,68 +135,103 @@ class webphoto_embed_ustream extends webphoto_embed_base
             return false;
         }
 
-        $arr = array(
-            'title'       => $this->get_xml_title($results),
+        $arr = [
+            'title' => $this->get_xml_title($results),
             'description' => $this->get_xml_description($results),
-            'url'         => $this->get_xml_url($results),
-            'thumb'       => $this->get_xml_thumb($results),
-            'duration'    => $this->get_xml_duration($results),
-            'tags'        => $this->get_xml_tags($results),
-            'script'      => $this->get_xml_script($results),
+            'url' => $this->get_xml_url($results),
+            'thumb' => $this->get_xml_thumb($results),
+            'duration' => $this->get_xml_duration($results),
+            'tags' => $this->get_xml_tags($results),
+            'script' => $this->get_xml_script($results),
+        ];
 
-        );
         return $arr;
     }
 
+    /**
+     * @param $results
+     * @return bool|null|string|string[]
+     */
     public function get_xml_title($results)
     {
         $str = $this->get_obj_property($results, 'title');
         $str = $this->convert_from_utf8((string)$str);
+
         return $str;
     }
 
+    /**
+     * @param $results
+     * @return bool|null|string|string[]
+     */
     public function get_xml_description($results)
     {
         $str = $this->get_obj_property($results, 'description');
         $str = $this->convert_from_utf8((string)$str);
+
         return $str;
     }
 
+    /**
+     * @param $results
+     * @return bool|string
+     */
     public function get_xml_url($results)
     {
         $str = $this->get_obj_property($results, 'url');
         $str = (string)$str;
+
         return $str;
     }
 
+    /**
+     * @param $results
+     * @return bool|string
+     */
     public function get_xml_thumb($results)
     {
         $url = $this->get_obj_property($results, 'imageUrl');
         $str = $this->get_obj_property($url, 'small');
         $str = (string)$str;
+
         return $str;
     }
 
+    /**
+     * @param $results
+     * @return bool|float
+     */
     public function get_xml_duration($results)
     {
         $str = $this->get_obj_property($results, 'lengthInSecond');
         $str = floor($str);
+
         return $str;
     }
 
+    /**
+     * @param $results
+     * @return array|bool
+     */
     public function get_xml_tags($results)
     {
         $tags = $this->get_obj_property($results, 'tags');
-        $arr  = $this->get_obj_property($tags, 'array');
-        $arr  = $this->obj_array_to_str_array($arr);
-        $arr  = $this->convert_array_from_utf8($arr);
+        $arr = $this->get_obj_property($tags, 'array');
+        $arr = $this->obj_array_to_str_array($arr);
+        $arr = $this->convert_array_from_utf8($arr);
+
         return $arr;
     }
 
+    /**
+     * @param $results
+     * @return bool|null|string|string[]
+     */
     public function get_xml_script($results)
     {
         $str = $this->get_obj_property($results, 'embedTag');
         $str = $this->replace_width_height($str);
+
         return $str;
     }
 

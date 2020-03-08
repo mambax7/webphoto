@@ -24,7 +24,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -32,7 +32,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_BL_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_BL_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (!defined($constpref . 'LANG_LOADED')) {
@@ -50,7 +50,7 @@ if (!defined($constpref . 'LANG_LOADED')) {
     define($constpref . 'TEXT_CATLIMITATION', 'Limit by category');
 
     // v2.30
-    define($constpref . 'TEXT_CATLIMITRECURSIVE', "with Sub-categories<br />Valid when set 'Limit by category' ");
+    define($constpref . 'TEXT_CATLIMITRECURSIVE', "with Sub-categories<br>Valid when set 'Limit by category' ");
 
     define($constpref . 'TEXT_BLOCK_WIDTH', 'Displays max');
     define($constpref . 'TEXT_BLOCK_WIDTH_NOTES', '(if you set this to 0, the thumbnail image displays in its original size.)');

@@ -23,56 +23,77 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // refer myalubum's MyXoopsGroupPermForm
 //=========================================================
 
+/**
+ * Class webphoto_lib_groupperm_form
+ */
 class webphoto_lib_groupperm_form
 {
-    public $_module_handler;
-    public $_member_handler;
-    public $_groupperm_handler;
+    public $_moduleHandler;
+    public $_memberHandler;
+    public $_grouppermHandler;
 
-    public $_CHECKED = 'checked="checked"';
+    public $_CHECKED = 'checked';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
     public function __construct()
     {
-        $this->_module_handler    = xoops_getHandler('module');
-        $this->_member_handler    = xoops_getHandler('member');
-        $this->_groupperm_handler = xoops_getHandler('groupperm');
+        $this->_moduleHandler = xoops_getHandler('module');
+        $this->_memberHandler = xoops_getHandler('member');
+        $this->_grouppermHandler = xoops_getHandler('groupperm');
     }
 
+    /**
+     * @return \webphoto_lib_groupperm_form
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_groupperm_form();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // main
     //---------------------------------------------------------
+
+    /**
+     * @param      $mod_id
+     * @param null $action
+     * @return array
+     */
     public function build_param($mod_id, $action = null)
     {
-        $arr = array(
-            'cols'          => 4,
-            'modid'         => $mod_id,
-            'action'        => $action,
-            'g_ticket'      => $this->get_token(),
+        $arr = [
+            'cols' => 4,
+            'modid' => $mod_id,
+            'action' => $action,
+            'g_ticket' => $this->get_token(),
             'xoops_dirname' => $this->get_dirname($mod_id),
-        );
+        ];
         if (defined('XOOPS_CUBE_LEGACY')) {
             $arr['xoops_cube_legacy'] = XOOPS_CUBE_LEGACY;
         }
+
         return array_merge($arr, $this->get_lang());
     }
 
+    /**
+     * @param      $mod_id
+     * @param      $perm_name
+     * @param      $item_array
+     * @param bool $flag_admin
+     * @return array
+     */
     public function build_group_list($mod_id, $perm_name, $item_array, $flag_admin = false)
     {
-        $system_list = $this->_member_handler->getGroupList();
+        $system_list = $this->_memberHandler->getGroupList();
 
-        $group_list = array();
+        $group_list = [];
         foreach (array_keys($system_list) as $id) {
             $group_list[$id] = $this->build_group_list_single($mod_id, $id, $system_list[$id], $perm_name, $item_array, $flag_admin);
         }
@@ -80,41 +101,62 @@ class webphoto_lib_groupperm_form
         return $group_list;
     }
 
+    /**
+     * @param      $mod_id
+     * @param      $group_id
+     * @param      $group_name
+     * @param      $perm_name
+     * @param      $item_array
+     * @param bool $flag_admin
+     * @return array
+     */
     public function build_group_list_single($mod_id, $group_id, $group_name, $perm_name, $item_array, $flag_admin = false)
     {
         $module_admin_right = $this->check_right('module_admin', $mod_id, $group_id);
-        $module_read_right  = $this->check_right('module_read', $mod_id, $group_id);
+        $module_read_right = $this->check_right('module_read', $mod_id, $group_id);
 
         $all_checked = ($flag_admin && $module_admin_right);
 
-        $item_id_array = $this->_groupperm_handler->getItemIds($perm_name, $group_id, $mod_id);
+        $item_id_array = $this->_grouppermHandler->getItemIds($perm_name, $group_id, $mod_id);
 
-        $item_list = array();
+        $item_list = [];
         foreach ($item_array as $item_id => $item_name) {
-            $item_list[$item_id] = array(
-                'item_id'   => $item_id,
+            $item_list[$item_id] = [
+                'item_id' => $item_id,
                 'item_name' => $item_name,
-                'checked'   => $this->build_checked_array($item_id, $item_id_array, $all_checked),
-            );
+                'checked' => $this->build_checked_array($item_id, $item_id_array, $all_checked),
+            ];
         }
 
-        $group_list = array(
-            'group_id'             => $group_id,
-            'group_name'           => $group_name,
-            'perm_name'            => $perm_name,
-            'item_list'            => $item_list,
+        $group_list = [
+            'group_id' => $group_id,
+            'group_name' => $group_name,
+            'perm_name' => $perm_name,
+            'item_list' => $item_list,
             'module_admin_checked' => $this->build_checked($module_admin_right),
-            'module_read_checked'  => $this->build_checked($module_read_right),
-        );
+            'module_read_checked' => $this->build_checked($module_read_right),
+        ];
 
         return $group_list;
     }
 
+    /**
+     * @param $perm_name
+     * @param $mod_id
+     * @param $group_id
+     * @return mixed
+     */
     public function check_right($perm_name, $mod_id, $group_id)
     {
-        return $this->_groupperm_handler->checkRight($perm_name, $mod_id, $group_id);
+        return $this->_grouppermHandler->checkRight($perm_name, $mod_id, $group_id);
     }
 
+    /**
+     * @param $val
+     * @param $array
+     * @param $all_checked
+     * @return string
+     */
     public function build_checked_array($val, $array, $all_checked)
     {
         if ($all_checked) {
@@ -123,52 +165,76 @@ class webphoto_lib_groupperm_form
         if (is_array($array) && in_array($val, $array)) {
             return $this->_CHECKED;
         }
+
         return '';
     }
 
+    /**
+     * @param $val
+     * @return string
+     */
     public function build_checked($val)
     {
         if ($val) {
             return $this->_CHECKED;
         }
+
         return '';
     }
 
+    /**
+     * @param $id
+     * @return bool|mixed
+     */
     public function get_dirname($id)
     {
-        $obj = $this->_module_handler->get($id);
+        $obj = $this->_moduleHandler->get($id);
         if (is_object($obj)) {
             return $obj->getVar('dirname', 'n');
         }
+
         return false;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function get_group_name($id)
     {
-        $obj = $this->_member_handler->getGroup($id);
+        $obj = $this->_memberHandler->getGroup($id);
         if (is_object($obj)) {
             return $obj->getVar('name');
         }
+
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function get_token()
     {
         global $xoopsGTicket;
         if (is_object($xoopsGTicket)) {
             return $xoopsGTicket->issue(__LINE__);
         }
+
         return false;
     }
 
+    /**
+     * @return array
+     */
     public function get_lang()
     {
-        $arr = array(
-            'lang_none'   => _NONE,
-            'lang_all'    => _ALL,
+        $arr = [
+            'lang_none' => _NONE,
+            'lang_all' => _ALL,
             'lang_submit' => _SUBMIT,
             'lang_cancel' => _CANCEL,
-        );
+        ];
+
         return $arr;
     }
 

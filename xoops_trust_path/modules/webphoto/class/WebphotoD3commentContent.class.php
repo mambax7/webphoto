@@ -14,9 +14,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // WebphotoD3commentContent
 // a class for d3forum comment integration
 //=========================================================
+
+/**
+ * Class WebphotoD3commentContent
+ */
 class WebphotoD3commentContent extends D3commentAbstract
 {
-
+    /**
+     * @param $link_id
+     * @return array|string
+     */
     public function fetchSummary($link_id)
     {
         $mydirname = $this->mydirname;
@@ -24,11 +31,11 @@ class WebphotoD3commentContent extends D3commentAbstract
             die('Invalid mydirname');
         }
 
-        $db   = XoopsDatabaseFactory::getDatabaseConnection();
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
         $myts = MyTextSanitizer::getInstance();
 
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($mydirname);
+        $moduleHandler = xoops_getHandler('module');
+        $module = $moduleHandler->getByDirname($mydirname);
 
         // query
         $sql = 'SELECT * FROM ' . $db->prefix($mydirname . '_item');
@@ -42,17 +49,21 @@ class WebphotoD3commentContent extends D3commentAbstract
         // dare to convert it irregularly
         $summary = str_replace('&amp;', '&', htmlspecialchars(xoops_substr(strip_tags($item_row['item_description']), 0, 255), ENT_QUOTES));
 
-        $ret = array(
-            'dirname'     => $mydirname,
+        $ret = [
+            'dirname' => $mydirname,
             'module_name' => $module->getVar('name'),
-            'subject'     => $myts->makeTboxData4Show($item_row['item_title']),
-            'uri'         => XOOPS_URL . '/modules/' . $mydirname . '/index.php?fct=photo&photo_id=' . (int)$link_id,
-            'summary'     => $summary,
-        );
+            'subject' => $myts->makeTboxData4Show($item_row['item_title']),
+            'uri' => XOOPS_URL . '/modules/' . $mydirname . '/index.php?fct=photo&photo_id=' . (int)$link_id,
+            'summary' => $summary,
+        ];
 
         return $ret;
     }
 
+    /**
+     * @param $link_id
+     * @return bool
+     */
     public function validate_id($link_id)
     {
         $db = XoopsDatabaseFactory::getDatabaseConnection();
@@ -66,9 +77,18 @@ class WebphotoD3commentContent extends D3commentAbstract
         if ($count <= 0) {
             return false;
         }
+
         return $link_id;
     }
 
+    /**
+     * @param     $mode
+     * @param     $link_id
+     * @param     $forum_id
+     * @param     $topic_id
+     * @param int $post_id
+     * @return mixed
+     */
     public function onUpdate($mode, $link_id, $forum_id, $topic_id, $post_id = 0)
     {
         $db = XoopsDatabaseFactory::getDatabaseConnection();

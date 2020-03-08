@@ -19,52 +19,75 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_photo_navi
 //=========================================================
+
+/**
+ * Class webphoto_photo_navi
+ */
 class webphoto_photo_navi extends webphoto_lib_error
 {
     public $_item_handler;
     public $_image_class;
 
-    public $_script   = null;
+    public $_script = null;
     public $_id_array = null;
 
     public $_MARK_ID_FIRST = '<b>[&lt;</b>';
-    public $_MARK_ID_LAST  = '<b>&gt;]</b>';
-    public $_MARK_ID_PREV  = '<b>Prev</b>';
-    public $_MARK_ID_NEXT  = '<b>Next</b>';
+    public $_MARK_ID_LAST = '<b>&gt;]</b>';
+    public $_MARK_ID_PREV = '<b>Prev</b>';
+    public $_MARK_ID_NEXT = '<b>Next</b>';
 
-    public $_max_small_width    = _C_WEBPHOTO_SMALL_WIDTH;
-    public $_max_small_height   = _C_WEBPHOTO_SMALL_HEIGHT;
-    public $_max_current_width  = _C_WEBPHOTO_SMALL_CURRENT_WIDTH;
+    public $_max_small_width = _C_WEBPHOTO_SMALL_WIDTH;
+    public $_max_small_height = _C_WEBPHOTO_SMALL_HEIGHT;
+    public $_max_current_width = _C_WEBPHOTO_SMALL_CURRENT_WIDTH;
     public $_max_current_height = _C_WEBPHOTO_SMALL_CURRENT_HEIGHT;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_photo_navi constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
 
         $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_image_class  = webphoto_show_image::getInstance($dirname, $trust_dirname);
+        $this->_image_class = webphoto_show_image::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_photo_navi
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_photo_navi($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // set parameter
     //---------------------------------------------------------
+
+    /**
+     * @param $val
+     */
     public function set_mark_id_prev($val)
     {
         $this->_MARK_ID_PREV = $val;
     }
 
+    /**
+     * @param $val
+     */
     public function set_mark_id_next($val)
     {
         $this->_MARK_ID_NEXT = $val;
@@ -74,6 +97,14 @@ class webphoto_photo_navi extends webphoto_lib_error
     // build pagenavi
     // use id (1.2.3...)
     //---------------------------------------------------------
+
+    /**
+     * @param     $script
+     * @param     $id_array
+     * @param     $id_current
+     * @param int $window
+     * @return string
+     */
     public function build_navi($script, $id_array, $id_current, $window = 7)
     {
         if (!is_array($id_array)) {
@@ -87,7 +118,7 @@ class webphoto_photo_navi extends webphoto_lib_error
 
         $pos = array_search($id_current, $id_array);
 
-        $this->_script   = $script;
+        $this->_script = $script;
         $this->_id_array = $id_array;
 
         $half = $window / 2;
@@ -134,11 +165,16 @@ class webphoto_photo_navi extends webphoto_lib_error
         return $navi;
     }
 
+    /**
+     * @param $num
+     * @param $flag_current
+     * @return string
+     */
     public function build_link_photo($num, $flag_current)
     {
         $title = null;
 
-        $item_id  = $this->get_id_from_array($num);
+        $item_id = $this->get_id_from_array($num);
         $item_row = $this->_item_handler->get_cached_row_by_id($item_id);
         if (is_array($item_row)) {
             $title = $item_row['item_title'];
@@ -152,6 +188,7 @@ class webphoto_photo_navi extends webphoto_lib_error
             $img = $num + 1;
             if ($flag_current) {
                 $str = ' (<b>' . $img . '</b>) ';
+
                 return $str;
             }
         }
@@ -159,10 +196,16 @@ class webphoto_photo_navi extends webphoto_lib_error
         return $this->build_link($item_id, $img, $title);
     }
 
+    /**
+     * @param $param
+     * @param $title
+     * @param $flag_current
+     * @return bool|string
+     */
     public function build_img($param, $title, $flag_current)
     {
-        $thumb_src    = $param['img_thumb_src'];
-        $thumb_width  = $param['img_thumb_width'];
+        $thumb_src = $param['img_thumb_src'];
+        $thumb_width = $param['img_thumb_width'];
         $thumb_height = $param['img_thumb_height'];
 
         if (empty($thumb_src)) {
@@ -172,22 +215,27 @@ class webphoto_photo_navi extends webphoto_lib_error
         list($width, $height) = $this->adjust_size($thumb_width, $thumb_height, $flag_current);
 
         $title_s = $this->sanitize($title);
-        $src_s   = $this->sanitize($thumb_src);
+        $src_s = $this->sanitize($thumb_src);
 
         if ($width && $height) {
-            $img = '<img src="' . $src_s . '" alt="' . $title_s . '" width="' . $width . '" height="' . $height . '" />';
+            $img = '<img src="' . $src_s . '" alt="' . $title_s . '" width="' . $width . '" height="' . $height . '" >';
         } else {
-            $img = '<img src="' . $src_s . '" alt="' . $title_s . '" width="' . $width . '" />';
+            $img = '<img src="' . $src_s . '" alt="' . $title_s . '" width="' . $width . '" >';
         }
 
         return $img;
     }
 
+    /**
+     * @param $num
+     * @param $name
+     * @return string
+     */
     public function build_link_id($num, $name)
     {
         $title = null;
 
-        $item_id  = $this->get_id_from_array($num);
+        $item_id = $this->get_id_from_array($num);
         $item_row = $this->_item_handler->get_cached_row_by_id($item_id);
         if (is_array($item_row)) {
             $title = $item_row['item_title'];
@@ -196,6 +244,12 @@ class webphoto_photo_navi extends webphoto_lib_error
         return $this->build_link($item_id, $name, $title);
     }
 
+    /**
+     * @param $extra
+     * @param $name
+     * @param $title
+     * @return string
+     */
     public function build_link($extra, $name, $title)
     {
         $href = $this->_script . $extra;
@@ -207,48 +261,72 @@ class webphoto_photo_navi extends webphoto_lib_error
         }
 
         $str .= $name . "</a> \n";
+
         return $str;
     }
 
+    /**
+     * @param $num
+     * @return bool
+     */
     public function get_id_from_array($num)
     {
         if (isset($this->_id_array[$num])) {
             return $this->_id_array[$num];
         }
+
         return false;
     }
 
     //---------------------------------------------------------
     // adjust
     //---------------------------------------------------------
+
+    /**
+     * @param $width
+     * @param $height
+     * @param $flag_current
+     * @return array
+     */
     public function adjust_size($width, $height, $flag_current)
     {
         if ($flag_current) {
             return $this->adjust_current_size($width, $height);
         }
+
         return $this->adjust_small_size($width, $height);
     }
 
+    /**
+     * @param $width
+     * @param $height
+     * @return array
+     */
     public function adjust_small_size($width, $height)
     {
         list($new_width, $new_height) = $this->_image_class->adjust_image_size($width, $height, $this->_max_small_width, $this->_max_small_height);
 
         if ($new_width && $new_height) {
-            return array($new_width, $new_height);
+            return [$new_width, $new_height];
         }
 
-        return array($this->_max_small_width, 0);
+        return [$this->_max_small_width, 0];
     }
 
+    /**
+     * @param $width
+     * @param $height
+     * @return array
+     */
     public function adjust_current_size($width, $height)
     {
         list($new_width, $new_height) = $this->_image_class->adjust_image_size($width, $height, $this->_max_current_width, $this->_max_current_height);
 
         if ($new_width && $new_height) {
-            return array($new_width, $new_height);
+            return [$new_width, $new_height];
         }
 
-        return array($this->_max_current_width, 0);
+        return [$this->_max_current_width, 0];
     }
 
     // --- class end ---

@@ -25,25 +25,35 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_redirect
 //=========================================================
+
+/**
+ * Class webphoto_edit_redirect
+ */
 class webphoto_edit_redirect extends webphoto_edit_base
 {
     public $_redirect_time = 0;
-    public $_redirect_url  = null;
-    public $_redirect_msg  = null;
+    public $_redirect_url = null;
+    public $_redirect_msg = null;
 
     public $_TIME_SUCCESS = 1;
     public $_TIME_PENDING = 3;
-    public $_TIME_FAILED  = 5;
-    public $_URL_SUCCESS  = null;
-    public $_URL_PENDING  = null;
-    public $_URL_FAILED   = null;
-    public $_MSG_SUCCESS  = 'success';
-    public $_MSG_PENDING  = 'pending';
-    public $_MSG_FAILED   = 'failed';
+    public $_TIME_FAILED = 5;
+    public $_URL_SUCCESS = null;
+    public $_URL_PENDING = null;
+    public $_URL_FAILED = null;
+    public $_MSG_SUCCESS = 'success';
+    public $_MSG_PENDING = 'pending';
+    public $_MSG_FAILED = 'failed';
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_redirect constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -52,89 +62,100 @@ class webphoto_edit_redirect extends webphoto_edit_base
         $this->preload_constant();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_redirect|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_edit_redirect($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // build failed msg
     //---------------------------------------------------------
+
+    /**
+     * @param $ret
+     * @return bool
+     */
     public function build_failed_msg($ret)
     {
         switch ($ret) {
             case _C_WEBPHOTO_ERR_DB:
                 $this->set_error_in_head_with_admin_info('DB Error');
-                return false;
 
-            case _C_WEBPHOTO_ERR_UPLOAD;
+                return false;
+            case _C_WEBPHOTO_ERR_UPLOAD:
                 $this->set_error_in_head('File Upload Error');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_NO_SPECIFIED:
                 $this->set_error('UPLOAD error: file name not specified');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_EXT:
                 $this->set_error_by_const_name('UPLOADER_ERR_NOT_ALLOWED_EXT');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_FILE_SIZE:
                 $this->set_error_by_const_name('UPLOADER_ERR_LARGE_FILE_SIZE');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_NO_PERM:
                 $this->set_error(_NOPERM);
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_NO_RECORD:
                 $this->set_error_by_const_name('NOMATCH_PHOTO');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_EMPTY_CAT:
                 $this->set_error_by_const_name('ERR_EMPTY_CAT');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_INVALID_CAT:
                 $this->set_error_by_const_name('ERR_INVALID_CAT');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_EMPTY_FILE:
                 $this->set_error_by_const_name('ERR_EMPTY_FILE');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_FILE:
                 $this->set_error_by_const_name('ERR_FILE');
-                return false;
 
-            case _C_WEBPHOTO_ERR_NO_IMAGE;
+                return false;
+            case _C_WEBPHOTO_ERR_NO_IMAGE:
                 $this->set_error_by_const_name('ERR_NOIMAGESPECIFIED');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_FILEREAD:
                 $this->set_error_by_const_name('ERR_FILEREAD');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_NO_TITLE:
                 $this->set_error_by_const_name('ERR_TITLE');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_EMBED:
                 $this->set_error_by_const_name('ERR_EMBED');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_PLAYLIST:
                 $this->set_error_by_const_name('ERR_PLAYLIST');
-                return false;
 
+                return false;
             case _C_WEBPHOTO_ERR_CREATE_PHOTO:
                 $this->set_error_by_const_name('ERR_CREATE_PHOTO');
-                return false;
 
+                return false;
             case 0:
             default:
                 break;
@@ -146,9 +167,14 @@ class webphoto_edit_redirect extends webphoto_edit_base
     //---------------------------------------------------------
     // redirect
     //---------------------------------------------------------
+
+    /**
+     * @param $param
+     * @return array
+     */
     public function build_redirect($param)
     {
-        $is_failed  = isset($param['is_failed']) ? (bool)$param['is_failed'] : false;
+        $is_failed = isset($param['is_failed']) ? (bool)$param['is_failed'] : false;
         $is_pending = isset($param['is_pending']) ? (bool)$param['is_pending'] : false;
 
         $has_extra_msg = isset($param['has_extra_msg']) ? (bool)$param['has_extra_msg'] : $this->has_msg_array();
@@ -175,48 +201,52 @@ class webphoto_edit_redirect extends webphoto_edit_base
             $msg_failed = $this->_MSG_FAILED;
         }
 
-        $msg_extra = isset($param['msg_extra']) ? $param['msg_extra'] : $this->get_format_msg_array() . '<br />' . $msg_success;
+        $msg_extra = isset($param['msg_extra']) ? $param['msg_extra'] : $this->get_format_msg_array() . '<br>' . $msg_success;
 
         // pending
         if ($is_failed) {
-            $url  = $url_failed;
+            $url = $url_failed;
             $time = $time_failed;
-            $msg  = $msg_failed;
+            $msg = $msg_failed;
 
-            // pending
+        // pending
         } elseif ($is_pending) {
-            $url  = $url_pending;
+            $url = $url_pending;
             $time = $time_pending;
-            $msg  = $msg_pending;
+            $msg = $msg_pending;
 
-            // has msg
+        // has msg
         } elseif ($has_extra_msg) {
-            $url  = $url_success;
+            $url = $url_success;
             $time = $time_pending;
-            $msg  = $msg_extra;
+            $msg = $msg_extra;
 
-            // success
+        // success
         } else {
-            $url  = $url_success;
+            $url = $url_success;
             $time = $time_success;
-            $msg  = $msg_success;
+            $msg = $msg_success;
         }
 
-        $this->_redirect_url  = $url;
+        $this->_redirect_url = $url;
         $this->_redirect_time = $time;
-        $this->_redirect_msg  = $msg;
+        $this->_redirect_msg = $msg;
 
-        return array($url, $time, $msg);
+        return [$url, $time, $msg];
     }
 
     //---------------------------------------------------------
     // set & get param
     //---------------------------------------------------------
+
     public function get_redirect_url()
     {
         return $this->_redirect_url;
     }
 
+    /**
+     * @return int
+     */
     public function get_redirect_time()
     {
         return $this->_redirect_time;
@@ -227,21 +257,33 @@ class webphoto_edit_redirect extends webphoto_edit_base
         return $this->_redirect_msg;
     }
 
+    /**
+     * @return int
+     */
     public function get_time_success()
     {
         return $this->_TIME_SUCCESS;
     }
 
+    /**
+     * @return int
+     */
     public function get_time_pending()
     {
         return $this->_TIME_PENDING;
     }
 
+    /**
+     * @return int
+     */
     public function get_time_failed()
     {
         return $this->_TIME_FAILED;
     }
 
+    /**
+     * @param $name
+     */
     public function set_error_by_const_name($name)
     {
         $this->set_error($this->get_constant($name));

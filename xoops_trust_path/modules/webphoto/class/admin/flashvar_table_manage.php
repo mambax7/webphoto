@@ -21,27 +21,42 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_flashvar_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_flashvar_table_manage
+ */
 class webphoto_admin_flashvar_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_flashvar_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_flashvar_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('FLASHVAR_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('flashvar_item_id'));
+        $this->set_manage_list_column_array(['flashvar_item_id']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_flashvar_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_flashvar_table_manage($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -56,95 +71,103 @@ class webphoto_admin_flashvar_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'flashvar_id'                  => $this->_post_class->get_post_get_int('flashvar_id'),
-            'flashvar_time_create'         => $this->_post_class->get_post_int('flashvar_time_create'),
-            'flashvar_time_update'         => $this->_post_class->get_post_int('flashvar_time_update'),
-            'flashvar_item_id'             => $this->_post_class->get_post_int('flashvar_item_id'),
-            'flashvar_width'               => $this->_post_class->get_post_int('flashvar_width'),
-            'flashvar_height'              => $this->_post_class->get_post_int('flashvar_height'),
-            'flashvar_displaywidth'        => $this->_post_class->get_post_int('flashvar_displaywidth'),
-            'flashvar_displayheight'       => $this->_post_class->get_post_int('flashvar_displayheight'),
-            'flashvar_image_show'          => $this->_post_class->get_post_int('flashvar_image_show'),
-            'flashvar_searchbar'           => $this->_post_class->get_post_int('flashvar_searchbar'),
-            'flashvar_showeq'              => $this->_post_class->get_post_int('flashvar_showeq'),
-            'flashvar_showicons'           => $this->_post_class->get_post_int('flashvar_showicons'),
-            'flashvar_shownavigation'      => $this->_post_class->get_post_int('flashvar_shownavigation'),
-            'flashvar_showstop'            => $this->_post_class->get_post_int('flashvar_showstop'),
-            'flashvar_showdigits'          => $this->_post_class->get_post_int('flashvar_showdigits'),
-            'flashvar_showdownload'        => $this->_post_class->get_post_int('flashvar_showdownload'),
-            'flashvar_usefullscreen'       => $this->_post_class->get_post_int('flashvar_usefullscreen'),
-            'flashvar_autoscroll'          => $this->_post_class->get_post_int('flashvar_autoscroll'),
-            'flashvar_thumbsinplaylist'    => $this->_post_class->get_post_int('flashvar_thumbsinplaylist'),
-            'flashvar_autostart'           => $this->_post_class->get_post_int('flashvar_autostart'),
-            'flashvar_repeat'              => $this->_post_class->get_post_int('flashvar_repeat'),
-            'flashvar_shuffle'             => $this->_post_class->get_post_int('flashvar_shuffle'),
-            'flashvar_smoothing'           => $this->_post_class->get_post_int('flashvar_smoothing'),
-            'flashvar_enablejs'            => $this->_post_class->get_post_int('flashvar_enablejs'),
-            'flashvar_linkfromdisplay'     => $this->_post_class->get_post_int('flashvar_linkfromdisplay'),
-            'flashvar_link_type'           => $this->_post_class->get_post_int('flashvar_link_type'),
-            'flashvar_bufferlength'        => $this->_post_class->get_post_int('flashvar_bufferlength'),
-            'flashvar_rotatetime'          => $this->_post_class->get_post_int('flashvar_rotatetime'),
-            'flashvar_volume'              => $this->_post_class->get_post_int('flashvar_volume'),
-            'flashvar_linktarget'          => $this->_post_class->get_post_text('flashvar_linktarget'),
-            'flashvar_overstretch'         => $this->_post_class->get_post_text('flashvar_overstretch'),
-            'flashvar_transition'          => $this->_post_class->get_post_text('flashvar_transition'),
-            'flashvar_screencolor'         => $this->_post_class->get_post_text('flashvar_screencolor'),
-            'flashvar_backcolor'           => $this->_post_class->get_post_text('flashvar_backcolor'),
-            'flashvar_frontcolor'          => $this->_post_class->get_post_text('flashvar_frontcolor'),
-            'flashvar_lightcolor'          => $this->_post_class->get_post_text('flashvar_lightcolor'),
-            'flashvar_type'                => $this->_post_class->get_post_text('flashvar_type'),
-            'flashvar_file'                => $this->_post_class->get_post_text('flashvar_file'),
-            'flashvar_image'               => $this->_post_class->get_post_text('flashvar_image'),
-            'flashvar_logo'                => $this->_post_class->get_post_text('flashvar_logo'),
-            'flashvar_link'                => $this->_post_class->get_post_text('flashvar_link'),
-            'flashvar_audio'               => $this->_post_class->get_post_text('flashvar_audio'),
-            'flashvar_captions'            => $this->_post_class->get_post_text('flashvar_captions'),
-            'flashvar_fallback'            => $this->_post_class->get_post_text('flashvar_fallback'),
-            'flashvar_callback'            => $this->_post_class->get_post_text('flashvar_callback'),
-            'flashvar_javascriptid'        => $this->_post_class->get_post_text('flashvar_javascriptid'),
-            'flashvar_recommendations'     => $this->_post_class->get_post_text('flashvar_recommendations'),
-            'flashvar_streamscript'        => $this->_post_class->get_post_text('flashvar_streamscript'),
-            'flashvar_searchlink'          => $this->_post_class->get_post_text('flashvar_searchlink'),
+        $row = [
+            'flashvar_id' => $this->_post_class->get_post_get_int('flashvar_id'),
+            'flashvar_time_create' => $this->_post_class->get_post_int('flashvar_time_create'),
+            'flashvar_time_update' => $this->_post_class->get_post_int('flashvar_time_update'),
+            'flashvar_item_id' => $this->_post_class->get_post_int('flashvar_item_id'),
+            'flashvar_width' => $this->_post_class->get_post_int('flashvar_width'),
+            'flashvar_height' => $this->_post_class->get_post_int('flashvar_height'),
+            'flashvar_displaywidth' => $this->_post_class->get_post_int('flashvar_displaywidth'),
+            'flashvar_displayheight' => $this->_post_class->get_post_int('flashvar_displayheight'),
+            'flashvar_image_show' => $this->_post_class->get_post_int('flashvar_image_show'),
+            'flashvar_searchbar' => $this->_post_class->get_post_int('flashvar_searchbar'),
+            'flashvar_showeq' => $this->_post_class->get_post_int('flashvar_showeq'),
+            'flashvar_showicons' => $this->_post_class->get_post_int('flashvar_showicons'),
+            'flashvar_shownavigation' => $this->_post_class->get_post_int('flashvar_shownavigation'),
+            'flashvar_showstop' => $this->_post_class->get_post_int('flashvar_showstop'),
+            'flashvar_showdigits' => $this->_post_class->get_post_int('flashvar_showdigits'),
+            'flashvar_showdownload' => $this->_post_class->get_post_int('flashvar_showdownload'),
+            'flashvar_usefullscreen' => $this->_post_class->get_post_int('flashvar_usefullscreen'),
+            'flashvar_autoscroll' => $this->_post_class->get_post_int('flashvar_autoscroll'),
+            'flashvar_thumbsinplaylist' => $this->_post_class->get_post_int('flashvar_thumbsinplaylist'),
+            'flashvar_autostart' => $this->_post_class->get_post_int('flashvar_autostart'),
+            'flashvar_repeat' => $this->_post_class->get_post_int('flashvar_repeat'),
+            'flashvar_shuffle' => $this->_post_class->get_post_int('flashvar_shuffle'),
+            'flashvar_smoothing' => $this->_post_class->get_post_int('flashvar_smoothing'),
+            'flashvar_enablejs' => $this->_post_class->get_post_int('flashvar_enablejs'),
+            'flashvar_linkfromdisplay' => $this->_post_class->get_post_int('flashvar_linkfromdisplay'),
+            'flashvar_link_type' => $this->_post_class->get_post_int('flashvar_link_type'),
+            'flashvar_bufferlength' => $this->_post_class->get_post_int('flashvar_bufferlength'),
+            'flashvar_rotatetime' => $this->_post_class->get_post_int('flashvar_rotatetime'),
+            'flashvar_volume' => $this->_post_class->get_post_int('flashvar_volume'),
+            'flashvar_linktarget' => $this->_post_class->get_post_text('flashvar_linktarget'),
+            'flashvar_overstretch' => $this->_post_class->get_post_text('flashvar_overstretch'),
+            'flashvar_transition' => $this->_post_class->get_post_text('flashvar_transition'),
+            'flashvar_screencolor' => $this->_post_class->get_post_text('flashvar_screencolor'),
+            'flashvar_backcolor' => $this->_post_class->get_post_text('flashvar_backcolor'),
+            'flashvar_frontcolor' => $this->_post_class->get_post_text('flashvar_frontcolor'),
+            'flashvar_lightcolor' => $this->_post_class->get_post_text('flashvar_lightcolor'),
+            'flashvar_type' => $this->_post_class->get_post_text('flashvar_type'),
+            'flashvar_file' => $this->_post_class->get_post_text('flashvar_file'),
+            'flashvar_image' => $this->_post_class->get_post_text('flashvar_image'),
+            'flashvar_logo' => $this->_post_class->get_post_text('flashvar_logo'),
+            'flashvar_link' => $this->_post_class->get_post_text('flashvar_link'),
+            'flashvar_audio' => $this->_post_class->get_post_text('flashvar_audio'),
+            'flashvar_captions' => $this->_post_class->get_post_text('flashvar_captions'),
+            'flashvar_fallback' => $this->_post_class->get_post_text('flashvar_fallback'),
+            'flashvar_callback' => $this->_post_class->get_post_text('flashvar_callback'),
+            'flashvar_javascriptid' => $this->_post_class->get_post_text('flashvar_javascriptid'),
+            'flashvar_recommendations' => $this->_post_class->get_post_text('flashvar_recommendations'),
+            'flashvar_streamscript' => $this->_post_class->get_post_text('flashvar_streamscript'),
+            'flashvar_searchlink' => $this->_post_class->get_post_text('flashvar_searchlink'),
 
             // JW Player 5.6
-            'flashvar_dock'                => $this->_post_class->get_post_int('flashvar_dock'),
-            'flashvar_icons'               => $this->_post_class->get_post_int('flashvar_icons'),
-            'flashvar_mute'                => $this->_post_class->get_post_int('flashvar_mute'),
+            'flashvar_dock' => $this->_post_class->get_post_int('flashvar_dock'),
+            'flashvar_icons' => $this->_post_class->get_post_int('flashvar_icons'),
+            'flashvar_mute' => $this->_post_class->get_post_int('flashvar_mute'),
             'flashvar_controlbar_idlehide' => $this->_post_class->get_post_int('flashvar_controlbar_idlehide'),
-            'flashvar_logo_hide'           => $this->_post_class->get_post_int('flashvar_logo_hide'),
-            'flashvar_duration'            => $this->_post_class->get_post_int('flashvar_duration'),
-            'flashvar_start'               => $this->_post_class->get_post_int('flashvar_start'),
-            'flashvar_item'                => $this->_post_class->get_post_int('flashvar_item'),
-            'flashvar_playlist_size'       => $this->_post_class->get_post_int('flashvar_playlist_size'),
-            'flashvar_logo_margin'         => $this->_post_class->get_post_int('flashvar_logo_margin'),
-            'flashvar_logo_timeout'        => $this->_post_class->get_post_int('flashvar_logo_timeout'),
-            'flashvar_logo_over'           => $this->_post_class->get_post_float('flashvar_logo_over'),
-            'flashvar_logo_out'            => $this->_post_class->get_post_float('flashvar_logo_out'),
-            'flashvar_playlistfile'        => $this->_post_class->get_post_text('flashvar_playlistfile'),
-            'flashvar_mediaid'             => $this->_post_class->get_post_text('flashvar_mediaid'),
-            'flashvar_provider'            => $this->_post_class->get_post_text('flashvar_provider'),
-            'flashvar_netstreambasepath'   => $this->_post_class->get_post_text('flashvar_netstreambasepath'),
-            'flashvar_skin'                => $this->_post_class->get_post_text('flashvar_skin'),
-            'flashvar_player_repeat'       => $this->_post_class->get_post_text('flashvar_player_repeat'),
-            'flashvar_playerready'         => $this->_post_class->get_post_text('flashvar_playerready'),
-            'flashvar_plugins'             => $this->_post_class->get_post_text('flashvar_plugins'),
-            'flashvar_stretching'          => $this->_post_class->get_post_text('flashvar_stretching'),
+            'flashvar_logo_hide' => $this->_post_class->get_post_int('flashvar_logo_hide'),
+            'flashvar_duration' => $this->_post_class->get_post_int('flashvar_duration'),
+            'flashvar_start' => $this->_post_class->get_post_int('flashvar_start'),
+            'flashvar_item' => $this->_post_class->get_post_int('flashvar_item'),
+            'flashvar_playlist_size' => $this->_post_class->get_post_int('flashvar_playlist_size'),
+            'flashvar_logo_margin' => $this->_post_class->get_post_int('flashvar_logo_margin'),
+            'flashvar_logo_timeout' => $this->_post_class->get_post_int('flashvar_logo_timeout'),
+            'flashvar_logo_over' => $this->_post_class->get_post_float('flashvar_logo_over'),
+            'flashvar_logo_out' => $this->_post_class->get_post_float('flashvar_logo_out'),
+            'flashvar_playlistfile' => $this->_post_class->get_post_text('flashvar_playlistfile'),
+            'flashvar_mediaid' => $this->_post_class->get_post_text('flashvar_mediaid'),
+            'flashvar_provider' => $this->_post_class->get_post_text('flashvar_provider'),
+            'flashvar_netstreambasepath' => $this->_post_class->get_post_text('flashvar_netstreambasepath'),
+            'flashvar_skin' => $this->_post_class->get_post_text('flashvar_skin'),
+            'flashvar_player_repeat' => $this->_post_class->get_post_text('flashvar_player_repeat'),
+            'flashvar_playerready' => $this->_post_class->get_post_text('flashvar_playerready'),
+            'flashvar_plugins' => $this->_post_class->get_post_text('flashvar_plugins'),
+            'flashvar_stretching' => $this->_post_class->get_post_text('flashvar_stretching'),
             'flashvar_controlbar_position' => $this->_post_class->get_post_text('flashvar_controlbar_position'),
-            'flashvar_playlist_position'   => $this->_post_class->get_post_text('flashvar_playlist_position'),
-            'flashvar_logo_file'           => $this->_post_class->get_post_text('flashvar_logo_file'),
-            'flashvar_logo_linktarget'     => $this->_post_class->get_post_text('flashvar_logo_linktarget'),
-            'flashvar_logo_position'       => $this->_post_class->get_post_text('flashvar_logo_position'),
+            'flashvar_playlist_position' => $this->_post_class->get_post_text('flashvar_playlist_position'),
+            'flashvar_logo_file' => $this->_post_class->get_post_text('flashvar_logo_file'),
+            'flashvar_logo_linktarget' => $this->_post_class->get_post_text('flashvar_logo_linktarget'),
+            'flashvar_logo_position' => $this->_post_class->get_post_text('flashvar_logo_position'),
+        ];
 
-        );
         return $row;
     }
 
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);
@@ -239,16 +262,20 @@ class webphoto_admin_flashvar_table_manage extends webphoto_lib_manage
         echo "</table></form>\n";
     }
 
+    /**
+     * @return string
+     */
     public function _build_row_item_id()
     {
-        $name  = 'flashvar_item_id';
+        $name = 'flashvar_item_id';
         $value = (int)$this->get_row_by_key($name);
-        $ele   = $this->build_input_text($name, $value);
+        $ele = $this->build_input_text($name, $value);
         if ($value > 0) {
             $url = $this->_MODULE_URL . '/admin/index.php?fct=item_table_manage&op=form&id=' . $value;
-            $ele .= "<br />\n";
+            $ele .= "<br>\n";
             $ele .= '<a href="' . $url . '">item table: ' . $value . '</a>';
         }
+
         return $this->build_line_ele($this->get_constant($name), $ele);
     }
 

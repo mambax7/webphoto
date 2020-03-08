@@ -28,10 +28,14 @@ if (!defined('WEBPHOTO_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_export
 //=========================================================
+
+/**
+ * Class webphoto_admin_export
+ */
 class webphoto_admin_export extends webphoto_base_this
 {
     public $_groupperm_class;
-    public $_image_handler;
+    public $_imageHandler;
     public $_form_class;
 
     public $_src_catid;
@@ -40,27 +44,39 @@ class webphoto_admin_export extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_export constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_groupperm_class = webphoto_xoops_groupperm::getInstance();
 
-        $this->_image_handler = webphoto_xoops_image_handler::getInstance();
-        $this->_image_handler->set_debug_error(1);
+        $this->_imageHandler = webphoto_xoops_image_handler::getInstance();
+        $this->_imageHandler->set_debug_error(1);
 
         $val = $this->get_ini(_C_WEBPHOTO_NAME_DEBUG_SQL);
         if ($val) {
-            $this->_image_handler->set_debug_sql($val);
+            $this->_imageHandler->set_debug_sql($val);
         }
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_export|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_export($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -80,13 +96,11 @@ class webphoto_admin_export extends webphoto_base_this
                     $this->_export_image();
                 }
                 break;
-
             case 'myalbum':
                 if ($this->check_token_with_print_error()) {
                     $this->_export_myalbum();
                 }
                 break;
-
             case 'form':
             default:
                 $this->_print_form();
@@ -97,20 +111,22 @@ class webphoto_admin_export extends webphoto_base_this
         exit();
     }
 
+    /**
+     * @return string
+     */
     public function _get_op()
     {
-        $op               = $this->_post_class->get_post_text('op');
+        $op = $this->_post_class->get_post_text('op');
         $this->_src_catid = $this->_post_class->get_post_int('cat_id');
         $this->_img_catid = $this->_post_class->get_post_int('imgcat_id');
 
-        if (($op == 'myalbum') && ($this->_src_catid > 0)) {
+        if (('myalbum' == $op) && ($this->_src_catid > 0)) {
             return 'myalbum';
         } // only when user has admin right of system 'imagemanager'
         elseif ($this->_groupperm_class->has_system_image()
-                && ($op == 'image')
+                && ('image' == $op)
                 && ($this->_src_catid > 0)
-                && ($this->_img_catid > 0)
-        ) {
+                && ($this->_img_catid > 0)) {
             return 'image';
         }
 
@@ -120,13 +136,18 @@ class webphoto_admin_export extends webphoto_base_this
     //---------------------------------------------------------
     // image
     //---------------------------------------------------------
+
+    /**
+     * @return bool
+     */
     public function _export_image()
     {
         $use_thumb = $this->_post_class->get_post_int('use_thumb');
 
-        $cat_row = $this->_image_handler->get_category_row_by_id($this->_img_catid);
+        $cat_row = $this->_imageHandler->get_category_row_by_id($this->_img_catid);
         if (!is_array($cat_row) || !count($cat_row)) {
             echo 'Invalid imgcat_id.';
+
             return false;
         }
 
@@ -135,89 +156,90 @@ class webphoto_admin_export extends webphoto_base_this
         $item_rows = $this->_item_handler->get_rows_by_catid($this->_src_catid);
         if (!is_array($item_rows) || !count($item_rows)) {
             echo 'no photo image';
+
             return false;
         }
 
         $export_count = 0;
 
         foreach ($item_rows as $item_row) {
-            $item_id          = $item_row['item_id'];
-            $item_title       = $item_row['item_title'];
-            $item_kind        = $item_row['item_kind'];
-            $item_status      = $item_row['item_status'];
+            $item_id = $item_row['item_id'];
+            $item_title = $item_row['item_title'];
+            $item_kind = $item_row['item_kind'];
+            $item_status = $item_row['item_status'];
             $item_time_update = $item_row['item_time_update'];
 
             echo $item_id . ' ' . $this->sanitize($item_title) . ' : ';
 
             if (!$this->is_image_kind($item_kind)) {
-                echo " skip non-image <br />\n";
+                echo " skip non-image <br>\n";
                 continue;
             }
 
             if ($use_thumb) {
                 $file_row = $this->get_file_extend_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_THUMB);
                 if (!is_array($file_row)) {
-                    echo " cannot get thumb row <br />\n";
+                    echo " cannot get thumb row <br>\n";
                     continue;
                 }
             } else {
                 $file_row = $this->get_file_extend_row_by_kind($item_row, _C_WEBPHOTO_FILE_KIND_CONT);
                 if (!is_array($file_row)) {
-                    echo " cannot get cont row <br />\n";
+                    echo " cannot get cont row <br>\n";
                     continue;
                 }
             }
 
             $src_file = $file_row['full_path'];
-            $ext      = $file_row['file_ext'];
-            $mime     = $file_row['file_mime'];
+            $ext = $file_row['file_ext'];
+            $mime = $file_row['file_mime'];
 
             $image_name = uniqid('img') . '.' . $ext;
-            $dst_file   = XOOPS_UPLOAD_PATH . '/' . $image_name;
+            $dst_file = XOOPS_UPLOAD_PATH . '/' . $image_name;
 
             // image in db
-            if ($imgcat_storetype == 'db') {
+            if ('db' == $imgcat_storetype) {
                 $body = $this->read_file($src_file, 'rb');
                 if (!$body) {
-                    echo 'failed to read file : ' . $src_file . "<br />\n";
+                    echo 'failed to read file : ' . $src_file . "<br>\n";
                     continue;
                 }
 
                 // image file
             } else {
-                echo $src_file . "<br />\n -> " . $dst_file . ' ';
+                echo $src_file . "<br>\n -> " . $dst_file . ' ';
                 $ret = $this->copy_file($src_file, $dst_file);
                 if (!$ret) {
-                    echo "failed to copy <br />\n";
+                    echo "failed to copy <br>\n";
                     continue;
                 }
             }
 
             // insert into image table
-            $image_row = array(
-                'image_name'     => $image_name,
+            $image_row = [
+                'image_name' => $image_name,
                 'image_nicename' => $item_title,
-                'image_created'  => $item_time_update,
+                'image_created' => $item_time_update,
                 'image_mimetype' => $mime,
-                'image_display'  => $item_status ? 1 : 0,
-                'image_weight'   => 0,
-                'imgcat_id'      => $this->_img_catid,
-            );
+                'image_display' => $item_status ? 1 : 0,
+                'image_weight' => 0,
+                'imgcat_id' => $this->_img_catid,
+            ];
 
-            $newid = $this->_image_handler->insert_image($image_row);
+            $newid = $this->_imageHandler->insert_image($image_row);
             if ($newid) {
-                echo " Success <br />\n";
+                echo " Success <br>\n";
 
                 // image in db
-                if ($imgcat_storetype == 'db') {
-                    $body_row = array(
-                        'image_id'   => $newid,
+                if ('db' == $imgcat_storetype) {
+                    $body_row = [
+                        'image_id' => $newid,
                         'image_body' => $body,
-                    );
-                    $this->_image_handler->insert_body($body_row);
+                    ];
+                    $this->_imageHandler->insert_body($body_row);
                 }
             } else {
-                echo " Failed <br />\n";
+                echo " Failed <br>\n";
             }
 
             ++$export_count;
@@ -249,22 +271,25 @@ class webphoto_admin_export extends webphoto_base_this
         $cat_selbox_class = webphoto_cat_selbox::getInstance();
         $cat_selbox_class->init($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
-        $this->_form_class->print_form_image($cat_selbox_class->build_selbox('cat_title', 0, null), $this->_image_handler->build_cat_selbox());
+        $this->_form_class->print_form_image($cat_selbox_class->build_selbox('cat_title', 0, null), $this->_imageHandler->build_cat_selbox());
     }
 
+    /**
+     * @param $count
+     */
     public function _print_export_count($count)
     {
-        echo "<br />\n";
+        echo "<br>\n";
         echo '<b>';
         echo sprintf(_AM_WEBPHOTO_FMT_EXPORTSUCCESS, $count);
-        echo "</b><br />\n";
+        echo "</b><br>\n";
     }
 
     public function _print_finish()
     {
-        echo "<br /><hr />\n";
+        echo "<br><hr>\n";
         echo "<h4>FINISHED</h4>\n";
-        echo '<a href="index.php">GOTO Admin Menu</a>' . "<br />\n";
+        echo '<a href="index.php">GOTO Admin Menu</a>' . "<br>\n";
     }
 
     // --- class end ---

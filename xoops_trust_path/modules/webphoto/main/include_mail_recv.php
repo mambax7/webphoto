@@ -30,7 +30,7 @@ if (!defined('_WEBPHOTO_PEAR_LOADED')) {
     define('_WEBPHOTO_PEAR_LOADED', '1');
 
     $config_class = webphoto_config::getInstance(WEBPHOTO_DIRNAME);
-    $pear_path    = $config_class->get_by_name('pear_path');
+    $pear_path = $config_class->get_by_name('pear_path');
 
     if (empty($pear_path) || !is_dir($pear_path)) {
         $pear_path = WEBPHOTO_TRUST_PATH . '/PEAR';
@@ -39,8 +39,8 @@ if (!defined('_WEBPHOTO_PEAR_LOADED')) {
     set_include_path(get_include_path() . PATH_SEPARATOR . $pear_path);
 }
 
-require_once 'Net/POP3.php';
-require_once 'Mail/mimeDecode.php';
+require_once __DIR__ . '/Net/POP3.php';
+require_once __DIR__ . '/Mail/mimeDecode.php';
 
 //---------------------------------------------------------
 // webphoto files

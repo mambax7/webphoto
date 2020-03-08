@@ -13,11 +13,15 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_test
 //=========================================================
+
+/**
+ * Class webphoto_admin_test
+ */
 class webphoto_admin_test extends webphoto_base_this
 {
     public $_class_dir;
 
-    public $_IGNORES_MAIN    = array(
+    public $_IGNORES_MAIN = [
         'header',
         'header_file',
         'header_inc_handler',
@@ -26,20 +30,26 @@ class webphoto_admin_test extends webphoto_base_this
         'header_submit_imagemanager',
         'include_mail_recv',
         'include_submit',
-        'include_submit_base'
-    );
-    public $_IGNORES_ADMIN   = array(
+        'include_submit_base',
+    ];
+    public $_IGNORES_ADMIN = [
         'header',
         'header_edit',
         'header_rss',
         'index',
-        'test'
-    );
-    public $_IGNORES_INCLUDE = array('mytrustdirname', 'weblinks.inc', 'webphoto');
+        'test',
+    ];
+    public $_IGNORES_INCLUDE = ['mytrustdirname', 'weblinks.inc', 'webphoto'];
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_test constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -47,12 +57,18 @@ class webphoto_admin_test extends webphoto_base_this
         $this->_class_dir = webphoto_lib_dir::getInstance();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_test|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_test($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -79,46 +95,37 @@ class webphoto_admin_test extends webphoto_base_this
             case 'xoops_version':
                 $this->exec_xoops_version();
                 break;
-
             case 'blocks':
                 $this->exec_blocks();
                 break;
-
             case 'comment.inc':
                 $func = $this->_DIRNAME . '_comments_update';
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'data.inc':
                 $func = $this->_DIRNAME . '_new';
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'notification.inc':
                 $func = $this->_DIRNAME . '_notify_iteminfo';
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'oninstall.inc':
                 $func = 'xoops_module_update_' . $this->_DIRNAME;
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'search.inc':
                 $func = $this->_DIRNAME . '_search';
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'sitemap.plugin':
                 $func = 'b_sitemap_' . $this->_DIRNAME;
                 $this->exec_include($file_include, $func);
                 break;
-
             case 'waiting.plugin':
                 $func = 'b_waiting_' . $this->_DIRNAME;
                 $this->exec_include($file_include, $func);
                 break;
-
             default:
                 $this->exec_list();
                 break;
@@ -188,27 +195,47 @@ class webphoto_admin_test extends webphoto_base_this
         $this->print_list($path, 'build_href_include', $this->_IGNORES_INCLUDE);
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function build_href_main($file)
     {
-        $fct  = $this->strip_ext($file);
+        $fct = $this->strip_ext($file);
         $href = $this->_MODULE_URL . '/index.php?fct=' . $fct;
+
         return $href;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function build_href_admin($file)
     {
-        $fct  = $this->strip_ext($file);
+        $fct = $this->strip_ext($file);
         $href = $this->_MODULE_URL . '/admin/index.php?fct=' . $fct;
+
         return $href;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function build_href_include($file)
     {
-        $fct  = $this->strip_ext($file);
+        $fct = $this->strip_ext($file);
         $href = $this->_MODULE_URL . '/admin/index.php?fct=test&amp;file=' . $fct;
+
         return $href;
     }
 
+    /**
+     * @param $path
+     * @param $func
+     * @param $ingores
+     */
     public function print_list($path, $func, $ingores)
     {
         $files = $this->_class_dir->get_files_in_dir($path, 'php');
@@ -229,7 +256,7 @@ class webphoto_admin_test extends webphoto_base_this
 
     public function exec_xoops_version()
     {
-        $flag      = false;
+        $flag = false;
         $file_full = $this->_MODULE_DIR . '/xoops_version.php';
 
         echo '<h4>xoops_version</h4>' . "\n";
@@ -244,15 +271,15 @@ class webphoto_admin_test extends webphoto_base_this
         }
 
         if (!$flag) {
-            echo 'NOT find <br />';
+            echo 'NOT find <br>';
         }
     }
 
     public function exec_blocks()
     {
-        $flag      = false;
+        $flag = false;
         $file_full = $this->_MODULE_DIR . '/blocks/blocks.php';
-        $func      = 'b_webphoto_topnews_show';
+        $func = 'b_webphoto_topnews_show';
 
         $options = $this->build_blocks_top_options();
 
@@ -262,7 +289,7 @@ class webphoto_admin_test extends webphoto_base_this
             include $file_full;
 
             if (function_exists($func)) {
-                $flag   = true;
+                $flag = true;
                 $result = $func($options);
                 echo "<pre>\n";
                 print_r($result);
@@ -271,23 +298,31 @@ class webphoto_admin_test extends webphoto_base_this
         }
 
         if (!$flag) {
-            echo 'NOT find <br />';
+            echo 'NOT find <br>';
         }
     }
 
+    /**
+     * @return array
+     */
     public function build_blocks_top_options()
     {
         $str = $this->_DIRNAME;
         $str .= $this->get_ini('xoops_version_blocks_top_options');
         $opt = explode('|', $str);
+
         return $opt;
     }
 
+    /**
+     * @param $file_name
+     * @param $func
+     */
     public function exec_include($file_name, $func)
     {
         echo ' &gt;&gt; include' . "\n";
 
-        $flag      = false;
+        $flag = false;
         $file_full = $this->_MODULE_DIR . '/include/' . $file_name . '.php';
 
         echo '<h4>' . $file_name . ' - ' . $func . '</h4>' . "\n";
@@ -296,7 +331,7 @@ class webphoto_admin_test extends webphoto_base_this
             include $file_full;
 
             if (function_exists($func)) {
-                $flag   = true;
+                $flag = true;
                 $result = $func();
                 echo "<pre>\n";
                 print_r($result);
@@ -305,7 +340,7 @@ class webphoto_admin_test extends webphoto_base_this
         }
 
         if (!$flag) {
-            echo 'NOT find <br />';
+            echo 'NOT find <br>';
         }
     }
 

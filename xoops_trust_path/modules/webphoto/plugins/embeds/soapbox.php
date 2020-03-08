@@ -18,9 +18,12 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // <embed src="http://images.video.msn.com/flash/soapbox1_1.swf" width="432" height="364" id="je4ro1qv" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" pluginspage="http://macromedia.com/go/getflashplayer" flashvars="c=v&v=0ba39053-48f2-4a2c-99eb-cb1b5bc9b263&ifs=true&fr=msnvideo&mkt=ja-JP"></embed>
 
 //=========================================================
+
+/**
+ * Class webphoto_embed_soapbox
+ */
 class webphoto_embed_soapbox extends webphoto_embed_base
 {
-
     public function __construct()
     {
         parent::__construct('soapbox');
@@ -28,21 +31,40 @@ class webphoto_embed_soapbox extends webphoto_embed_base
         $this->set_sample('0ba39053-48f2-4a2c-99eb-cb1b5bc9b263');
     }
 
+    /**
+     * @param $src
+     * @param $width
+     * @param $height
+     * @return null|string
+     */
     public function embed($src, $width, $height)
     {
-        $movie      = 'http://images.video.msn.com/flash/soapbox1_1.swf';
+        $movie = 'http://images.video.msn.com/flash/soapbox1_1.swf';
         $flash_vars = 'c=v&amp;v=' . $src . '&amp;ifs=true&amp;fr=msnvideo';
 
-        $embed = '<embed src="http://images.video.msn.com/flash/soapbox1_1.swf" quality="high" width="' . $width . '" height="' . $height
-                 . '" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" pluginspage="http://macromedia.com/go/getflashplayer" flashvars="' . $flash_vars . '" />';
+        $embed = '<embed src="http://images.video.msn.com/flash/soapbox1_1.swf" quality="high" width="'
+                 . $width
+                 . '" height="'
+                 . $height
+                 . '" type="application/x-shockwave-flash" allowFullScreen="true" allowScriptAccess="always" pluginspage="http://macromedia.com/go/getflashplayer" flashvars="'
+                 . $flash_vars
+                 . '" >';
+
         return $embed;
     }
 
+    /**
+     * @param $src
+     * @return null|string
+     */
     public function link($src)
     {
         return $this->build_link($src);
     }
 
+    /**
+     * @return null|string
+     */
     public function desc()
     {
         return $this->build_desc();

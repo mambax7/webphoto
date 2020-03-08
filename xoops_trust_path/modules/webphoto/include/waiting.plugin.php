@@ -43,9 +43,14 @@ function b_waiting_' . $MY_DIRNAME . '()
 
 // === function begin ===
 if (!function_exists('webphoto_waiting_base')) {
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     function webphoto_waiting_base($dirname)
     {
         $inc_class = webphoto_inc_waiting::getSingleton($dirname, WEBPHOTO_TRUST_DIRNAME);
+
         return $inc_class->waiting();
     }
 

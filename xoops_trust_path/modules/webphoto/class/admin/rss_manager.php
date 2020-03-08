@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_rss_manager
 //=========================================================
+
+/**
+ * Class webphoto_admin_rss_manager
+ */
 class webphoto_admin_rss_manager extends webphoto_base_this
 {
     public $_form_class;
@@ -25,24 +29,36 @@ class webphoto_admin_rss_manager extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_rss_manager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_rss_class  = webphoto_rss::getInstance($dirname, $trust_dirname);
+        $this->_rss_class = webphoto_rss::getInstance($dirname, $trust_dirname);
         $this->_form_class = webphoto_admin_rss_form::getInstance($dirname, $trust_dirname);
 
-        $this->_template = 'db:' . $dirname . '_main_rss.html';
+        $this->_template = 'db:' . $dirname . '_main_rss.tpl';
 
         $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_rss_manager|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_rss_manager($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -53,7 +69,7 @@ class webphoto_admin_rss_manager extends webphoto_base_this
     {
         $op = $this->_post_class->get_post_text('op');
 
-        if ($op == 'clear_cache') {
+        if ('clear_cache' == $op) {
             if ($this->check_token()) {
                 $this->_rss_class->clear_compiled_tpl();
                 redirect_header($this->_THIS_URL, 1, _AM_WEBPHOTO_RSS_CLEARED);
@@ -70,10 +86,10 @@ class webphoto_admin_rss_manager extends webphoto_base_this
         }
 
         echo '<a href="' . $this->_MODULE_URL . '/admin/index.php?fct=rss_view" target="_blank">';
-        echo '<img src="' . $this->_MODULE_URL . '/images/icons/rss.png" border="0" /> ';
+        echo '<img src="' . $this->_MODULE_URL . '/images/icons/rss.png" border="0" > ';
         echo _AM_WEBPHOTO_RSS_DEBUG;
         echo '</a>';
-        echo "<br /><br />\n";
+        echo "<br><br>\n";
 
         $this->_form_class->print_form_clear_cache();
 

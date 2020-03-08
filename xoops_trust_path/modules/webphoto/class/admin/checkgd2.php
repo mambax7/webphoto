@@ -13,23 +13,38 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_checkgd2
 //=========================================================
+
+/**
+ * Class webphoto_admin_checkgd2
+ */
 class webphoto_admin_checkgd2
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_checkgd2 constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         // dummy
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_checkgd2
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_checkgd2($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -49,8 +64,8 @@ class webphoto_admin_checkgd2
             echo 'Failed';
         }
 
-        echo "<br /><br />\n";
-        echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" />';
+        echo "<br><br>\n";
+        echo '<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" >';
 
         xoops_cp_footer();
     }

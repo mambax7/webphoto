@@ -29,41 +29,61 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_mime_form
 //=========================================================
+
+/**
+ * Class webphoto_admin_mime_form
+ */
 class webphoto_admin_mime_form extends webphoto_edit_form
 {
-    public $_mime_handler;
+    public $_mimeHandler;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_mime_form constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_mime_handler = webphoto_mime_handler::getInstance($dirname, $trust_dirname);
+        $this->_mimeHandler = webphoto_mime_handler::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_mime_form|\webphoto_edit_form|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_mime_form($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // print form
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     */
     public function print_form_mimetype($row)
     {
         $this->set_row($row);
 
         $mime_id = $row['mime_id'];
 
-        $extra_submit  = 'onclick="this.form.elements.op.value=\'save\'" ';
-        $extra_delete  = 'onclick="this.form.elements.op.value=\'delete\'" ';
-        $extra_cancel  = 'onclick="history.go(-1)" ';
+        $extra_submit = 'onclick="this.form.elements.op.value=\'save\'" ';
+        $extra_delete = 'onclick="this.form.elements.op.value=\'delete\'" ';
+        $extra_cancel = 'onclick="history.go(-1)" ';
         $button_cancel = $this->build_input_button('cancel', _CANCEL, $extra_cancel);
 
         echo $this->build_script_edit_js();
@@ -90,7 +110,7 @@ class webphoto_admin_mime_form extends webphoto_edit_form
             $button .= $button_cancel;
         }
 
-        $this->_mime_handler->get_kind_options();
+        $this->_mimeHandler->get_kind_options();
 
         echo $this->build_row_text(_WEBPHOTO_MIME_EXT, 'mime_ext');
         echo $this->build_row_text(_WEBPHOTO_MIME_NAME, 'mime_name');
@@ -105,19 +125,29 @@ class webphoto_admin_mime_form extends webphoto_edit_form
         echo $this->build_form_end();
     }
 
+    /**
+     * @return null|string
+     */
     public function _build_ele_kind()
     {
-        $name    = 'mime_kind';
-        $value   = $this->get_row_by_key($name);
-        $options = $this->_mime_handler->get_kind_options();
+        $name = 'mime_kind';
+        $value = $this->get_row_by_key($name);
+        $options = $this->_mimeHandler->get_kind_options();
+
         return $this->build_form_select($name, $value, $options, 1);
     }
 
+    /**
+     * @return string
+     */
     public function _build_ele_perms()
     {
         return $this->build_ele_group_perms_by_key('mime_perms');
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_script()
     {
         return $this->build_js_envelop($this->build_js_check_all());

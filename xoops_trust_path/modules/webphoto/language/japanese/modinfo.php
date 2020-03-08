@@ -9,7 +9,7 @@
 //---------------------------------------------------------
 // change log
 // 2010-10-01 K.OHWADA
-// ¼Ì¿¿ -> ¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢
+// ï¿½Ì¿ï¿½ -> ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½
 // 2010-04-04 K.OHWADA
 // remove echo
 //---------------------------------------------------------
@@ -24,7 +24,7 @@ if (!isset($MY_DIRNAME)) {
     if (isset($mydirname)) {
         $MY_DIRNAME = $mydirname;
 
-        // probably error
+    // probably error
     } elseif (isset($GLOBALS['MY_DIRNAME'])) {
         $MY_DIRNAME = $GLOBALS['MY_DIRNAME'];
     } else {
@@ -32,7 +32,7 @@ if (!isset($MY_DIRNAME)) {
     }
 }
 
-$constpref = strtoupper('_MI_' . $MY_DIRNAME . '_');
+$constpref = mb_strtoupper('_MI_' . $MY_DIRNAME . '_');
 
 // === define begin ===
 if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
@@ -43,349 +43,342 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . 'LANG_LOADED')) {
     //=========================================================
 
     // The name of this module
-    define($constpref . 'NAME', 'WEB ¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢½¸');
+    define($constpref . 'NAME', 'WEB ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // A brief description of this module
-    define($constpref . 'DESC', '¼Ì¿¿¤äÆ°²è¤ä¤½¤ÎÂ¾¤Î¥á¥Ç¥£¥¢¤ò´ÉÍý¤¹¤ë¥¢¥ë¥Ð¥à¡¦¥â¥¸¥å¡¼¥ë¤Ç¤¹');
+    define($constpref . 'DESC', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ä¤½ï¿½ï¿½Â¾ï¿½Î¥ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¥¢ï¿½ï¿½Ð¥à¡¦ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½Ç¤ï¿½');
 
     // Names of blocks for this module (Not all module has blocks)
-    define($constpref . 'BNAME_RECENT', 'ºÇ¶á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'BNAME_HITS', '¿Íµ¤¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'BNAME_RANDOM', '¥Ô¥Ã¥¯¥¢¥Ã¥×¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'BNAME_RECENT_P', 'ºÇ¶á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢(¥µ¥à¥Í¥¤¥ëÉÕ)');
-    define($constpref . 'BNAME_HITS_P', '¿Íµ¤¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢(¥µ¥à¥Í¥¤¥ëÉÕ)');
+    define($constpref . 'BNAME_RECENT', 'ï¿½Ç¶ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'BNAME_HITS', 'ï¿½Íµï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'BNAME_RANDOM', 'ï¿½Ô¥Ã¥ï¿½ï¿½ï¿½ï¿½Ã¥×¤Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'BNAME_RECENT_P', 'ï¿½Ç¶ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½)');
+    define($constpref . 'BNAME_HITS_P', 'ï¿½Íµï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½)');
 
-    define($constpref . 'CFG_IMAGINGPIPE', '²èÁü½èÍý¤ò¹Ô¤ï¤»¤ë¥Ñ¥Ã¥±¡¼¥¸ÁªÂò');
-    define($constpref . 'CFG_DESCIMAGINGPIPE', '¤Û¤È¤ó¤É¤ÎPHP´Ä¶­¤ÇÉ¸½àÅª¤ËÍøÍÑ²ÄÇ½¤Ê¤Î¤ÏGD¤Ç¤¹¤¬µ¡Ç½Åª¤ËÎô¤ê¤Þ¤¹<br />²ÄÇ½¤Ç¤¢¤ì¤ÐImageMagick¤«NetPBM¤Î»ÈÍÑ¤ò¤ª´«¤á¤·¤Þ¤¹');
-    define($constpref . 'CFG_FORCEGD2', '¶¯À©GD2¥â¡¼¥É');
-    define($constpref . 'CFG_DESCFORCEGD2',
-           '¶¯À©Åª¤ËGD2¥â¡¼¥É¤ÇÆ°ºî¤µ¤»¤Þ¤¹<br />°ìÉô¤ÎPHP¤Ç¤Ï¶¯À©GD2¥â¡¼¥É¤Ç¥µ¥à¥Í¥¤¥ëºîÀ®¤Ë¼ºÇÔ¤·¤Þ¤¹<br />²èÁü½èÍý¥Ñ¥Ã¥±¡¼¥¸¤È¤·¤ÆGD¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
-    define($constpref . 'CFG_IMAGICKPATH', 'ImageMagick¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_DESCIMAGICKPATH',
-           'convert¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¤¬¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />²èÁü½èÍý¥Ñ¥Ã¥±¡¼¥¸¤È¤·¤ÆImageMagick¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
-    define($constpref . 'CFG_NETPBMPATH', 'NetPBM¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_DESCNETPBMPATH',
-           'pnmscaleÅù¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¤¬¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />²èÁü½èÍý¥Ñ¥Ã¥±¡¼¥¸¤È¤·¤ÆNetPBM¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
-    define($constpref . 'CFG_POPULAR', "'POP'¥¢¥¤¥³¥ó¤¬¤Ä¤¯¤¿¤á¤ËÉ¬Í×¤Ê¥Ò¥Ã¥È¿ô");
-    define($constpref . 'CFG_NEWDAYS', "'new'¤ä'update'¥¢¥¤¥³¥ó¤¬É½¼¨¤µ¤ì¤ëÆü¿ô");
-    define($constpref . 'CFG_NEWPHOTOS', '¥È¥Ã¥×¥Ú¡¼¥¸¤Ç¿·µ¬¤È¤·¤ÆÉ½¼¨¤¹¤ë¿ô');
-    define($constpref . 'CFG_PERPAGE', '1¥Ú¡¼¥¸¤ËÉ½¼¨¤µ¤ì¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'CFG_DESCPERPAGE', 'ÁªÂò²ÄÇ½¤Ê¿ô»ú¤ò | ¤Ç¶èÀÚ¤Ã¤Æ²¼¤µ¤¤<br />Îã: 10|20|50|100');
-    define($constpref . 'CFG_ALLOWNOIMAGE', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¤Ê¤¤Åê¹Æ¤òµö²Ä¤¹¤ë');
-    define($constpref . 'CFG_MAKETHUMB', '¥µ¥à¥Í¥¤¥ë¤òºîÀ®¤¹¤ë');
-    define($constpref . 'CFG_DESCMAKETHUMB', '¡ÖÀ¸À®¤·¤Ê¤¤¡×¤«¤é¡ÖÀ¸À®¤¹¤ë¡×¤ËÊÑ¹¹¤·¤¿»þ¤Ë¤Ï¡¢¡Ö¥µ¥à¥Í¥¤¥ë¤ÎºÆ¹½ÃÛ¡×¤¬É¬Í×¤Ç¤¹¡£');
+    define($constpref . 'CFG_IMAGINGPIPE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¤»ï¿½ï¿½Ñ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCIMAGINGPIPE', 'ï¿½Û¤È¤ï¿½É¤ï¿½PHPï¿½Ä¶ï¿½ï¿½ï¿½É¸ï¿½ï¿½Åªï¿½ï¿½ï¿½ï¿½ï¿½Ñ²ï¿½Ç½ï¿½Ê¤Î¤ï¿½GDï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½Ç½Åªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½<br>ï¿½ï¿½Ç½ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ImageMagickï¿½ï¿½NetPBMï¿½Î»ï¿½ï¿½Ñ¤ò¤ª´ï¿½ï¿½á¤·ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_FORCEGD2', 'ï¿½ï¿½ï¿½ï¿½GD2ï¿½â¡¼ï¿½ï¿½');
+    define($constpref . 'CFG_DESCFORCEGD2', 'ï¿½ï¿½ï¿½ï¿½Åªï¿½ï¿½GD2ï¿½â¡¼ï¿½É¤ï¿½Æ°ï¿½î¤µï¿½ï¿½ï¿½Þ¤ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½PHPï¿½Ç¤Ï¶ï¿½ï¿½ï¿½GD2ï¿½â¡¼ï¿½É¤Ç¥ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½ï¿½Ô¤ï¿½ï¿½Þ¤ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½GDï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_IMAGICKPATH', 'ImageMagickï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_DESCIMAGICKPATH', 'convertï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½ImageMagickï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_NETPBMPATH', 'NetPBMï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_DESCNETPBMPATH', 'pnmscaleï¿½ï¿½ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½NetPBMï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_POPULAR', "'POP'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó¤¬¤Ä¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¬ï¿½×¤Ê¥Ò¥Ã¥È¿ï¿½");
+    define($constpref . 'CFG_NEWDAYS', "'new'ï¿½ï¿½'update'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+    define($constpref . 'CFG_NEWPHOTOS', 'ï¿½È¥Ã¥×¥Ú¡ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_PERPAGE', '1ï¿½Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'CFG_DESCPERPAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ | ï¿½Ç¶ï¿½ï¿½Ú¤Ã¤Æ²ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½: 10|20|50|100');
+    define($constpref . 'CFG_ALLOWNOIMAGE', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¤Ê¤ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½Ä¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_MAKETHUMB', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCMAKETHUMB', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤Ï¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ÎºÆ¹ï¿½ï¿½Û¡×¤ï¿½É¬ï¿½×¤Ç¤ï¿½ï¿½ï¿½');
 
     // v2.30
-    //define( $constpref."CFG_WIDTH" , "ºÇÂç²èÁüÉý" ) ;
-    //define( $constpref."CFG_DESCWIDTH" , "²èÁü¥¢¥Ã¥×¥í¡¼¥É»þ¤Ë¼«Æ°Ä´À°¤µ¤ì¤ë¥á¥¤¥ó²èÁü¤ÎºÇÂçÉý¡£<br />GD¥â¡¼¥É¤ÇTrueColor¤ò°·¤¨¤Ê¤¤»þ¤Ë¤ÏÃ±¤Ê¤ë¥µ¥¤¥ºÀ©¸Â" ) ;
-    //define( $constpref."CFG_HEIGHT" , "ºÇÂç²èÁü¹â" ) ;
-    //define( $constpref."CFG_DESCHEIGHT" , "ºÇÂçÉý¤ÈÆ±¤¸°ÕÌ£¤Ç¤¹" ) ;
-    define($constpref . 'CFG_WIDTH', '¥Ý¥Ã¥×¥¢¥Ã¥×¤Ç¤Î²èÁü¤ÎÉý');
-    define($constpref . 'CFG_DESCWIDTH',
-           '¥Ý¥Ã¥×¥¢¥Ã¥×¤·¤¿¤È¤­¤Î²èÁü¤ÎÂç¤­¤µ¤Ç¤¹¡£<br /><br />½¾Íè¤Î¥Ð¡¼¥¸¥ç¥ó¤Ç¤Ï¥¢¥Ã¥×¥í¡¼¥É²ÄÇ½¤Ê²èÁü¤ÎÂç¤­¤µ¤ÎÀ©¸Â¤Ç¤·¤¿¡£<br />¤³¤ÎÀ©¸Â¤Ï¤Ê¤¯¤Ê¤ê¤Þ¤·¤¿¡£<br />2.30¤Ë¤Æ»ÅÍÍ¤¬ÊÑ¤ï¤ê¤Þ¤·¤¿¡£');
-    define($constpref . 'CFG_HEIGHT', '¥Ý¥Ã¥×¥¢¥Ã¥×¤Ç¤Î²èÁü¤ÎÉý¤µ');
-    define($constpref . 'CFG_DESCHEIGHT', '²èÁü¤ÎÉý¤ÈÆ±¤¸°ÕÌ£¤Ç¤¹');
+    //define( $constpref."CFG_WIDTH" , "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ) ;
+    //define( $constpref."CFG_DESCWIDTH" , "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½Ë¼ï¿½Æ°Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¥¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>GDï¿½â¡¼ï¿½É¤ï¿½TrueColorï¿½ò°·¤ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½Ã±ï¿½Ê¤ë¥µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ) ;
+    //define( $constpref."CFG_HEIGHT" , "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" ) ;
+    //define( $constpref."CFG_DESCHEIGHT" , "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½Ì£ï¿½Ç¤ï¿½" ) ;
+    define($constpref . 'CFG_WIDTH', 'ï¿½Ý¥Ã¥×¥ï¿½ï¿½Ã¥×¤Ç¤Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCWIDTH', 'ï¿½Ý¥Ã¥×¥ï¿½ï¿½Ã¥×¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ï¿½<br><br>ï¿½ï¿½ï¿½ï¿½Î¥Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤Ï¥ï¿½ï¿½Ã¥×¥ï¿½ï¿½É²ï¿½Ç½ï¿½Ê²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¤Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¤Ï¤Ê¤ï¿½ï¿½Ê¤ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½<br>2.30ï¿½Ë¤Æ»ï¿½ï¿½Í¤ï¿½ï¿½Ñ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_HEIGHT', 'ï¿½Ý¥Ã¥×¥ï¿½ï¿½Ã¥×¤Ç¤Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCHEIGHT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½Ì£ï¿½Ç¤ï¿½');
 
-    define($constpref . 'CFG_FSIZE', 'ºÇÂç¥Õ¥¡¥¤¥ë¥µ¥¤¥º');
-    define($constpref . 'CFG_DESCFSIZE', '¥¢¥Ã¥×¥í¡¼¥É»þ¤Î¥Õ¥¡¥¤¥ë¥µ¥¤¥ºÀ©¸Â(byte)');
-    define($constpref . 'CFG_ADDPOSTS', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÅê¹Æ¤·¤¿»þ¤Ë¥«¥¦¥ó¥È¥¢¥Ã¥×¤µ¤ì¤ëÅê¹Æ¿ô');
-    define($constpref . 'CFG_DESCADDPOSTS', '¾ï¼±Åª¤Ë¤Ï0¤«1¤Ç¤¹¡£Éé¤ÎÃÍ¤Ï0¤È¸«¤Ê¤µ¤ì¤Þ¤¹');
-    define($constpref . 'CFG_CATONSUBMENU', '¥µ¥Ö¥á¥Ë¥å¡¼¤Ø¤Î¥È¥Ã¥×¥«¥Æ¥´¥ê¡¼¤ÎÅÐÏ¿');
-    define($constpref . 'CFG_NAMEORUNAME', 'Åê¹Æ¼ÔÌ¾¤ÎÉ½¼¨');
-    define($constpref . 'CFG_DESCNAMEORUNAME', '¥í¥°¥¤¥óÌ¾¤«¥Ï¥ó¥É¥ëÌ¾¤«ÁªÂò¤·¤Æ²¼¤µ¤¤');
-    define($constpref . 'CFG_VIEWTYPE', '°ìÍ÷É½¼¨¤ÎÉ½¼¨¥¿¥¤¥×');
-    define($constpref . 'CFG_COLSOFTABLE', '¥Æ¡¼¥Ö¥ëÉ½¼¨»þ¤Î¥«¥é¥à¿ô');
-    define($constpref . 'CFG_USESITEIMG', '¥¤¥á¡¼¥¸¥Þ¥Í¡¼¥¸¥ãÅý¹ç¤Ç¤Î[siteimg]¥¿¥°');
-    define($constpref . 'CFG_DESCUSESITEIMG',
-           '¥¤¥á¡¼¥¸¥Þ¥Í¡¼¥¸¥ãÅý¹ç¤Ç¡¢[img]¥¿¥°¤ÎÂå¤ï¤ê¤Ë[siteimg]¥¿¥°¤òÁÞÆþ¤¹¤ë¤è¤¦¤Ë¤Ê¤ê¤Þ¤¹¡£<br />ÍøÍÑ¥â¥¸¥å¡¼¥ëÂ¦¤Ç[siteimg]¥¿¥°¤¬Í­¸ú¤Ëµ¡Ç½¤¹¤ë¤è¤¦¤Ë¤Ê¤Ã¤Æ¤¤¤ëÉ¬Í×¤¬¤¢¤ê¤Þ¤¹');
-    define($constpref . 'OPT_USENAME', '¥Ï¥ó¥É¥ëÌ¾');
-    define($constpref . 'OPT_USEUNAME', '¥í¥°¥¤¥óÌ¾');
-    define($constpref . 'OPT_VIEWLIST', 'ÀâÌÀÊ¸ÉÕ¥ê¥¹¥ÈÉ½¼¨');
-    define($constpref . 'OPT_VIEWTABLE', '¥Æ¡¼¥Ö¥ëÉ½¼¨');
+    define($constpref . 'CFG_FSIZE', 'ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¥µï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCFSIZE', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É»ï¿½ï¿½Î¥Õ¥ï¿½ï¿½ï¿½ï¿½ë¥µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(byte)');
+    define($constpref . 'CFG_ADDPOSTS', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¥ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½Ã¥×¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½');
+    define($constpref . 'CFG_DESCADDPOSTS', 'ï¿½ï¼±Åªï¿½Ë¤ï¿½0ï¿½ï¿½1ï¿½Ç¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¤ï¿½0ï¿½È¸ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_CATONSUBMENU', 'ï¿½ï¿½ï¿½Ö¥ï¿½Ë¥å¡¼ï¿½Ø¤Î¥È¥Ã¥×¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½ï¿½Ï¿');
+    define($constpref . 'CFG_NAMEORUNAME', 'ï¿½ï¿½Æ¼ï¿½Ì¾ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCNAMEORUNAME', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½Ï¥ï¿½É¥ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤Æ²ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_VIEWTYPE', 'ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_COLSOFTABLE', 'ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_USESITEIMG', 'ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½Þ¥Í¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½[siteimg]ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_DESCUSESITEIMG', 'ï¿½ï¿½ï¿½á¡¼ï¿½ï¿½ï¿½Þ¥Í¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¡ï¿½[img]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[siteimg]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¤¦ï¿½Ë¤Ê¤ï¿½Þ¤ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½Ñ¥â¥¸ï¿½å¡¼ï¿½ï¿½Â¦ï¿½ï¿½[siteimg]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í­ï¿½ï¿½ï¿½Ëµï¿½Ç½ï¿½ï¿½ï¿½ï¿½è¤¦ï¿½Ë¤Ê¤Ã¤Æ¤ï¿½ï¿½ï¿½É¬ï¿½×¤ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'OPT_USENAME', 'ï¿½Ï¥ï¿½É¥ï¿½Ì¾');
+    define($constpref . 'OPT_USEUNAME', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾');
+    define($constpref . 'OPT_VIEWLIST', 'ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½Õ¥ê¥¹ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'OPT_VIEWTABLE', 'ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½É½ï¿½ï¿½');
 
     // Text for notifications
-    define($constpref . 'GLOBAL_NOTIFY', '¥â¥¸¥å¡¼¥ëÁ´ÂÎ');
-    define($constpref . 'GLOBAL_NOTIFYDSC', '¥â¥¸¥å¡¼¥ëÁ´ÂÎ¤Ë¤ª¤±¤ëÄÌÃÎ¥ª¥×¥·¥ç¥ó');
-    define($constpref . 'CATEGORY_NOTIFY', '¥«¥Æ¥´¥ê¡¼');
-    define($constpref . 'CATEGORY_NOTIFYDSC', 'ÁªÂòÃæ¤Î¥«¥Æ¥´¥ê¡¼¤ËÂÐ¤¹¤ëÄÌÃÎ¥ª¥×¥·¥ç¥ó');
-    define($constpref . 'PHOTO_NOTIFY', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢');
-    define($constpref . 'PHOTO_NOTIFYDSC', 'É½¼¨Ãæ¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ËÂÐ¤¹¤ëÄÌÃÎ¥ª¥×¥·¥ç¥ó');
+    define($constpref . 'GLOBAL_NOTIFY', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GLOBAL_NOTIFYDSC', 'ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½ï¿½ï¿½Î¤Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CATEGORY_NOTIFY', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼');
+    define($constpref . 'CATEGORY_NOTIFYDSC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½ï¿½ï¿½Ð¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'PHOTO_NOTIFY', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½');
+    define($constpref . 'PHOTO_NOTIFYDSC', 'É½ï¿½ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½×¥ï¿½ï¿½ï¿½ï¿½');
 
-    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFY', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿·µ¬ÅÐÏ¿');
-    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYCAP', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬¿·µ¬¤ËÅÐÏ¿¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë');
-    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYDSC', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬¿·µ¬¤ËÅÐÏ¿¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë');
-    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ¿·¤¿¤Ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬ÅÐÏ¿¤µ¤ì¤Þ¤·¤¿');
+    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFY', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿');
+    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYCAP', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½');
+    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYDSC', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½');
+    define($constpref . 'GLOBAL_NEWPHOTO_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
-    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFY', '¥«¥Æ¥´¥êËè¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿·µ¬ÅÐÏ¿');
-    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYCAP', '¤³¤Î¥«¥Æ¥´¥ê¤Ë¿·¤¿¤Ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬ÅÐÏ¿¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë');
-    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYDSC', '¤³¤Î¥«¥Æ¥´¥ê¤Ë¿·¤¿¤Ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬ÅÐÏ¿¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë');
-    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ¿·¤¿¤Ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬ÅÐÏ¿¤µ¤ì¤Þ¤·¤¿');
+    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFY', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿');
+    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYCAP', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½Ë¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYDSC', 'ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½Ë¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CATEGORY_NEWPHOTO_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     //=========================================================
     // add for webphoto
     //=========================================================
 
     // Config Items
-    define($constpref . 'CFG_SORT', '¥Ç¥Õ¥©¥ë¥È¤ÎÉ½¼¨½ç');
-    define($constpref . 'OPT_SORT_IDA', '¥ì¥³¡¼¥ÉÈÖ¹æ¾º½ç');
-    define($constpref . 'OPT_SORT_IDD', '¥ì¥³¡¼¥ÉÈÖ¹æ¹ß½ç');
-    define($constpref . 'OPT_SORT_HITSA', '¥Ò¥Ã¥È¿ô (Äã¢ª¹â)');
-    define($constpref . 'OPT_SORT_HITSD', '¥Ò¥Ã¥È¿ô (¹â¢ªÄã)');
-    define($constpref . 'OPT_SORT_TITLEA', '¥¿¥¤¥È¥ë (A ¢ª Z)');
-    define($constpref . 'OPT_SORT_TITLED', '¥¿¥¤¥È¥ë (Z ¢ª A)');
-    define($constpref . 'OPT_SORT_DATEA', '¹¹¿·Æü»þ (µì¢ª¿·)');
-    define($constpref . 'OPT_SORT_DATED', '¹¹¿·Æü»þ (¿·¢ªµì)');
-    define($constpref . 'OPT_SORT_RATINGA', 'É¾²Á (Äã¢ª¹â)');
-    define($constpref . 'OPT_SORT_RATINGD', 'É¾²Á (¹â¢ªÄã)');
-    define($constpref . 'OPT_SORT_RANDOM', '¥é¥ó¥À¥à');
-    define($constpref . 'CFG_MIDDLE_WIDTH', '¥·¥ó¥°¥ë¥Ó¥å¡¼¤Ç¤Î²èÁü¤ÎÉý');
-    define($constpref . 'CFG_MIDDLE_HEIGHT', '¥·¥ó¥°¥ë¥Ó¥å¡¼¤Ç¤Î²èÁü¤Î¹â¤µ');
-    define($constpref . 'CFG_THUMB_WIDTH', '¥µ¥à¥Í¥¤¥ë²èÁü¤ÎÉý');
-    define($constpref . 'CFG_THUMB_HEIGHT', '¥µ¥à¥Í¥¤¥ë²èÁü¤Î¹â¤µ');
+    define($constpref . 'CFG_SORT', 'ï¿½Ç¥Õ¥ï¿½ï¿½ï¿½È¤ï¿½É½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_SORT_IDA', 'ï¿½ì¥³ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹æ¾ºï¿½ï¿½');
+    define($constpref . 'OPT_SORT_IDD', 'ï¿½ì¥³ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ß½ï¿½');
+    define($constpref . 'OPT_SORT_HITSA', 'ï¿½Ò¥Ã¥È¿ï¿½ (ï¿½ã¢ªï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_HITSD', 'ï¿½Ò¥Ã¥È¿ï¿½ (ï¿½â¢ªï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_TITLEA', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ (A ï¿½ï¿½ Z)');
+    define($constpref . 'OPT_SORT_TITLED', 'ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ (Z ï¿½ï¿½ A)');
+    define($constpref . 'OPT_SORT_DATEA', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ì¢ªï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_DATED', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_RATINGA', 'É¾ï¿½ï¿½ (ï¿½ã¢ªï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_RATINGD', 'É¾ï¿½ï¿½ (ï¿½â¢ªï¿½ï¿½)');
+    define($constpref . 'OPT_SORT_RANDOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_MIDDLE_WIDTH', 'ï¿½ï¿½ï¿½ó¥°¥ï¿½Ó¥å¡¼ï¿½Ç¤Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_MIDDLE_HEIGHT', 'ï¿½ï¿½ï¿½ó¥°¥ï¿½Ó¥å¡¼ï¿½Ç¤Î²ï¿½ï¿½ï¿½ï¿½Î¹â¤µ');
+    define($constpref . 'CFG_THUMB_WIDTH', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_THUMB_HEIGHT', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¹â¤µ');
 
     define($constpref . 'CFG_APIKEY', 'Google API Key');
-    define($constpref . 'CFG_APIKEY_DSC',
-           "Google Maps ¤òÍøÍÑ¤¹¤ë¾ì¹ç¤Ï <br /> <a href=\"http://www.google.com/apis/maps/signup.html\" target=\"_blank\">Sign Up for the Google Maps API</a> <br /> ¤Ë¤Æ <br /> API key ¤ò¼èÆÀ¤·¤Æ¤¯¤À¤µ¤¤<br /><br />¥Ñ¥é¥á¡¼¥¿¤Î¾ÜºÙ¤Ï²¼µ­¤ò¤´Í÷¤¯¤À¤µ¤¤<br /><a href=\"http://www.google.com/apis/maps/documentation/reference.html\" target=\"_blank\">Google Maps API Reference</a>");
-    define($constpref . 'CFG_LATITUDE', '°ÞÅÙ');
-    define($constpref . 'CFG_LONGITUDE', '·ÐÅÙ');
-    define($constpref . 'CFG_ZOOM', '¥º¡¼¥à');
+    define(
+        $constpref . 'CFG_APIKEY_DSC',
+        'Google Maps ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ <br> <a href="http://www.google.com/apis/maps/signup.html" target="_blank">Sign Up for the Google Maps API</a> <br> ï¿½Ë¤ï¿½ <br> API key ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br><br>ï¿½Ñ¥ï¿½á¡¼ï¿½ï¿½ï¿½Î¾ÜºÙ¤Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br><a href="http://www.google.com/apis/maps/documentation/reference.html" target="_blank">Google Maps API Reference</a>'
+    );
+    define($constpref . 'CFG_LATITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_LONGITUDE', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_ZOOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
-    define($constpref . 'CFG_USE_POPBOX', 'PopBox ¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_POPBOX', 'PopBox ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
 
-    define($constpref . 'CFG_INDEX_DESC', '¥È¥Ã¥×¥Ú¡¼¥¸¤ËÉ½¼¨¤¹¤ëÀâÌÀÊ¸');
-    define($constpref . 'CFG_INDEX_DESC_DEFAULT', '¤³¤³¤Ë¤ÏÀâÌÀÊ¸¤òÉ½¼¨¤·¤Þ¤¹¡£<br />ÀâÌÀÊ¸¤Ï¡Ö°ìÈÌÀßÄê¡×¤Ë¤ÆÊÔ½¸¤Ç¤­¤Þ¤¹¡£<br />');
+    define($constpref . 'CFG_INDEX_DESC', 'ï¿½È¥Ã¥×¥Ú¡ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸');
+    define($constpref . 'CFG_INDEX_DESC_DEFAULT', 'ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½<br>ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½Ï¡Ö°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¤Ë¤ï¿½ï¿½Ô½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½<br>');
 
     // Sub menu titles
-    define($constpref . 'SMNAME_SUBMIT', 'Åê¹Æ');
-    define($constpref . 'SMNAME_POPULAR', '¹â¿Íµ¤');
-    define($constpref . 'SMNAME_HIGHRATE', '¥È¥Ã¥×¥é¥ó¥¯');
-    define($constpref . 'SMNAME_MYPHOTO', '¼«Ê¬¤ÎÅê¹Æ');
+    define($constpref . 'SMNAME_SUBMIT', 'ï¿½ï¿½ï¿½');
+    define($constpref . 'SMNAME_POPULAR', 'ï¿½ï¿½Íµï¿½');
+    define($constpref . 'SMNAME_HIGHRATE', 'ï¿½È¥Ã¥×¥ï¿½ï¿½');
+    define($constpref . 'SMNAME_MYPHOTO', 'ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // Names of admin menu items
-    define($constpref . 'ADMENU_PHOTOMANAGER', '¥á¥Ç¥£¥¢´ÉÍý');
-    define($constpref . 'ADMENU_CATMANAGER', '¥«¥Æ¥´¥ê´ÉÍý');
-    define($constpref . 'ADMENU_CHECKCONFIGS', 'Æ°ºî¥Á¥§¥Ã¥«¡¼');
-    define($constpref . 'ADMENU_BATCH', '¥á¥Ç¥£¥¢¤Î°ì³çÅÐÏ¿');
-    define($constpref . 'ADMENU_GROUPPERM', '³Æ¥°¥ë¡¼¥×¤Î¸¢¸Â');
-    define($constpref . 'ADMENU_IMPORT', '¥á¥Ç¥£¥¢¤Î¥¤¥ó¥Ý¡¼¥È');
-    define($constpref . 'ADMENU_EXPORT', '¥á¥Ç¥£¥¢¤Î¥¨¥¯¥¹¥Ý¡¼¥È');
+    define($constpref . 'ADMENU_PHOTOMANAGER', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_CATMANAGER', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_CHECKCONFIGS', 'Æ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_BATCH', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½ï¿½Ï¿');
+    define($constpref . 'ADMENU_GROUPPERM', 'ï¿½Æ¥ï¿½ï¿½ë¡¼ï¿½×¤Î¸ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_IMPORT', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_EXPORT', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½');
 
-    define($constpref . 'ADMENU_GICONMANAGER', 'Google¥¢¥¤¥³¥ó´ÉÍý');
-    define($constpref . 'ADMENU_MIMETYPES', 'MIME¥¿¥¤¥×´ÉÍý');
-    define($constpref . 'ADMENU_IMPORT_MYALBUM', 'Myalbum ¤«¤é¤Î°ì³ç¥¤¥ó¥Ý¡¼¥È');
-    define($constpref . 'ADMENU_CHECKTABLES', '¥Æ¡¼¥Ö¥ëÆ°ºî¥Á¥§¥Ã¥¯');
-    define($constpref . 'ADMENU_PHOTO_TABLE_MANAGE', '¼Ì¿¿¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_CAT_TABLE_MANAGE', '¥«¥Æ¥´¥ê¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_VOTE_TABLE_MANAGE', 'ÅêÉ¼¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_GICON_TABLE_MANAGE', 'Google¥¢¥¤¥³¥ó¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_MIME_TABLE_MANAGE', 'MIME¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_TAG_TABLE_MANAGE', '¥¿¥°¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_P2T_TABLE_MANAGE', '¼Ì¿¿¥¿¥°´ØÏ¢¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_SYNO_TABLE_MANAGE', 'Îà»÷¸ì¥Æ¡¼¥Ö¥ë´ÉÍý');
+    define($constpref . 'ADMENU_GICONMANAGER', 'Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_MIMETYPES', 'MIMEï¿½ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_IMPORT_MYALBUM', 'Myalbum ï¿½ï¿½ï¿½ï¿½Î°ï¿½ç¥¤ï¿½ï¿½Ý¡ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_CHECKTABLES', 'ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½');
+    define($constpref . 'ADMENU_PHOTO_TABLE_MANAGE', 'ï¿½Ì¿ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_CAT_TABLE_MANAGE', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_VOTE_TABLE_MANAGE', 'ï¿½ï¿½É¼ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_GICON_TABLE_MANAGE', 'Googleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_MIME_TABLE_MANAGE', 'MIMEï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_TAG_TABLE_MANAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_P2T_TABLE_MANAGE', 'ï¿½Ì¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_SYNO_TABLE_MANAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.20
     //---------------------------------------------------------
-    define($constpref . 'CFG_USE_FFMPEG', 'ffmpeg ¤ò»ÈÍÑ¤¹¤ë');
-    define($constpref . 'CFG_FFMPEGPATH', 'ffmpeg ¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_DESCFFMPEGPATH',
-           'ffmpeg ¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />¡Öffmpeg ¤ò»ÈÍÑ¤¹¤ë¡×¤Î¡Ö¤Ï¤¤¡×¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
-    define($constpref . 'CFG_USE_PATHINFO', 'pathinfo ¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_FFMPEG', 'ffmpeg ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_FFMPEGPATH', 'ffmpeg ï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_DESCFFMPEGPATH', 'ffmpeg ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½ffmpeg ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½×¤Î¡Ö¤Ï¤ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
+    define($constpref . 'CFG_USE_PATHINFO', 'pathinfo ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.30
     //---------------------------------------------------------
-    define($constpref . 'CFG_MAIL_HOST', '¥á¡¼¥ë ¥µ¡¼¥Ð¡¼ ¥Û¥¹¥ÈÌ¾');
-    define($constpref . 'CFG_MAIL_USER', '¥á¡¼¥ë ¥æ¡¼¥¶¡¼ID');
-    define($constpref . 'CFG_MAIL_PASS', '¥á¡¼¥ë ¥Ñ¥¹¥ï¡¼¥É');
-    define($constpref . 'CFG_MAIL_ADDR', 'Åê¹ÆÀè ¥á¡¼¥ë¥¢¥É¥ì¥¹');
-    define($constpref . 'CFG_MAIL_CHARSET', '¥á¡¼¥ë¤ÎÊ¸»ú¥³¡¼¥É');
-    define($constpref . 'CFG_MAIL_CHARSET_DSC', "'|' ¤Ç¶èÀÚ¤Ã¤ÆÆþÎÏ¤·¤Æ²¼¤µ¤¤¡£<br />Ê¸»ú¥³¡¼¥É¤Ë¤è¤ë¥Á¥§¥Ã¥¯¤ò¹Ô¤ï¤Ê¤¤»þ¤Ë¤Ï¡¢¤³¤³¤ò¶õÍó¤Ë¤·¤Þ¤¹");
+    define($constpref . 'CFG_MAIL_HOST', 'ï¿½á¡¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ ï¿½Û¥ï¿½ï¿½ï¿½Ì¾');
+    define($constpref . 'CFG_MAIL_USER', 'ï¿½á¡¼ï¿½ï¿½ ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½ID');
+    define($constpref . 'CFG_MAIL_PASS', 'ï¿½á¡¼ï¿½ï¿½ ï¿½Ñ¥ï¿½ï¿½ï¡¼ï¿½ï¿½');
+    define($constpref . 'CFG_MAIL_ADDR', 'ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½á¡¼ï¿½ë¥¢ï¿½É¥ì¥¹');
+    define($constpref . 'CFG_MAIL_CHARSET', 'ï¿½á¡¼ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_MAIL_CHARSET_DSC', "'|' ï¿½Ç¶ï¿½ï¿½Ú¤Ã¤ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½<br>Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¤Ë¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½Ô¤ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½Ë¤Ï¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½Þ¤ï¿½");
     define($constpref . 'CFG_MAIL_CHARSET_LIST', 'ISO-2022-JP|JIS|Shift_JIS|EUC-JP|UTF-8');
-    define($constpref . 'CFG_FILE_DIR', 'FTP ¥Õ¥¡¥¤¥ë¤ÎÊÝÂ¸Àè¥Ç¥£¥ì¥¯¥È¥ê');
-    define($constpref . 'CFG_FILE_DIR_DSC', "¥Õ¥ë¥Ñ¥¹¤ò»ØÄê¡ÊºÇ¸å¤Î'/'¤ÏÉÔÍ×¡Ë<br />¥É¥­¥å¥á¥ó¥È¡¦¥ë¡¼¥È°Ê³°¤ËÀßÄê¤¹¤ë¤³¤È¤ò¤ª´«¤á¤·¤Þ¤¹");
-    define($constpref . 'CFG_FILE_SIZE', 'FTP ºÇÂç¥Õ¥¡¥¤¥ëÍÆÎÌ (byte)');
-    define($constpref . 'CFG_FILE_DESC', 'FTP ¥Ø¥ë¥×ÀâÌÀÊ¸');
-    define($constpref . 'CFG_FILE_DESC_DSC', '¡Ö¥Õ¥¡¥¤¥ëÅê¹Æ¡×¤Î¸¢¸Â¤¬¤¢¤ë¾ì¹ç¤Ë¡¢¥Ø¥ë¥×¤ËÉ½¼¨¤µ¤ì¤Þ¤¹');
+    define($constpref . 'CFG_FILE_DIR', 'FTP ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define($constpref . 'CFG_FILE_DIR_DSC', "ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÇ¸ï¿½ï¿½'/'ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½<br>ï¿½É¥ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ë¡¼ï¿½È°Ê³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ë¤³ï¿½È¤ò¤ª´ï¿½ï¿½á¤·ï¿½Þ¤ï¿½");
+    define($constpref . 'CFG_FILE_SIZE', 'FTP ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (byte)');
+    define($constpref . 'CFG_FILE_DESC', 'FTP ï¿½Ø¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸');
+    define($constpref . 'CFG_FILE_DESC_DSC', 'ï¿½Ö¥Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡×¤Î¸ï¿½ï¿½Â¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½ï¿½Ø¥ï¿½×¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
     define($constpref . 'CFG_FILE_DESC_TEXT', '
-<b>FTP ¥µ¡¼¥Ð¡¼</b><br />
-FTP ¥µ¡¼¥Ð¡¼ ¥Û¥¹¥ÈÌ¾: xxx<br />
-FTP ¥æ¡¼¥¶¡¼ID: xxx<br />
-FTP ¥Ñ¥¹¥ï¡¼¥É: xxx<br />');
+<b>FTP ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½</b><br>
+FTP ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ ï¿½Û¥ï¿½ï¿½ï¿½Ì¾: xxx<br>
+FTP ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½ID: xxx<br>
+FTP ï¿½Ñ¥ï¿½ï¿½ï¡¼ï¿½ï¿½: xxx<br>');
 
-    define($constpref . 'ADMENU_MAILLOG_MANAGER', '¥á¡¼¥ë¥í¥°´ÉÍý');
-    define($constpref . 'ADMENU_MAILLOG_TABLE_MANAGE', '¥á¡¼¥ë¥í¥°¡¦¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_USER_TABLE_MANAGE', '¥æ¡¼¥¶Êä½õ¥Æ¡¼¥Ö¥ë´ÉÍý');
+    define($constpref . 'ADMENU_MAILLOG_MANAGER', 'ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_MAILLOG_TABLE_MANAGE', 'ï¿½á¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_USER_TABLE_MANAGE', 'ï¿½æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.40
     //---------------------------------------------------------
-    define($constpref . 'CFG_BIN_PASS', '¥³¥Þ¥ó¥É¤Î¥Ñ¥¹¥ï¡¼¥É');
-    define($constpref . 'CFG_COM_DIRNAME', '¥³¥á¥ó¥ÈÅý¹ç¤¹¤ëd3forum¤Îdirname');
-    define($constpref . 'CFG_COM_FORUM_ID', '¥³¥á¥ó¥ÈÅý¹ç¤¹¤ë¥Õ¥©¡¼¥é¥à¤ÎÈÖ¹æ');
-    define($constpref . 'CFG_COM_VIEW', '¥³¥á¥ó¥ÈÅý¹ç¤ÎÉ½¼¨ÊýË¡');
+    define($constpref . 'CFG_BIN_PASS', 'ï¿½ï¿½ï¿½Þ¥ï¿½É¤Î¥Ñ¥ï¿½ï¿½ï¡¼ï¿½ï¿½');
+    define($constpref . 'CFG_COM_DIRNAME', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤¹ï¿½ï¿½d3forumï¿½ï¿½dirname');
+    define($constpref . 'CFG_COM_FORUM_ID', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç¤¹ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½');
+    define($constpref . 'CFG_COM_VIEW', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½Ë¡');
 
-    define($constpref . 'ADMENU_UPDATE', '¥¢¥Ã¥×¥Ç¡¼¥È');
-    define($constpref . 'ADMENU_ITEM_TABLE_MANAGE', '¥¢¥¤¥Æ¥à¡¦¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_FILE_TABLE_MANAGE', '¥Õ¥¡¥¤¥ë¡¦¥Æ¡¼¥Ö¥ë´ÉÍý');
+    define($constpref . 'ADMENU_UPDATE', 'ï¿½ï¿½ï¿½Ã¥×¥Ç¡ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_ITEM_TABLE_MANAGE', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥à¡¦ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_FILE_TABLE_MANAGE', 'ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ë¡¦ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.50
     //---------------------------------------------------------
-    define($constpref . 'CFG_UPLOADSPATH', '¥¢¥Ã¥×¥í¡¼¥É¡¦¥Õ¥¡¥¤¥ë¤ÎÊÝÂ¸Àè¥Ç¥£¥ì¥¯¥È¥ê');
-    define($constpref . 'CFG_UPLOADSPATH_DSC', "XOOPS¥¤¥ó¥¹¥È¡¼¥ëÀè¤«¤é¤Î¥Ñ¥¹¤ò»ØÄê¡ÊºÇ½é¤Î'/'¤ÏÉ¬Í×¡¢ºÇ¸å¤Î'/'¤ÏÉÔÍ×¡Ë<br />Unix¤Ç¤Ï¤³¤Î¥Ç¥£¥ì¥¯¥È¥ê¤Ø¤Î½ñ¹þÂ°À­¤òON¤Ë¤·¤Æ²¼¤µ¤¤");
-    define($constpref . 'CFG_MEDIASPATH', '¥á¥Ç¥£¥¢¡¦¥Õ¥¡¥¤¥ë¤Î¥Ç¥£¥ì¥¯¥È¥ê');
-    define($constpref . 'CFG_MEDIASPATH_DSC', "¥×¥ì¥¤¥ê¥¹¥È¤Î¸µ¤Ë¤Ê¤ë¥á¥Ç¥£¥¢¡¦¥Õ¥¡¥¤¥ë¤Î¤¢¤ë¥Ç¥£¥ì¥¯¥È¥ê <br />XOOPS¥¤¥ó¥¹¥È¡¼¥ëÀè¤«¤é¤Î¥Ñ¥¹¤ò»ØÄê¡ÊºÇ½é¤Î'/'¤ÏÉ¬Í×¡¢ºÇ¸å¤Î'/'¤ÏÉÔÍ×¡Ë");
-    define($constpref . 'CFG_LOGO_WIDTH', '¥×¥ì¥¤¥ä¡¼¡¦¥í¥´²èÁü¤ÎÉý¤È¹â¤µ');
-    define($constpref . 'CFG_USE_CALLBACK', '¥³¡¼¥ë¥Ð¥Ã¥¯¡¦¥í¥°¤ò»ÈÍÑ¤¹¤ë');
-    define($constpref . 'CFG_USE_CALLBACK_DSC', '¥³¡¼¥ë¥Ð¥Ã¥¯¤ò»ÈÍÑ¤·¤Æ Flash Player ¤Î¥¤¥Ù¥ó¥È¤òµ­Ï¿¤¹¤ë');
+    define($constpref . 'CFG_UPLOADSPATH', 'ï¿½ï¿½ï¿½Ã¥×¥ï¿½ï¿½É¡ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define($constpref . 'CFG_UPLOADSPATH_DSC', "XOOPSï¿½ï¿½ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½è¤«ï¿½ï¿½Î¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÇ½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¡ï¿½ï¿½Ç¸ï¿½ï¿½'/'ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½<br>Unixï¿½Ç¤Ï¤ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ø¤Î½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ONï¿½Ë¤ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½");
+    define($constpref . 'CFG_MEDIASPATH', 'ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define($constpref . 'CFG_MEDIASPATH_DSC', "ï¿½×¥ì¥¤ï¿½ê¥¹ï¿½È¤Î¸ï¿½ï¿½Ë¤Ê¤ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ <br>XOOPSï¿½ï¿½ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½è¤«ï¿½ï¿½Î¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÇ½ï¿½ï¿½'/'ï¿½ï¿½É¬ï¿½×¡ï¿½ï¿½Ç¸ï¿½ï¿½'/'ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½");
+    define($constpref . 'CFG_LOGO_WIDTH', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹â¤µ');
+    define($constpref . 'CFG_USE_CALLBACK', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_USE_CALLBACK_DSC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½ Flash Player ï¿½Î¥ï¿½ï¿½Ù¥ï¿½È¤ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½');
 
-    define($constpref . 'ADMENU_ITEM_MANAGER', '¥¢¥¤¥Æ¥à´ÉÍý');
-    define($constpref . 'ADMENU_PLAYER_MANAGER', '¥×¥ì¥¤¥ä¡¼´ÉÍý');
-    define($constpref . 'ADMENU_FLASHVAR_MANAGER', '¥Õ¥é¥Ã¥·¥åÊÑ¿ô´ÉÍý');
-    define($constpref . 'ADMENU_PLAYER_TABLE_MANAGE', '¥×¥ì¥¤¥ä¡¼¡¦¥Æ¡¼¥Ö¥ë´ÉÍý');
-    define($constpref . 'ADMENU_FLASHVAR_TABLE_MANAGE', '¥Õ¥é¥Ã¥·¥åÊÑ¿ô¡¦¥Æ¡¼¥Ö¥ë´ÉÍý');
+    define($constpref . 'ADMENU_ITEM_MANAGER', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_PLAYER_MANAGER', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_FLASHVAR_MANAGER', 'ï¿½Õ¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_PLAYER_TABLE_MANAGE', 'ï¿½×¥ì¥¤ï¿½ä¡¼ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'ADMENU_FLASHVAR_TABLE_MANAGE', 'ï¿½Õ¥ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.60
     //---------------------------------------------------------
-    define($constpref . 'CFG_WORKDIR', 'ºî¶ÈÍÑ¤Î¥Ç¥£¥ì¥¯¥È¥ê');
-    define($constpref . 'CFG_WORKDIR_DSC', "¥Õ¥ë¥Ñ¥¹¤ò»ØÄê¡ÊºÇ¸å¤Î'/'¤ÏÉÔÍ×¡Ë<br />¥É¥­¥å¥á¥ó¥È¡¦¥ë¡¼¥È°Ê³°¤ËÀßÄê¤¹¤ë¤³¤È¤ò¤ª´«¤á¤·¤Þ¤¹");
-    define($constpref . 'CFG_CAT_WIDTH', '¥«¥Æ¥´¥ê²èÁü¤ÎÉý¤È¹â¤µ');
-    define($constpref . 'CFG_CSUB_WIDTH', '¥µ¥Ö¥«¥Æ¥´¥ê¤ËÉ½¼¨¤¹¤ë²èÁü¤ÎÉý¤È¹â¤µ');
-    define($constpref . 'CFG_GICON_WIDTH', 'GoogleMap ¥¢¥¤¥³¥ó²èÁü¤ÎÉý¤È¹â¤µ');
-    define($constpref . 'CFG_JPEG_QUALITY', 'JPEG ÉÊ¼Á');
-    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br />²èÁü½èÍý¥Ñ¥Ã¥±¡¼¥¸¤È¤·¤ÆGD¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
+    define($constpref . 'CFG_WORKDIR', 'ï¿½ï¿½ï¿½ï¿½Ñ¤Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½');
+    define($constpref . 'CFG_WORKDIR_DSC', "ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊºÇ¸ï¿½ï¿½'/'ï¿½ï¿½ï¿½ï¿½ï¿½×¡ï¿½<br>ï¿½É¥ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ë¡¼ï¿½È°Ê³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ë¤³ï¿½È¤ò¤ª´ï¿½ï¿½á¤·ï¿½Þ¤ï¿½");
+    define($constpref . 'CFG_CAT_WIDTH', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹â¤µ');
+    define($constpref . 'CFG_CSUB_WIDTH', 'ï¿½ï¿½ï¿½Ö¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹â¤µ');
+    define($constpref . 'CFG_GICON_WIDTH', 'GoogleMap ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹â¤µ');
+    define($constpref . 'CFG_JPEG_QUALITY', 'JPEG ï¿½Ê¼ï¿½');
+    define($constpref . 'CFG_JPEG_QUALITY_DSC', '1 - 100 <br>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¥Ã¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½ï¿½GDï¿½ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
     //---------------------------------------------------------
     // v0.80
     //---------------------------------------------------------
-    define($constpref . 'BNAME_CATLIST', '¥«¥Æ¥´¥ê°ìÍ÷');
-    define($constpref . 'BNAME_TAGCLOUD', '¥¿¥°°ìÍ÷');
+    define($constpref . 'BNAME_CATLIST', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'BNAME_TAGCLOUD', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v0.90
     //---------------------------------------------------------
-    define($constpref . 'CFG_PERM_CAT_READ', '¥«¥Æ¥´¥ê¤Î±ÜÍ÷¸¢¸Â');
-    define($constpref . 'CFG_PERM_CAT_READ_DSC', '¥«¥Æ¥´¥ê¡¦¥Æ¡¼¥Ö¥ë¤ÎÀßÄê¤È¹ç¤ï¤»¤ÆÍ­¸ú¤Ë¤Ê¤ë');
-    define($constpref . 'CFG_PERM_ITEM_READ', '¥¢¥¤¥Æ¥à¤Î±ÜÍ÷¸¢¸Â');
-    define($constpref . 'CFG_PERM_ITEM_READ_DSC', '¥¢¥¤¥Æ¥à¡¦¥Æ¡¼¥Ö¥ë¤ÎÀßÄê¤È¹ç¤ï¤»¤ÆÍ­¸ú¤Ë¤Ê¤ë');
-    define($constpref . 'OPT_PERM_READ_ALL', 'Á´¤ÆÉ½¼¨¤¹¤ë');
-    define($constpref . 'OPT_PERM_READ_NO_ITEM', '¥¢¥¤¥Æ¥à¤òÈóÉ½¼¨¤Ë¤¹¤ë');
-    define($constpref . 'OPT_PERM_READ_NO_CAT', '¥«¥Æ¥´¥ê¤È¥¢¥¤¥Æ¥à¤òÈóÉ½¼¨¤Ë¤¹¤ë');
+    define($constpref . 'CFG_PERM_CAT_READ', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_PERM_CAT_READ_DSC', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¦ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹ï¿½ï¤»ï¿½ï¿½Í­ï¿½ï¿½ï¿½Ë¤Ê¤ï¿½');
+    define($constpref . 'CFG_PERM_ITEM_READ', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_PERM_ITEM_READ_DSC', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥à¡¦ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¹ï¿½ï¤»ï¿½ï¿½Í­ï¿½ï¿½ï¿½Ë¤Ê¤ï¿½');
+    define($constpref . 'OPT_PERM_READ_ALL', 'ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_PERM_READ_NO_ITEM', 'ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_PERM_READ_NO_CAT', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½Ë¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.10
     //---------------------------------------------------------
-    define($constpref . 'CFG_USE_XPDF', 'xpdf ¤ò»ÈÍÑ¤¹¤ë');
-    define($constpref . 'CFG_XPDFPATH', 'xpdf ¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_XPDFPATH_DSC',
-           'pdftoppm ¤Ê¤É¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />¡Öxpdf ¤ò»ÈÍÑ¤¹¤ë¡×¤Î¡Ö¤Ï¤¤¡×¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
+    define($constpref . 'CFG_USE_XPDF', 'xpdf ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_XPDFPATH', 'xpdf ï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_XPDFPATH_DSC', 'pdftoppm ï¿½Ê¤É¤ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½xpdf ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½×¤Î¡Ö¤Ï¤ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
     //---------------------------------------------------------
     // v1.21
     //---------------------------------------------------------
-    define($constpref . 'ADMENU_RSS_MANAGER', 'RSS ´ÉÍý');
+    define($constpref . 'ADMENU_RSS_MANAGER', 'RSS ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.30
     //---------------------------------------------------------
-    define($constpref . 'CFG_SMALL_WIDTH', '¥¿¥¤¥à¥é¥¤¥ó¤Ç¤Î²èÁü¤ÎÉý');
-    define($constpref . 'CFG_SMALL_HEIGHT', '¥¿¥¤¥à¥é¥¤¥ó¤Ç¤Î²èÁü¤Î¹â¤µ');
-    define($constpref . 'CFG_TIMELINE_DIRNAME', 'timeline ¥â¥¸¥å¡¼¥ë¤Î¥Ç¥£¥ì¥¯¥È¥êÌ¾');
-    define($constpref . 'CFG_TIMELINE_DIRNAME_DSC', '¥¿¥¤¥à¥é¥¤¥óµ¡Ç½¤ò»ÈÍÑ¤¹¤ë¤È¤­¤Ë»ØÄê¤¹¤ë');
-    define($constpref . 'CFG_TIMELINE_SCALE', '¥¿¥¤¥à¥é¥¤¥ó¤Î»þ´ÖÉý');
-    define($constpref . 'CFG_TIMELINE_SCALE_DSC', 'Ìó 600px ¤Î²£Éý¤ËÉ½¼¨¤¹¤ë»þ´Ö');
-    define($constpref . 'OPT_TIMELINE_SCALE_WEEK', '£±½µ´Ö');
-    define($constpref . 'OPT_TIMELINE_SCALE_MONTH', '£±¥ö·î');
-    define($constpref . 'OPT_TIMELINE_SCALE_YEAR', '£±Ç¯');
-    define($constpref . 'OPT_TIMELINE_SCALE_DECADE', '£±£°Ç¯');
+    define($constpref . 'CFG_SMALL_WIDTH', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Ç¤Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_SMALL_HEIGHT', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Ç¤Î²ï¿½ï¿½ï¿½ï¿½Î¹â¤µ');
+    define($constpref . 'CFG_TIMELINE_DIRNAME', 'timeline ï¿½â¥¸ï¿½å¡¼ï¿½ï¿½Î¥Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½Ì¾');
+    define($constpref . 'CFG_TIMELINE_DIRNAME_DSC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½È¤ï¿½ï¿½Ë»ï¿½ï¿½ê¤¹ï¿½ï¿½');
+    define($constpref . 'CFG_TIMELINE_SCALE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_TIMELINE_SCALE_DSC', 'ï¿½ï¿½ 600px ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_WEEK', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_MONTH', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_YEAR', 'ï¿½ï¿½Ç¯');
+    define($constpref . 'OPT_TIMELINE_SCALE_DECADE', 'ï¿½ï¿½ï¿½ï¿½Ç¯');
 
     //---------------------------------------------------------
     // v1.40
     //---------------------------------------------------------
     // timeline
-    define($constpref . 'CFG_TIMELINE_LATEST', '¥¿¥¤¥à¥é¥¤¥ó¤Î¿·¤·¤¤Êý¤«¤éÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'CFG_TIMELINE_RANDOM', '¥¿¥¤¥à¥é¥¤¥ó¤Î¥é¥ó¥À¥à¤ËÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'BNAME_TIMELINE', '¥¿¥¤¥à¥é¥¤¥ó');
+    define($constpref . 'CFG_TIMELINE_LATEST', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'CFG_TIMELINE_RANDOM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½Î¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'BNAME_TIMELINE', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¤ï¿½ï¿½');
 
     // map, tag
-    define($constpref . 'CFG_GMAP_PHOTOS', '¥Þ¥Ã¥×¤ËÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¿ô');
-    define($constpref . 'CFG_TAGS', '¥¿¥°¥¯¥é¥¦¥É¤ËÉ½¼¨¤¹¤ë¥¿¥°¤Î¿ô');
+    define($constpref . 'CFG_GMAP_PHOTOS', 'ï¿½Þ¥Ã¥×¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¿ï¿½');
+    define($constpref . 'CFG_TAGS', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é¥¦ï¿½É¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ë¥¿ï¿½ï¿½ï¿½Î¿ï¿½');
 
     //---------------------------------------------------------
     // v1.70
     //---------------------------------------------------------
-    define($constpref . 'CFG_ITEM_SUMMARY', '¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÀâÌÀ¤ÎºÇÂç¤ÎÊ¸»ú¿ô');
-    define($constpref . 'CFG_ITEM_SUMMARY_DSC', '°ìÍ÷¤ËÉ½¼¨¤¹¤ë¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÀâÌÀÊ¸¤ÎºÇÂç¤ÎÊ¸»ú¿ô¤ò»ØÄê¤¹¤ë<br />-1 ¤ÏÀ©¸Â¤Ê¤·');
-    define($constpref . 'CFG_CAT_SUMMARY', '¥«¥Æ¥´¥ê¤ÎÀâÌÀ¤ÎºÇÂç¤ÎÊ¸»ú¿ô');
-    define($constpref . 'CFG_CAT_SUMMARY_DSC', '¥«¥Æ¥´¥ê°ìÍ÷¤ËÉ½¼¨¤¹¤ëÀâÌÀÊ¸¤ÎºÇÂç¤ÎÊ¸»ú¿ô¤ò»ØÄê¤¹¤ë<br />-1 ¤ÏÀ©¸Â¤Ê¤·');
-    define($constpref . 'CFG_CAT_CHILD', '²¼°Ì¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÉ½¼¨');
-    define($constpref . 'CFG_CAT_CHILD_DSC', '¥«¥Æ¥´¥êÉ½¼¨¤Î¤È¤­¤Ë²¼°Ì¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÉ½¼¨¤¹¤ë¤«ÈÝ¤«¤ò»ØÄê¤¹¤ë');
-    define($constpref . 'OPT_CAT_CHILD_NON', '¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤Î¤ß¤òÉ½¼¨¤¹¤ë¡£¾ï¤Ë²¼°Ì¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÉ½¼¨¤·¤Ê¤¤');
-    define($constpref . 'OPT_CAT_CHILD_EMPTY', '¥«¥Æ¥´¥ê¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬¥¼¥í¤Î¤È¤­¤Ë¡¢²¼°Ì¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÉ½¼¨¤¹¤ë');
-    define($constpref . 'OPT_CAT_CHILD_ALWAYS', '¾ï¤Ë²¼°Ì¥«¥Æ¥´¥ê¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤òÉ½¼¨¤¹¤ë');
+    define($constpref . 'CFG_ITEM_SUMMARY', 'ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_ITEM_SUMMARY_DSC', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½Îºï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ï¿½<br>-1 ï¿½ï¿½ï¿½ï¿½ï¿½Â¤Ê¤ï¿½');
+    define($constpref . 'CFG_CAT_SUMMARY', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_CAT_SUMMARY_DSC', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½Îºï¿½ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ï¿½<br>-1 ï¿½ï¿½ï¿½ï¿½ï¿½Â¤Ê¤ï¿½');
+    define($constpref . 'CFG_CAT_CHILD', 'ï¿½ï¿½ï¿½Ì¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½');
+    define($constpref . 'CFG_CAT_CHILD_DSC', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½Î¤È¤ï¿½ï¿½Ë²ï¿½ï¿½Ì¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ë¤«ï¿½Ý¤ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ï¿½');
+    define($constpref . 'OPT_CAT_CHILD_NON', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½Î¤ß¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡£ï¿½ï¿½Ë²ï¿½ï¿½Ì¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½');
+    define($constpref . 'OPT_CAT_CHILD_EMPTY', 'ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤È¤ï¿½ï¿½Ë¡ï¿½ï¿½ï¿½ï¿½Ì¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_CAT_CHILD_ALWAYS', 'ï¿½ï¿½Ë²ï¿½ï¿½Ì¥ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v1.80
     //---------------------------------------------------------
-    define($constpref . 'CFG_USE_LAME', 'lame ¤ò»ÈÍÑ¤¹¤ë');
-    define($constpref . 'CFG_LAMEPATH', 'lame ¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_LAMEPATH_DSC', 'lame ¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />¡Ölame ¤ò»ÈÍÑ¤¹¤ë¡×¤Î¡Ö¤Ï¤¤¡×¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
+    define($constpref . 'CFG_USE_LAME', 'lame ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_LAMEPATH', 'lame ï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_LAMEPATH_DSC', 'lame ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½lame ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½×¤Î¡Ö¤Ï¤ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
-    define($constpref . 'CFG_USE_TIMIDITY', 'timidity ¤ò»ÈÍÑ¤¹¤ë');
-    define($constpref . 'CFG_TIMIDITYPATH', 'timidity ¤Î¼Â¹Ô¥Ñ¥¹');
-    define($constpref . 'CFG_TIMIDITYPATH_DSC',
-           'timidity ¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Õ¥ë¥Ñ¥¹¤Ç»ØÄê¤·¤Þ¤¹¡¢¶õÇò¤Ç¤¦¤Þ¤¯¹Ô¤¯¤³¤È¤¬Â¿¤¤¤Ç¤·¤ç¤¦¡£<br />¡Ötimidity ¤ò»ÈÍÑ¤¹¤ë¡×¤Î¡Ö¤Ï¤¤¡×¤òÁªÂò¤·¤¿»þ¤Î¤ß°ÕÌ£¤ò»ý¤Á¤Þ¤¹');
+    define($constpref . 'CFG_USE_TIMIDITY', 'timidity ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_TIMIDITYPATH', 'timidity ï¿½Î¼Â¹Ô¥Ñ¥ï¿½');
+    define($constpref . 'CFG_TIMIDITYPATH_DSC', 'timidity ï¿½ï¿½Â¸ï¿½ß¤ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ì¥¯ï¿½È¥ï¿½ï¿½Õ¥ï¿½Ñ¥ï¿½ï¿½Ç»ï¿½ï¿½ê¤·ï¿½Þ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½Þ¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½È¤ï¿½Â¿ï¿½ï¿½ï¿½Ç¤ï¿½ï¿½ç¤¦ï¿½ï¿½<br>ï¿½ï¿½timidity ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½×¤Î¡Ö¤Ï¤ï¿½ï¿½×¤ï¿½ï¿½ï¿½ï¿½ò¤·¤ï¿½ï¿½ï¿½ï¿½Î¤ß°ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½');
 
-    define($constpref . 'SMNAME_SEARCH', '¸¡º÷');
+    define($constpref . 'SMNAME_SEARCH', 'ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.00
     //---------------------------------------------------------
     // config
-    define($constpref . 'CFG_GROUPID_ADMIN', '´ÉÍý¼Ô ¥°¥ë¡¼¥×ID');
-    define($constpref . 'CFG_GROUPID_ADMIN_DSC', '¤³¤Î¥â¥¸¥å¡¼¥ë¤Î´ÉÍý¼Ô¤Î¥æ¡¼¥¶¥°¥ë¡¼¥×ID¡£<br />¥â¥¸¥å¡¼¥ë¥¤¥ó¥¹¥È¡¼¥ë»þ¤ËÀßÄê¤µ¤ì¤ë¡£<br />¤à¤ä¤ß¤ËÊÑ¹¹¤·¤Ê¤¤¤³¤È');
-    define($constpref . 'CFG_GROUPID_USER', 'ÍøÍÑ¼Ô ¥°¥ë¡¼¥×ID');
-    define($constpref . 'CFG_GROUPID_USER_DSC', '¤³¤Î¥â¥¸¥å¡¼¥ë¤ÎÍøÍÑ¼Ô¤Î¥æ¡¼¥¶¥°¥ë¡¼¥×ID¡£<br />¥â¥¸¥å¡¼¥ë¥¤¥ó¥¹¥È¡¼¥ë»þ¤ËÀßÄê¤µ¤ì¤ë¡£<br />¤à¤ä¤ß¤ËÊÑ¹¹¤·¤Ê¤¤¤³¤È');
+    define($constpref . 'CFG_GROUPID_ADMIN', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ë¡¼ï¿½ï¿½ID');
+    define($constpref . 'CFG_GROUPID_ADMIN_DSC', 'ï¿½ï¿½ï¿½Î¥â¥¸ï¿½å¡¼ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½Ô¤Î¥æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ë¡¼ï¿½ï¿½IDï¿½ï¿½<br>ï¿½â¥¸ï¿½å¡¼ï¿½ë¥¤ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤µï¿½ï¿½ë¡£<br>ï¿½ï¿½ï¿½ß¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_GROUPID_USER', 'ï¿½ï¿½ï¿½Ñ¼ï¿½ ï¿½ï¿½ï¿½ë¡¼ï¿½ï¿½ID');
+    define($constpref . 'CFG_GROUPID_USER_DSC', 'ï¿½ï¿½ï¿½Î¥â¥¸ï¿½å¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¼Ô¤Î¥æ¡¼ï¿½ï¿½ï¿½ï¿½ï¿½ë¡¼ï¿½ï¿½IDï¿½ï¿½<br>ï¿½â¥¸ï¿½å¡¼ï¿½ë¥¤ï¿½ó¥¹¥È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¤µï¿½ï¿½ë¡£<br>ï¿½ï¿½ï¿½ß¤ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ê¤ï¿½ï¿½ï¿½ï¿½ï¿½');
 
     // admin menu
-    define($constpref . 'ADMENU_INVITE', 'Í§¿Í¤ò¾·ÂÔ¤¹¤ë');
+    define($constpref . 'ADMENU_INVITE', 'Í§ï¿½Í¤ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½');
 
     // notifications
-    define($constpref . 'GLOBAL_WAITING_NOTIFY', '¾µÇ§ÂÔ¤Á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤ÎÅê¹Æ');
-    define($constpref . 'GLOBAL_WAITING_NOTIFYCAP', '¾µÇ§ÂÔ¤Á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬Åê¹Æ¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë (´ÉÍý¼Ô)');
-    define($constpref . 'GLOBAL_WAITING_NOTIFYDSC', '¾µÇ§ÂÔ¤Á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¤¬Åê¹Æ¤µ¤ì¤¿»þ¤ËÄÌÃÎ¤¹¤ë');
-    define($constpref . 'GLOBAL_WAITING_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ¾µÇ§ÂÔ¤Á¤Î¼Ì¿¿¡¦Æ°²è¡¦¥á¥Ç¥£¥¢¿¿¤¬Åê¹Æ¤µ¤ì¤Þ¤·¤¿');
+    define($constpref . 'GLOBAL_WAITING_NOTIFY', 'ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'GLOBAL_WAITING_NOTIFYCAP', 'ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)');
+    define($constpref . 'GLOBAL_WAITING_NOTIFYDSC', 'ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ì¤¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¤ï¿½ï¿½ï¿½');
+    define($constpref . 'GLOBAL_WAITING_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE}: ï¿½ï¿½Ç§ï¿½Ô¤ï¿½ï¿½Î¼Ì¿ï¿½ï¿½ï¿½Æ°ï¿½è¡¦ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.10
     //---------------------------------------------------------
-    define($constpref . 'CFG_USE_LIGHTBOX', 'LightBox ¤ò»ÈÍÑ¤¹¤ë');
+    define($constpref . 'CFG_USE_LIGHTBOX', 'LightBox ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.11
     //---------------------------------------------------------
-    define($constpref . 'ADMENU_REDOTHUMBS', '¥µ¥à¥Í¥¤¥ë¤ÎºÆ¹½ÃÛ');
+    define($constpref . 'ADMENU_REDOTHUMBS', 'ï¿½ï¿½ï¿½ï¿½Í¥ï¿½ï¿½ï¿½ÎºÆ¹ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.20
     //---------------------------------------------------------
-    define($constpref . 'CFG_EMBED_WIDTH', 'Æ°²è¥µ¥¤¥È¤ÎÉ½¼¨¤ÎÉý');
-    define($constpref . 'CFG_EMBED_HEIGHT', 'Æ°²è¥µ¥¤¥È¤ÎÉ½¼¨¤Î¹â¤µ');
+    define($constpref . 'CFG_EMBED_WIDTH', 'Æ°ï¿½è¥µï¿½ï¿½ï¿½È¤ï¿½É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'CFG_EMBED_HEIGHT', 'Æ°ï¿½è¥µï¿½ï¿½ï¿½È¤ï¿½É½ï¿½ï¿½ï¿½Î¹â¤µ');
 
     //---------------------------------------------------------
     // v2.40
     //---------------------------------------------------------
-    define($constpref . 'CFG_PEAR_PATH', 'PEAR ¥é¥¤¥Ö¥é¥ê¤Î¥Ñ¥¹');
-    define($constpref . 'CFG_PEAR_PATH_DSC', 'Net_POP3 ¤Î¤¢¤ë PEAR ¥é¥¤¥Ö¥é¥ê¤ÎÀäÂÐ¥Ñ¥¹¤ò»ØÄê¤¹¤ë<br />»ØÄê¤·¤Ê¤¤¤È¤­¤Ï modules/webphoto/PEAR ¤¬»ÈÍÑ¤µ¤ì¤ë');
+    define($constpref . 'CFG_PEAR_PATH', 'PEAR ï¿½é¥¤ï¿½Ö¥ï¿½ï¿½Î¥Ñ¥ï¿½');
+    define($constpref . 'CFG_PEAR_PATH_DSC', 'Net_POP3 ï¿½Î¤ï¿½ï¿½ï¿½ PEAR ï¿½é¥¤ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¥Ñ¥ï¿½ï¿½ï¿½ï¿½ï¿½ê¤¹ï¿½ï¿½<br>ï¿½ï¿½ï¿½ê¤·ï¿½Ê¤ï¿½ï¿½È¤ï¿½ï¿½ï¿½ modules/webphoto/PEAR ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¤ï¿½ï¿½ï¿½ï¿½');
 
     //---------------------------------------------------------
     // v2.60
     //---------------------------------------------------------
-    define($constpref . 'OPT_TIMELINE_SCALE_HOUR', '£±»þ´Ö');
-    define($constpref . 'OPT_TIMELINE_SCALE_DAY', '£±Æü');
-    define($constpref . 'OPT_TIMELINE_SCALE_CENTURY', '£±À¤µª');
-    define($constpref . 'OPT_TIMELINE_SCALE_MILLENNIUM', '£±£°À¤µª');
+    define($constpref . 'OPT_TIMELINE_SCALE_HOUR', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_DAY', 'ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_CENTURY', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+    define($constpref . 'OPT_TIMELINE_SCALE_MILLENNIUM', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 }// === define begin ===
-;

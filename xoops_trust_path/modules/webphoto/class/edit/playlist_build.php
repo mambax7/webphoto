@@ -25,6 +25,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_playlist_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_playlist_build
+ */
 class webphoto_edit_playlist_build extends webphoto_base_ini
 {
     public $_playlist_class;
@@ -38,35 +42,58 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_playlist_build constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
-        $this->_playlist_class   = webphoto_playlist::getInstance($dirname, $trust_dirname);
+        $this->_playlist_class = webphoto_playlist::getInstance($dirname, $trust_dirname);
         $this->_icon_build_class = webphoto_edit_icon_build::getInstance($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_playlist_build|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_playlist_build($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function is_type($row)
     {
         if ($row['item_playlist_type']) {
             return true;
         }
+
         return false;
     }
 
     // called before crete item
+
+    /**
+     * @param $row
+     * @return int
+     */
     public function build_row($row)
     {
         if (!$this->is_type($row)) {
@@ -75,10 +102,10 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
 
         $this->_item_row = $row;
 
-        $item_title         = $row['item_title'];
+        $item_title = $row['item_title'];
         $item_playlist_type = $row['item_playlist_type'];
         $item_playlist_feed = $row['item_playlist_feed'];
-        $item_playlist_dir  = $row['item_playlist_dir'];
+        $item_playlist_dir = $row['item_playlist_dir'];
 
         if ($item_playlist_feed) {
             $row['item_kind'] = _C_WEBPHOTO_ITEM_KIND_PLAYLIST_FEED;
@@ -94,15 +121,14 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
 
         switch ($item_playlist_type) {
             // general
-            case _C_WEBPHOTO_PLAYLIST_TYPE_AUDIO :
-            case _C_WEBPHOTO_PLAYLIST_TYPE_VIDEO :
-            case _C_WEBPHOTO_PLAYLIST_TYPE_FLASH :
+            case _C_WEBPHOTO_PLAYLIST_TYPE_AUDIO:
+            case _C_WEBPHOTO_PLAYLIST_TYPE_VIDEO:
+            case _C_WEBPHOTO_PLAYLIST_TYPE_FLASH:
                 $row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_MEDIAPLAYER;
-                $row['item_player_id']   = _C_WEBPHOTO_PLAYER_ID_PLAYLIST;
+                $row['item_player_id'] = _C_WEBPHOTO_PLAYER_ID_PLAYLIST;
                 break;
-
             // image
-            case _C_WEBPHOTO_PLAYLIST_TYPE_IMAGE :
+            case _C_WEBPHOTO_PLAYLIST_TYPE_IMAGE:
                 $row['item_displaytype'] = _C_WEBPHOTO_DISPLAYTYPE_IMAGEROTATOR;
                 break;
         }
@@ -110,10 +136,16 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
         $row = $this->build_row_icon_if_empty($row, $this->_THUMB_EXT_DEFAULT);
 
         $this->_item_row = $row;
+
         return 0;  // OK
     }
 
     // called after crete item
+
+    /**
+     * @param $row
+     * @return int
+     */
     public function create_cache($row)
     {
         if (!$this->is_type($row)) {
@@ -121,7 +153,7 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
         }
 
         $this->_item_row = $row;
-        $item_id         = $row['item_id'];
+        $item_id = $row['item_id'];
 
         // playlist cache
         $row['item_playlist_cache'] = $this->_playlist_class->build_name($item_id);
@@ -129,16 +161,22 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
         $ret = $this->_playlist_class->create_cache_by_item_row($row);
         if (!$ret) {
             $this->set_error($this->_playlist_class->get_errors());
+
             return _C_WEBPHOTO_ERR_PLAYLIST;
         }
 
         $this->_item_row = $row;
+
         return 0;  // OK
     }
 
+    /**
+     * @param $row
+     * @return false|null|string
+     */
     public function build_title($row)
     {
-        $playlist_dir  = $row['item_playlist_dir'];
+        $playlist_dir = $row['item_playlist_dir'];
         $playlist_feed = $row['item_playlist_feed'];
 
         $title = null;
@@ -146,7 +184,6 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
         if ($playlist_dir) {
             $title = $playlist_dir;
         } elseif ($playlist_feed) {
-
             // BUG: Notice [PHP]: Undefined variable: laylist_feed
             $param = parse_url($playlist_feed);
 
@@ -172,6 +209,12 @@ class webphoto_edit_playlist_build extends webphoto_base_ini
     //---------------------------------------------------------
     // icon
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param null $ext
+     * @return mixed
+     */
     public function build_row_icon_if_empty($row, $ext = null)
     {
         return $this->_icon_build_class->build_row_icon_if_empty($row, $ext);

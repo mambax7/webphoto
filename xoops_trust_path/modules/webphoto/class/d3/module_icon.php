@@ -13,6 +13,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_d3_module_icon
 //=========================================================
+
+/**
+ * Class webphoto_d3_module_icon
+ */
 class webphoto_d3_module_icon
 {
     public $_DIRNAME;
@@ -30,22 +34,30 @@ class webphoto_d3_module_icon
         // dummy
     }
 
+    /**
+     * @return \webphoto_d3_module_icon
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_d3_module_icon();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function init($dirname, $trust_dirname)
     {
-        $this->_DIRNAME       = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_TRUST_DIRNAME = $trust_dirname;
 
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
-        $this->_TRUST_DIR  = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
+        $this->_TRUST_DIR = XOOPS_TRUST_PATH . '/modules/' . $trust_dirname;
     }
 
     //---------------------------------------------------------
@@ -54,18 +66,18 @@ class webphoto_d3_module_icon
     public function output_image()
     {
         $icon_trust_path = $this->_TRUST_DIR . '/images/module_icon.png';
-        $icon_root_path  = $this->_MODULE_DIR . '/images/module_icon.png';
+        $icon_root_path = $this->_MODULE_DIR . '/images/module_icon.png';
 
         if (file_exists($icon_root_path)) {
             $use_custom_icon = true;
-            $icon_fullpath   = $icon_root_path;
+            $icon_fullpath = $icon_root_path;
         } else {
             $use_custom_icon = false;
-            $icon_fullpath   = $icon_trust_path;
+            $icon_fullpath = $icon_trust_path;
         }
 
         $modified = (int)(time() / $this->_CACHE_LIMIT) * $this->_CACHE_LIMIT;
-        $expires  = $modified + $this->_CACHE_LIMIT;
+        $expires = $modified + $this->_CACHE_LIMIT;
 
         session_cache_limiter('public');
         header('Expires: ' . date('r', $expires));
@@ -77,11 +89,10 @@ class webphoto_d3_module_icon
             && function_exists('imagecreatefrompng')
             && function_exists('imagecolorallocate')
             && function_exists('imagestring')
-            && function_exists('imagepng')
-        ) {
-            $im    = imagecreatefrompng($icon_fullpath);
+            && function_exists('imagepng')) {
+            $im = imagecreatefrompng($icon_fullpath);
             $color = imagecolorallocate($im, 0, 0, 0); // black
-            $px    = (92 - 6 * strlen($this->_DIRNAME)) / 2;
+            $px = (92 - 6 * mb_strlen($this->_DIRNAME)) / 2;
             imagestring($im, 3, $px, 34, $this->_DIRNAME, $color);
             imagepng($im);
             imagedestroy($im);

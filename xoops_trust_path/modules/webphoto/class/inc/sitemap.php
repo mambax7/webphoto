@@ -25,6 +25,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_inc_sitemap
 //=========================================================
+
+/**
+ * Class webphoto_inc_sitemap
+ */
 class webphoto_inc_sitemap extends webphoto_inc_base_ini
 {
     public $_uri_class;
@@ -32,27 +36,43 @@ class webphoto_inc_sitemap extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_sitemap constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_uri_class = webphoto_inc_uri::getSingleton($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_sitemap($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function sitemap()
     {
         $table_cat = $this->prefix_dirname('cat');
@@ -64,7 +84,7 @@ class webphoto_inc_sitemap extends webphoto_inc_base_ini
             return sitemap_get_categoires_map($table_cat, 'cat_id', 'cat_pid', 'cat_title', $link, 'cat_title');
         }
 
-        return array();
+        return [];
     }
 
     // --- class end ---

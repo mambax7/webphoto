@@ -15,4 +15,3 @@ if (!defined('_C_WEBPHOTO_VERSION')) {
     define('_C_WEBPHOTO_VERSION', '2.61');
     define('_C_WEBPHOTO_TIMELINE_VERSION', '0.20');
 }// --- define version end ---
-;

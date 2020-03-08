@@ -9,9 +9,12 @@
 //=========================================================
 // class webphoto_lib_mail
 //=========================================================
+
+/**
+ * Class webphoto_lib_mail
+ */
 class webphoto_lib_mail
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -20,18 +23,27 @@ class webphoto_lib_mail
         // dummy
     }
 
+    /**
+     * @return \webphoto_lib_mail
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_lib_mail();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $str
+     * @return mixed|null
+     */
     public function get_valid_addr($str)
     {
         list($name, $addr) = $this->parse_name_addr($str);
@@ -39,9 +51,14 @@ class webphoto_lib_mail
         if ($this->check_valid_addr($addr)) {
             return $addr;
         }
+
         return null;
     }
 
+    /**
+     * @param $addr
+     * @return bool
+     */
     public function check_valid_addr($addr)
     {
         // same as class/xoopsmailer.php
@@ -50,9 +67,14 @@ class webphoto_lib_mail
         if (preg_match($PATTERN, $addr)) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $str
+     * @return array
+     */
     public function parse_name_addr($str)
     {
         $name = '';
@@ -66,7 +88,8 @@ class webphoto_lib_mail
         } else {
             $addr = trim($str);
         }
-        return array($name, $addr);
+
+        return [$name, $addr];
     }
 
     // --- class end ---

@@ -15,9 +15,11 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // when command mode, use instead of class/xoops/config.php
 //=========================================================
 
+/**
+ * Class webphoto_bin_config
+ */
 class webphoto_bin_config extends webphoto_lib_handler
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
@@ -26,37 +28,61 @@ class webphoto_bin_config extends webphoto_lib_handler
         parent::__construct();
     }
 
+    /**
+     * @return \webphoto_bin_config|\webphoto_lib_error
+     */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_bin_config();
+        if (null === $instance) {
+            $instance = new self();
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // xoops class
     //---------------------------------------------------------
+
+    /**
+     * @param $dirname
+     * @return array
+     */
     public function get_config_by_dirname($dirname)
     {
         $modid = $this->get_modid_by_dirname($dirname);
+
         return $this->get_config_by_modid($modid);
     }
 
+    /**
+     * @param $dirname
+     * @return mixed
+     */
     public function get_modid_by_dirname($dirname)
     {
         $sql = 'SELECT * FROM ' . $this->db_prefix('modules');
         $sql .= ' WHERE dirname = ' . $this->quote($dirname);
         $row = $this->get_row_by_sql($sql);
+
         return $row['mid'];
     }
 
+    /**
+     * @param $modid
+     * @return array
+     */
     public function get_config_by_modid($modid)
     {
         return $this->get_config_by_modid_catid($modid, 0);
     }
 
+    /**
+     * @param $modid
+     * @param $catid
+     * @return array
+     */
     public function get_config_by_modid_catid($modid, $catid)
     {
         $sql = 'SELECT * FROM ' . $this->db_prefix('config');
@@ -67,7 +93,7 @@ class webphoto_bin_config extends webphoto_lib_handler
 
         $rows = $this->get_rows_by_sql($sql);
 
-        $arr = array();
+        $arr = [];
         foreach ($rows as $row) {
             $arr[$row['conf_name']] = $row['conf_value'];
         }

@@ -29,6 +29,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_player_manager
 //=========================================================
+
+/**
+ * Class webphoto_admin_player_manager
+ */
 class webphoto_admin_player_manager extends webphoto_base_this
 {
     public $_player_handler;
@@ -36,7 +40,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
     public $_playlist_class;
     public $_player_class;
 
-    public $_player_id    = 0;
+    public $_player_id = 0;
     public $_player_title = null;
 
     public $_STYLE_NOT_SET = -1;
@@ -45,29 +49,41 @@ class webphoto_admin_player_manager extends webphoto_base_this
     public $_THIS_URL;
 
     public $_TIME_SUCCESS = 1;
-    public $_TIME_FAIL    = 5;
+    public $_TIME_FAIL = 5;
 
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_player_manager constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
 
         $this->_flashvar_handler = webphoto_flashvar_handler::getInstance($dirname, $trust_dirname);
-        $this->_player_handler   = webphoto_player_handler::getInstance($dirname, $trust_dirname);
-        $this->_playlist_class   = webphoto_playlist::getInstance($dirname, $trust_dirname);
-        $this->_player_class     = webphoto_flash_player::getInstance($dirname, $trust_dirname);
+        $this->_player_handler = webphoto_player_handler::getInstance($dirname, $trust_dirname);
+        $this->_playlist_class = webphoto_playlist::getInstance($dirname, $trust_dirname);
+        $this->_player_class = webphoto_flash_player::getInstance($dirname, $trust_dirname);
 
         $this->_THIS_URL = $this->_MODULE_URL . '/admin/index.php?fct=' . $this->_THIS_FCT;
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_player_manager|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_admin_player_manager($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -78,7 +94,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
     {
         $op = $this->_post_class->get_post_get_text('op');
 
-        $this->_player_id    = $this->_post_class->get_post_get_int('player_id');
+        $this->_player_id = $this->_post_class->get_post_get_int('player_id');
         $this->_player_title = $this->_post_class->get_post_text('player_title');
 
         switch ($op) {
@@ -86,15 +102,12 @@ class webphoto_admin_player_manager extends webphoto_base_this
             case 'clone':
                 $this->_submit();
                 break;
-
             case 'modify':
                 $this->_modify();
                 break;
-
             case 'delete':
                 $this->_delete();
                 break;
-
             default:
                 break;
         }
@@ -103,11 +116,9 @@ class webphoto_admin_player_manager extends webphoto_base_this
             case 'modify_form':
                 $this->_modify_form();
                 break;
-
             case 'clone_form':
                 $this->_clone_form();
                 break;
-
             case 'main':
             case 'submit_form':
             default:
@@ -122,7 +133,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
     public function _print_menu()
     {
         $player_id = $this->_post_class->get_get_int('player_id');
-        $item_id   = $this->_post_class->get_get_int('item_id');
+        $item_id = $this->_post_class->get_get_int('item_id');
 
         $onclick = "location='" . $this->_THIS_URL . '&amp;item_id=' . $item_id . "'";
 
@@ -145,41 +156,57 @@ class webphoto_admin_player_manager extends webphoto_base_this
             $player_id = $row['player_id'];
 
             echo '<tr>';
-            echo '<td class="even" align="right">' . $player_id . '</td>' . "\n";;
-            echo '<td class="odd"  >' . $row['player_title'] . '</td>' . "\n";;
+            echo '<td class="even" align="right">' . $player_id . '</td>' . "\n";
+
+            echo '<td class="odd"  >' . $row['player_title'] . '</td>' . "\n";
+
             echo '<td class="even" >';
             echo $this->_style_to_lang($row['player_style']);
             echo '</td>' . "\n";
-            echo '<td class="odd"  align="right">' . $row['player_width'] . '</td>' . "\n";;
-            echo '<td class="even" align="right">' . $row['player_height'] . '</td>' . "\n";;
+            echo '<td class="odd"  align="right">' . $row['player_width'] . '</td>' . "\n";
+
+            echo '<td class="even" align="right">' . $row['player_height'] . '</td>' . "\n";
+
             echo '<td class="odd"  >';
             echo $this->_build_button($item_id, $player_id, 'modify_form', _EDIT);
             echo $this->_build_button($item_id, $player_id, 'clone_form', _AM_WEBPHOTO_BUTTON_CLONE);
 
-            if ($player_id != 1) {
+            if (1 != $player_id) {
                 echo $this->_build_button($item_id, $player_id, 'delete', _DELETE);
             }
 
             echo '</td></tr>' . "\n";
         }
 
-        echo "</table><br />\n";
+        echo "</table><br>\n";
     }
 
+    /**
+     * @param $style
+     */
     public function _style_to_lang($style)
     {
         $arr = $this->_player_handler->get_style_options();
         if (isset($arr[$style])) {
             return $arr[$style];
         }
+
         return null;
     }
 
+    /**
+     * @param $item_id
+     * @param $player_id
+     * @param $op
+     * @param $value
+     * @return string
+     */
     public function _build_button($item_id, $player_id, $op, $value)
     {
         $location = $this->_THIS_URL . '&amp;op=' . $op . '&amp;player_id=' . $player_id . '&amp;item_id=' . $item_id;
-        $onclick  = "location='" . $location . "'";
-        $str      = '<input type="button" value="' . $value . '" onClick="' . $onclick . '">' . "\n";
+        $onclick = "location='" . $location . "'";
+        $str = '<input type="button" value="' . $value . '" onClick="' . $onclick . '">' . "\n";
+
         return $str;
     }
 
@@ -192,6 +219,10 @@ class webphoto_admin_player_manager extends webphoto_base_this
         $this->_print_form_common('submit', $row);
     }
 
+    /**
+     * @param $mode
+     * @param $row
+     */
     public function _print_form_common($mode, $row)
     {
         xoops_cp_header();
@@ -204,6 +235,10 @@ class webphoto_admin_player_manager extends webphoto_base_this
         xoops_cp_footer();
     }
 
+    /**
+     * @param $mode
+     * @param $player_row
+     */
     public function _print_player_table($mode, $player_row)
     {
         $form = webphoto_admin_player_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
@@ -216,22 +251,22 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         $player_id = $player_row['player_id'];
 
-        $item_id  = 0;
+        $item_id = 0;
         $item_row = $this->_get_item_row();
 
         $movie = null;
 
         if (is_array($item_row)) {
             $item_id = $item_row['item_id'];
-            $movie   = $this->_player_class->build_movie_by_item_row($item_row, $player_row);
+            $movie = $this->_player_class->build_movie_by_item_row($item_row, $player_row);
         }
 
         $op = $mode . '_form';
 
-        $param_form = array(
-            'mode'    => $mode,
+        $param_form = [
+            'mode' => $mode,
             'item_id' => $item_id,
-        );
+        ];
 
         // PLAYER TABLE
         echo $form->build_script_color_pickup();
@@ -255,27 +290,37 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         echo '</td></tr>' . "\n";
         echo '<tr><td colspan="2">';
-        echo "<br />\n";
+        echo "<br>\n";
         echo nl2br($this->sanitize($movie));
         echo '</td></tr>' . "\n";
         echo '</table>' . "\n";
     }
 
+    /**
+     * @param $op
+     * @param $item_id
+     * @param $player_id
+     * @param $style
+     * @param $movie
+     */
     public function _print_movie($op, $item_id, $player_id, $style, $movie)
     {
         $selbox = $this->_build_item_selbox($op, $item_id, $player_id, $style);
 
-        echo "<br />\n";
+        echo "<br>\n";
         echo '<h3>' . _AM_WEBPHOTO_PLAYER_PREVIEW . '</h3>' . "\n";
-        echo "<br />\n";
+        echo "<br>\n";
         echo $movie;
-        echo "<br />\n";
+        echo "<br>\n";
         echo _AM_WEBPHOTO_PLAYER_PREVIEW_LINK . ' &nbsp; ';
         echo $selbox;
-        echo "<br />\n";
+        echo "<br>\n";
         echo _AM_WEBPHOTO_PLAYER_PREVIEW_DSC;
     }
 
+    /**
+     * @return bool|null
+     */
     public function _get_item_row()
     {
         $item_id = $this->_post_class->get_get_int('item_id');
@@ -293,6 +338,13 @@ class webphoto_admin_player_manager extends webphoto_base_this
         return null;
     }
 
+    /**
+     * @param $op
+     * @param $item_id
+     * @param $player_id
+     * @param $style
+     * @return string
+     */
     public function _build_item_selbox($op, $item_id, $player_id, $style)
     {
         $rows = $this->_item_handler->get_rows_flashplayer();
@@ -302,7 +354,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         $text = '<select name="item_id" onchange="' . $onchange . '" >' . "\n";
         foreach ($rows as $row) {
-            $id    = $row['item_id'];
+            $id = $row['item_id'];
             $title = $row['item_title'];
 
             $sel = '';
@@ -315,6 +367,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
             $text .= "</option>\n";
         }
         $text .= "</select>\n";
+
         return $text;
     }
 
@@ -371,7 +424,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         $newid = $this->_player_handler->insert($row);
         if (!$newid) {
-            $msg = "DB Error <br />\n";
+            $msg = "DB Error <br>\n";
             $msg .= $this->_player_handler->get_format_error();
             redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
         }
@@ -380,19 +433,24 @@ class webphoto_admin_player_manager extends webphoto_base_this
         redirect_header($url, $this->_TIME_SUCCESS, _AM_WEBPHOTO_PLAYER_ADDED);
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function _build_row_by_post($row)
     {
-        $row['player_title']         = $this->_player_title;
-        $row['player_screencolor']   = $this->_post_class->get_post_text('player_screencolor');
-        $row['player_backcolor']     = $this->_post_class->get_post_text('player_backcolor');
-        $row['player_frontcolor']    = $this->_post_class->get_post_text('player_frontcolor');
-        $row['player_lightcolor']    = $this->_post_class->get_post_text('player_lightcolor');
-        $row['player_style']         = $this->_post_class->get_post_int('player_style');
-        $row['player_width']         = $this->_post_class->get_post_int('player_width');
-        $row['player_height']        = $this->_post_class->get_post_int('player_height');
-        $row['player_displaywidth']  = $this->_post_class->get_post_int('player_displaywidth');
+        $row['player_title'] = $this->_player_title;
+        $row['player_screencolor'] = $this->_post_class->get_post_text('player_screencolor');
+        $row['player_backcolor'] = $this->_post_class->get_post_text('player_backcolor');
+        $row['player_frontcolor'] = $this->_post_class->get_post_text('player_frontcolor');
+        $row['player_lightcolor'] = $this->_post_class->get_post_text('player_lightcolor');
+        $row['player_style'] = $this->_post_class->get_post_int('player_style');
+        $row['player_width'] = $this->_post_class->get_post_int('player_width');
+        $row['player_height'] = $this->_post_class->get_post_int('player_height');
+        $row['player_displaywidth'] = $this->_post_class->get_post_int('player_displaywidth');
         $row['player_displayheight'] = $this->_post_class->get_post_int('player_displayheight');
         $row['player_largecontrols'] = $this->_post_class->get_post_int('player_largecontrols');
+
         return $row;
     }
 
@@ -417,7 +475,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         $ret = $this->_player_handler->update($row);
         if (!$ret) {
-            $msg = "DB Error <br />\n";
+            $msg = "DB Error <br>\n";
             $msg .= $this->_player_handler->get_format_error();
             redirect_header($url, $this->_TIME_FAIL, $msg);
         }
@@ -432,7 +490,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
     {
         $ok = $this->_post_class->get_post_int('ok');
 
-        if ($ok == 1) {
+        if (1 == $ok) {
             $this->_delete_excute();
         } else {
             $this->_delete_comfirm();
@@ -443,12 +501,12 @@ class webphoto_admin_player_manager extends webphoto_base_this
     {
         $form_class = webphoto_admin_player_form::getInstance($this->_DIRNAME, $this->_TRUST_DIRNAME);
 
-        $hiddens = array(
-            'fct'       => $this->_THIS_FCT,
-            'op'        => 'delete',
-            'ok'        => 1,
+        $hiddens = [
+            'fct' => $this->_THIS_FCT,
+            'op' => 'delete',
+            'ok' => 1,
             'player_id' => $this->_player_id,
-        );
+        ];
 
         $url = $this->_MODULE_URL . '/admin/index.php';
 
@@ -469,7 +527,7 @@ class webphoto_admin_player_manager extends webphoto_base_this
 
         $ret = $this->_player_handler->delete_by_id($this->_player_id);
         if (!$ret) {
-            $msg = "DB Error <br />\n";
+            $msg = "DB Error <br>\n";
             $msg .= $this->_player_handler->get_format_error();
             redirect_header($this->_THIS_URL, $this->_TIME_FAIL, $msg);
         }
@@ -478,6 +536,9 @@ class webphoto_admin_player_manager extends webphoto_base_this
         exit();
     }
 
+    /**
+     * @return string
+     */
     public function _build_bread_crumb()
     {
         return $this->build_admin_bread_crumb($this->get_admin_title('PLAYER_MANAGER'), $this->_THIS_URL);

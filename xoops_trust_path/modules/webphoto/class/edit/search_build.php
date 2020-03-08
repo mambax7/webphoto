@@ -26,12 +26,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_search_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_search_build
+ */
 class webphoto_edit_search_build
 {
     public $_item_handler;
-    public $_file_handler;
-    public $_cat_handler;
-    public $_syno_handler;
+    public $_fileHandler;
+    public $_catHandler;
+    public $_synoHandler;
     public $_tag_build_class;
 
     public $_DIRNAME;
@@ -43,62 +47,101 @@ class webphoto_edit_search_build
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_search_build constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
-        $this->_DIRNAME    = $dirname;
+        $this->_DIRNAME = $dirname;
         $this->_MODULE_URL = XOOPS_URL . '/modules/' . $dirname;
         $this->_MODULE_DIR = XOOPS_ROOT_PATH . '/modules/' . $dirname;
 
-        $this->_item_handler    = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_cat_handler     = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
-        $this->_file_handler    = webphoto_file_handler::getInstance($dirname, $trust_dirname);
-        $this->_syno_handler    = webphoto_syno_handler::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_catHandler = webphoto_cat_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_synoHandler = webphoto_synoHandler::getInstance($dirname, $trust_dirname);
         $this->_tag_build_class = webphoto_tag_build::getInstance($dirname, $trust_dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_search_build
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_search_build($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return string
+     */
     public function build_with_tag($row)
     {
         $tag_array = $this->_tag_build_class->get_tag_name_array_by_photoid($row['item_id']);
+
         return $this->build_search($row, $tag_array);
     }
 
+    /**
+     * @param      $row
+     * @param null $tag_name_array
+     * @return mixed
+     */
     public function build_row($row, $tag_name_array = null)
     {
         $row['item_search'] = $this->build_search($row, $tag_name_array);
+
         return $row;
     }
 
+    /**
+     * @param      $row
+     * @param null $tag_name_array
+     * @return string
+     */
     public function build_search($row, $tag_name_array = null)
     {
         $str = $this->_item_handler->build_search($row);
         $str .= $this->get_category($row);
         $str .= $this->get_tag($tag_name_array);
         $str .= $this->get_synonym();
+
         return $str;
     }
 
+    /**
+     * @param $row
+     * @return string
+     */
     public function get_category($row)
     {
-        $str      = $this->_SPACE;
-        $cat_rows = $this->_cat_handler->get_parent_path_array($row['item_cat_id']);
+        $str = $this->_SPACE;
+        $cat_rows = $this->_catHandler->get_parent_path_array($row['item_cat_id']);
         foreach ($cat_rows as $cat_row) {
             $str .= $cat_row['cat_title'] . $this->_SPACE;
         }
+
         return $str;
     }
 
+    /**
+     * @param $tag_name_array
+     * @return string
+     */
     public function get_tag($tag_name_array)
     {
         if (!is_array($tag_name_array) || !count($tag_name_array)) {
@@ -109,12 +152,16 @@ class webphoto_edit_search_build
         foreach ($tag_name_array as $tag_name) {
             $str .= $tag_name . $this->_SPACE;
         }
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function get_synonym()
     {
-        $syno_rows = $this->_syno_handler->get_rows_orderby_weight_asc();
+        $syno_rows = $this->_synoHandler->get_rows_orderby_weight_asc();
         if (!is_array($syno_rows) || !count($syno_rows)) {
             return '';
         }
@@ -123,10 +170,11 @@ class webphoto_edit_search_build
         foreach ($syno_rows as $syno_row) {
             $key = $syno_row['syno_key'];
             $val = $syno_row['syno_value'];
-            if ((strpos($str, $key) > 0) && (strpos($str, $val) === false)) {
+            if ((mb_strpos($str, $key) > 0) && (false === mb_strpos($str, $val))) {
                 $str .= $val . $this->_SPACE;
             }
         }
+
         return $str;
     }
 

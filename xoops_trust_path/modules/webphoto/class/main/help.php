@@ -28,6 +28,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_main_help
 //=========================================================
+
+/**
+ * Class webphoto_main_help
+ */
 class webphoto_main_help extends webphoto_base_this
 {
     public $_show_menu_mail = false;
@@ -36,6 +40,12 @@ class webphoto_main_help extends webphoto_base_this
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_main_help constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -47,18 +57,28 @@ class webphoto_main_help extends webphoto_base_this
         $this->_page_class->init_preload();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_main_help
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new webphoto_main_help($dirname, $trust_dirname);
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // function
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function main()
     {
         $this->_assign_xoops_header();
@@ -67,32 +87,39 @@ class webphoto_main_help extends webphoto_base_this
 
         $this->_show_menu_mail = $main_param['show_menu_mail'];
         $this->_show_menu_file = $main_param['show_menu_file'];
-        $cfg_is_set_mail       = $main_param['cfg_is_set_mail'];
-        $cfg_file_dir          = $main_param['cfg_file_dir'];
+        $cfg_is_set_mail = $main_param['cfg_is_set_mail'];
+        $cfg_file_dir = $main_param['cfg_file_dir'];
 
-        $param = array(
+        $param = [
             'lang_help_mobile_text' => $this->_build_mobile_text(),
-            'show_help_mail'        => $cfg_is_set_mail,
-            'show_help_mail_text'   => $this->_build_show_mail_text(),
-            'lang_help_mail_perm'   => $this->_build_mail_perm(),
-            'lang_help_mail_text'   => $this->_build_mail_text(),
-            'show_help_file'        => $cfg_file_dir,
-            'show_help_file_text'   => $this->_build_show_file_text(),
-            'lang_help_file_perm'   => $this->_build_file_perm(),
+            'show_help_mail' => $cfg_is_set_mail,
+            'show_help_mail_text' => $this->_build_show_mail_text(),
+            'lang_help_mail_perm' => $this->_build_mail_perm(),
+            'lang_help_mail_text' => $this->_build_mail_text(),
+            'show_help_file' => $cfg_file_dir,
+            'show_help_file_text' => $this->_build_show_file_text(),
+            'lang_help_file_perm' => $this->_build_file_perm(),
             'lang_help_file_text_1' => $this->_build_file_text_1(),
             'lang_help_file_text_2' => $this->_build_file_text_2(),
-        );
+        ];
 
         return array_merge($param, $main_param);
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_mobile_text()
     {
         $str = $this->get_constant('HELP_MOBILE_TEXT_FMT');
         $str = str_replace('{MODULE_URL}', $this->_MODULE_URL, $str);
+
         return $str;
     }
 
+    /**
+     * @return bool
+     */
     public function _build_show_mail_text()
     {
         if ($this->_show_menu_mail) {
@@ -100,6 +127,7 @@ class webphoto_main_help extends webphoto_base_this
         } elseif ($this->_is_login_user) {
             return true;
         }
+
         return false;
     }
 
@@ -108,33 +136,44 @@ class webphoto_main_help extends webphoto_base_this
         return $this->_build_perm($this->_show_menu_mail);
     }
 
+    /**
+     * @return mixed|string
+     */
     public function _build_mail_text()
     {
         $text = $this->_build_mail_post();
         $text .= $this->_build_mail_retrieve();
+
         return $text;
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_mail_post()
     {
         if ($this->_show_menu_mail) {
-            $mail_addr  = $this->sanitize($this->get_config_by_name('mail_addr'));
+            $mail_addr = $this->sanitize($this->get_config_by_name('mail_addr'));
             $mail_guest = null;
         } else {
-            $mail_addr  = 'user@exsample.com';
-            $mail_guest = '<br />' . $this->get_constant('HELP_MAIL_GUEST');
+            $mail_addr = 'user@exsample.com';
+            $mail_guest = '<br>' . $this->get_constant('HELP_MAIL_GUEST');
         }
 
         $str = $this->get_constant('HELP_MAIL_POST_FMT');
         $str = str_replace('{MODULE_URL}', $this->_MODULE_URL, $str);
         $str = str_replace('{MAIL_ADDR}', $mail_addr, $str);
         $str = str_replace('{MAIL_GUEST}', $mail_guest, $str);
+
         return $str;
     }
 
+    /**
+     * @return string
+     */
     public function _build_mail_retrieve()
     {
-        $text      = $this->get_constant('HELP_MAIL_SUBTITLE_RETRIEVE');
+        $text = $this->get_constant('HELP_MAIL_SUBTITLE_RETRIEVE');
         $auto_time = $this->get_ini('mail_retrieve_auto_time');
 
         if ($auto_time > 0) {
@@ -145,9 +184,13 @@ class webphoto_main_help extends webphoto_base_this
         }
 
         $text .= $this->get_constant('HELP_MAIL_RETRIEVE_TEXT');
+
         return $text;
     }
 
+    /**
+     * @return bool
+     */
     public function _build_show_file_text()
     {
         if ($this->_show_menu_file) {
@@ -155,6 +198,7 @@ class webphoto_main_help extends webphoto_base_this
         } elseif ($this->_is_login_user) {
             return true;
         }
+
         return false;
     }
 
@@ -163,10 +207,14 @@ class webphoto_main_help extends webphoto_base_this
         return $this->_build_perm($this->_show_menu_file);
     }
 
+    /**
+     * @return mixed
+     */
     public function _build_file_text_1()
     {
         $str = $this->get_constant('HELP_FILE_TEXT_FMT');
         $str = str_replace('{MODULE_URL}', $this->_MODULE_URL, $str);
+
         return $str;
     }
 
@@ -177,9 +225,13 @@ class webphoto_main_help extends webphoto_base_this
         } else {
             $str = null;
         }
+
         return $str;
     }
 
+    /**
+     * @param $perm
+     */
     public function _build_perm($perm)
     {
         if ($perm) {
@@ -189,6 +241,7 @@ class webphoto_main_help extends webphoto_base_this
         } else {
             $str = $this->get_constant('HELP_MUST_LOGIN');
         }
+
         return $str;
     }
 

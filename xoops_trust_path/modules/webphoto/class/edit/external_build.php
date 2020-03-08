@@ -19,6 +19,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_external_build
 //=========================================================
+
+/**
+ * Class webphoto_edit_external_build
+ */
 class webphoto_edit_external_build
 {
     public $_item_row = null;
@@ -28,46 +32,66 @@ class webphoto_edit_external_build
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_external_build constructor.
+     * @param $dirname
+     */
     public function __construct($dirname)
     {
-        $this->_utility_class    = webphoto_lib_utility::getInstance();
-        $this->_kind_class       = webphoto_kind::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
+        $this->_kind_class = webphoto_kind::getInstance();
         $this->_icon_build_class = webphoto_edit_icon_build::getInstance($dirname);
     }
 
+    /**
+     * @param null $dirname
+     * @return \webphoto_edit_external_build
+     */
     public static function getInstance($dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_external_build($dirname);
+        if (null === $instance) {
+            $instance = new self($dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool
+     */
     public function is_type($row)
     {
         if ($row['item_external_url']) {
             return true;
         }
+
         return false;
     }
 
+    /**
+     * @param $row
+     * @return int
+     */
     public function build($row)
     {
         $this->_item_row = $row;
 
-        $item_title          = $row['item_title'];
-        $item_external_url   = $row['item_external_url'];
+        $item_title = $row['item_title'];
+        $item_external_url = $row['item_external_url'];
         $item_external_thumb = $row['item_external_thumb'];
 
         if (!$this->is_type($row)) {
             return 1;  // no action
         }
 
-        $item_ext        = $this->parse_ext($item_external_url);
+        $item_ext = $this->parse_ext($item_external_url);
         $row['item_ext'] = $item_ext;
 
         if ($this->is_image_ext($item_ext)) {
@@ -87,13 +111,19 @@ class webphoto_edit_external_build
         $row = $this->build_row_icon_if_empty($row, $this->_THUMB_EXT_DEFAULT);
 
         $this->_item_row = $row;
+
         return 0;  // OK
     }
 
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function build_title($row)
     {
-        $file  = $this->parse_url_to_filename($row['item_external_url']);
+        $file = $this->parse_url_to_filename($row['item_external_url']);
         $title = $this->strip_ext($file);
+
         return $title;
     }
 
@@ -105,6 +135,12 @@ class webphoto_edit_external_build
     //---------------------------------------------------------
     // icon
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param null $ext
+     * @return mixed
+     */
     public function build_row_icon_if_empty($row, $ext = null)
     {
         return $this->_icon_build_class->build_row_icon_if_empty($row, $ext);
@@ -113,6 +149,11 @@ class webphoto_edit_external_build
     //---------------------------------------------------------
     // kind class
     //---------------------------------------------------------
+
+    /**
+     * @param $ext
+     * @return bool
+     */
     public function is_image_ext($ext)
     {
         return $this->_kind_class->is_image_ext($ext);
@@ -121,16 +162,29 @@ class webphoto_edit_external_build
     //---------------------------------------------------------
     // utility
     //---------------------------------------------------------
+
+    /**
+     * @param $file
+     * @return string
+     */
     public function parse_ext($file)
     {
         return $this->_utility_class->parse_ext($file);
     }
 
+    /**
+     * @param $file
+     * @return mixed
+     */
     public function strip_ext($file)
     {
         return $this->_utility_class->strip_ext($file);
     }
 
+    /**
+     * @param $url
+     * @return mixed|null
+     */
     public function parse_url_to_filename($url)
     {
         return $this->_utility_class->parse_url_to_filename($url);

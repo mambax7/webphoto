@@ -19,27 +19,42 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_admin_user_table_manage
 //=========================================================
+
+/**
+ * Class webphoto_admin_user_table_manage
+ */
 class webphoto_admin_user_table_manage extends webphoto_lib_manage
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_admin_user_table_manage constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
         $this->set_manage_handler(webphoto_user_handler::getInstance($dirname, $trust_dirname));
         $this->set_manage_title_by_name('USER_TABLE_MANAGE');
 
-        $this->set_manage_list_column_array(array('user_uid', 'user_email'));
+        $this->set_manage_list_column_array(['user_uid', 'user_email']);
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_admin_user_table_manage|\webphoto_lib_element|\webphoto_lib_error|\webphoto_lib_form
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_admin_user_table_manage($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
@@ -54,24 +69,28 @@ class webphoto_admin_user_table_manage extends webphoto_lib_manage
     //=========================================================
     // override for caller
     //=========================================================
+
+    /**
+     * @return array|void
+     */
     public function _build_row_by_post()
     {
-        $row = array(
-            'user_id'          => $this->_post_class->get_post_get_int('user_id'),
+        $row = [
+            'user_id' => $this->_post_class->get_post_get_int('user_id'),
             'user_time_create' => $this->_post_class->get_post_int('user_time_create'),
             'user_time_update' => $this->_post_class->get_post_int('user_time_update'),
-            'user_uid'         => $this->_post_class->get_post_int('user_uid'),
-            'user_cat_id'      => $this->_post_class->get_post_int('user_cat_id'),
-            'user_email'       => $this->_post_class->get_post_text('user_email'),
-            'user_text1'       => $this->_post_class->get_post_text('user_text1'),
-            'user_text2'       => $this->_post_class->get_post_text('user_text2'),
-            'user_text3'       => $this->_post_class->get_post_text('user_text3'),
-            'user_text4'       => $this->_post_class->get_post_text('user_text4'),
-            'user_text5'       => $this->_post_class->get_post_text('user_text5'),
-        );
+            'user_uid' => $this->_post_class->get_post_int('user_uid'),
+            'user_cat_id' => $this->_post_class->get_post_int('user_cat_id'),
+            'user_email' => $this->_post_class->get_post_text('user_email'),
+            'user_text1' => $this->_post_class->get_post_text('user_text1'),
+            'user_text2' => $this->_post_class->get_post_text('user_text2'),
+            'user_text3' => $this->_post_class->get_post_text('user_text3'),
+            'user_text4' => $this->_post_class->get_post_text('user_text4'),
+            'user_text5' => $this->_post_class->get_post_text('user_text5'),
+        ];
 
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_CAT_TEXT; ++$i) {
-            $name       = 'user_text' . $i;
+            $name = 'user_text' . $i;
             $row[$name] = $this->_post_class->get_post_text($name);
         }
 
@@ -81,6 +100,10 @@ class webphoto_admin_user_table_manage extends webphoto_lib_manage
     //---------------------------------------------------------
     // form
     //---------------------------------------------------------
+
+    /**
+     * @param null $row
+     */
     public function _print_form($row = null)
     {
         echo $this->build_manage_form_begin($row);

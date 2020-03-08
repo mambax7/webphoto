@@ -28,12 +28,16 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_edit_item_delete
 //=========================================================
+
+/**
+ * Class webphoto_edit_item_delete
+ */
 class webphoto_edit_item_delete extends webphoto_lib_error
 {
     public $_item_handler;
-    public $_file_handler;
-    public $_vote_handler;
-    public $_p2t_handler;
+    public $_fileHandler;
+    public $_voteHandler;
+    public $_p2tHandler;
     public $_maillog_handler;
     public $_mail_unlink_class;
     public $_utility_class;
@@ -43,40 +47,62 @@ class webphoto_edit_item_delete extends webphoto_lib_error
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_edit_item_delete constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
 
-        $this->_item_handler    = webphoto_item_handler::getInstance($dirname, $trust_dirname);
-        $this->_file_handler    = webphoto_file_handler::getInstance($dirname, $trust_dirname);
-        $this->_vote_handler    = webphoto_vote_handler::getInstance($dirname, $trust_dirname);
-        $this->_p2t_handler     = webphoto_p2t_handler::getInstance($dirname, $trust_dirname);
+        $this->_item_handler = webphoto_item_handler::getInstance($dirname, $trust_dirname);
+        $this->_fileHandler = webphoto_file_handler::getInstance($dirname, $trust_dirname);
+        $this->_voteHandler = webphoto_vote_handler::getInstance($dirname, $trust_dirname);
+        $this->_p2tHandler = webphoto_p2tHandler::getInstance($dirname, $trust_dirname);
         $this->_maillog_handler = webphoto_maillog_handler::getInstance($dirname, $trust_dirname);
 
         $this->_mail_unlink_class = webphoto_edit_mail_unlink::getInstance($dirname);
-        $this->_utility_class     = webphoto_lib_utility::getInstance();
+        $this->_utility_class = webphoto_lib_utility::getInstance();
 
         $this->_init_xoops_param();
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_edit_item_delete|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_edit_item_delete($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // delete
     //---------------------------------------------------------
+
+    /**
+     * @param $item_id
+     * @return bool
+     */
     public function delete_photo_by_item_id($item_id)
     {
         $item_row = $this->_item_handler->get_row_by_id($item_id);
+
         return $this->delete_photo_by_item_row($item_row);
     }
 
+    /**
+     * @param $item_row
+     * @return bool
+     */
     public function delete_photo_by_item_row($item_row)
     {
         if (!is_array($item_row)) {
@@ -93,14 +119,14 @@ class webphoto_edit_item_delete extends webphoto_lib_error
             $this->set_error($this->_item_handler->get_errors());
         }
 
-        $ret = $this->_p2t_handler->delete_by_photoid($item_id);
+        $ret = $this->_p2tHandler->delete_by_photoid($item_id);
         if (!$ret) {
-            $this->set_error($this->_p2t_handler->get_errors());
+            $this->set_error($this->_p2tHandler->get_errors());
         }
 
-        $ret = $this->_vote_handler->delete_by_photoid($item_id);
+        $ret = $this->_voteHandler->delete_by_photoid($item_id);
         if (!$ret) {
-            $this->set_error($this->_vote_handler->get_errors());
+            $this->set_error($this->_voteHandler->get_errors());
         }
 
         xoops_comment_delete($this->_MODULE_ID, $item_id);
@@ -109,26 +135,35 @@ class webphoto_edit_item_delete extends webphoto_lib_error
         return $this->return_code();
     }
 
+    /**
+     * @param $item_row
+     * @return mixed
+     */
     public function delete_files_with_file($item_row)
     {
         $item_id = $item_row['item_id'];
 
         // unlink files
         for ($i = 1; $i <= _C_WEBPHOTO_MAX_ITEM_FILE_ID; ++$i) {
-            $name    = $this->_item_handler->file_id_to_item_name($i);
+            $name = $this->_item_handler->file_id_to_item_name($i);
             $file_id = $item_row[$name];
             if ($file_id > 0) {
                 $file_path = $this->unlink_file_by_id($file_id);
             }
         }
 
-        $ret = $this->_file_handler->delete_by_itemid($item_id);
+        $ret = $this->_fileHandler->delete_by_itemid($item_id);
         if (!$ret) {
-            $this->set_error($this->_file_handler->get_errors());
+            $this->set_error($this->_fileHandler->get_errors());
         }
+
         return $ret;
     }
 
+    /**
+     * @param $photo_id
+     * @return bool
+     */
     public function delete_maillogs($photo_id)
     {
         $maillog_rows = $this->_maillog_handler->get_rows_by_photoid($photo_id);
@@ -141,34 +176,51 @@ class webphoto_edit_item_delete extends webphoto_lib_error
         }
     }
 
+    /**
+     * @param $photo_id
+     * @param $maillog_row
+     * @return mixed|void
+     */
     public function delete_maillog_single($photo_id, $maillog_row)
     {
         $photo_id_array = $this->_maillog_handler->build_photo_ids_row_to_array($maillog_row);
         if (is_array($photo_id_array) && (count($photo_id_array) > 1)) {
             return $this->remove_maillog_photoid($photo_id, $photo_id_array, $maillog_row);
         }
+
         return $this->delete_maillog_with_file($maillog_row);
     }
 
+    /**
+     * @param $photo_id
+     * @param $photo_id_array
+     * @param $maillog_row
+     * @return mixed
+     */
     public function remove_maillog_photoid($photo_id, $photo_id_array, $maillog_row)
     {
-        $arr = array();
+        $arr = [];
         foreach ($photo_id_array as $id) {
             if ($id != $photo_id) {
                 $arr[] = $id;
             }
         }
 
-        $row_update                     = $maillog_row;
+        $row_update = $maillog_row;
         $row_update['maillo_photo_ids'] = $this->_maillog_handler->build_photo_ids_array_to_str($arr);
 
         $ret = $this->_maillog_handler->update($row_update);
         if (!$ret) {
             $this->set_error($this->_maillog_handler->get_errors());
         }
+
         return $ret;
     }
 
+    /**
+     * @param $maillog_row
+     * @return mixed
+     */
     public function delete_maillog_with_file($maillog_row)
     {
         $this->_mail_unlink_class->unlink_by_maillog_row($maillog_row);
@@ -177,12 +229,16 @@ class webphoto_edit_item_delete extends webphoto_lib_error
         if (!$ret) {
             $this->set_error($this->_maillog_handler->get_errors());
         }
+
         return $ret;
     }
 
+    /**
+     * @param $file_id
+     */
     public function unlink_file_by_id($file_id)
     {
-        $file = $this->_file_handler->get_full_path_by_id($file_id);
+        $file = $this->_fileHandler->get_full_path_by_id($file_id);
         $this->_utility_class->unlink_file($file);
     }
 

@@ -17,14 +17,23 @@ if (!defined('XOOPS_TRUST_PATH')) {
 }
 
 //=========================================================
-// class webphoto_tag_handler
+// class webphoto_tagHandler
 //=========================================================
-class webphoto_tag_handler extends webphoto_handler_base_ini
-{
 
+/**
+ * Class webphoto_tagHandler
+ */
+class webphoto_tagHandler extends webphoto_handler_base_ini
+{
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_tagHandler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -32,36 +41,46 @@ class webphoto_tag_handler extends webphoto_handler_base_ini
         $this->set_id_name('tag_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_lib_error|\webphoto_tagHandler
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_tag_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
-
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
         $time_create = 0;
         $time_update = 0;
 
         if ($flag_new) {
-            $time        = time();
+            $time = time();
             $time_create = $time;
             $time_update = $time;
         }
 
-        $arr = array(
-            'tag_id'          => 0,
+        $arr = [
+            'tag_id' => 0,
             'tag_time_create' => $time_create,
             'tag_time_update' => $time_update,
-            'tag_name'        => '',
-        );
+            'tag_name' => '',
+        ];
 
         return $arr;
     }
@@ -69,6 +88,11 @@ class webphoto_tag_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return bool|void
+     */
     public function insert($row)
     {
         extract($row);
@@ -98,6 +122,11 @@ class webphoto_tag_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param $row
+     * @return mixed
+     */
     public function update($row)
     {
         extract($row);
@@ -116,10 +145,16 @@ class webphoto_tag_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get row
     //---------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return bool
+     */
     public function get_row_by_name($name)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE tag_name=' . $this->quote($name);
+
         return $this->get_row_by_sql($sql);
     }
 

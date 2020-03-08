@@ -22,12 +22,21 @@ if (!defined('XOOPS_TRUST_PATH')) {
 //=========================================================
 // class webphoto_flashvar_handler
 //=========================================================
+
+/**
+ * Class webphoto_flashvar_handler
+ */
 class webphoto_flashvar_handler extends webphoto_handler_base_ini
 {
-
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_flashvar_handler constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct($dirname, $trust_dirname);
@@ -35,169 +44,180 @@ class webphoto_flashvar_handler extends webphoto_handler_base_ini
         $this->set_id_name('flashvar_id');
     }
 
+    /**
+     * @param null $dirname
+     * @param null $trust_dirname
+     * @return \webphoto_flashvar_handler|\webphoto_lib_error
+     */
     public static function getInstance($dirname = null, $trust_dirname = null)
     {
         static $instance;
-        if (!isset($instance)) {
-            $instance = new webphoto_flashvar_handler($dirname, $trust_dirname);
+        if (null === $instance) {
+            $instance = new self($dirname, $trust_dirname);
         }
+
         return $instance;
     }
 
     //---------------------------------------------------------
     // create
     //---------------------------------------------------------
+
+    /**
+     * @param bool $flag_new
+     * @return array|void
+     */
     public function create($flag_new = false)
     {
-        $time_create  = 0;
-        $time_update  = 0;
+        $time_create = 0;
+        $time_update = 0;
         $bufferlength = 0;
-        $rotatetime   = 0;
-        $volume       = 0;
+        $rotatetime = 0;
+        $volume = 0;
         $bufferlength = 0;
-        $shuffle      = -1;
-        $autostart    = -1;
-        $linktarget   = '';
-        $overstretch  = '';
-        $transition   = '';
+        $shuffle = -1;
+        $autostart = -1;
+        $linktarget = '';
+        $overstretch = '';
+        $transition = '';
 
         // JW Player 5.6
-        $dock                = -1;
-        $icons               = -1;
-        $smoothing           = -1;
-        $mute                = -1;
-        $stretching          = '';
-        $player_repeat       = '';
+        $dock = -1;
+        $icons = -1;
+        $smoothing = -1;
+        $mute = -1;
+        $stretching = '';
+        $player_repeat = '';
         $controlbar_position = '';
         $controlbar_idlehide = -1;
-        $display_showmute    = -1;
-        $playlist_size       = 0;
-        $playlist_position   = '';
-        $logo_hide           = -1;
-        $logo_margin         = 0;
-        $logo_timeout        = 0;
-        $logo_over           = -1;
-        $logo_out            = -1;
-        $logo_position       = '';
-        $logo_linktarget     = '';
+        $display_showmute = -1;
+        $playlist_size = 0;
+        $playlist_position = '';
+        $logo_hide = -1;
+        $logo_margin = 0;
+        $logo_timeout = 0;
+        $logo_over = -1;
+        $logo_out = -1;
+        $logo_position = '';
+        $logo_linktarget = '';
 
         if ($flag_new) {
-            $time         = time();
-            $time_create  = $time;
-            $time_update  = $time;
+            $time = time();
+            $time_create = $time;
+            $time_update = $time;
             $bufferlength = $this->get_ini('flashvar_bufferlength_default');
-            $rotatetime   = $this->get_ini('flashvar_rotatetime_default');
-            $volume       = $this->get_ini('flashvar_volume_default');
-            $linktarget   = $this->get_ini('flashvar_linktarget_default');
-            $overstretch  = $this->get_ini('flashvar_overstretch_default');
-            $transition   = $this->get_ini('flashvar_transition_default');
-            $autostart    = $this->get_ini('flashvar_autostart_default');
-            $smoothing    = $this->get_ini('flashvar_smoothing_default');
-            $shuffle      = $this->get_ini('flashvar_shuffle_default');
+            $rotatetime = $this->get_ini('flashvar_rotatetime_default');
+            $volume = $this->get_ini('flashvar_volume_default');
+            $linktarget = $this->get_ini('flashvar_linktarget_default');
+            $overstretch = $this->get_ini('flashvar_overstretch_default');
+            $transition = $this->get_ini('flashvar_transition_default');
+            $autostart = $this->get_ini('flashvar_autostart_default');
+            $smoothing = $this->get_ini('flashvar_smoothing_default');
+            $shuffle = $this->get_ini('flashvar_shuffle_default');
 
             // JW Player 5.6
-            $dock                = $this->get_ini('flashvar_dock_default');
-            $icons               = $this->get_ini('flashvar_icons_default');
-            $mute                = $this->get_ini('flashvar_mute_default');
-            $stretching          = $this->get_ini('flashvar_stretching_default');
-            $player_repeat       = $this->get_ini('flashvar_player_repeat_default');
+            $dock = $this->get_ini('flashvar_dock_default');
+            $icons = $this->get_ini('flashvar_icons_default');
+            $mute = $this->get_ini('flashvar_mute_default');
+            $stretching = $this->get_ini('flashvar_stretching_default');
+            $player_repeat = $this->get_ini('flashvar_player_repeat_default');
             $controlbar_idlehide = $this->get_ini('flashvar_controlbar_idlehide_default');
             $controlbar_position = $this->get_ini('flashvar_controlbar_position_default');
-            $display_showmute    = $this->get_ini('flashvar_display_showmute_default');
-            $playlist_size       = $this->get_ini('flashvar_playlist_size_default');
-            $playlist_position   = $this->get_ini('flashvar_playlist_position_default');
-            $logo_hide           = $this->get_ini('flashvar_logo_hide_default');
-            $logo_margin         = $this->get_ini('flashvar_logo_margin_default');
-            $logo_timeout        = $this->get_ini('flashvar_logo_timeout_default');
-            $logo_over           = $this->get_ini('flashvar_logo_over_default');
-            $logo_out            = $this->get_ini('flashvar_logo_out_default');
-            $logo_position       = $this->get_ini('flashvar_logo_position_default');
-            $logo_linktarget     = $this->get_ini('flashvar_logo_linktarget_default');
+            $display_showmute = $this->get_ini('flashvar_display_showmute_default');
+            $playlist_size = $this->get_ini('flashvar_playlist_size_default');
+            $playlist_position = $this->get_ini('flashvar_playlist_position_default');
+            $logo_hide = $this->get_ini('flashvar_logo_hide_default');
+            $logo_margin = $this->get_ini('flashvar_logo_margin_default');
+            $logo_timeout = $this->get_ini('flashvar_logo_timeout_default');
+            $logo_over = $this->get_ini('flashvar_logo_over_default');
+            $logo_out = $this->get_ini('flashvar_logo_out_default');
+            $logo_position = $this->get_ini('flashvar_logo_position_default');
+            $logo_linktarget = $this->get_ini('flashvar_logo_linktarget_default');
         }
 
-        $arr = array(
-            'flashvar_id'                  => 0,
-            'flashvar_time_create'         => $time_create,
-            'flashvar_time_update'         => $time_update,
-            'flashvar_item_id'             => 0,
-            'flashvar_width'               => 0,
-            'flashvar_height'              => 0,
-            'flashvar_displaywidth'        => 0,
-            'flashvar_displayheight'       => 0,
-            'flashvar_image_show'          => 1,   // true
-            'flashvar_searchbar'           => 0,
-            'flashvar_showeq'              => 0,
-            'flashvar_showicons'           => 1,   // true
-            'flashvar_shownavigation'      => 1,   // true
-            'flashvar_showstop'            => 0,
-            'flashvar_showdigits'          => 1,  // true
-            'flashvar_showdownload'        => 0,
-            'flashvar_usefullscreen'       => 1,  // true
-            'flashvar_autoscroll'          => 0,
-            'flashvar_thumbsinplaylist'    => 1,  // true
-            'flashvar_autostart'           => $autostart,
-            'flashvar_repeat'              => 0,
-            'flashvar_enablejs'            => 0,
-            'flashvar_linkfromdisplay'     => 0,
-            'flashvar_link_type'           => 0,
-            'flashvar_screencolor'         => '',
-            'flashvar_backcolor'           => '',
-            'flashvar_frontcolor'          => '',
-            'flashvar_lightcolor'          => '',
-            'flashvar_type'                => '',
-            'flashvar_file'                => '',
-            'flashvar_image'               => '',
-            'flashvar_logo'                => '',
-            'flashvar_link'                => '',
-            'flashvar_audio'               => '',
-            'flashvar_captions'            => '',
-            'flashvar_fallback'            => '',
-            'flashvar_callback'            => '',
-            'flashvar_javascriptid'        => '',
-            'flashvar_recommendations'     => '',
-            'flashvar_searchlink'          => '',
-            'flashvar_streamscript'        => '',
-            'flashvar_bufferlength'        => $bufferlength,
-            'flashvar_rotatetime'          => $rotatetime,
-            'flashvar_volume'              => $volume,
-            'flashvar_linktarget'          => $linktarget,
-            'flashvar_overstretch'         => $overstretch,
-            'flashvar_transition'          => $transition,
-            'flashvar_smoothing'           => $smoothing,
-            'flashvar_shuffle'             => $shuffle,
+        $arr = [
+            'flashvar_id' => 0,
+            'flashvar_time_create' => $time_create,
+            'flashvar_time_update' => $time_update,
+            'flashvar_item_id' => 0,
+            'flashvar_width' => 0,
+            'flashvar_height' => 0,
+            'flashvar_displaywidth' => 0,
+            'flashvar_displayheight' => 0,
+            'flashvar_image_show' => 1,   // true
+            'flashvar_searchbar' => 0,
+            'flashvar_showeq' => 0,
+            'flashvar_showicons' => 1,   // true
+            'flashvar_shownavigation' => 1,   // true
+            'flashvar_showstop' => 0,
+            'flashvar_showdigits' => 1,  // true
+            'flashvar_showdownload' => 0,
+            'flashvar_usefullscreen' => 1,  // true
+            'flashvar_autoscroll' => 0,
+            'flashvar_thumbsinplaylist' => 1,  // true
+            'flashvar_autostart' => $autostart,
+            'flashvar_repeat' => 0,
+            'flashvar_enablejs' => 0,
+            'flashvar_linkfromdisplay' => 0,
+            'flashvar_link_type' => 0,
+            'flashvar_screencolor' => '',
+            'flashvar_backcolor' => '',
+            'flashvar_frontcolor' => '',
+            'flashvar_lightcolor' => '',
+            'flashvar_type' => '',
+            'flashvar_file' => '',
+            'flashvar_image' => '',
+            'flashvar_logo' => '',
+            'flashvar_link' => '',
+            'flashvar_audio' => '',
+            'flashvar_captions' => '',
+            'flashvar_fallback' => '',
+            'flashvar_callback' => '',
+            'flashvar_javascriptid' => '',
+            'flashvar_recommendations' => '',
+            'flashvar_searchlink' => '',
+            'flashvar_streamscript' => '',
+            'flashvar_bufferlength' => $bufferlength,
+            'flashvar_rotatetime' => $rotatetime,
+            'flashvar_volume' => $volume,
+            'flashvar_linktarget' => $linktarget,
+            'flashvar_overstretch' => $overstretch,
+            'flashvar_transition' => $transition,
+            'flashvar_smoothing' => $smoothing,
+            'flashvar_shuffle' => $shuffle,
 
             // JW Player 5.6
-            'flashvar_duration'            => '0',
-            'flashvar_start'               => '0',
-            'flashvar_item'                => '0',
-            'flashvar_playlistfile'        => '',
-            'flashvar_mediaid'             => '',
-            'flashvar_provider'            => '',
-            'flashvar_streamer'            => '',
-            'flashvar_netstreambasepath'   => '',
-            'flashvar_skin'                => '',
-            'flashvar_playerready'         => '',
-            'flashvar_plugins'             => '',
-            'flashvar_logo_file'           => '',
-            'flashvar_logo_link'           => '',
-            'flashvar_dock'                => $dock,
-            'flashvar_icons'               => $icons,
-            'flashvar_mute'                => $mute,
-            'flashvar_stretching'          => $stretching,
-            'flashvar_player_repeat'       => $player_repeat,
+            'flashvar_duration' => '0',
+            'flashvar_start' => '0',
+            'flashvar_item' => '0',
+            'flashvar_playlistfile' => '',
+            'flashvar_mediaid' => '',
+            'flashvar_provider' => '',
+            'flashvar_streamer' => '',
+            'flashvar_netstreambasepath' => '',
+            'flashvar_skin' => '',
+            'flashvar_playerready' => '',
+            'flashvar_plugins' => '',
+            'flashvar_logo_file' => '',
+            'flashvar_logo_link' => '',
+            'flashvar_dock' => $dock,
+            'flashvar_icons' => $icons,
+            'flashvar_mute' => $mute,
+            'flashvar_stretching' => $stretching,
+            'flashvar_player_repeat' => $player_repeat,
             'flashvar_controlbar_position' => $controlbar_position,
             'flashvar_controlbar_idlehide' => $controlbar_idlehide,
-            'flashvar_display_showmute'    => $display_showmute,
-            'flashvar_playlist_size'       => $playlist_size,
-            'flashvar_playlist_position'   => $playlist_position,
-            'flashvar_logo_hide'           => $logo_hide,
-            'flashvar_logo_margin'         => $logo_margin,
-            'flashvar_logo_timeout'        => $logo_timeout,
-            'flashvar_logo_over'           => $logo_over,
-            'flashvar_logo_out'            => $logo_out,
-            'flashvar_logo_linktarget'     => $logo_linktarget,
-            'flashvar_logo_position'       => $logo_position,
-        );
+            'flashvar_display_showmute' => $display_showmute,
+            'flashvar_playlist_size' => $playlist_size,
+            'flashvar_playlist_position' => $playlist_position,
+            'flashvar_logo_hide' => $logo_hide,
+            'flashvar_logo_margin' => $logo_margin,
+            'flashvar_logo_timeout' => $logo_timeout,
+            'flashvar_logo_over' => $logo_over,
+            'flashvar_logo_out' => $logo_out,
+            'flashvar_logo_linktarget' => $logo_linktarget,
+            'flashvar_logo_position' => $logo_position,
+        ];
 
         return $arr;
     }
@@ -205,6 +225,12 @@ class webphoto_flashvar_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // insert
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param bool $force
+     * @return bool|void
+     */
     public function insert($row, $force = false)
     {
         extract($row);
@@ -392,6 +418,12 @@ class webphoto_flashvar_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // update
     //---------------------------------------------------------
+
+    /**
+     * @param      $row
+     * @param bool $force
+     * @return mixed
+     */
     public function update($row, $force = false)
     {
         extract($row);
@@ -487,132 +519,183 @@ class webphoto_flashvar_handler extends webphoto_handler_base_ini
     //---------------------------------------------------------
     // get rows
     //---------------------------------------------------------
+
+    /**
+     * @param     $item_id
+     * @param int $limit
+     * @param int $offset
+     * @return array|bool
+     */
     public function get_rows_by_itemid($item_id, $limit = 0, $offset = 0)
     {
         $sql = 'SELECT * FROM ' . $this->_table;
         $sql .= ' WHERE flashvar_item_id = ' . (int)$item_id;
         $sql .= ' ORDER BY flashvar_id';
+
         return $this->get_rows_by_sql($sql, $limit, $offset);
     }
 
     //---------------------------------------------------------
     // option
     //---------------------------------------------------------
+
+    /**
+     * @return array
+     */
     public function get_autostart_options()
     {
-        $arr = array(
+        $arr = [
             '0' => 'false',
             '1' => 'true',
             '2' => 'default',
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @param bool $flag_down
+     * @return array
+     */
     public function get_link_type_options($flag_down = false)
     {
-        $arr = array(
+        $arr = [
             '0' => _WEBPHOTO_FLASHVAR_LINK_TYPE_NONE,
             '1' => _WEBPHOTO_FLASHVAR_LINK_TYPE_SITE,
             '2' => _WEBPHOTO_FLASHVAR_LINK_TYPE_PAGE,
-        );
+        ];
         if ($flag_down) {
             $arr['3'] = _WEBPHOTO_FLASHVAR_LINK_TYPE_FILE;
         }
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_linktarget_options()
     {
-        $arr = array(
-            '_self'  => _WEBPHOTO_FLASHVAR_LINKTREGET_SELF,
+        $arr = [
+            '_self' => _WEBPHOTO_FLASHVAR_LINKTREGET_SELF,
             '_blank' => _WEBPHOTO_FLASHVAR_LINKTREGET_BLANK,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_overstretch_options()
     {
-        $arr = array(
+        $arr = [
             'false' => _WEBPHOTO_FLASHVAR_OVERSTRETCH_FALSE,
-            'fit'   => _WEBPHOTO_FLASHVAR_OVERSTRETCH_FIT,
-            'true'  => _WEBPHOTO_FLASHVAR_OVERSTRETCH_TRUE,
-            'none'  => _WEBPHOTO_FLASHVAR_OVERSTRETCH_NONE,
-        );
+            'fit' => _WEBPHOTO_FLASHVAR_OVERSTRETCH_FIT,
+            'true' => _WEBPHOTO_FLASHVAR_OVERSTRETCH_TRUE,
+            'none' => _WEBPHOTO_FLASHVAR_OVERSTRETCH_NONE,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_transition_options()
     {
-        $arr = array(
-            '0'        => _WEBPHOTO_FLASHVAR_TRANSITION_OFF,
-            'fade'     => _WEBPHOTO_FLASHVAR_TRANSITION_FADE,
+        $arr = [
+            '0' => _WEBPHOTO_FLASHVAR_TRANSITION_OFF,
+            'fade' => _WEBPHOTO_FLASHVAR_TRANSITION_FADE,
             'slowfade' => _WEBPHOTO_FLASHVAR_TRANSITION_SLOWFADE,
-            'bgfade'   => _WEBPHOTO_FLASHVAR_TRANSITION_BGFADE,
-            'blocks'   => _WEBPHOTO_FLASHVAR_TRANSITION_BLOCKS,
-            'bubbles'  => _WEBPHOTO_FLASHVAR_TRANSITION_BUBBLES,
-            'circles'  => _WEBPHOTO_FLASHVAR_TRANSITION_CIRCLES,
-            'fluids'   => _WEBPHOTO_FLASHVAR_TRANSITION_FLUIDS,
-            'lines'    => _WEBPHOTO_FLASHVAR_TRANSITION_LINES,
-            'random'   => _WEBPHOTO_FLASHVAR_TRANSITION_RANDOM,
-        );
+            'bgfade' => _WEBPHOTO_FLASHVAR_TRANSITION_BGFADE,
+            'blocks' => _WEBPHOTO_FLASHVAR_TRANSITION_BLOCKS,
+            'bubbles' => _WEBPHOTO_FLASHVAR_TRANSITION_BUBBLES,
+            'circles' => _WEBPHOTO_FLASHVAR_TRANSITION_CIRCLES,
+            'fluids' => _WEBPHOTO_FLASHVAR_TRANSITION_FLUIDS,
+            'lines' => _WEBPHOTO_FLASHVAR_TRANSITION_LINES,
+            'random' => _WEBPHOTO_FLASHVAR_TRANSITION_RANDOM,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_player_repeat_options()
     {
-        $arr = array(
-            'none'   => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_NONE,
-            'list'   => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_LIST,
+        $arr = [
+            'none' => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_NONE,
+            'list' => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_LIST,
             'always' => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_ALWAYS,
             'single' => _WEBPHOTO_FLASHVAR_PLAYER_REPEAT_SINGLE,
-        );
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_stretching_options()
     {
-        $arr = array(
-            'none'     => _WEBPHOTO_FLASHVAR_STRETCHING_NONE,
+        $arr = [
+            'none' => _WEBPHOTO_FLASHVAR_STRETCHING_NONE,
             'exactfit' => _WEBPHOTO_FLASHVAR_STRETCHING_EXACTFIT,
-            'uniform'  => _WEBPHOTO_FLASHVAR_STRETCHING_UNIFORM,
-            'fill'     => _WEBPHOTO_FLASHVAR_STRETCHING_FILL,
-        );
+            'uniform' => _WEBPHOTO_FLASHVAR_STRETCHING_UNIFORM,
+            'fill' => _WEBPHOTO_FLASHVAR_STRETCHING_FILL,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_controlbar_position_options()
     {
-        $arr = array(
+        $arr = [
             'bottom' => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_BOTTOM,
-            'top'    => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_TOP,
-            'over'   => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_OVER,
-            'none'   => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_NONE,
-        );
+            'top' => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_TOP,
+            'over' => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_OVER,
+            'none' => _WEBPHOTO_FLASHVAR_CONTROLBAR_POSITION_NONE,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_playlist_position_options()
     {
-        $arr = array(
+        $arr = [
             'bottom' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_BOTTOM,
-            'top'    => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_TOP,
-            'right'  => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_RIGHT,
-            'left'   => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_LEFT,
-            'over'   => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_OVER,
-            'none'   => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_NONE,
-        );
+            'top' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_TOP,
+            'right' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_RIGHT,
+            'left' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_LEFT,
+            'over' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_OVER,
+            'none' => _WEBPHOTO_FLASHVAR_PLAYLIST_POSITION_NONE,
+        ];
+
         return $arr;
     }
 
+    /**
+     * @return array
+     */
     public function get_logo_position_options()
     {
-        $arr = array(
-            'bottom-left'  => _WEBPHOTO_FLASHVAR_LOGO_POSITION_BOTTOM_LEFT,
+        $arr = [
+            'bottom-left' => _WEBPHOTO_FLASHVAR_LOGO_POSITION_BOTTOM_LEFT,
             'bottom-right' => _WEBPHOTO_FLASHVAR_LOGO_POSITION_BOTTOM_RIGHT,
-            'top-left'     => _WEBPHOTO_FLASHVAR_LOGO_POSITION_TOP_LEFT,
-            'top-right'    => _WEBPHOTO_FLASHVAR_LOGO_POSITION_TOP_RIGHT,
-        );
+            'top-left' => _WEBPHOTO_FLASHVAR_LOGO_POSITION_TOP_LEFT,
+            'top-right' => _WEBPHOTO_FLASHVAR_LOGO_POSITION_TOP_RIGHT,
+        ];
+
         return $arr;
     }
+
     // --- class end ---
 }

@@ -30,6 +30,10 @@ if (!defined('XOOPS_TRUST_PATH')) {
 // class webphoto_inc_notification
 //=========================================================
 // Fatal error: Call to undefined method webphoto_inc_base_ini()
+
+/**
+ * Class webphoto_inc_notification
+ */
 class webphoto_inc_notification extends webphoto_inc_base_ini
 {
     public $_uri_class;
@@ -39,53 +43,74 @@ class webphoto_inc_notification extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // constructor
     //---------------------------------------------------------
+
+    /**
+     * webphoto_inc_notification constructor.
+     * @param $dirname
+     * @param $trust_dirname
+     */
     public function __construct($dirname, $trust_dirname)
     {
         parent::__construct();
         $this->init_base_ini($dirname, $trust_dirname);
-        $this->init_handler($dirname);
+        $this->initHandler($dirname);
 
         $this->_INDEX_URL = $this->_MODULE_URL . '/index.php';
 
         $this->_uri_class = webphoto_inc_uri::getSingleton($dirname);
     }
 
+    /**
+     * @param $dirname
+     * @param $trust_dirname
+     * @return mixed
+     */
     public static function getSingleton($dirname, $trust_dirname)
     {
         static $singletons;
         if (!isset($singletons[$dirname])) {
-            $singletons[$dirname] = new webphoto_inc_notification($dirname, $trust_dirname);
+            $singletons[$dirname] = new self($dirname, $trust_dirname);
         }
+
         return $singletons[$dirname];
     }
 
     //---------------------------------------------------------
     // public
     //---------------------------------------------------------
+
+    /**
+     * @param $category
+     * @param $id
+     * @return array
+     */
     public function notify($category, $id)
     {
-        $info = array();
+        $info = [];
 
         switch ($category) {
             case 'global':
                 $info['name'] = '';
-                $info['url']  = '';
+                $info['url'] = '';
                 break;
-
             case 'category':
                 $info['name'] = $this->_get_cat_title($id);
-                $info['url']  = $this->_get_url($category, $id);
+                $info['url'] = $this->_get_url($category, $id);
                 break;
-
             case 'photo':
                 $info['name'] = $this->_get_item_title($id);
-                $info['url']  = $this->_get_url($category, $id);
+                $info['url'] = $this->_get_url($category, $id);
                 break;
         }
 
         return $info;
     }
 
+    /**
+     * @param $category
+     * @param $id
+     * @return mixed
+     */
     public function _get_url($category, $id)
     {
         return $this->_uri_claas->build_full_uri_mode_param($category, $id);
@@ -94,21 +119,32 @@ class webphoto_inc_notification extends webphoto_inc_base_ini
     //---------------------------------------------------------
     // handler
     //---------------------------------------------------------
+
+    /**
+     * @param $item_id
+     * @return bool
+     */
     public function _get_item_title($item_id)
     {
         $row = $this->get_item_row_by_id($item_id);
         if (isset($row['item_title'])) {
             return $row['item_title'];
         }
+
         return false;
     }
 
+    /**
+     * @param $cat_id
+     * @return bool
+     */
     public function _get_cat_title($cat_id)
     {
         $row = $this->get_cat_row_by_id($cat_id);
         if (isset($row['cat_title'])) {
             return $row['cat_title'];
         }
+
         return false;
     }
 
